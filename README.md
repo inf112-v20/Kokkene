@@ -6,3 +6,9 @@ Simple skeleton with libgdx.
 Currently throws "WARNING: An illegal reflective access operation has occurred", 
 when the java version used is >8. This has no effect on function or performance, and is just a warning.
 
+## Team Roles
+Leader: Kristoffer  
+GameCoder: Jan Kåre  
+TestCoder: Markus  
+RuleControl (CustomerContact): Martin  
+Graphic Design: Arthur  
