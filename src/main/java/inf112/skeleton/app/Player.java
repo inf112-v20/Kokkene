@@ -78,8 +78,8 @@ public class Player {
 
     //If orientation is somehow bigger than 4, still returns in the interval [1-4]
     public int getOrientation() {
-        if(orientation > 4) {
-            if(orientation % 4 == 0) {
+        if (orientation > 4) {
+            if (orientation % 4 == 0) {
                 return 4;
             }
             else {
@@ -100,8 +100,14 @@ public class Player {
         return health;
     }
 
+    //Health can never be set above 10
     public void setHealth(int health) {
-        this.health = health;
+        if (health >= 10) {
+            this.health = 10;
+        }
+        else {
+            this.health = health;
+        }
     }
 
     public boolean isAlive() {
