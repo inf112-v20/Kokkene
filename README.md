@@ -9,7 +9,7 @@ when the java version used is >8. This has no effect on function or performance,
 Kristoffer Johansen: 4th semester student (Datatryggleik), likes board games.\
 Jan Kåre Sandblåst:\
 Markus Jensen:\
-Martin Johnsen:\
+Martin Johnsen: 6th semester student (Kognitiv vitenskap), likes to meet at lectures.\
 Arthur Andersen: 4th semester student (Datateknologi), likes graphic design.\
 
 ## Team Roles for **Kokkene** 
