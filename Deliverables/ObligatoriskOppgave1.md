@@ -33,8 +33,29 @@ Arthur really likes graphic design.
 ## Task 2
 ### Final product
 A functioning LAN-capable version of the board game RoboRally. 
+
+The goal of our application is a working version of RoboRally. \
+A working version is however, not very specific. \
+Therefore, you can find a list of requirements below. \
+The list specifies what should be implemented, \
+in order to fulfill our goal of what we consider a working application.
+
 ### High level requirements
-TODO
+- Board
+   - Board elements (Pits, Lasers, Conveyor belts)
+ - Maps / Courses
+ - Timer
+ - Program Registers
+   - Amount of cards received based on damage
+ - Card decks
+ - Damage & Destruction
+ - Phase sequences in multiple rounds
+ - Robots
+   - Events (Pushing, Laser, Power down)
+ - Multiplayer
+ - Win condition 
+   - Flags / Checkpoints
+
 ### First iteration deliverables
 [ ] Complete this list\
 [x] Player class\
