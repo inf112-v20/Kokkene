@@ -78,17 +78,12 @@ public class Player {
 
     //If orientation is somehow bigger than 4, still returns in the interval [1-4]
     public int getOrientation() {
-        if (orientation > 4) {
-            if (orientation % 4 == 0) {
-                return 4;
-            }
-            else {
-                return orientation % 4;
-            }
+        if(orientation % 4 == 0) {
+            return 4;
         }
-        else {
-            return orientation;
-        }
+
+        return orientation % 4;
+
     }
 
     //Forces positive number when a orientation is set
