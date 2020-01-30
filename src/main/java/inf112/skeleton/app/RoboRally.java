@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class HelloWorld implements ApplicationListener {
+public class RoboRally implements ApplicationListener {
     private SpriteBatch batch;
     private BitmapFont font;
 
@@ -30,7 +30,7 @@ public class HelloWorld implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-        font.draw(batch, "Hello World", 200, 200);
+        font.draw(batch, "RoboRally", 500, 500);
         batch.end();
     }
 
