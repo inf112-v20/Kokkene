@@ -35,7 +35,7 @@ Arthur really likes graphic design.
 [ ] Simple visual elements\
 [ ] Simple main menu\
 [ ] In-game music\
-[ ]
+[ ] 
 
 ## User stories
 "As a < type of user >, I want < some goal > so that < some reason >." Remove this before turning in.\
