@@ -11,6 +11,15 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+/**
+ * Main menu should have buttons to change options, start the game and quit the game.
+ * If you choose multiplayer you should get a drop-down list to set whether a given player
+ * should be human-controlled or an AI.
+ * After starting the game a RoboRally object should be created and rendered.
+ * After the game is finished we should return to the main menu.
+ *
+ * -Jan Kåre Sandblåst
+ */
 public class MainMenu implements ApplicationListener {
 
     private Options options;

@@ -1,5 +1,5 @@
 ## RoboRally - a game made by Kokkene. 
-RoboRally is a multiplayer game in which robots mover around the map attempting to get to all the flags. 
+RoboRally is a multiplayer game in which robots move around the map attempting to get to all the flags. 
 
 ## Our abilities useful for this team project
 Kristoffer Kraft Johansen: 4th semester student (Datasikkerhet), likes board games.\
