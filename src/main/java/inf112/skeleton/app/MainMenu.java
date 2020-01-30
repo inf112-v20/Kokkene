@@ -7,15 +7,21 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import java.awt.*;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+
 public class MainMenu implements ApplicationListener {
 
     private Options options;
     private SpriteBatch batch;
     private BitmapFont font;
 
-    MainMenu(){
-        options = new Options();
+    MainMenu(Options o){
+        this.options = o;
     }
+
+    // Exits the game
     public void quit(){
         System.exit(0);
     }
@@ -38,6 +44,9 @@ public class MainMenu implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
+        Button b = new Button();
+        b.setLabel("Quit");
+        b.setLocation(100, 200);
         font.draw(batch, "RoboRally", 500, 700);
         font.draw(batch, "Options", 100, 250);
         font.draw(batch, "Quit", 100, 200);
