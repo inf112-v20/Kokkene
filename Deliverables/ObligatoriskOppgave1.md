@@ -14,8 +14,6 @@ Markus Jensen:
 
 Martin Johnsen: 6th semester student (Kognitiv vitenskap), likes to meet at lectures.
 
-Some project management experience from work.
-
 Jan Kåre Sandblåst:4th semester student (Datavitenskap), likes programming. 
 Experience: Python, Java, Haskell, C++, JavaScript. 
 
