@@ -2,13 +2,12 @@ package inf112.skeleton.app;
 
 public class Options {
 
-    private int totalPlayers, players, boardX, boardY;
+    private int totalPlayers, players, boardSize;
 
     Options(){
         totalPlayers = 8;
         players = 8;
-        boardX = 1;
-        boardY = 1;
+        boardSize = 1;
     }
 
 

@@ -142,11 +142,8 @@ public class Player {
      * @param health  The value that health will be set to.
      */
     public void setHealth(int health) {
-        if (health >= 10) {
-            this.health = 10;
-        }
-        else {
-            this.health = health;
+        if (0 <= health){
+            this.health = Math.min(health, 10);
         }
     }
 
