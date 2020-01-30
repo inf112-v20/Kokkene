@@ -8,8 +8,8 @@ Coding experience: 2 years Html, CSS and javascript from high school.\
 INF100, INF101, INF102, INF142, INF143, DAT103\
 Some project management experience from work.
 
-**Jan Kåre Sandblåst:** 4th semester student (Datavitenskap), likes programming. 
-Experience: Python, Java, Haskell, C++, JavaScript. 
+**Jan Kåre Sandblåst:** 4th semester student (Datavitenskap), likes programming. \
+Language experience: Python, Java, Haskell, C++, JavaScript. 
 
 **Markus Jensen:**
 
@@ -32,7 +32,7 @@ Arthur really likes graphic design.
 
 ## Task 2
 ### Final product
-TODO
+A functioning LAN-capable version of the board game RoboRally. 
 ### High level requirements
 TODO
 ### First iteration deliverables
