@@ -4,13 +4,23 @@ RoboRally - a game made by Kokkene.
 Kristoffer Kraft Johansen: 4th semester student (Datasikkerhet), likes board games.\
 Coding experience: 2 years Html, CSS and javascript from high school.\
 INF100, INF101, INF102, INF142, INF143, DAT103\
-Some project management experience from work.\
+Some project management experience from work.
 
-Jan Kåre Sandblåst:4th semester student (Datavitenskap), likes programming. \
+Jan Kåre Sandblåst:4th semester student (Datavitenskap), likes programming. 
+Experience: Python, Java, Haskell, C++, JavaScript. 
 
-Markus Jensen:\
+Markus Jensen:
 
-Martin Johnsen: 6th semester student (Kognitiv vitenskap), likes to meet at lectures.\
+Martin Johnsen: 6th semester student (Kognitiv vitenskap), likes to meet at lectures.
+
+Some project management experience from work.
+
+Jan Kåre Sandblåst:4th semester student (Datavitenskap), likes programming. 
+Experience: Python, Java, Haskell, C++, JavaScript. 
+
+Markus Jensen:
+
+Martin Johnsen: 6th semester student (Kognitiv vitenskap), likes to meet at lectures.
 
 Arthur Andersen: 4th semester student (Datateknologi), likes graphic design.
 

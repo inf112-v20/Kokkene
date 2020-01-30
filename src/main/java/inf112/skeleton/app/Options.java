@@ -17,6 +17,7 @@ public class Options {
     }
 
     public void setTotalPlayers(int totalPlayers) {
+        assert 0 < totalPlayers;
         this.totalPlayers = totalPlayers;
     }
 
@@ -25,6 +26,7 @@ public class Options {
     }
 
     public void setPlayers(int players) {
-        this.players = players;
+        assert 0 < players;
+        this.players = Math.min(players, getTotalPlayers());
     }
 }

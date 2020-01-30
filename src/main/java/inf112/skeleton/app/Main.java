@@ -11,7 +11,8 @@ public class Main {
         cfg.width = 1080;
         cfg.height = 720;
 
-        new LwjglApplication(new MainMenu(), cfg);
+        Options options = new Options();
+        new LwjglApplication(new MainMenu(options), cfg);
 
     }
 }
