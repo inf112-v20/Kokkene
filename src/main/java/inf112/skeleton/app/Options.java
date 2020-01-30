@@ -18,6 +18,7 @@ public class Options {
 
     public void setTotalPlayers(int totalPlayers) {
         assert 0 < totalPlayers;
+        this.players = Math.min(players, totalPlayers);
         this.totalPlayers = totalPlayers;
     }
 
