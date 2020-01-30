@@ -2,7 +2,7 @@ RoboRally - a game made by Kokkene.
 
 ## Our abilities useful for this team project
 Kristoffer Johansen: 4th semester student (Datatryggleik), likes board games.\
-Jan Kåre Sandblåst:\
+Jan Kåre Sandblåst:4th semester student (Datavitenskap), likes programming. \
 Markus Jensen:\
 Martin Johnsen: 6th semester student (Kognitiv vitenskap), likes to meet at lectures.\
 Arthur Andersen: 4th semester student (Datateknologi), likes graphic design.
