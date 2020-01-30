@@ -97,7 +97,7 @@ public class Player {
 
     //Health can never be set above 10
     public void setHealth(int health) {
-        if (0 < health){
+        if (0 <= health){
             this.health = Math.min(health, 10);
         }
     }
