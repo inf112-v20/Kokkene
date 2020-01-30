@@ -1,5 +1,8 @@
 ## Our abilities useful for this team project
 Kristoffer Johansen: 4th semester student (Datatryggleik), likes board games.\
+Coding experience: 2 years Html, CSS and javascript from high school.\
+INF100, INF101, INF102, INF142, INF143, DAT103\
+Some project management experience from work.\
 Jan Kåre Sandblåst: 4th semester student (Datavitenskap), likes programming. \
 Markus Jensen:\
 Martin Johnsen: 6th semester student (Kognitiv vitenskap), likes to meet at lectures.\
