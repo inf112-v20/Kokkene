@@ -43,8 +43,8 @@ Arthur really likes graphic design.
 [ ] Somehow place the player on the board, and choose the rotation\
 [ ] Simple visual elements\
 [ ] Simple main menu\
-[ ] In-game music\
-[ ]
+[ ] In-game song\
+[ ] 
 
 ## User stories
 "As a < type of user >, I want < some goal > so that < some reason >." Remove this before turning in.\
