@@ -15,7 +15,9 @@ Language experience: Python, Java, Haskell, C++, JavaScript.
 
 **Martin Johnsen:** 6th semester student (Kognitiv vitenskap), likes to meet at lectures.
 
-**Arthur Andersen:** 4th semester student (Datateknologi), likes graphic design.
+**Arthur Andersen:** 4th semester student (Datateknologi), likes graphic design.\
+Coding experience: Python, Java, Haskell, SQL, NASM.\
+INF100, INF101, INF102, INF115, INF122, DAT103, MNF130, MAT101. 
 
 ### Team Roles for **Kokkene** 
 **Leader**: Kristoffer\
