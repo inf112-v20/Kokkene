@@ -2,6 +2,9 @@ package inf112.skeleton.app;
 
 import java.util.HashMap;
 
+/**
+ * Ideas from https://youtu.be/MAFawG6lEkw video series.
+ */
 public enum TileType {
 
     GROUND(1,false,"Ground"),
