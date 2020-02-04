@@ -24,14 +24,18 @@ INF100, INF101, INF102, INF115, INF122, DAT103, MNF130, MAT101.
 ### Team Roles for **Kokkene** 
 **Leader**: Kristoffer\
 Kristoffer showed excellent leadership already in the first team meeting.\
+
 **GameCoder**: Jan Kåre\
 Jan Kåre makes sure all the code is working well together.\
+
 **TestCoder**: Markus\
 Markus is quite comfortable with writing tests.\
+
 **CustomerContact**: Martin\
 Martin feels comfortable with the rules of the game, because he has met\
 at most lectures and read the rulebook. He felt like the natural choice for\
 this role, together with the logic subjects he has had.\
+
 **Graphic Design**: Arthur\
 Arthur really likes graphic design.
 
@@ -88,7 +92,8 @@ Getting into specifics we are to meet twice a week for 2-3 hours, to discuss our
 is started we will work through the todo when we are able to before our next meeting. At each meeting we will present any obstacles
 and get some feedback on how well along everything is going. And also if new customer requirements are needed from the backlog.
 We have some divided work tasks, in accordance to each persons role in the project.\
-**Leader**: Kristoffer will focus on organizing meetings and making sure deadlines are met, and that we work on the correct tasks. 
+**Leader**: Kristoffer will focus on organizing meetings and making sure deadlines are met,\
+and that we work on the correct tasks.\
 **GameCoder**: Jan Kåre will be our lead developer, making sure all the code is modular and works together well.\
 **TestCoder**: Markus will do quality assurance, focusing on writing tests and keeping the code high quality.\
 **CustomerContact**: Martin will make sure the logic is correct, in accordance to the rules of the game.\
@@ -97,15 +102,22 @@ While each of us will try to keep to our specialties, we will ofcourse offer eac
 
 ## Task 4 
 ### User Stories
-"As a < type of user >, I want < some goal > so that < some reason >." Remove this before turning in.\
-P = Person
+These are our user stories which are needed for completing the first obligatory task.
 
-User stories for the board.
+**User stories for the board**
 
-P1 - As a player, I want to see the board I am going to play on, such that I can make strategic choises regarding the game.\
-P2 - As a player, I would like the oppurtunity to play on different boards to not make the game stale.\
+P1 - As a player, I want to see the board I am going to play on.\
+P2 - As a player, I want to be able to move around the board.
 
-User stories for the pieces:
+**How do we accomplish these user stories?**\
+**P1**\
+    - We need a way of visualizing the board\
+    - Paint on default tiles\
+**P2**\
+    - We need to be able to put down a piece somewhere on the board\
+    - Be able to move around according to instructions.
+
+**User stories for the pieces**
 
 P1 - As a player, I want to see my piece/s on the board so i can play the correct moves to gain an advantage.\
-P2 - As a player, I want to be able to select were to place my pieces at the start of the game.\
+P2 - As a player, I want to be able to select were to place my pieces at the start of the game.
