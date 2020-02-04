@@ -11,9 +11,11 @@ Some project management experience from work.
 **Jan Kåre Sandblåst:** 4th semester student (Datavitenskap), likes programming. \
 Language experience: Python, Java, Haskell, C++, JavaScript. 
 
-**Markus Jensen:**
+**Markus Jensen:** TODO
 
-**Martin Johnsen:** 6th semester student (Kognitiv vitenskap), likes to meet at lectures.
+**Martin Johnsen:** 6th semester student (Kognitiv vitenskap), likes to meet at lectures.\
+Coding experience: Several hobby projects with big object-oriented system structures.\
+INF100, INF101, INF102, INF122, INF227, INFO282, INFO283, LOG110, LOG111
 
 **Arthur Andersen:** 4th semester student (Datateknologi), likes graphic design.\
 Coding experience: Python, Java, Haskell, SQL, NASM.\
@@ -27,8 +29,9 @@ Jan Kåre makes sure all the code is working well together.\
 **TestCoder**: Markus\
 Markus is quite comfortable with writing tests.\
 **CustomerContact**: Martin\
-Martin feels comfortable with the rules of the game,\
-hence he was the natural choice for this part of the team.\
+Martin feels comfortable with the rules of the game, because he has met\
+at most lectures and read the rulebook. He felt like the natural choice for\
+this role, together with the logic subjects he has had.\
 **Graphic Design**: Arthur\
 Arthur really likes graphic design.
 
@@ -36,13 +39,14 @@ Arthur really likes graphic design.
 ### Final product
 A functioning LAN-capable version of the board game RoboRally. 
 
-The goal of our application is a working version of RoboRally. \
-A working version is however, not very specific. \
+The goal of our application will be a working version of the boardgame RoboRally. \
+A working version however, might not be very specific. \
 Therefore, you can find a list of requirements below. \
 The list specifies what should be implemented, \
 in order to fulfill our goal of what we consider a working application.
 
 ### High level requirements
+For our final product our version of the MVP will have these functionalities.
 - Board
    - Board elements (Pits, Lasers, Conveyor belts)
  - Maps / Courses
@@ -50,23 +54,23 @@ in order to fulfill our goal of what we consider a working application.
  - Program Registers
    - Amount of cards received based on damage
  - Card decks
+ - Program robots
  - Damage & Destruction
  - Phase sequences in multiple rounds
+ - Repairing
+    -Wrench
  - Robots
-   - Events (Pushing, Laser, Power down)
- - Multiplayer
+   - Events (Pushing, Laser, Powerdown)
+   - Health
+ - Multiplayer (LAN)
  - Win condition 
    - Flags / Checkpoints
 
 ### First iteration deliverables
-[ ] Complete this list\
-[x] Player class\
+[x] Player\
 [ ] One simple board\
-[ ] Somehow place the player on the board, and choose the rotation\
 [ ] Simple visual elements\
-[ ] Simple main menu\
-[ ] In-game song\
-[ ] 
+[ ] Place the player on the board, and choose the rotation\
 
 ## Task 3 
 ### Project Methodology 
@@ -83,12 +87,12 @@ further with the code.
 Getting into specifics we are to meet twice a week for 2-3 hours, to discuss our current sprint or starting a sprint. When a sprint
 is started we will work through the todo when we are able to before our next meeting. At each meeting we will present any obstacles
 and get some feedback on how well along everything is going. And also if new customer requirements are needed from the backlog.
-We have some divided work tasks, in accordance to each persons role in the project.
+We have some divided work tasks, in accordance to each persons role in the project.\
 **Leader**: Kristoffer will focus on organizing meetings and making sure deadlines are met, and that we work on the correct tasks. 
-**GameCoder**: Jan Kåre will be our lead developer, making sure all the code is modular and works together well.
-**TestCoder**: Markus will do quality assurance, focusing on writing tests and keeping the code high quality.
-**CustomerContact**: Martin will make sure the logic is correct, in accordance to the rules of the game.
-**Graphic Design**: Arthur will focus on graphics and how to visualize each scene in the game.
+**GameCoder**: Jan Kåre will be our lead developer, making sure all the code is modular and works together well.\
+**TestCoder**: Markus will do quality assurance, focusing on writing tests and keeping the code high quality.\
+**CustomerContact**: Martin will make sure the logic is correct, in accordance to the rules of the game.\
+**Graphic Design**: Arthur will focus on graphics and how to visualize each scene in the game.\
 While each of us will try to keep to our specialties, we will ofcourse offer eachother help if ones workload is bigger.
 
 ## Task 4 
