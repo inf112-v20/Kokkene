@@ -4,7 +4,7 @@ RoboRally is a multiplayer game in which robots move around the map attempting t
 ## Task 1
 ### Our abilities useful for this team project
 **Kristoffer Kraft Johansen:** 4th semester student (Datasikkerhet), likes board games.\
-Coding experience: 2 years Html, CSS and javascript from high school.\
+Coding experience: Html, CSS, SQL, PHP and javascript from high school.\
 INF100, INF101, INF102, INF142, INF143, DAT103\
 Some project management experience from work.
 
@@ -74,8 +74,8 @@ For our final product our version of the MVP will have these functionalities.
 
 ### First iteration deliverables
 [x] Player\
-[ ] One simple board\
-[ ] Simple visual elements\
+[X] One simple board\
+[X] Simple visual elements\
 [ ] Place the player on the board, and choose the rotation\
 
 ## Task 3 
@@ -100,7 +100,7 @@ and that we work on the correct tasks.\
 **TestCoder**: Markus will do quality assurance, focusing on writing tests and keeping the code high quality.\
 **CustomerContact**: Martin will make sure the logic is correct, in accordance to the rules of the game.\
 **Graphic Design**: Arthur will focus on graphics and how to visualize each scene in the game.\
-While each of us will try to keep to our specialties, we will ofcourse offer eachother help if ones workload is bigger.
+While each of us will try to keep to our specialties, we will of course offer each other help if ones workload is bigger.
 
 ## Task 4 
 ### User Stories
@@ -111,15 +111,22 @@ These are our user stories which are needed for completing the first obligatory 
 P1 - As a player, I want to see the board I am going to play on.\
 P2 - As a player, I want to be able to move around the board.
 
+**User stories for the pieces**
+
+P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
+P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
+
 **How do we accomplish these user stories?**\
 **P1**\
     - We need a way of visualizing the board\
     - Paint on default tiles\
 **P2**\
     - We need to be able to put down a piece somewhere on the board\
-    - Be able to move around according to instructions.
+    - Be able to move around according to instructions\
+**P3**\
+    - We need a visualized board\
+    - Paint on a player avatar\
+**P4**\
+    - We need to be able to put down a piece somewhere on the board\
+    - Have something that allows the player to choose the starting position.
 
-**User stories for the pieces**
-
-P1 - As a player, I want to see my piece/s on the board so i can play the correct moves to gain an advantage.\
-P2 - As a player, I want to be able to select were to place my pieces at the start of the game.

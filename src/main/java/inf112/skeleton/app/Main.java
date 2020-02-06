@@ -13,6 +13,5 @@ public class Main {
 
         RoboRally rr = new RoboRally();
         new LwjglApplication(rr, cfg);
-
     }
 }
