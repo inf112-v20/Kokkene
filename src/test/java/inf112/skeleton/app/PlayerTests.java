@@ -32,12 +32,12 @@ public class PlayerTests {
     }
 
     @Test
-    public void PlayerHasXPositionOneAfterInitiation() {
+    public void PlayerXPositionIsOneAfterInitiation() {
         assertEquals(player.getxPos(),xPos);
     }
 
     @Test
-    public void PlayerHasYPositionOneAfterInitiation() {
+    public void PlayerYPositionIsOneAfterInitiation() {
         assertEquals(player.getyPos(),xPos);
     }
 }

@@ -113,7 +113,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="Goal" width="12" height="12">
+ <layer id="7" name="Flag" width="12" height="12">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,
