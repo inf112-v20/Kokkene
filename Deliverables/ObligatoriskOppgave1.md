@@ -11,7 +11,9 @@ Some project management experience from work.
 **Jan Kåre Sandblåst:** 4th semester student (Datavitenskap), likes programming. \
 Language experience: Python, Java, Haskell, C++, JavaScript. 
 
-**Markus Jensen:** TODO
+**Markus Jensen:** 4th semester student (Datateknologi).
+Coding experience: HTML, CSS, JavaScript, Java, Haskell, Python, SQL.\
+INF100, INF101, INF102, INF115, INF122, DAT103.
 
 **Martin Johnsen:** 6th semester student (Kognitiv vitenskap), likes to meet at lectures.\
 Coding experience: Several hobby projects with big object-oriented system structures.\
