@@ -26,7 +26,18 @@ public class PlayerTests {
         assertEquals(player.getLifePoints(),3);
     }
 
+    @Test
     public void PlayerHasOrientationOneAfterInitiation() {
         assertEquals(player.getOrientation(), orientation);
+    }
+
+    @Test
+    public void PlayerHasXPositionOneAfterInitiation() {
+        assertEquals(player.getxPos(),xPos);
+    }
+
+    @Test
+    public void PlayerHasYPositionOneAfterInitiation() {
+        assertEquals(player.getyPos(),xPos);
     }
 }

@@ -40,8 +40,11 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
 
+        int boardHeight = boardLayer.getHeight();
+        int boardWidth = boardLayer.getWidth();
+
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 5, 5);
+        camera.setToOrtho(false, boardWidth, boardHeight);
         camera.position.x = 2.5f;
         camera.update();
 
