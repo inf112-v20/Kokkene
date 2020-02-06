@@ -114,7 +114,6 @@ P2 - As a player, I want to be able to move around the board.
 **User stories for the pieces**
 
 P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
-P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
 
 **How do we accomplish these user stories?**\
 **P1**\
@@ -126,9 +125,6 @@ P4 - As a player, I want to be able to select were to place my pieces at the sta
 **P3**\
     - We need a visualized board\
     - Paint on a player avatar\
-**P4**\
-    - We need to be able to put down a piece somewhere on the board\
-    - Have something that allows the player to choose the starting position.
 
 ## Summary of the 1st assignment.
  **What worked**\
