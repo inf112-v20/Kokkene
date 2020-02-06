@@ -2,27 +2,32 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.Map;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Vector2;
 
-public class RoboRally implements ApplicationListener {
+public class RoboRally extends InputAdapter implements ApplicationListener {
 
     TiledMap map;
-    TiledMapTileLayer boardLayer;
-    TiledMapTileLayer playerLayer;
-    TiledMapTileLayer holeLayer;
-    TiledMapTileLayer flagLayer;
+    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer;
 
     OrthogonalTiledMapRenderer mapRenderer;
     OrthographicCamera camera;
+
+    Texture playerTexture;
+    TextureRegion[][] tr;
+    Cell playerNorm, playerWon, playerDead;
 
     @Override
     public void create() {
@@ -38,17 +43,28 @@ public class RoboRally implements ApplicationListener {
         camera.position.x = 2.5f;
         camera.update();
 
-
         float unitScale = 1/300f;
         mapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
         mapRenderer.setView(camera);
+
+        playerTexture = new Texture("assets/player.png");
+        tr = TextureRegion.split(playerTexture, 300, 300);
+
+        playerNorm = new Cell();
+        playerNorm.setTile(new StaticTiledMapTile(tr[0][0]));
+
+        playerDead = new Cell();
+        playerDead.setTile(new StaticTiledMapTile(tr[0][1]));
+
+        playerWon = new Cell();
+        playerWon.setTile(new StaticTiledMapTile(tr[0][2]));
 
     }
 
     @Override
     public void dispose() {
-        mapRenderer.dispose();
         map.dispose();
+        mapRenderer.dispose();
     }
 
     @Override
@@ -57,6 +73,8 @@ public class RoboRally implements ApplicationListener {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         mapRenderer.render();
+
+        playerLayer.setCell(0, 0, playerNorm);
 
     }
 
