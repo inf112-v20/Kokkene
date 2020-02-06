@@ -77,6 +77,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     @Override
     public boolean keyUp(int keycode) {
 
+        //Sets the current cell with the player to null.
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
 
         if(keycode == Input.Keys.LEFT){

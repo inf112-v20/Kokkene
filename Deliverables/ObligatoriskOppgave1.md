@@ -25,18 +25,18 @@ INF100, INF101, INF102, INF115, INF122, DAT103, MNF130, MAT101.
 
 ### Team Roles for **Kokkene** 
 **Leader**: Kristoffer\
-Kristoffer showed excellent leadership already in the first team meeting.\
+Kristoffer showed excellent leadership already in the first team meeting.
 
 **GameCoder**: Jan Kåre\
-Jan Kåre makes sure all the code is working well together.\
+Jan Kåre makes sure all the code is working well together.
 
 **TestCoder**: Markus\
-Markus is quite comfortable with writing tests.\
+Markus is quite comfortable with writing tests.
 
 **CustomerContact**: Martin\
 Martin feels comfortable with the rules of the game, because he has met\
 at most lectures and read the rulebook. He felt like the natural choice for\
-this role, together with the logic subjects he has had.\
+this role, together with the logic subjects he has had.
 
 **Graphic Design**: Arthur\
 Arthur really likes graphic design.
@@ -73,10 +73,10 @@ For our final product our version of the MVP will have these functionalities.
    - Flags / Checkpoints
 
 ### First iteration deliverables
-[x] Player\
+[X] Player\
 [X] One simple board\
 [X] Simple visual elements\
-[ ] Place the player on the board, and choose the rotation\
+[X] Place the player on the board and move
 
 ## Task 3 
 ### Project Methodology 
@@ -130,3 +130,15 @@ P4 - As a player, I want to be able to select were to place my pieces at the sta
     - We need to be able to put down a piece somewhere on the board\
     - Have something that allows the player to choose the starting position.
 
+##Summary of the 1st assignment.
+ **What worked**\
+    - The team was well organized and everyone did their share\
+    - Effective meetings, where everyone that was available, took part.\
+    - A mix of Scrum and XP also worked very well as our project methodology of choice, as it helped organize us.
+
+ **What did not work**\
+    - We got a little ahead of ourselves sometimes, where we focused more on future goals.\
+    - Project board could also have been used more frequently
+    
+ **Did we hit our goals?**\
+    Yes, Kokkene believes that we hit our goals and more.

@@ -38,6 +38,6 @@ public class PlayerTests {
 
     @Test
     public void PlayerYPositionIsOneAfterInitiation() {
-        assertEquals(player.getyPos(),xPos);
+        assertEquals(player.getyPos(),yPos);
     }
 }
