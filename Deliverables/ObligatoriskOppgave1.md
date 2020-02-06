@@ -93,7 +93,8 @@ further with the code.
 Getting into specifics we are to meet twice a week for 2-3 hours, to discuss our current sprint or starting a sprint. When a sprint
 is started we will work through the todo when we are able to before our next meeting. At each meeting we will present any obstacles
 and get some feedback on how well along everything is going. And also if new customer requirements are needed from the backlog.
-We have some divided work tasks, in accordance to each persons role in the project.\
+We have some divided work tasks, in accordance to each persons role in the project.
+
 **Leader**: Kristoffer will focus on organizing meetings and making sure deadlines are met,\
 and that we work on the correct tasks.\
 **GameCoder**: Jan Kåre will be our lead developer, making sure all the code is modular and works together well.\
