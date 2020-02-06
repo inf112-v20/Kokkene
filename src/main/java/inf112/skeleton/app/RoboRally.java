@@ -29,6 +29,8 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     TextureRegion[][] tr;
     Cell playerNorm, playerWon, playerDead;
 
+    Player player;
+
     @Override
     public void create() {
 
@@ -59,6 +61,58 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         playerWon = new Cell();
         playerWon.setTile(new StaticTiledMapTile(tr[0][2]));
 
+        Gdx.input.setInputProcessor(this);
+        player = new Player("Test", 0,0, 1);
+
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+
+        if(keycode == Input.Keys.LEFT){
+            if(player.getxPos() == 0) {
+                System.out.println("You cannot move in this direction");
+                return false;
+            }
+            else{
+                player.setxPos(player.getxPos()-1);
+                return true;
+            }
+        }
+        if(keycode == Input.Keys.RIGHT){
+            if(player.getxPos() == 5) {
+                System.out.println("You cannot move in this direction");
+                return false;
+            }
+            else{
+                player.setxPos(player.getxPos()+1);
+                return true;
+            }
+        }
+        if(keycode == Input.Keys.DOWN){
+            if(player.getyPos() == 0) {
+                System.out.println("You cannot move in this direction");
+                return false;
+            }
+            else{
+                player.setyPos(player.getyPos()-1);
+                return true;
+            }
+        }
+
+        if(keycode == Input.Keys.UP){
+            if(player.getyPos() == 5) {
+                System.out.println("You cannot move in this direction");
+                return false;
+            }
+            else{
+                player.setyPos(player.getyPos()+1);
+                return true;
+            }
+        }
+
+        return false;
+
     }
 
     @Override
@@ -74,7 +128,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
         mapRenderer.render();
 
-        playerLayer.setCell(0, 0, playerNorm);
+        playerLayer.setCell(player.getxPos(), player.getyPos(), playerNorm);
 
     }
 
