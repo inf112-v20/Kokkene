@@ -58,18 +58,16 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         tr = TextureRegion.split(playerTexture, 300, 300);
 
         playerNorm = new Cell();
-        playerNorm.setTile(new StaticTiledMapTile(tr[0][0]));
-
         playerDead = new Cell();
-        playerDead.setTile(new StaticTiledMapTile(tr[0][1]));
-
         playerWon = new Cell();
+        playerNorm.setTile(new StaticTiledMapTile(tr[0][0]));
+        playerDead.setTile(new StaticTiledMapTile(tr[0][1]));
         playerWon.setTile(new StaticTiledMapTile(tr[0][2]));
 
-        playerStatus = new Cell();
         playerStatus = playerNorm;
 
         Gdx.input.setInputProcessor(this);
+
         player = new Player("Test", 0,0, 1);
 
     }
@@ -150,12 +148,10 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
         playerStatus = playerNorm;
 
-        if(holeLayer.getCell(player.getxPos(), player.getyPos()) != null) {
+        if(holeLayer.getCell(player.getxPos(), player.getyPos()) != null)
             playerStatus = playerDead;
-        }
-        else if (flagLayer.getCell(player.getxPos(), player.getyPos()) != null) {
+        else if(flagLayer.getCell(player.getxPos(), player.getyPos()) != null)
             playerStatus = playerWon;
-        }
 
     }
 
