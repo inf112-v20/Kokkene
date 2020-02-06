@@ -130,7 +130,7 @@ P4 - As a player, I want to be able to select were to place my pieces at the sta
     - We need to be able to put down a piece somewhere on the board\
     - Have something that allows the player to choose the starting position.
 
-##Summary of the 1st assignment.
+## Summary of the 1st assignment.
  **What worked**\
     - The team was well organized and everyone did their share\
     - Effective meetings, where everyone that was available, took part.\
