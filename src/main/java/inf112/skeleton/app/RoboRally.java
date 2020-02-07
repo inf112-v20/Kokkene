@@ -10,33 +10,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 
 public class RoboRally extends InputAdapter implements ApplicationListener {
 
-    TiledMap map;
-    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer;
+    public int boardHeight;
+    public int boardWidth;
 
-    int boardHeight;
-    int boardWidth;
+    private TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer;
 
-    OrthogonalTiledMapRenderer mapRenderer;
-    OrthographicCamera camera;
+    private OrthogonalTiledMapRenderer mapRenderer;
 
-    Texture playerTexture;
-    TextureRegion[][] tr;
-    Cell playerNorm, playerWon, playerDead;
-    Cell playerStatus;
+    private Cell playerNormal, playerWon, playerDead;
+    private Cell playerStatus;
 
-    Player player;
+    private Player player;
 
     @Override
     public void create() {
 
-        map = new TmxMapLoader().load("12by12DizzyDash.tmx");
+        TiledMap map = new TmxMapLoader().load("12by12DizzyDash.tmx");
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
@@ -45,7 +41,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
 
-        camera = new OrthographicCamera();
+        OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, boardWidth, boardHeight);
         camera.position.x = boardWidth/2f;
         camera.update();
@@ -54,17 +50,17 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         mapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
         mapRenderer.setView(camera);
 
-        playerTexture = new Texture("assets/player.png");
-        tr = TextureRegion.split(playerTexture, 300, 300);
+        Texture playerTexture = new Texture("assets/player.png");
+        TextureRegion[][] tr = TextureRegion.split(playerTexture, 300, 300);
 
-        playerNorm = new Cell();
+        playerNormal = new Cell();
         playerDead = new Cell();
         playerWon = new Cell();
-        playerNorm.setTile(new StaticTiledMapTile(tr[0][0]));
+        playerNormal.setTile(new StaticTiledMapTile(tr[0][0]));
         playerDead.setTile(new StaticTiledMapTile(tr[0][1]));
         playerWon.setTile(new StaticTiledMapTile(tr[0][2]));
 
-        playerStatus = playerNorm;
+        playerStatus = playerNormal;
 
         Gdx.input.setInputProcessor(this);
 
@@ -75,10 +71,13 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     @Override
     public boolean keyUp(int keycode) {
 
+        //Clears the current cell
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
 
+        //Switch Case is another possible solution
         if(keycode == Input.Keys.LEFT){
             if(player.getxPos() <= 0) {
+                //temporary fix for moving of board
                 System.out.println("You cannot move in this direction");
                 return false;
             }
@@ -127,7 +126,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
     @Override
     public void dispose() {
-        map.dispose();
         mapRenderer.dispose();
     }
 
@@ -136,7 +134,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //Returns
         getPlayerStatus();
 
         playerLayer.setCell(player.getxPos(), player.getyPos(), playerStatus);
@@ -146,7 +143,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
     public void getPlayerStatus() {
 
-        playerStatus = playerNorm;
+        playerStatus = playerNormal;
 
         if(holeLayer.getCell(player.getxPos(), player.getyPos()) != null)
             playerStatus = playerDead;
