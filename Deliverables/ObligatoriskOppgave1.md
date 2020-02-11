@@ -93,8 +93,7 @@ further with the code.
 Getting into specifics we are to meet twice a week for 2-3 hours, to discuss our current sprint or starting a sprint. When a sprint
 is started we will work through the todo when we are able to before our next meeting. At each meeting we will present any obstacles
 and get some feedback on how well along everything is going. And also if new customer requirements are needed from the backlog.
-We have some divided work tasks, in accordance to each persons role in the project.
-
+We have some divided work tasks, in accordance to each persons role in the project.\
 **Leader**: Kristoffer will focus on organizing meetings and making sure deadlines are met,\
 and that we work on the correct tasks.\
 **GameCoder**: Jan Kåre will be our lead developer, making sure all the code is modular and works together well.\
@@ -115,6 +114,7 @@ P2 - As a player, I want to be able to move around the board.
 **User stories for the pieces**
 
 P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
+P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
 
 **How do we accomplish these user stories?**\
 **P1**\
@@ -126,8 +126,11 @@ P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
 **P3**\
     - We need a visualized board\
     - Paint on a player avatar\
+**P4**\
+    - We need to be able to put down a piece somewhere on the board\
+    - Have something that allows the player to choose the starting position.
 
-## Summary of the 1st assignment.
+##Summary of the 1st assignment.
  **What worked**\
     - The team was well organized and everyone did their share\
     - Effective meetings, where everyone that was available, took part.\
