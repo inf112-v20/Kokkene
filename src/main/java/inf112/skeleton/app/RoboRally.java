@@ -10,33 +10,29 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 
 public class RoboRally extends InputAdapter implements ApplicationListener {
 
-    TiledMap map;
-    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer;
+    public int boardHeight;
+    public int boardWidth;
 
-    int boardHeight;
-    int boardWidth;
+    private TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer;
 
-    OrthogonalTiledMapRenderer mapRenderer;
-    OrthographicCamera camera;
+    private OrthogonalTiledMapRenderer mapRenderer;
 
-    Texture playerTexture;
-    TextureRegion[][] tr;
-    Cell playerNorm, playerWon, playerDead;
-    Cell playerStatus;
+    private Cell playerNormal, playerWon, playerDead;
+    private Cell playerStatus;
 
-    Player player;
+    private Player player;
 
     @Override
     public void create() {
 
-        map = new TmxMapLoader().load("12by12DizzyDash.tmx");
+        TiledMap map = new TmxMapLoader().load("12by12DizzyDash.tmx");
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
@@ -45,7 +41,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
 
-        camera = new OrthographicCamera();
+        OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, boardWidth, boardHeight);
         camera.position.x = boardWidth/2f;
         camera.update();
@@ -54,82 +50,72 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         mapRenderer = new OrthogonalTiledMapRenderer(map, unitScale);
         mapRenderer.setView(camera);
 
-        playerTexture = new Texture("assets/player.png");
-        tr = TextureRegion.split(playerTexture, 300, 300);
+        Texture playerTexture = new Texture("assets/player.png");
+        TextureRegion[][] tr = TextureRegion.split(playerTexture, 300, 300);
 
-        playerNorm = new Cell();
-        playerNorm.setTile(new StaticTiledMapTile(tr[0][0]));
-
+        playerNormal = new Cell();
         playerDead = new Cell();
-        playerDead.setTile(new StaticTiledMapTile(tr[0][1]));
-
         playerWon = new Cell();
+        playerNormal.setTile(new StaticTiledMapTile(tr[0][0]));
+        playerDead.setTile(new StaticTiledMapTile(tr[0][1]));
         playerWon.setTile(new StaticTiledMapTile(tr[0][2]));
 
-        playerStatus = new Cell();
-        playerStatus = playerNorm;
+        playerStatus = playerNormal;
 
         Gdx.input.setInputProcessor(this);
+
         player = new Player("Test", 0,0, 1);
 
     }
 
     @Override
     public boolean keyUp(int keycode) {
+        //We are supposed to move with programming cards, so this type of movement is kinda useless
 
+        //Clears the current cell
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
 
-        if(keycode == Input.Keys.LEFT){
-            if(player.getxPos() <= 0) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setxPos(player.getxPos()-1);
-                return true;
-            }
+        //Checks the input and performs the action
+        switch (keycode) {
+            case (Input.Keys.LEFT):
+                if (player.getxPos() <= 0) {
+                    //temporary fix for moving of board
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setxPos(player.getxPos() - 1);
+                    break;
+                }
+            case (Input.Keys.RIGHT):
+                if (player.getxPos() >= boardWidth - 1) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setxPos(player.getxPos() + 1);
+                    break;
+                }
+            case (Input.Keys.DOWN):
+                if (player.getyPos() <= 0) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setyPos(player.getyPos() - 1);
+                    break;
+                }
+            case (Input.Keys.UP):
+                if (player.getyPos() >= boardHeight - 1) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setyPos(player.getyPos() + 1);
+                    break;
+                }
         }
-
-        if(keycode == Input.Keys.RIGHT){
-            if(player.getxPos() >= boardWidth-1) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setxPos(player.getxPos()+1);
-                return true;
-            }
-        }
-
-        if(keycode == Input.Keys.DOWN){
-            if(player.getyPos() <= 0) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setyPos(player.getyPos()-1);
-                return true;
-            }
-        }
-
-        if(keycode == Input.Keys.UP){
-            if(player.getyPos() >= boardHeight-1) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setyPos(player.getyPos()+1);
-                return true;
-            }
-        }
-
         return false;
-
     }
 
     @Override
     public void dispose() {
-        map.dispose();
         mapRenderer.dispose();
     }
 
@@ -138,7 +124,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //Returns
         getPlayerStatus();
 
         playerLayer.setCell(player.getxPos(), player.getyPos(), playerStatus);
@@ -148,14 +133,12 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
     public void getPlayerStatus() {
 
-        playerStatus = playerNorm;
+        playerStatus = playerNormal;
 
-        if(holeLayer.getCell(player.getxPos(), player.getyPos()) != null) {
+        if(holeLayer.getCell(player.getxPos(), player.getyPos()) != null)
             playerStatus = playerDead;
-        }
-        else if (flagLayer.getCell(player.getxPos(), player.getyPos()) != null) {
+        else if(flagLayer.getCell(player.getxPos(), player.getyPos()) != null)
             playerStatus = playerWon;
-        }
 
     }
 
