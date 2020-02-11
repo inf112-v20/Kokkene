@@ -70,58 +70,48 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
     @Override
     public boolean keyUp(int keycode) {
+        //We are supposed to move with programming cards, so this type of movement is kinda useless
 
         //Clears the current cell
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
 
-        //Switch Case is another possible solution
-        if(keycode == Input.Keys.LEFT){
-            if(player.getxPos() <= 0) {
-                //temporary fix for moving of board
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setxPos(player.getxPos()-1);
-                return true;
-            }
+        //Checks the input and performs the action
+        switch (keycode) {
+            case (Input.Keys.LEFT):
+                if (player.getxPos() <= 0) {
+                    //temporary fix for moving of board
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setxPos(player.getxPos() - 1);
+                    break;
+                }
+            case (Input.Keys.RIGHT):
+                if (player.getxPos() >= boardWidth - 1) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setxPos(player.getxPos() + 1);
+                    break;
+                }
+            case (Input.Keys.DOWN):
+                if (player.getyPos() <= 0) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setyPos(player.getyPos() - 1);
+                    break;
+                }
+            case (Input.Keys.UP):
+                if (player.getyPos() >= boardHeight - 1) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setyPos(player.getyPos() + 1);
+                    break;
+                }
         }
-
-        if(keycode == Input.Keys.RIGHT){
-            if(player.getxPos() >= boardWidth-1) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setxPos(player.getxPos()+1);
-                return true;
-            }
-        }
-
-        if(keycode == Input.Keys.DOWN){
-            if(player.getyPos() <= 0) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setyPos(player.getyPos()-1);
-                return true;
-            }
-        }
-
-        if(keycode == Input.Keys.UP){
-            if(player.getyPos() >= boardHeight-1) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setyPos(player.getyPos()+1);
-                return true;
-            }
-        }
-
         return false;
-
     }
 
     @Override
