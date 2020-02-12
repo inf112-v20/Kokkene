@@ -18,7 +18,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 public class RoboRally extends InputAdapter implements ApplicationListener {
 
     TiledMap map;
-    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer;
+    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer, wallLayer;
 
     int boardHeight;
     int boardWidth;
@@ -38,6 +38,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
         map = new TmxMapLoader().load("12by12DizzyDash.tmx");
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
+        wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
@@ -80,8 +81,13 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         //Sets the current cell with the player to null.
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
 
+        int wall = 0;
+        if (wallLayer.getCell(player.getxPos(), player.getyPos()) != null){
+            wall =  wallLayer.getCell(player.getxPos(), player.getyPos()).getTile().getId();
+        }
+
         if(keycode == Input.Keys.LEFT){
-            if(player.getxPos() <= 0) {
+            if(player.getxPos() <= 0 || wall == 27) {
                 System.out.println("You cannot move in this direction");
                 return false;
             }
@@ -92,7 +98,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         }
 
         if(keycode == Input.Keys.RIGHT){
-            if(player.getxPos() >= boardWidth-1) {
+            if(player.getxPos() >= boardWidth-1 || wall == 21) {
                 System.out.println("You cannot move in this direction");
                 return false;
             }
@@ -103,7 +109,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         }
 
         if(keycode == Input.Keys.DOWN){
-            if(player.getyPos() <= 0) {
+            if(player.getyPos() <= 0 || wall == 26) {
                 System.out.println("You cannot move in this direction");
                 return false;
             }
@@ -114,7 +120,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         }
 
         if(keycode == Input.Keys.UP){
-            if(player.getyPos() >= boardHeight-1) {
+            if(player.getyPos() >= boardHeight-1 || wall == 28) {
                 System.out.println("You cannot move in this direction");
                 return false;
             }
