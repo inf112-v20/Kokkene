@@ -14,6 +14,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
 
 public class RoboRally extends InputAdapter implements ApplicationListener {
 
@@ -32,6 +35,8 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     Cell playerStatus;
 
     Player player;
+
+    Music music;
 
     @Override
     public void create() {
@@ -72,6 +77,8 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
         Gdx.input.setInputProcessor(this);
         player = new Player("Test", 0,0, 1);
+
+        startMusic(); //starts the background music.
 
     }
 
@@ -130,6 +137,10 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
             }
         }
 
+        if(keycode == Input.Keys.M){
+            music.muteToggle();
+        }
+
         return false;
 
     }
@@ -176,5 +187,18 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
     @Override
     public void resume() {
+    }
+
+    private void startMusic() {
+
+        try {
+            music = new Music();
+        } catch (UnsupportedAudioFileException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LineUnavailableException e) {
+            e.printStackTrace();
+        }
     }
 }
