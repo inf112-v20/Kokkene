@@ -21,7 +21,8 @@ import java.io.IOException;
 public class RoboRally extends InputAdapter implements ApplicationListener {
 
     TiledMap map;
-    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer, wallLayer;
+    private TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
+            wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer;
 
     int boardHeight;
     int boardWidth;
@@ -47,6 +48,11 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flagLayer = (TiledMapTileLayer) map.getLayers().get("Flag");
+        laserLayer = (TiledMapTileLayer) map.getLayers().get("Laser");
+        pushLayer = (TiledMapTileLayer) map.getLayers().get("Push");
+        wrenchLayer = (TiledMapTileLayer) map.getLayers().get("Wrench");
+        conveyorLayer = (TiledMapTileLayer) map.getLayers().get("Conveyor");
+        gearLayer = (TiledMapTileLayer) map.getLayers().get("Gear");
 
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
@@ -84,69 +90,64 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
     @Override
     public boolean keyUp(int keycode) {
+        //We are supposed to move with programming cards,
+        //so this type of movement is kinda useless.
 
-        //Sets the current cell with the player to null.
+        //Clears the current cell
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
 
         int wall = 0;
-        if (wallLayer.getCell(player.getxPos(), player.getyPos()) != null){
-            wall =  wallLayer.getCell(player.getxPos(), player.getyPos()).getTile().getId();
+        if (wallLayer.getCell(player.getxPos(), player.getyPos()) != null) {
+            wall = wallLayer.getCell(player.getxPos(), player.getyPos()).getTile().getId();
         }
 
-        if(keycode == Input.Keys.LEFT){
-            if(player.getxPos() <= 0 || wall == 27) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setxPos(player.getxPos()-1);
-                return true;
-            }
+        //Checks the input and performs the action
+        switch (keycode) {
+            case (Input.Keys.LEFT):
+                if (player.getxPos() <= 0 || wall == 27) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setxPos(player.getxPos() - 1);
+                    break;
+                }
+            case (Input.Keys.RIGHT):
+                if (player.getxPos() >= boardWidth - 1 || wall == 21) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setxPos(player.getxPos() + 1);
+                    break;
+                }
+            case (Input.Keys.DOWN):
+                if (player.getyPos() <= 0 || wall == 26) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setyPos(player.getyPos() - 1);
+                    break;
+                }
+            case (Input.Keys.UP):
+                if (player.getyPos() >= boardHeight - 1 || wall == 28) {
+                    System.out.println("You cannot move in this direction");
+                    break;
+                } else {
+                    player.setyPos(player.getyPos() + 1);
+                    break;
+                }
+            case (Input.Keys.M):
+                music.muteToggle();
+                break;
+            case (Input.Keys.P):
+                music.pauseToggle();
+                break;
         }
-
-        if(keycode == Input.Keys.RIGHT){
-            if(player.getxPos() >= boardWidth-1 || wall == 21) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setxPos(player.getxPos()+1);
-                return true;
-            }
-        }
-
-        if(keycode == Input.Keys.DOWN){
-            if(player.getyPos() <= 0 || wall == 26) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setyPos(player.getyPos()-1);
-                return true;
-            }
-        }
-
-        if(keycode == Input.Keys.UP){
-            if(player.getyPos() >= boardHeight-1 || wall == 28) {
-                System.out.println("You cannot move in this direction");
-                return false;
-            }
-            else{
-                player.setyPos(player.getyPos()+1);
-                return true;
-            }
-        }
-
-        if(keycode == Input.Keys.M){
-            music.muteToggle();
-        }
-
         return false;
-
     }
 
+
     @Override
-    public void dispose() {
+    public void dispose(){
         map.dispose();
         mapRenderer.dispose();
     }

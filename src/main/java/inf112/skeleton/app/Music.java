@@ -12,22 +12,26 @@ public class Music {
     //store current position
     Long currentFrame;
     Clip clip;
-    boolean mute;
 
     AudioInputStream audioInputStream;
-    FloatControl volume;
+    FloatControl volume; //actually gain
+    BooleanControl muter;
 
     //May be in unpacked file format.
     static String themeSong = "assets/S31-CrackedOutRobot.wav";
     private String status;
 
     Music() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        mute = false;
         SimpleAudioPlayer();
         volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        volume.setValue(-10.0f);
+        muter = (BooleanControl) clip.getControl(BooleanControl.Type.MUTE);
     }
 
-    public void SimpleAudioPlayer()
+    /**
+     * Only used in constructor.
+     */
+    private void SimpleAudioPlayer()
         throws UnsupportedAudioFileException,
             IOException, LineUnavailableException {
         audioInputStream = AudioSystem.getAudioInputStream(new File(themeSong).getAbsoluteFile());
@@ -38,18 +42,12 @@ public class Music {
         clip.start();
     }
 
-    /**
-     * start the music
-     */
     public void play() {
         clip.start();
 
         status = "play";
     }
 
-    /**
-     * pause the music
-     */
     public void  pause() {
         if (status=="paused") return;
 
@@ -63,7 +61,7 @@ public class Music {
         if (status=="play") return;
 
         clip.close();
-        resetAudioStream();
+        resetAudioStream(themeSong);
         clip.setMicrosecondPosition(currentFrame);
         this.play();
     }
@@ -72,7 +70,7 @@ public class Music {
             IOException, LineUnavailableException {
         clip.stop();
         clip.close();
-        resetAudioStream();
+        resetAudioStream(themeSong);
         currentFrame = 0L;
         clip.setMicrosecondPosition(0);
         this.play();
@@ -85,21 +83,24 @@ public class Music {
     }
 
     public void muteToggle() {
-        if (mute) {
-            volume.setValue(volume.getMaximum());
-            mute = !mute;
-            return;
-        }
-        volume.setValue(volume.getMinimum());
-        mute = !mute;
+        muter.setValue(!muter.getValue());
     }
 
-    public void resetAudioStream() throws IOException,
+    /**
+     * reset with the song chosen song
+     */
+    private void resetAudioStream(String filePath) throws IOException,
             LineUnavailableException, UnsupportedAudioFileException {
         audioInputStream = AudioSystem.getAudioInputStream(
-                new File(themeSong).getAbsoluteFile());
+                new File(filePath).getAbsoluteFile());
+        themeSong = filePath;
         clip.open(audioInputStream);
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
+    public void pauseToggle() {
+        if (status=="paused") play();
+
+        else pause();
+    }
 }
