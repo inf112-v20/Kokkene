@@ -178,7 +178,6 @@ public class Player {
     int getLifePoints() { return this.lifePoints; }
 
     /**
-     *
      * @return true if robot is alive
      */
     public boolean isAlive() { return getLifePoints()<1; }

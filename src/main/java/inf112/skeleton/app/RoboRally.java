@@ -96,15 +96,10 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         //Clears the current cell
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
 
-        int wall = 0;
-        if (wallLayer.getCell(player.getxPos(), player.getyPos()) != null) {
-            wall = wallLayer.getCell(player.getxPos(), player.getyPos()).getTile().getId();
-        }
-
         //Checks the input and performs the action
         switch (keycode) {
             case (Input.Keys.LEFT):
-                if (player.getxPos() <= 0 || wall == 27) {
+                if (player.getxPos() <= 0 || !canMoveTo(3)) {
                     System.out.println("You cannot move in this direction");
                     break;
                 } else {
@@ -112,7 +107,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
                     break;
                 }
             case (Input.Keys.RIGHT):
-                if (player.getxPos() >= boardWidth - 1 || wall == 21) {
+                if (player.getxPos() >= boardWidth - 1 || !canMoveTo(1)) {
                     System.out.println("You cannot move in this direction");
                     break;
                 } else {
@@ -120,7 +115,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
                     break;
                 }
             case (Input.Keys.DOWN):
-                if (player.getyPos() <= 0 || wall == 26) {
+                if (player.getyPos() <= 0 || !canMoveTo(2)) {
                     System.out.println("You cannot move in this direction");
                     break;
                 } else {
@@ -128,7 +123,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
                     break;
                 }
             case (Input.Keys.UP):
-                if (player.getyPos() >= boardHeight - 1 || wall == 28) {
+                if (player.getyPos() >= boardHeight - 1 || !canMoveTo(0)) {
                     System.out.println("You cannot move in this direction");
                     break;
                 } else {
@@ -190,6 +185,9 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     public void resume() {
     }
 
+    /**
+     * Initialises the gameplay music
+     */
     private void startMusic() {
 
         try {
@@ -201,5 +199,30 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         } catch (LineUnavailableException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean canMoveTo(int direction) {
+
+        int[] coordinates = player.getNeighbour(direction);
+        int wallThis = 0, wallNext = 0, x = coordinates[0], y = coordinates[1];
+
+        if (wallLayer.getCell(player.getxPos(), player.getyPos()) != null) {
+            wallThis = wallLayer.getCell(player.getxPos(), player.getyPos()).getTile().getId();
+        }
+        if (wallLayer.getCell(x, y) != null) {
+            wallNext = wallLayer.getCell(x, y).getTile().getId();
+        }
+
+        switch (direction) {
+            case 0:
+                return !(wallThis == 28 || wallNext == 26);
+            case 1:
+                return !(wallThis == 21 || wallNext == 27);
+            case 2:
+                return !(wallThis == 26 || wallNext == 28);
+            case 3:
+                return !(wallThis == 27 || wallNext == 21);
+        }
+        return false;
     }
 }
