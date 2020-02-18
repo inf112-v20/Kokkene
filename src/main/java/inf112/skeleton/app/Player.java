@@ -1,7 +1,5 @@
 package inf112.skeleton.app;
 
-import org.lwjgl.Sys;
-
 /**
  *
  * The robot start with a name, xPos, yPos and orientation on the board.
