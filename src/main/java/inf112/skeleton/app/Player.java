@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import org.lwjgl.Sys;
+
 /**
  *
  * The robot start with a name, xPos, yPos and orientation on the board.
@@ -135,15 +137,19 @@ public class Player {
      */
     public int[] getNeighbour(int direction){
         int[] neighbour = new int[]{this.xPos, this.yPos};
-        switch (direction){
+        switch (direction) {
             case (0):
                 neighbour[1]++;
+                break;
             case (1):
                 neighbour[0]++;
+                break;
             case (2):
                 neighbour[1]--;
+                break;
             case (3):
                 neighbour[0]--;
+                break;
         }
         return neighbour;
     }
