@@ -64,52 +64,38 @@ public class Player {
     /**
      * @return respawn x-position
      */
-    public int getxBackup() {
-        return xBackup;
-    }
+    public int getxBackup() { return xBackup; }
 
     /**
      * @return respawn y-position
      */
-    public int getyBackup() {
-        return yBackup;
-    }
+    public int getyBackup() { return yBackup; }
 
     /**
      * @return name of the specific robot.
      */
-    public String getName() {
-        return name;
-    }
+    public String getName() { return name; }
 
     /**
      * @return the current x Position for this robot.
      */
-    public int getxPos() {
-        return xPos;
-    }
+    public int getxPos() { return xPos; }
 
     /**
      * Replace x position with a new one
      * @param xPos  new x position
      */
-    public void setxPos(int xPos) {
-        this.xPos = xPos;
-    }
+    public void setxPos(int xPos) { this.xPos = xPos; }
 
     /**
      * @return the current y position for this robot.
      */
-    public int getyPos() {
-        return yPos;
-    }
+    public int getyPos() { return yPos; }
 
     /**
      * @param yPos  the y-value this robot should have.
      */
-    public void setyPos(int yPos) {
-        this.yPos = yPos;
-    }
+    public void setyPos(int yPos) { this.yPos = yPos; }
 
     /**
      * @return current rotation in a 1-4 scale.
@@ -157,9 +143,7 @@ public class Player {
      *
      * @return current health total.
      */
-    public int getHealth() {
-        return health;
-    }
+    public int getHealth() { return health; }
 
     /**
      *
@@ -176,22 +160,16 @@ public class Player {
      * @param life is the amount of lifepoints lost/earned.
      *             (-1 = 1 less life point)
      */
-    private void addLifePoints(int life) {
-        this.lifePoints += life;
-    }
+    private void addLifePoints(int life) { this.lifePoints += life; }
 
     /**
      * @return the amount of lifePoints
      */
-    int getLifePoints() {
-        return this.lifePoints;
-    }
+    int getLifePoints() { return this.lifePoints; }
 
     /**
      *
      * @return true if robot is alive
      */
-    public boolean isAlive() {
-        return getLifePoints()<1;
-    }
+    public boolean isAlive() { return getLifePoints()<1; }
 }

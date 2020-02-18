@@ -32,7 +32,7 @@ public class Music {
      * Only used in constructor.
      */
     private void SimpleAudioPlayer()
-        throws UnsupportedAudioFileException,
+            throws UnsupportedAudioFileException,
             IOException, LineUnavailableException {
         audioInputStream = AudioSystem.getAudioInputStream(new File(themeSong).getAbsoluteFile());
 
