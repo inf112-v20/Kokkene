@@ -125,18 +125,7 @@ public class Player {
      * @return List of coordinates for the neighbour in the direction the player is pointing
      */
     public int[] getNeighbour(){
-        int[] neighbour = new int[]{this.xPos, this.yPos};
-        switch (getOrientation()){
-            case (0):
-                neighbour[1]++;
-            case (1):
-                neighbour[0]++;
-            case (2):
-                neighbour[1]--;
-            case (3):
-                neighbour[0]--;
-        }
-        return neighbour;
+        return getNeighbour(getOrientation());
     }
 
     /**
