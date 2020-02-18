@@ -20,7 +20,7 @@ public class Player {
     //Position on the board
     private int xPos, yPos;
 
-    //Direction the robot is facing (north=1, west=2, east=3, south=4)
+    //Direction the robot is facing (north=0, east=1, south=2, west=3)
     private int orientation;
 
     //Health of the robot
@@ -115,9 +115,6 @@ public class Player {
      * @return current rotation in a 1-4 scale.
      */
     public int getOrientation() {
-        if(orientation % 4 == 0) {
-            return 4;
-        }
         return orientation % 4;
     }
 
@@ -127,6 +124,29 @@ public class Player {
      */
     public void setOrientation(int orientation) {
         this.orientation = Math.abs(orientation);
+    }
+
+    /**
+     * Turns the robot
+     * @param change positive numbers are to the right, negative turns to the left
+     */
+    public void turn(int change){
+        setOrientation((getOrientation() + change) % 4);
+    }
+
+    public int[] getNeighbour(){
+        int[] neighbour = new int[]{this.xPos, this.yPos};
+        switch (getOrientation()){
+            case (0):
+                neighbour[1]++;
+            case (1):
+                neighbour[0]++;
+            case (2):
+                neighbour[1]--;
+            case (3):
+                neighbour[0]--;
+        }
+        return neighbour;
     }
 
     /**
