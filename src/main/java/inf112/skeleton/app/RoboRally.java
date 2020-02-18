@@ -99,28 +99,28 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         //Checks the input and performs the action
         switch (keycode) {
             case (Input.Keys.LEFT):
-                if (player.getxPos() <= 0 || !canMoveTo(3)) {
+                if (player.getxPos() <= 0 || isBlocked(3)) {
                     System.out.println("You cannot move in this direction");
                 } else {
                     player.setxPos(player.getxPos() - 1);
                 }
                 break;
             case (Input.Keys.RIGHT):
-                if (player.getxPos() >= boardWidth - 1 || !canMoveTo(1)) {
+                if (player.getxPos() >= boardWidth - 1 || isBlocked(1)) {
                     System.out.println("You cannot move in this direction");
                 } else {
                     player.setxPos(player.getxPos() + 1);
                 }
                 break;
             case (Input.Keys.DOWN):
-                if (player.getyPos() <= 0 || !canMoveTo(2)) {
+                if (player.getyPos() <= 0 || isBlocked(2)) {
                     System.out.println("You cannot move in this direction");
                 } else {
                     player.setyPos(player.getyPos() - 1);
                 }
                 break;
             case (Input.Keys.UP):
-                if (player.getyPos() >= boardHeight - 1 || !canMoveTo(0)) {
+                if (player.getyPos() >= boardHeight - 1 || isBlocked(0)) {
                     System.out.println("You cannot move in this direction");
                 } else {
                     player.setyPos(player.getyPos() + 1);
@@ -202,7 +202,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      * @param direction to check
      * @return True if we can move in given direction, false otherwise
      */
-    private boolean canMoveTo(int direction) {
+    private boolean isBlocked(int direction) {
 
         int[] coordinates = player.getNeighbour(direction);
         int wallThis = 0, wallNext = 0, x = coordinates[0], y = coordinates[1];
@@ -216,14 +216,14 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
         switch (direction) {
             case 0:
-                return !(wallThis == 28 || wallNext == 26);
+                return wallThis == 28 || wallNext == 26;
             case 1:
-                return !(wallThis == 21 || wallNext == 27);
+                return wallThis == 21 || wallNext == 27;
             case 2:
-                return !(wallThis == 26 || wallNext == 28);
+                return wallThis == 26 || wallNext == 28;
             case 3:
-                return !(wallThis == 27 || wallNext == 21);
+                return wallThis == 27 || wallNext == 21;
         }
-        return false;
+        return true;
     }
 }
