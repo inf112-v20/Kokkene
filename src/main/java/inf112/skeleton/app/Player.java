@@ -134,6 +134,10 @@ public class Player {
         setOrientation((getOrientation() + change) % 4);
     }
 
+    /**
+     * Gets neighbour for the player to move to
+     * @return List of coordinates for the neighbour in the direction the player is pointing
+     */
     public int[] getNeighbour(){
         int[] neighbour = new int[]{this.xPos, this.yPos};
         switch (getOrientation()){
