@@ -98,7 +98,7 @@ public class Player {
     public void setyPos(int yPos) { this.yPos = yPos; }
 
     /**
-     * @return current rotation in a 1-4 scale.
+     * @return current rotation in a 0-3 scale.
      */
     public int getOrientation() {
         return orientation % 4;
@@ -106,7 +106,7 @@ public class Player {
 
     /**
      * Sets the direction
-     * @param orientation  orientation is the direction in a 1-4 scale.
+     * @param orientation  orientation is the direction in a 0-3 scale.
      */
     public void setOrientation(int orientation) {
         this.orientation = Math.abs(orientation);
@@ -117,7 +117,7 @@ public class Player {
      * @param change positive numbers are to the right, negative turns to the left
      */
     public void turn(int change){
-        setOrientation((getOrientation() + change) % 4);
+        setOrientation((getOrientation() + change + 4) % 4);
     }
 
     /**
@@ -138,6 +138,27 @@ public class Player {
         }
         return neighbour;
     }
+
+    /**
+     * Gets neighbour in given direction
+     * @param direction to check neighbour
+     * @return List of x- and y-coordinate of the neighbour in the given direction
+     */
+    public int[] getNeighbour(int direction){
+        int[] neighbour = new int[]{this.xPos, this.yPos};
+        switch (direction){
+            case (0):
+                neighbour[1]++;
+            case (1):
+                neighbour[0]++;
+            case (2):
+                neighbour[1]--;
+            case (3):
+                neighbour[0]--;
+        }
+        return neighbour;
+    }
+
 
     /**
      *

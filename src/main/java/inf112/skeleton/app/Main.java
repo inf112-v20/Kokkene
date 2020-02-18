@@ -11,7 +11,7 @@ public class Main {
         cfg.title = "RoboRally";
         cfg.width = 720;
         cfg.height = 600;
-        System.out.println(-1%4);
+        System.out.println((-7) % 4);
 
         RoboRally rr = new RoboRally();
         new LwjglApplication(rr, cfg);
