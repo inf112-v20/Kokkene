@@ -101,35 +101,31 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
             case (Input.Keys.LEFT):
                 if (player.getxPos() <= 0 || !canMoveTo(3)) {
                     System.out.println("You cannot move in this direction");
-                    break;
                 } else {
                     player.setxPos(player.getxPos() - 1);
-                    break;
                 }
+                break;
             case (Input.Keys.RIGHT):
                 if (player.getxPos() >= boardWidth - 1 || !canMoveTo(1)) {
                     System.out.println("You cannot move in this direction");
-                    break;
                 } else {
                     player.setxPos(player.getxPos() + 1);
-                    break;
                 }
+                break;
             case (Input.Keys.DOWN):
                 if (player.getyPos() <= 0 || !canMoveTo(2)) {
                     System.out.println("You cannot move in this direction");
-                    break;
                 } else {
                     player.setyPos(player.getyPos() - 1);
-                    break;
                 }
+                break;
             case (Input.Keys.UP):
                 if (player.getyPos() >= boardHeight - 1 || !canMoveTo(0)) {
                     System.out.println("You cannot move in this direction");
-                    break;
                 } else {
                     player.setyPos(player.getyPos() + 1);
-                    break;
                 }
+                break;
             case (Input.Keys.M):
                 music.muteToggle();
                 break;
@@ -201,6 +197,11 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         }
     }
 
+    /**
+     * Checks if you can move to given direction
+     * @param direction to check
+     * @return True if we can move in given direction, false otherwise
+     */
     private boolean canMoveTo(int direction) {
 
         int[] coordinates = player.getNeighbour(direction);
