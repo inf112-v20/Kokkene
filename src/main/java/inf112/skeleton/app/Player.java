@@ -1,5 +1,8 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 /**
  *
  * The robot start with a name, xPos, yPos and orientation on the board.
@@ -12,7 +15,7 @@ package inf112.skeleton.app;
  *
  */
 
-public class Player {
+public class Player  {
 
     //ID of the robot
     private String name;
@@ -185,4 +188,14 @@ public class Player {
      * @return true if robot is alive
      */
     public boolean isAlive() { return getLifePoints()<1; }
+
+    /**
+     * @param texture for the sprite of a player
+     * @return true if robot is alive
+     */
+    public TextureRegion[][] setPlayerTextures (String texture) {
+        Texture playerTexture = new Texture(texture);
+        return  TextureRegion.split(playerTexture, 300, 300);
+    }
+
 }

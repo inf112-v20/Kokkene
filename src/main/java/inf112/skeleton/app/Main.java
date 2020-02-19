@@ -14,6 +14,8 @@ public class Main {
         System.out.println((-7) % 4);
 
         RoboRally rr = new RoboRally();
+        //Sets the current map
+        rr.mapFile = "12by12DizzyDash.tmx";
         new LwjglApplication(rr, cfg);
     }
 }
