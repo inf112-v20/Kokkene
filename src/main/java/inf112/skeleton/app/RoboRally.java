@@ -147,23 +147,19 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     private void createDeck() throws FileNotFoundException {
         int priority, name, move;
         int indexNext = 0;
-        Scanner fScn = new Scanner(new File("assets/test.txt"));
-        while (fScn.hasNextLine()) {
-            String data = fScn.nextLine();
-            if (data.contains("P")) {
-                priority = Integer.parseInt(data.substring(0, data.indexOf("P")));
-                indexNext = data.indexOf("P") + 1;
-                System.out.print(priority + ("   "));
-            }
-            if (data.contains("N")) {
-                name = Integer.parseInt(data.substring(indexNext, data.indexOf("N")));
-                indexNext = data.indexOf("N") + 1;
-                System.out.print(name + "   ");
-            }
-            if (data.contains("M")) {
-                move = Integer.parseInt(data.substring(indexNext, data.indexOf("M")));
-                System.out.println(move);
-            }
+        Scanner Scn = new Scanner(new File("assets/test.txt"));
+        while (Scn.hasNextLine()) {
+            String data = Scn.nextLine();
+
+            priority = Integer.parseInt(data.substring(0, data.indexOf("P")));
+            indexNext = data.indexOf("P") + 1;
+
+            name = Integer.parseInt(data.substring(indexNext, data.indexOf("N")));
+            indexNext = data.indexOf("N") + 1;
+
+            move = Integer.parseInt(data.substring(indexNext, data.indexOf("M")));
+            //Here we just take and create the card with the values we extracted
+            System.out.println(priority + " " + name + " "+ move);
         }
     }
 }
