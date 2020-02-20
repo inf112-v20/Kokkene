@@ -200,6 +200,11 @@ public class Player  {
      */
     public boolean isAlive() { return getLifePoints()<1; }
 
+    public void resetPos() {
+        setxPos(xBackup);
+        setyPos(yBackup);
+    }
+
     /**
      * @param texture for the sprite of a player
      * @return true if robot is alive

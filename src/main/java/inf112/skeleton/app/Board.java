@@ -16,7 +16,8 @@ public class Board {
      *
      * @param mapFile the file containing the map.
      */
-    public Board(String mapFile) {        map = new TmxMapLoader().load(mapFile);
+    public Board(String mapFile) {
+        map = new TmxMapLoader().load(mapFile);
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
@@ -46,33 +47,49 @@ public class Board {
         switch(orientation) {
             //North
             case(0):
-                if (player.getyPos() >= boardHeight - 1 || isBlocked(0, player)) {
+                if (player.getyPos() >= boardHeight - 1) {
+                    player.resetPos();
+                }
+                else if(isBlocked(0, player)) {
                     System.out.println("You cannot move in this direction");
-                } else {
+                }
+                else {
                     player.setyPos(player.getyPos() + 1);
                 }
                 break;
             //East
             case(1):
-                if (player.getxPos() >= boardWidth - 1 || isBlocked(1, player)) {
+                if (player.getxPos() >= boardWidth - 1) {
+                    player.resetPos();
+                }
+                else if(isBlocked(1, player)){
                     System.out.println("You cannot move in this direction");
-                } else {
+                }
+                else {
                     player.setxPos(player.getxPos() + 1);
                 }
                 break;
             //South
             case(2):
-                if (player.getyPos() <= 0 || isBlocked(2, player)) {
+                if (player.getyPos() <= 0) {
+                    player.resetPos();
+                }
+                else if (isBlocked(2, player)){
                     System.out.println("You cannot move in this direction");
-                } else {
+                }
+                else {
                     player.setyPos(player.getyPos() - 1);
                 }
                 break;
             //West
             case(3):
-                if (player.getxPos() <= 0 || isBlocked(3, player)) {
+                if (player.getxPos() <= 0) {
+                    player.resetPos();
+                }
+                else if(isBlocked(3, player)){
                     System.out.println("You cannot move in this direction");
-                } else {
+                }
+                else {
                     player.setxPos(player.getxPos() - 1);
                 }
                 break;
