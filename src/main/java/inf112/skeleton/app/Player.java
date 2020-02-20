@@ -35,6 +35,8 @@ public class Player  {
     //Which tile holds the backup of this robot
     private int xBackup, yBackup;
 
+    TextureRegion[][] tr;
+
     /**
      *
      * @param name  the name for this robot.
@@ -211,7 +213,7 @@ public class Player  {
      */
     public TextureRegion[][] setPlayerTextures (String texture) {
         Texture playerTexture = new Texture(texture);
-        return  TextureRegion.split(playerTexture, 300, 300);
+        return  tr = TextureRegion.split(playerTexture, 300, 300);
     }
 
 }

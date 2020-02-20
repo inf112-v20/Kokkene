@@ -40,14 +40,14 @@ public class Board {
      */
     public void move(Player player) {
         //This is easier to modify, in order to make it work with cards
-
+        TiledMapTileLayer.Cell getHole = holeLayer.getCell(player.getxPos(), player.getyPos());
         //Gets the orientation from the player, in order to check which direction they should move
         int orientation = player.getOrientation();
 
         switch(orientation) {
             //North
             case(0):
-                if (player.getyPos() >= boardHeight - 1) {
+                if (player.getyPos() >= boardHeight - 1 || getHole != null) {
                     player.resetPos();
                 }
                 else if(isBlocked(0, player)) {
@@ -59,7 +59,7 @@ public class Board {
                 break;
             //East
             case(1):
-                if (player.getxPos() >= boardWidth - 1) {
+                if (player.getxPos() >= boardWidth - 1 || getHole != null) {
                     player.resetPos();
                 }
                 else if(isBlocked(1, player)){
@@ -71,7 +71,7 @@ public class Board {
                 break;
             //South
             case(2):
-                if (player.getyPos() <= 0) {
+                if (player.getyPos() <= 0 || getHole != null) {
                     player.resetPos();
                 }
                 else if (isBlocked(2, player)){
@@ -83,7 +83,7 @@ public class Board {
                 break;
             //West
             case(3):
-                if (player.getxPos() <= 0) {
+                if (player.getxPos() <= 0 || getHole != null) {
                     player.resetPos();
                 }
                 else if(isBlocked(3, player)){
@@ -99,7 +99,7 @@ public class Board {
     /**
      * Checks if you can move to given direction
      * @param direction to check
-     * @param player to check direction for
+     * @param player who check direction for
      * @return True if we can move in given direction, false otherwise
      */
     private boolean isBlocked(int direction, Player player) {
