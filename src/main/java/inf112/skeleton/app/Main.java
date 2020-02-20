@@ -5,15 +5,12 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 
 public class Main {
-
-    public static LwjglApplicationConfiguration cfg;
-
     public static void main(String[] args) {
-        cfg = new LwjglApplicationConfiguration();
+        LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
+        //cfg.fullscreen = true;
         cfg.title = "RoboRally";
         cfg.width = 720;
         cfg.height = 600;
-        cfg.setFromDisplayMode(cfg.getDesktopDisplayMode());
 
         RoboRally rr = new RoboRally();
         //Sets the current map
