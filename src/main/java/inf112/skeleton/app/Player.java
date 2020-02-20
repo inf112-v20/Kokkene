@@ -35,6 +35,9 @@ public class Player  {
     //Which tile holds the backup of this robot
     private int xBackup, yBackup;
 
+    //The next objective the Player has to go to to score points.
+    private int objective = 1;
+
     TextureRegion[][] tr;
 
     /**
@@ -205,6 +208,17 @@ public class Player  {
     public void resetPos() {
         setxPos(xBackup);
         setyPos(yBackup);
+    }
+
+    /**
+     * @return the next objective to stand at to get points
+     */
+    public int getObjective() {
+        return this.objective;
+    }
+
+    public void setObjective(int ob) {
+        this.objective = ob;
     }
 
     /**
