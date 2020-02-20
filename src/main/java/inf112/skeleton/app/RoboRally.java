@@ -68,15 +68,19 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         switch (keycode) {
             case (Input.Keys.UP):
                 player.setOrientation(0);
+                board.move(player);
                 break;
             case (Input.Keys.RIGHT):
                 player.setOrientation(1);
+                board.move(player);
                 break;
             case (Input.Keys.DOWN):
                 player.setOrientation(2);
+                board.move(player);
                 break;
             case (Input.Keys.LEFT):
                 player.setOrientation(3);
+                board.move(player);
                 break;
             case (Input.Keys.M):
                 music.muteToggle();
@@ -85,8 +89,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
                 music.pauseToggle();
                 break;
         }
-        //Moves the player on the board according to their orientation
-        board.move(player);
         return false;
     }
 

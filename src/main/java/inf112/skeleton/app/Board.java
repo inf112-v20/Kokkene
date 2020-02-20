@@ -16,8 +16,7 @@ public class Board {
      *
      * @param mapFile the file containing the map.
      */
-    public Board(String mapFile) {
-        map = new TmxMapLoader().load(mapFile);
+    public Board(String mapFile) {        map = new TmxMapLoader().load(mapFile);
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
