@@ -156,6 +156,11 @@ public class Board {
         return neighbour;
     }
 
+    private boolean isBlocked(int x, int y, int dir){
+        // TODO
+        return true;
+    }
+
     /**
      * Checks if you can move to given direction
      * @param direction to check
