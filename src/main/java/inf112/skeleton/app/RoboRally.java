@@ -21,6 +21,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     String mapFile = "fiveTiles.tmx";
 
     Board board;
+    HUD hud;
 
     OrthogonalTiledMapRenderer mapRenderer;
     OrthographicCamera camera;
@@ -33,7 +34,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     @Override
     public void create() {
 
-        //Initializes the board
+        //Initializes the board and HUD
         board = new Board(mapFile);
 
         camera = new OrthographicCamera();
@@ -50,16 +51,19 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         TextureRegion[][] tr = player.setPlayerTextures("assets/player.png");
         ps = new PlayerState(player, board, tr);
 
+        //sets up the hud to display information about the player in real time.
+        hud = new HUD(player);
+
         Gdx.input.setInputProcessor(this);
 
         startMusic(); //starts the background music.
 
+        //This is ugly
         try {
             createDeck();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -93,6 +97,10 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
             case (Input.Keys.P):
                 music.pauseToggle();
                 break;
+            case (Input.Keys.Q):
+                System.out.println("Quitting!");
+                System.exit(0);
+                break;
         }
         return false;
     }
@@ -109,7 +117,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
         board.playerLayer.setCell(player.getxPos(), player.getyPos(), ps.getPlayerStatus());
         mapRenderer.render();
-
+        hud.render();
     }
 
     @Override
@@ -128,7 +136,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      * Initialises the gameplay music
      */
     private void startMusic() {
-
         try {
             music = new Music();
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
@@ -136,6 +143,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         }
     }
 
+    //This is just a test, will probably not be in final product, it only prints out numbers extr<cted from txt file
     private void createDeck() throws FileNotFoundException {
         int priority, name, move;
         int indexNext = 0;
