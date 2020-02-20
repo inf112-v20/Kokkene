@@ -18,6 +18,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     String mapFile = "fiveTiles.tmx";
 
     Board board;
+    HUD hud;
 
     OrthogonalTiledMapRenderer mapRenderer;
     OrthographicCamera camera;
@@ -30,7 +31,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     @Override
     public void create() {
 
-        //Initializes the board
+        //Initializes the board and HUD
         board = new Board(mapFile);
 
         camera = new OrthographicCamera();
@@ -46,6 +47,9 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         player = new Player("Test",0,0, 0);
         TextureRegion[][] tr = player.setPlayerTextures("assets/player.png");
         ps = new PlayerState(player, board, tr);
+
+        //sets up the hud to display information about the player in real time.
+        hud = new HUD(player);
 
         Gdx.input.setInputProcessor(this);
 
@@ -96,9 +100,10 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         board.playerLayer.setCell(player.getxPos(), player.getyPos(), ps.getPlayerStatus());
         mapRenderer.render();
-
+        hud.render();
     }
 
     @Override
