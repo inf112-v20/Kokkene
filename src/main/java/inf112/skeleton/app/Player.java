@@ -35,6 +35,9 @@ public class Player  {
     //Which tile holds the backup of this robot
     private int xBackup, yBackup;
 
+    //obvious sounds.
+    private Sound damageSound;
+
     TextureRegion[][] tr;
 
     /**
@@ -54,6 +57,12 @@ public class Player  {
         this.health = 10;
         this.lifePoints = 3;
         this.alive = true;
+        setupSound(damageSound,"assets/oof_sound.mp3");
+    }
+
+    private void setupSound(Sound sound,String filePath) {
+        sound = new Sound(filePath);
+        sound.randomPitch(100);
     }
 
     /**
@@ -146,7 +155,12 @@ public class Player  {
      * @param life is the amount of lifepoints lost/earned.
      *             (-1 = 1 less life point)
      */
-    private void addLifePoints(int life) { this.lifePoints += life; }
+    private void addLifePoints(int life) {
+        this.lifePoints += life;
+        if (life<0) {
+            damageSound.play();
+        }
+    }
 
     /**
      * @return the amount of lifePoints

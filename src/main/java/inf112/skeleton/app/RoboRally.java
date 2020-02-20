@@ -115,6 +115,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
         board.playerLayer.setCell(player.getxPos(), player.getyPos(), ps.getPlayerStatus());
         mapRenderer.render();
         hud.render();
@@ -136,11 +137,8 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      * Initialises the gameplay music
      */
     private void startMusic() {
-        try {
-            music = new Music();
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-            e.printStackTrace();
-        }
+        music = new Music();
+        music.play();
     }
 
     //This is just a test, will probably not be in final product, it only prints out numbers extr<cted from txt file
@@ -163,4 +161,3 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         }
     }
 }
-
