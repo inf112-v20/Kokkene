@@ -125,19 +125,30 @@ public class Player  {
 
     /**
      * Gets neighbour for the player to move to
-     * @return List of coordinates for the neighbour in the direction the player is pointing
+     * @return Array of coordinates for the neighbour in the direction the player is facing
      */
     public int[] getNeighbour(){
         return getNeighbour(getOrientation());
     }
 
     /**
-     * Gets neighbour in given direction
+     * Finds neighbour of current player in given direction
      * @param direction to check neighbour
-     * @return List of x- and y-coordinate of the neighbour in the given direction
+     * @return Array of x- and y-coordinate for the neighbour in the given direction
      */
     public int[] getNeighbour(int direction){
-        int[] neighbour = new int[]{this.xPos, this.yPos};
+        return getNeighbour(direction, this.xPos, this.yPos);
+    }
+
+    /**
+     * Gets neighbour in given direction from position given by x and y
+     * @param direction to check neighbour
+     * @param x x-coordinate to check neighbour from
+     * @param y y-coordinate to check neighbour from
+     * @return Array of x- and y-coordinate of the neighbour in the given direction
+     */
+    public int[] getNeighbour(int direction, int x, int y){
+        int[] neighbour = new int[]{x, y};
         switch (direction) {
             case (0):
                 neighbour[1]++;
