@@ -143,8 +143,8 @@ public class Player  {
     /**
      * Gets neighbour in given direction from position given by x and y
      * @param direction to check neighbour
-     * @param x x-coordinate to check neighbour from
-     * @param y y-coordinate to check neighbour from
+     * @param x coordinate to check neighbour of
+     * @param y coordinate to check neighbour of
      * @return Array of x- and y-coordinate of the neighbour in the given direction
      */
     public int[] getNeighbour(int direction, int x, int y){

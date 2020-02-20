@@ -10,11 +10,10 @@ public class Main {
 
     public static void main(String[] args) {
         cfg = new LwjglApplicationConfiguration();
-        //cfg.fullscreen = true;
         cfg.title = "RoboRally";
         cfg.width = 720;
         cfg.height = 600;
-        System.out.println((-7) % 4);
+        cfg.setFromDisplayMode(cfg.getDesktopDisplayMode());
 
         RoboRally rr = new RoboRally();
         //Sets the current map

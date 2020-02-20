@@ -54,7 +54,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         Gdx.input.setInputProcessor(this);
 
         startMusic(); //starts the background music.
-
     }
 
     @Override
@@ -88,6 +87,10 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
             case (Input.Keys.P):
                 music.pauseToggle();
                 break;
+            case (Input.Keys.Q):
+                System.out.println("Quitting!");
+                System.exit(0);
+                break;
         }
         return false;
     }
@@ -101,7 +104,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         board.playerLayer.setCell(player.getxPos(), player.getyPos(), ps.getPlayerStatus());
         mapRenderer.render();
@@ -124,7 +126,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
      * Initialises the gameplay music
      */
     private void startMusic() {
-
         try {
             music = new Music();
         } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
