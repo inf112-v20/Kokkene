@@ -12,11 +12,14 @@ public class Board {
 
     int boardHeight, boardWidth;
 
+    Player[] players;
+    Player currentPlayer;
+
     /**
      *
      * @param mapFile the file containing the map.
      */
-    public Board(String mapFile) {
+    public Board(String mapFile, int nrPlayers) {
         map = new TmxMapLoader().load(mapFile);
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
@@ -31,6 +34,12 @@ public class Board {
 
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
+
+        players = new Player[nrPlayers];
+        for (int i = 0; i < nrPlayers; i++){
+            players[i] = new Player("Player " + i, 1, i, 0);
+
+        }
 
     }
 
@@ -97,6 +106,57 @@ public class Board {
     }
 
     /**
+     * Gets neighbour of the current player
+     * @return Array of coordinates in the direction the current player is facing
+     */
+    public int[] getNeighbour(){
+        return getNeighbour(currentPlayer);
+    }
+
+    /**
+     * Gets neighbour for the player to move to
+     * @return Array of coordinates for the neighbour in the direction the player is facing
+     */
+    public int[] getNeighbour(Player pl){
+        return getNeighbour(pl, pl.getOrientation());
+    }
+
+    /**
+     * Finds neighbour of current player in given direction
+     * @param direction to check neighbour
+     * @return Array of x- and y-coordinate for the neighbour in the given direction
+     */
+    public int[] getNeighbour(Player pl, int direction){
+        return getNeighbour(direction, pl.getxPos(), pl.getyPos());
+    }
+
+    /**
+     * Gets neighbour in given direction from position given by x and y
+     * @param direction to check neighbour
+     * @param x coordinate to check neighbour of
+     * @param y coordinate to check neighbour of
+     * @return Array of x- and y-coordinate of the neighbour in the given direction
+     */
+    public int[] getNeighbour(int direction, int x, int y){
+        int[] neighbour = new int[]{x, y};
+        switch (direction) {
+            case (0):
+                neighbour[1]++;
+                break;
+            case (1):
+                neighbour[0]++;
+                break;
+            case (2):
+                neighbour[1]--;
+                break;
+            case (3):
+                neighbour[0]--;
+                break;
+        }
+        return neighbour;
+    }
+
+    /**
      * Checks if you can move to given direction
      * @param direction to check
      * @param player who check direction for
@@ -104,7 +164,7 @@ public class Board {
      */
     private boolean isBlocked(int direction, Player player) {
 
-        int[] coordinates = player.getNeighbour(direction);
+        int[] coordinates = getNeighbour(player, direction);
         int wallThis = 0, wallNext = 0, x = coordinates[0], y = coordinates[1];
 
         if (wallLayer.getCell(player.getxPos(), player.getyPos()) != null) {

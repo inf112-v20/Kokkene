@@ -35,7 +35,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     public void create() {
 
         //Initializes the board and HUD
-        board = new Board(mapFile);
+        board = new Board(mapFile, 0);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, board.boardWidth, board.boardHeight);
@@ -146,7 +146,7 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     //This is just a test, will probably not be in final product, it only prints out numbers extr<cted from txt file
     private void createDeck() throws FileNotFoundException {
         int priority, name, move;
-        int indexNext = 0;
+        int indexNext;
         Scanner Scn = new Scanner(new File("assets/test.txt"));
         while (Scn.hasNextLine()) {
             String data = Scn.nextLine();

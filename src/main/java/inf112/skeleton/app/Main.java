@@ -13,7 +13,7 @@ public class Main {
         cfg.title = "RoboRally";
         cfg.width = 720;
         cfg.height = 600;
-        cfg.setFromDisplayMode(cfg.getDesktopDisplayMode());
+        cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
 
         RoboRally rr = new RoboRally();
         //Sets the current map

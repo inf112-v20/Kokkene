@@ -126,50 +126,6 @@ public class Player  {
     }
 
     /**
-     * Gets neighbour for the player to move to
-     * @return Array of coordinates for the neighbour in the direction the player is facing
-     */
-    public int[] getNeighbour(){
-        return getNeighbour(getOrientation());
-    }
-
-    /**
-     * Finds neighbour of current player in given direction
-     * @param direction to check neighbour
-     * @return Array of x- and y-coordinate for the neighbour in the given direction
-     */
-    public int[] getNeighbour(int direction){
-        return getNeighbour(direction, this.xPos, this.yPos);
-    }
-
-    /**
-     * Gets neighbour in given direction from position given by x and y
-     * @param direction to check neighbour
-     * @param x coordinate to check neighbour of
-     * @param y coordinate to check neighbour of
-     * @return Array of x- and y-coordinate of the neighbour in the given direction
-     */
-    public int[] getNeighbour(int direction, int x, int y){
-        int[] neighbour = new int[]{x, y};
-        switch (direction) {
-            case (0):
-                neighbour[1]++;
-                break;
-            case (1):
-                neighbour[0]++;
-                break;
-            case (2):
-                neighbour[1]--;
-                break;
-            case (3):
-                neighbour[0]--;
-                break;
-        }
-        return neighbour;
-    }
-
-
-    /**
      *
      * @return current health total.
      */
