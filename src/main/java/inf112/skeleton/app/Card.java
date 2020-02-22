@@ -35,18 +35,11 @@ public class Card {
         if (this.priority > that.priority) {
             return 1;
         }
-
         return 0;
     }
 
     //Getters might be redundant
-    public int getPriority() {
-        return priority;
-    }
-    public int getMove() {
-        return move;
-    }
-    public int getName() {
-        return name;
-    }
+    public int getPriority() { return priority; }
+    public int getMove() { return move; }
+    public int getName() { return name; }
 }

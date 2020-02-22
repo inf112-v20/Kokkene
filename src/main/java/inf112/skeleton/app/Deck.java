@@ -1,18 +1,17 @@
 package inf112.skeleton.app;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 public class Deck {
+    int priority, name, move, indexNext;
+    Scanner Scn = new Scanner(new File("assets/test.txt"));
 
     Queue<Card> Cards = new LinkedList<>();
 
     //Creates a deck from the text file set inside the constructor
-    public Deck() throws FileNotFoundException {
-        int priority, name, move, indexNext;
-
-        Scanner Scn = new Scanner(new File("assets/test.txt"));
+    public Deck() throws IOException {
         while (Scn.hasNextLine()) {
             String data = Scn.nextLine();
 

@@ -58,10 +58,11 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
         startMusic(); //starts the background music.
 
+        //Cant find a way to get rid of these things
         try {
             Deck deck = new Deck();
             deck.print();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -91,15 +92,17 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
                 player.setOrientation(3);
                 board.move(player);
                 break;
+
             case (Input.Keys.M):
                 music.muteToggle();
                 break;
             case (Input.Keys.P):
                 music.pauseToggle();
                 break;
+
             case (Input.Keys.Q):
                 System.out.println("Quitting!");
-                System.exit(0);
+                Gdx.app.exit();
                 break;
         }
         return false;
