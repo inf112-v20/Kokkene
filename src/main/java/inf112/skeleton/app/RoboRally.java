@@ -58,9 +58,9 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
         startMusic(); //starts the background music.
 
-        //This is ugly
         try {
-            createDeck();
+            Deck deck = new Deck();
+            deck.print();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -139,25 +139,5 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     private void startMusic() {
         music = new Music();
         music.play();
-    }
-
-    //This is just a test, will probably not be in final product, it only prints out numbers extr<cted from txt file
-    private void createDeck() throws FileNotFoundException {
-        int priority, name, move;
-        int indexNext;
-        Scanner Scn = new Scanner(new File("assets/test.txt"));
-        while (Scn.hasNextLine()) {
-            String data = Scn.nextLine();
-
-            priority = Integer.parseInt(data.substring(0, data.indexOf("P")));
-            indexNext = data.indexOf("P") + 1;
-
-            name = Integer.parseInt(data.substring(indexNext, data.indexOf("N")));
-            indexNext = data.indexOf("N") + 1;
-
-            move = Integer.parseInt(data.substring(indexNext, data.indexOf("M")));
-            //Here we just take and create the card with the values we extracted
-            System.out.println(priority + " " + name + " "+ move);
-        }
     }
 }
