@@ -4,9 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+//deck1994 does not contain the correct priorities but follows the rule: (3m -> 2m -> 1m/-1m -> left/right/U-turn)
 public class Deck {
     int priority, name, move, indexNext;
-    Scanner Scn = new Scanner(new File("assets/test.txt"));
+    Scanner Scn = new Scanner(new File("assets/deck1994.txt"));
 
     Queue<Card> Cards = new LinkedList<>();
 
