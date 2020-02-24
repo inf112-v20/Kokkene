@@ -1,24 +1,21 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.File;
-import java.io.FileNotFoundException;
+import javax.swing.*;
 import java.io.IOException;
-import java.util.Scanner;
 
-public class RoboRally extends InputAdapter implements ApplicationListener {
+public class RoboRally extends InputAdapter implements Screen {
 
-    String mapFile = "fiveTiles.tmx";
+    public static String mapFile = "fiveTiles.tmx";
+    private SpriteBatch batch;
+
+    Game game;
 
     Board board;
     HUD hud;
@@ -31,8 +28,10 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
     Music music;
 
-    @Override
-    public void create() {
+    RoboRally(Game game) {
+        this.game = game;
+
+        batch = new SpriteBatch();
 
         //Initializes the board and HUD
         board = new Board(mapFile, 0);
@@ -54,8 +53,6 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         //sets up the hud to display information about the player in real time.
         hud = new HUD(player);
 
-        Gdx.input.setInputProcessor(this);
-
         startMusic(); //starts the background music.
 
         //Cant find a way to get rid of these things
@@ -65,11 +62,17 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(this);
+        render(0);
     }
 
     @Override
     public boolean keyUp(int keycode) {
-
         //Clears the current cell of the player
         //Also stays in
         board.playerLayer.setCell(player.getxPos(), player.getyPos(), null);
@@ -114,14 +117,14 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
     }
 
     @Override
-    public void render() {
+    public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         board.playerLayer.setCell(player.getxPos(), player.getyPos(), ps.getPlayerStatus());
         mapRenderer.render();
         hud.render();
+
     }
 
     @Override
@@ -134,6 +137,11 @@ public class RoboRally extends InputAdapter implements ApplicationListener {
 
     @Override
     public void resume() {
+    }
+
+    @Override
+    public void hide() {
+
     }
 
     /**
