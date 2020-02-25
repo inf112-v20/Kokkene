@@ -78,7 +78,7 @@ public class Menu implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
+    public void resize(int i, int i1) {
     }
 
     @Override

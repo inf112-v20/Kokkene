@@ -181,15 +181,6 @@ public class Player  {
     }
 
     /**
-     * @param texture for the sprite of a player
-     * @return true if robot is alive
-     */
-    public TextureRegion[][] setPlayerTextures (String texture) {
-        Texture playerTexture = new Texture(texture);
-        return  tr = TextureRegion.split(playerTexture, 300, 300);
-    }
-
-    /**
      * @return the next objective to stand at to get points
      */
     public int getObjective() {
@@ -198,6 +189,15 @@ public class Player  {
 
     public void setObjective(int ob) {
         this.objective = ob;
+    }
+
+    /**
+     * @param texture for the sprite of a player
+     * @return true if robot is alive
+     */
+    public TextureRegion[][] setPlayerTextures (String texture) {
+        Texture playerTexture = new Texture(texture);
+        return  tr = TextureRegion.split(playerTexture, 300, 300);
     }
 
 }
