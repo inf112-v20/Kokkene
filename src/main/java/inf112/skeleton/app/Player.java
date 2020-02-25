@@ -38,6 +38,9 @@ public class Player  {
     //The next objective the Player has to go to to score points.
     private int objective = 1;
 
+    //If player makes sound.
+    private boolean soundBool = true;
+
     //obvious sounds.
     private Sound damageSound;
 
@@ -49,7 +52,7 @@ public class Player  {
      * @param xPos  starting x-position for this robot.
      * @param yPos  starting y-position for this robot.
      * @param orientation  orientation (direction) in a 0-3 scale.
-     * @param soundBool  true if you want sound object.
+     * @param soundBool  true if you want sound.
      */
     public Player(String name, int xPos, int yPos, int orientation, boolean soundBool) {
         this.name = name;
@@ -58,7 +61,12 @@ public class Player  {
         this.orientation = orientation;
         this.xBackup = xPos;
         this.yBackup = yPos;
-        if (soundBool) {setupSound(damageSound,"assets/oof_sound.mp3");}
+        this.soundBool = soundBool;
+        if (this.soundBool) {setupSound(damageSound,"assets/oof_sound.mp3");}
+    }
+
+    public Player(String name, int xPos, int yPos, int orientation) {
+        new Player(name, xPos, yPos, orientation, this.soundBool);
     }
 
     private void setupSound(Sound sound,String filePath) {

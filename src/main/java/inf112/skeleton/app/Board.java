@@ -37,7 +37,7 @@ public class Board {
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
-            players[i] = new Player("Player " + (i + 1), 1, i, 0, true);
+            players[i] = new Player("Player " + (i + 1), 1, i, 0);
         }
 
     }
@@ -172,16 +172,18 @@ public class Board {
      * @return true if given direction is blocked
      */
     private boolean isBlocked(int x, int y, int dir){
+
         int[] nb = getNeighbour(x, y, dir);
-        if (playerLayer.getCell(nb[0], nb[1]).getTile().getId() != 0){
-            return isBlocked(dir, nb[0], nb[1]);
-        }
+
+        //The following line should be removed before code being delivered.
+        //if (playerLayer.getCell(nb[0], nb[1]) != null){ return isBlocked(nb[0], nb[1], dir); }
+
         int wallThis = 0, wallNext = 0;
         if (wallLayer.getCell(x, y) != null) {
             wallThis = wallLayer.getCell(x, y).getTile().getId();
         }
-        if (wallLayer.getCell(x, y) != null) {
-            wallNext = wallLayer.getCell(x, y).getTile().getId();
+        if (wallLayer.getCell(nb[0], nb[1]) != null) {
+            wallNext = wallLayer.getCell(nb[0], nb[1]).getTile().getId();
         }
         switch (dir) {
             case 0:
