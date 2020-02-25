@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class PlayerTests {
 
@@ -53,5 +54,12 @@ public class PlayerTests {
         int damage = -10;
         player.addHealth(damage);
         assertEquals(player.getLifePoints(), maxLifePoints-1);
+    }
+
+    @Test
+    public void PlayerIsDeadAfterLosingTenHealthThreeTimes() {
+        int damage = -10;
+        player.addHealth(damage); player.addHealth(damage); player.addHealth(damage);
+        assertFalse(player.isAlive());
     }
 }

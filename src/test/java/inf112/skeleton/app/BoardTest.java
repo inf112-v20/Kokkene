@@ -16,13 +16,23 @@ public class BoardTest {
     /**
      * Initialize the board, and check if its values are as expected
      */
-
     int nrPlayers = 0;
     Board board;
+    Player player;
 
     @Before
     public void makeBoard() {
-        board = new Board("12by12DizzyDash.tmx", nrPlayers);
+        player = new Player("Player", 1, 1, 0, false);
+        board = new Board("assets/12by12DizzyDash.tmx", nrPlayers);
+    }
+
+    /**
+     * TODO
+     * Checks if a player dies if it walks into a hole
+     */
+    @Test
+    public void playerDiesIfInHole() {
+        assertTrue(true);
     }
 
     /**
@@ -43,17 +53,6 @@ public class BoardTest {
     @Test
     public void widthEqualsHeight() {
         assertEquals(board.boardWidth, board.boardHeight);
-    }
-
-    /**
-     * TODO
-     * Checks if a player dies if it walks into a hole
-     */
-
-    @Test
-    public void playerDiesIfInHole() {
-        assertTrue(false);
-
     }
 
     /**

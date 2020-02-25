@@ -48,7 +48,8 @@ public class Player  {
      * @param name  the name for this robot.
      * @param xPos  starting x-position for this robot.
      * @param yPos  starting y-position for this robot.
-     * @param orientation  orientation (direction) in a 1-4 scale.
+     * @param orientation  orientation (direction) in a 0-3 scale.
+     * @param soundBool  true if you want sound object.
      */
     public Player(String name, int xPos, int yPos, int orientation, boolean soundBool) {
         this.name = name;
@@ -185,8 +186,8 @@ public class Player  {
     public boolean isAlive() { return getLifePoints()>0; }
 
     public void resetPos() {
-        setxPos(xBackup);
-        setyPos(yBackup);
+        setxPos(getxBackup());
+        setyPos(getyBackup());
     }
 
     /**
