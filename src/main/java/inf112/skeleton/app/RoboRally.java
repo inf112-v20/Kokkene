@@ -43,7 +43,7 @@ public class RoboRally extends InputAdapter implements Screen {
         mapRenderer.setView(camera);
 
         //Sets up one player and texture for testing purposes
-        player = new Player("Test",0,0, 0);
+        player = new Player("Test",0,0, 0, true);
         TextureRegion[][] tr = player.setPlayerTextures("assets/player.png");
         ps = new PlayerState(player, board, tr);
 

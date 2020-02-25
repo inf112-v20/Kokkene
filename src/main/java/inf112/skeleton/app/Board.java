@@ -37,7 +37,7 @@ public class Board {
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
-            players[i] = new Player("Player " + i, 1, i, 0);
+            players[i] = new Player("Player " + i, 1, i, 0, true);
 
         }
 

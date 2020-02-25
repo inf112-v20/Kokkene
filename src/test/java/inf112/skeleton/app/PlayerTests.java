@@ -9,10 +9,11 @@ public class PlayerTests {
 
     Player player;
     int xPos, yPos, orientation = 1;
+    int maxHealth = 10, maxLifePoints = 3;
 
     @Before
     public void MakePlayer() {
-        player = new Player("player", xPos, yPos, orientation);
+        player = new Player("player", xPos, yPos, orientation,false);
     }
 
     @Test
@@ -38,5 +39,19 @@ public class PlayerTests {
     @Test
     public void PlayerYPositionIsOneAfterInitiation() {
         assertEquals(player.getyPos(),yPos);
+    }
+
+    @Test
+    public void PlayerTakesOneDamageOnCall() {
+        int damage = -1;
+        player.addHealth(damage);
+        assertEquals(player.getHealth(),maxHealth + damage);
+    }
+
+    @Test
+    public void PlayerLoseOneLifePointWhenTakingTenDamage() {
+        int damage = -10;
+        player.addHealth(damage);
+        assertEquals(player.getLifePoints(), maxLifePoints-1);
     }
 }

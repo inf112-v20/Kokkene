@@ -27,10 +27,10 @@ public class Player  {
     private int orientation;
 
     //Health of the robot
-    private int health, lifePoints;
+    private int health = 10, lifePoints = 3;
 
     //The robot is alive if lifePoints is above 0
-    private boolean alive;
+    private boolean alive = true;
 
     //Which tile holds the backup of this robot
     private int xBackup, yBackup;
@@ -50,17 +50,14 @@ public class Player  {
      * @param yPos  starting y-position for this robot.
      * @param orientation  orientation (direction) in a 1-4 scale.
      */
-    public Player(String name, int xPos, int yPos, int orientation) {
+    public Player(String name, int xPos, int yPos, int orientation, boolean soundBool) {
         this.name = name;
         this.xPos = xPos;
         this.yPos = yPos;
         this.orientation = orientation;
         this.xBackup = xPos;
         this.yBackup = yPos;
-        this.health = 10;
-        this.lifePoints = 3;
-        this.alive = true;
-        setupSound(damageSound,"assets/oof_sound.mp3");
+        if (soundBool) {setupSound(damageSound,"assets/oof_sound.mp3");}
     }
 
     private void setupSound(Sound sound,String filePath) {
@@ -144,12 +141,22 @@ public class Player  {
     public int getHealth() { return health; }
 
     /**
+     * @param health The amount to add or take away.
+     */
+    public void addHealth(int health) {
+        setHealth(this.health+health);
+        //if (health<0) { damageSound.play(); }
+    }
+
+    /**
      *
      * @param health  The value that health will be set to.
      */
-    public void setHealth(int health) {
-        if (0 <= health){
-            this.health = Math.min(health, 10);
+    private void setHealth(int health) {
+        this.health = Math.min(health, 10);
+        if (this.health<=0) {
+            addLifePoints(-1);
+            this.health = 10;
         }
     }
 
@@ -160,20 +167,17 @@ public class Player  {
      */
     private void addLifePoints(int life) {
         this.lifePoints += life;
-        if (life<0) {
-            damageSound.play();
-        }
     }
 
     /**
      * @return the amount of lifePoints
      */
-    int getLifePoints() { return this.lifePoints; }
+    public int getLifePoints() { return this.lifePoints; }
 
     /**
      * @return true if robot is alive
      */
-    public boolean isAlive() { return getLifePoints()<1; }
+    public boolean isAlive() { return getLifePoints()>0; }
 
     public void resetPos() {
         setxPos(xBackup);
