@@ -35,6 +35,9 @@ public class Player  {
     //Which tile holds the backup of this robot
     private int xBackup, yBackup;
 
+    //The next objective the Player has to go to to score points.
+    private int objective = 1;
+
     //obvious sounds.
     private Sound damageSound;
 
@@ -184,6 +187,17 @@ public class Player  {
     public TextureRegion[][] setPlayerTextures (String texture) {
         Texture playerTexture = new Texture(texture);
         return  tr = TextureRegion.split(playerTexture, 300, 300);
+    }
+
+    /**
+     * @return the next objective to stand at to get points
+     */
+    public int getObjective() {
+        return this.objective;
+    }
+
+    public void setObjective(int ob) {
+        this.objective = ob;
     }
 
 }
