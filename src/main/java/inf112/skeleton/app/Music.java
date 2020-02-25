@@ -1,8 +1,6 @@
 package inf112.skeleton.app;
 
-import javax.sound.sampled.*;
-import java.io.File;
-import java.io.IOException;
+import com.badlogic.gdx.Gdx;
 
 /**
  * Controls the background music
@@ -10,97 +8,56 @@ import java.io.IOException;
 public class Music {
 
     //store current position
-    Long currentFrame;
-    Clip clip;
-
-    AudioInputStream audioInputStream;
-    FloatControl volume; //actually gain
-    BooleanControl muter;
+    com.badlogic.gdx.audio.Music music;
 
     //May be in unpacked file format.
-    static String themeSong = "assets/S31-CrackedOutRobot.wav";
-    private String status;
+    static String musicFilePath = "assets/S31-CrackedOutRobot.wav";
 
-    Music() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        SimpleAudioPlayer();
-        volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        volume.setValue(-10.0f);
-        muter = (BooleanControl) clip.getControl(BooleanControl.Type.MUTE);
-    }
-
-    /**
-     * Only used in constructor.
-     */
-    private void SimpleAudioPlayer()
-            throws UnsupportedAudioFileException,
-            IOException, LineUnavailableException {
-        audioInputStream = AudioSystem.getAudioInputStream(new File(themeSong).getAbsoluteFile());
-
-        clip = AudioSystem.getClip();
-        clip.open(audioInputStream);
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
-        clip.start();
+    Music() {
+        music = Gdx.audio.newMusic(Gdx.files.internal(musicFilePath));
+        music.setVolume(0.1f);
     }
 
     public void play() {
-        clip.start();
-
-        status = "play";
+        music.play();
+        music.setLooping(true);
     }
 
     public void  pause() {
-        if (status=="paused") return;
-
-        this.currentFrame = this.clip.getMicrosecondPosition();
-        clip.stop();
-        status = "paused";
+        music.pause();
     }
 
-    public void resumeAudio() throws UnsupportedAudioFileException,
-            IOException, LineUnavailableException {
-        if (status=="play") return;
-
-        clip.close();
-        resetAudioStream(themeSong);
-        clip.setMicrosecondPosition(currentFrame);
-        this.play();
-    }
-
-    public void restart() throws UnsupportedAudioFileException,
-            IOException, LineUnavailableException {
-        clip.stop();
-        clip.close();
-        resetAudioStream(themeSong);
-        currentFrame = 0L;
-        clip.setMicrosecondPosition(0);
-        this.play();
+    public void restart() {
+        music.stop();
+        music.play();
     }
 
     public void stop() {
-        clip.stop();
-        clip.close();
-        currentFrame = 0L;
+        music.stop();
     }
 
     public void muteToggle() {
-        muter.setValue(!muter.getValue());
+        if (music.getVolume()==0f) music.setVolume(0.1f);
+        else music.setVolume(0f);
     }
 
     /**
-     * reset with the song chosen song
+     * reset with the chosen song
+     * @param filePath filepath to the new song.
      */
-    private void resetAudioStream(String filePath) throws IOException,
-            LineUnavailableException, UnsupportedAudioFileException {
-        audioInputStream = AudioSystem.getAudioInputStream(
-                new File(filePath).getAbsoluteFile());
-        themeSong = filePath;
-        clip.open(audioInputStream);
-        clip.loop(Clip.LOOP_CONTINUOUSLY);
+    private void resetWithNewSong (String filePath) {
+        if (filePath == musicFilePath) return;
+        dispose();
+        musicFilePath = filePath;
+        music = Gdx.audio.newMusic(Gdx.files.internal(musicFilePath));
     }
 
     public void pauseToggle() {
-        if (status=="paused") play();
+        if(music.isPlaying()) pause();
+        else play();
+    }
 
-        else pause();
+    public void dispose() {
+        music.dispose();
     }
 }

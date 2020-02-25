@@ -35,8 +35,8 @@ public class Player  {
     //Which tile holds the backup of this robot
     private int xBackup, yBackup;
 
-    //The next objective the Player has to go to to score points.
-    private int objective = 1;
+    //obvious sounds.
+    private Sound damageSound;
 
     TextureRegion[][] tr;
 
@@ -57,6 +57,12 @@ public class Player  {
         this.health = 10;
         this.lifePoints = 3;
         this.alive = true;
+        setupSound(damageSound,"assets/oof_sound.mp3");
+    }
+
+    private void setupSound(Sound sound,String filePath) {
+        sound = new Sound(filePath);
+        sound.randomPitch(100);
     }
 
     /**
@@ -129,50 +135,6 @@ public class Player  {
     }
 
     /**
-     * Gets neighbour for the player to move to
-     * @return Array of coordinates for the neighbour in the direction the player is facing
-     */
-    public int[] getNeighbour(){
-        return getNeighbour(getOrientation());
-    }
-
-    /**
-     * Finds neighbour of current player in given direction
-     * @param direction to check neighbour
-     * @return Array of x- and y-coordinate for the neighbour in the given direction
-     */
-    public int[] getNeighbour(int direction){
-        return getNeighbour(direction, this.xPos, this.yPos);
-    }
-
-    /**
-     * Gets neighbour in given direction from position given by x and y
-     * @param direction to check neighbour
-     * @param x coordinate to check neighbour of
-     * @param y coordinate to check neighbour of
-     * @return Array of x- and y-coordinate of the neighbour in the given direction
-     */
-    public int[] getNeighbour(int direction, int x, int y){
-        int[] neighbour = new int[]{x, y};
-        switch (direction) {
-            case (0):
-                neighbour[1]++;
-                break;
-            case (1):
-                neighbour[0]++;
-                break;
-            case (2):
-                neighbour[1]--;
-                break;
-            case (3):
-                neighbour[0]--;
-                break;
-        }
-        return neighbour;
-    }
-
-
-    /**
      *
      * @return current health total.
      */
@@ -193,7 +155,12 @@ public class Player  {
      * @param life is the amount of lifepoints lost/earned.
      *             (-1 = 1 less life point)
      */
-    private void addLifePoints(int life) { this.lifePoints += life; }
+    private void addLifePoints(int life) {
+        this.lifePoints += life;
+        if (life<0) {
+            damageSound.play();
+        }
+    }
 
     /**
      * @return the amount of lifePoints
@@ -208,17 +175,6 @@ public class Player  {
     public void resetPos() {
         setxPos(xBackup);
         setyPos(yBackup);
-    }
-
-    /**
-     * @return the next objective to stand at to get points
-     */
-    public int getObjective() {
-        return this.objective;
-    }
-
-    public void setObjective(int ob) {
-        this.objective = ob;
     }
 
     /**

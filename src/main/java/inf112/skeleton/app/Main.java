@@ -11,13 +11,11 @@ public class Main {
     public static void main(String[] args) {
         cfg = new LwjglApplicationConfiguration();
         cfg.title = "RoboRally";
-        cfg.width = 720;
-        cfg.height = 600;
-        cfg.setFromDisplayMode(cfg.getDesktopDisplayMode());
+        cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
 
-        RoboRally rr = new RoboRally();
+        MainApplication menu = new MainApplication();
+        RoboRally.mapFile = "12by12DizzyDash.tmx";
         //Sets the current map
-        rr.mapFile = "12by12DizzyDash.tmx";
-        new LwjglApplication(rr, cfg);
+        new LwjglApplication(menu, cfg);
     }
 }

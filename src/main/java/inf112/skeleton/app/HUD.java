@@ -18,7 +18,7 @@ public class HUD {
 
     public HUD(Player player) {
         this.player = player;
-        font.setColor(Color.GOLD);
+        font.setColor(Color.RED);
         font.getData().setScale(2,2);
 
     }
@@ -26,11 +26,10 @@ public class HUD {
     // renders a HUD staticly on the top of the game window.
     public void render() {
         batch.begin();
+        //font.draw(batch, "HP: " + player.getHealth(), WIDTH-100, HEIGHT-10);
         for(int i = 0; i < player.getHealth(); i++) {
             batch.draw(heart, (i*25), HEIGHT-40, 45,45);
         }
-
-        font.draw(batch, "Objective: " + Integer.toString(player.getObjective()),275, HEIGHT-10);
         batch.end();
     }
 }
