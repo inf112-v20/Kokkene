@@ -3,17 +3,14 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class RoboRally extends InputAdapter implements Screen {
 
     public static String mapFile = "fiveTiles.tmx";
-    private SpriteBatch batch;
 
     Game game;
 
@@ -30,8 +27,6 @@ public class RoboRally extends InputAdapter implements Screen {
 
     RoboRally(Game game) {
         this.game = game;
-
-        batch = new SpriteBatch();
 
         //Initializes the board and HUD
         board = new Board(mapFile, 0);
@@ -58,7 +53,9 @@ public class RoboRally extends InputAdapter implements Screen {
         //Cant find a way to get rid of these things
         try {
             Deck deck = new Deck();
+            deck.shuffle();
             deck.print();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,7 +107,6 @@ public class RoboRally extends InputAdapter implements Screen {
         }
         return false;
     }
-
 
     @Override
     public void dispose(){

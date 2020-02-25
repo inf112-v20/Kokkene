@@ -56,11 +56,11 @@ public class Board {
         switch(orientation) {
             //North
             case(0):
-                if (player.getyPos() >= boardHeight - 1 || getHole != null) {
-                    player.resetPos();
-                }
-                else if(isBlocked(0, player)) {
+                if(isBlocked(0, player)) {
                     System.out.println("You cannot move in this direction");
+                }
+                else if (player.getyPos() >= boardHeight - 1 || getHole != null) {
+                    player.resetPos();
                 }
                 else {
                     player.setyPos(player.getyPos() + 1);
@@ -68,11 +68,11 @@ public class Board {
                 break;
             //East
             case(1):
-                if (player.getxPos() >= boardWidth - 1 || getHole != null) {
-                    player.resetPos();
-                }
-                else if(isBlocked(1, player)){
+                if(isBlocked(1, player)){
                     System.out.println("You cannot move in this direction");
+                }
+                else if (player.getxPos() >= boardWidth - 1 || getHole != null) {
+                    player.resetPos();
                 }
                 else {
                     player.setxPos(player.getxPos() + 1);
@@ -80,11 +80,11 @@ public class Board {
                 break;
             //South
             case(2):
-                if (player.getyPos() <= 0 || getHole != null) {
-                    player.resetPos();
-                }
-                else if (isBlocked(2, player)){
+                if (isBlocked(2, player)){
                     System.out.println("You cannot move in this direction");
+                }
+                else if (player.getyPos() <= 0 || getHole != null) {
+                    player.resetPos();
                 }
                 else {
                     player.setyPos(player.getyPos() - 1);
@@ -92,11 +92,11 @@ public class Board {
                 break;
             //West
             case(3):
-                if (player.getxPos() <= 0 || getHole != null) {
-                    player.resetPos();
-                }
-                else if(isBlocked(3, player)){
+                if(isBlocked(3, player)){
                     System.out.println("You cannot move in this direction");
+                }
+                else if (player.getxPos() <= 0 || getHole != null) {
+                    player.resetPos();
                 }
                 else {
                     player.setxPos(player.getxPos() - 1);
