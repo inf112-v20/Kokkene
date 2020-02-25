@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class RoboRally extends InputAdapter implements Screen {
 
-    public static String mapFile = "fiveTiles.tmx";
+    public static String mapFile;
 
     Game game;
 
