@@ -160,6 +160,11 @@ public class Player  {
         }
     }
 
+    public boolean takeDamage(){
+        health--;
+        return true;
+    }
+
     /**
      * Changes the lifePoints
      * @param life is the amount of lifepoints lost/earned.
