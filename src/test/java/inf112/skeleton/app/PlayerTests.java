@@ -19,17 +19,17 @@ public class PlayerTests {
 
     @Test
     public void PlayerHasTenHealthAfterInitiation() {
-        assertEquals(player.getHealth(), 10);
+        assertEquals(10, player.getHealth());
     }
 
     @Test
     public void PlayerHasThreeLivesAfterInitiation() {
-        assertEquals(player.getLifePoints(),3);
+        assertEquals(3, player.getLifePoints());
     }
 
     @Test
     public void PlayerHasOrientationOneAfterInitiation() {
-        assertEquals(player.getOrientation(), orientation);
+        assertEquals(orientation, player.getOrientation());
     }
 
     @Test
@@ -61,5 +61,26 @@ public class PlayerTests {
         int damage = -10;
         player.addHealth(damage); player.addHealth(damage); player.addHealth(damage);
         assertFalse(player.isAlive());
+    }
+
+    @Test
+    public void PlayerCanTurnRight() {
+        int turnRight = 1;
+        player.turn(turnRight);
+        assertEquals(player.getOrientation(),orientation+turnRight);
+    }
+
+    @Test
+    public void PlayerCanTurnLeft() {
+        int turnLeft = -1;
+        player.turn(turnLeft);
+        assertEquals(player.getOrientation(),orientation+turnLeft);
+    }
+
+    @Test
+    public void PlayerObjectiveCanOnlyChangeToOneMore() {
+        int initialObjective = 1, newObjective = 3; //Objective is initially 1
+        player.setObjective(newObjective);
+        assertEquals(initialObjective, player.getObjective());
     }
 }

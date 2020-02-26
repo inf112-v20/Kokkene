@@ -3,7 +3,6 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
@@ -43,7 +42,7 @@ public class RoboRally extends InputAdapter implements Screen {
         mapRenderer.setView(camera);
 
         //Sets up one player and texture for testing purposes
-        player = new Player("Test",0,0, 0);
+        player = new Player("Test", 0, 0, 0);
         TextureRegion[][] tr = player.setPlayerTextures("assets/player.png");
         ps = new PlayerState(player, board, tr);
 

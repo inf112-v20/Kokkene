@@ -102,6 +102,31 @@ public class Board {
                 }
                 break;
         }
+        afterMove(player);
+    }
+
+    /**
+     * Checking the rest of the layers after doing the move.
+     * @param player  the player to be affected.
+     */
+    private void afterMove(Player player) {
+        int x = player.getxPos(), y = player.getyPos();
+        TiledMapTileLayer.Cell laser = laserLayer.getCell(x,y);
+        TiledMapTileLayer.Cell flag = flagLayer.getCell(x, y);
+
+        if (laser != null) {
+            player.addHealth(-1);
+        }
+
+        if (flag != null) {
+            switch (flag.getTile().getId()) {
+                case 49: player.setObjective(2); break;
+                case 56: player.setObjective(3); break;
+                case 63: player.setObjective(4); break;
+                case 70: player.setObjective(5); break;//temporary solution
+            }
+
+        }
     }
 
     /**
