@@ -160,9 +160,21 @@ public class Board {
 
         if (flag != null) {
             switch (flag.getTile().getId()) {
-                case 49: player.setObjective(2); break;
-                case 56: player.setObjective(3); break;
-                case 63: player.setObjective(4); break;
+                case 49:
+                    player.setObjective(2);
+                    if (player.getObjective() == 2)
+                        player.setBackup(player.getxPos(),player.getyPos());
+                    break;
+                case 56:
+                    player.setObjective(3);
+                    if (player.getObjective() == 3)
+                        player.setBackup(player.getxPos(),player.getyPos());
+                    break;
+                case 63:
+                    player.setObjective(4);
+                    if (player.getObjective() == 4)
+                        player.setBackup(player.getxPos(),player.getyPos());
+                    break;
                 case 70: player.setObjective(5); break;//temporary solution
             }
 
