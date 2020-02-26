@@ -57,7 +57,7 @@ public class Player  {
         this.xBackup = xPos;
         this.yBackup = yPos;
         this.soundBool = playerSoundBool;
-        if (playerSoundBool) {
+        if (playerSoundBool) { //Have to do this to make testing be possible
             damageSound = new Sound("assets/oof_sound.mp3");
         }
     }
