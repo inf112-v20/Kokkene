@@ -38,6 +38,8 @@ public class Player  {
     //obvious sounds.
     private Sound damageSound;
 
+    Card[] playerHand;
+
     TextureRegion[][] tr;
 
     /**
@@ -224,4 +226,12 @@ public class Player  {
         Texture playerTexture = new Texture(texture);
         return  tr = TextureRegion.split(playerTexture, 300, 300);
     }
+
+    public void hand(Deck deck) {
+        playerHand = new Card[getHealth()];
+        for(int i = 0; i < getHealth(); i++) {
+            playerHand[i] = deck.Cards.poll();
+        }
+    }
+
 }

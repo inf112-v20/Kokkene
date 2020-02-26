@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class RoboRally extends InputAdapter implements Screen {
@@ -23,6 +22,10 @@ public class RoboRally extends InputAdapter implements Screen {
 
     Player player;
     PlayerState ps;
+
+    Deck deck;
+
+    int turn;
 
     Music music;
 
@@ -53,8 +56,12 @@ public class RoboRally extends InputAdapter implements Screen {
 
         //Cant find a way to get rid of these things
         try {
-            Deck deck = new Deck();
-            deck.print();
+            deck = new Deck();
+            deck.shuffle();
+            player.hand(deck);
+            for(Card cards : player.playerHand) {
+                System.out.println(cards.toString());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -69,27 +76,27 @@ public class RoboRally extends InputAdapter implements Screen {
 
     @Override
     public boolean keyUp(int keycode) {
-        //Clears the current cell of the player
-        //Also stays in
-        board.playerLayer.setCell(player.getxPos(), player.getyPos(), null);
+        //Checks the keycode
 
-        //Checks the keycode of the key pressed and sets the orientation of the player
+        //temporary card, to work with the forwardmove.
+        //Until cards are fully implemented, arrow keys will stay here.
+        Card c = new Card(0,0,1);
         switch (keycode) {
             case (Input.Keys.UP):
                 player.setOrientation(0);
-                board.move(player);
+                board.forwardMove(player, c);
                 break;
             case (Input.Keys.RIGHT):
                 player.setOrientation(1);
-                board.move(player);
+                board.forwardMove(player, c);
                 break;
             case (Input.Keys.DOWN):
                 player.setOrientation(2);
-                board.move(player);
+                board.forwardMove(player, c);
                 break;
             case (Input.Keys.LEFT):
                 player.setOrientation(3);
-                board.move(player);
+                board.forwardMove(player, c);
                 break;
 
             case (Input.Keys.M):
@@ -98,12 +105,19 @@ public class RoboRally extends InputAdapter implements Screen {
             case (Input.Keys.P):
                 music.pauseToggle();
                 break;
-
             case (Input.Keys.Q):
                 System.out.println("Quitting!");
                 Gdx.app.exit();
                 break;
         }
+
+        //Currently movement is limited to the five first cards in hand, over and over.
+        /*
+        System.out.println(player.getOrientation());
+        cardMove(player.playerHand[turn]);
+        turn = (turn + 1)%5;
+        */
+
         return false;
     }
 
@@ -138,6 +152,27 @@ public class RoboRally extends InputAdapter implements Screen {
     @Override
     public void hide() {
 
+    }
+
+    /**
+     * Determines what kind of movement should be done
+     * @param card gives information on type of movement
+     */
+    public void cardMove (Card card) {
+        switch(card.getName()){
+            //Forward
+            case (0):
+                board.forwardMove(player, card);
+                break;
+            //Backward
+            case (1):
+                board.backwardMove(player, card);
+                break;
+            //Turn
+            case (2):
+                player.turn(card.getMove());
+                break;
+        }
     }
 
     /**

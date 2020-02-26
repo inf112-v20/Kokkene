@@ -28,13 +28,6 @@ public class Deck {
         }
     }
 
-    //Prints out the cards in order from the queue
-    public void print() {
-        for (Card i : Cards) {
-            System.out.println(i.toString());
-        }
-    }
-
     //Shuffles the Current deck
     public void shuffle() {
         Collections.shuffle((List<Card>) Cards);
