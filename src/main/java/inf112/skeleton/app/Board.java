@@ -61,7 +61,7 @@ public class Board {
                 case (0):
                     if (isBlocked(player, 0)) {
                         System.out.println("You cannot move in this direction");
-                    } else if (player.getyPos() >= boardHeight || getHole != null) {
+                    } else if (player.getyPos() >= boardHeight-1 || getHole != null) {
                         player.resetPos();
                     } else {
                         player.setyPos(player.getyPos() + 1);
@@ -71,7 +71,7 @@ public class Board {
                 case (1):
                     if (isBlocked(player, 1)) {
                         System.out.println("You cannot move in this direction");
-                    } else if (player.getxPos() >= boardWidth || getHole != null) {
+                    } else if (player.getxPos() >= boardWidth-1 || getHole != null) {
                         player.resetPos();
                     } else {
                         player.setxPos(player.getxPos() + 1);
