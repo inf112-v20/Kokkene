@@ -12,28 +12,24 @@ public class RoboRally extends InputAdapter implements Screen {
 
     public static String mapFile;
 
-    Game game;
+    private Board board;
+    private HUD hud;
 
-    Board board;
-    HUD hud;
+    private OrthogonalTiledMapRenderer mapRenderer;
 
-    OrthogonalTiledMapRenderer mapRenderer;
-    OrthographicCamera camera;
+    private Player player;
+    private PlayerState ps;
 
-    Player player;
-    PlayerState ps;
+    private Music music;
 
     Deck deck;
 
-    Music music;
-
     RoboRally(Game game) {
-        this.game = game;
 
         //Initializes the board and HUD
         board = new Board(mapFile, 0);
 
-        camera = new OrthographicCamera();
+        OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, board.boardWidth, board.boardHeight);
         camera.position.x = board.boardWidth/2f;
         camera.update();
@@ -52,18 +48,16 @@ public class RoboRally extends InputAdapter implements Screen {
 
         startMusic(); //starts the background music.
 
-        //Cant find a way to get rid of these things
+
         try {
             deck = new Deck();
             deck.shuffle();
-            //Prints card from player hand.
             player.hand(deck);
-            for(Card cards : player.playerHand) {
-                System.out.println(cards.toString());
-            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     @Override
@@ -154,12 +148,12 @@ public class RoboRally extends InputAdapter implements Screen {
 
     }
 
-    /*
+
     public void cardMove (Card card) {
         switch(card.getName()){
             //Forward
             case (0):
-                board.forwardMove(player, card);
+                board.forwardMove(player, card.getMove());
                 break;
             //Backward
             case (1):
@@ -171,7 +165,6 @@ public class RoboRally extends InputAdapter implements Screen {
                 break;
         }
     }
-    */
 
     /**
      * Initialises the gameplay music

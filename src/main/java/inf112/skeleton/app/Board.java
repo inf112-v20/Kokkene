@@ -105,8 +105,6 @@ public class Board {
         }
     }
 
-    /*
-
     public void backwardMove(Player player, Card card) {
 
         TiledMapTileLayer.Cell getHole = holeLayer.getCell(player.getxPos(), player.getyPos());
@@ -161,10 +159,9 @@ public class Board {
                 }
                 break;
         }
-        afterMove(player);
+        afterTurn(player);
     }
 
-     */
 
     /**
      * Checking the rest of the layers after turn

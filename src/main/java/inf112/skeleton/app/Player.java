@@ -38,9 +38,7 @@ public class Player  {
     //obvious sounds.
     private Sound damageSound;
 
-    Card[] playerHand;
-
-    TextureRegion[][] tr;
+    private Card[] playerHand;
 
     /**
      * @param name  the name for this robot.
@@ -223,7 +221,7 @@ public class Player  {
      */
     public TextureRegion[][] setPlayerTextures (String texture) {
         Texture playerTexture = new Texture(texture);
-        return  tr = TextureRegion.split(playerTexture, 300, 300);
+        return TextureRegion.split(playerTexture, 300, 300);
     }
 
     public void hand(Deck deck) {
@@ -232,4 +230,7 @@ public class Player  {
             playerHand[i] = deck.Cards.poll();
         }
     }
+
+    public Card[] getHand() { return playerHand; }
+
 }

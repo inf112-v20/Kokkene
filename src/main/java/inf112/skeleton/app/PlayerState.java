@@ -9,9 +9,9 @@ public class PlayerState  {
     private Board board;
     private Player player;
 
-    Cell playerNorm;
-    Cell playerDead;
-    Cell playerWon;
+    private Cell playerNorm;
+    private Cell playerDead;
+    private Cell playerWon;
 
     PlayerState(Player player, Board board, TextureRegion[][] tr) {
         this.player = player;
