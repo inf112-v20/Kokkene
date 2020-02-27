@@ -107,12 +107,14 @@ public class Board {
         afterMove(player);
     }
 
+    /*
+
     public void backwardMove(Player player, Card card) {
-        //Checks if there is a player at the hole
+
         TiledMapTileLayer.Cell getHole = holeLayer.getCell(player.getxPos(), player.getyPos());
-        //Clears the current player cell
+
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
-        //Gets the orientation from the player, in order to check which direction they should move
+
         int orientation = player.getOrientation();
 
         switch (orientation) {
@@ -141,9 +143,30 @@ public class Board {
                 if (isBlocked(player, 0)) {
                     System.out.println("You cannot move in this direction");
                 }
+                else if (player.getyPos() - card.getMove() > boardHeight || getHole != null) {
+                    player.resetPos();
+                }
+                else {
+                    player.setyPos(player.getyPos() - card.getMove());
+                }
+                break;
+            //West
+            case(3):
+                if(isBlocked(player, 1)){
+                    System.out.println("You cannot move in this direction");
+                }
+                else if (player.getxPos() - card.getMove() > boardWidth || getHole != null) {
+                    player.resetPos();
+                }
+                else {
+                    player.setxPos(player.getxPos() - card.getMove());
+                }
+                break;
         }
         afterMove(player);
     }
+
+     */
 
     /**
      * Checking the rest of the layers after doing the move.

@@ -25,8 +25,6 @@ public class RoboRally extends InputAdapter implements Screen {
 
     Deck deck;
 
-    int turn;
-
     Music music;
 
     RoboRally(Game game) {
@@ -58,6 +56,7 @@ public class RoboRally extends InputAdapter implements Screen {
         try {
             deck = new Deck();
             deck.shuffle();
+            //Prints card from player hand.
             player.hand(deck);
             for(Card cards : player.playerHand) {
                 System.out.println(cards.toString());
@@ -65,7 +64,6 @@ public class RoboRally extends InputAdapter implements Screen {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -154,10 +152,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     }
 
-    /**
-     * Determines what kind of movement should be done
-     * @param card gives information on type of movement
-     */
+    /*
     public void cardMove (Card card) {
         switch(card.getName()){
             //Forward
@@ -174,6 +169,7 @@ public class RoboRally extends InputAdapter implements Screen {
                 break;
         }
     }
+    */
 
     /**
      * Initialises the gameplay music
