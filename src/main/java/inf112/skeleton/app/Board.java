@@ -33,8 +33,8 @@ public class Board {
         gearLayer = (TiledMapTileLayer) map.getLayers().get("Gear");
         cardLayer = (TiledMapTileLayer) map.getLayers().get("Card");
 
-        boardHeight = cardLayer.getHeight();
-        boardWidth = cardLayer.getWidth();
+        boardHeight = boardLayer.getHeight();
+        boardWidth = boardLayer.getWidth();
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){

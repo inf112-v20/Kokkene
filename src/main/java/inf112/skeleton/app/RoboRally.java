@@ -28,9 +28,9 @@ public class RoboRally extends InputAdapter implements Screen {
         board = new Board(mapFile, 0);
 
         OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, board.boardWidth, board.boardHeight);
+        camera.setToOrtho(false, board.boardWidth, board.boardHeight+2);
         camera.position.x = board.boardWidth/2f;
-        camera.position.y = board.boardHeight/2f-2;
+        camera.position.y = board.boardHeight/2f+1;
         camera.update();
 
         float unitScale = 1/300f;
