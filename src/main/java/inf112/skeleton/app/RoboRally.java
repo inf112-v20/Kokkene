@@ -78,7 +78,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
         //temporary card, to work with the forwardmove.
         //Until cards are fully implemented, arrow keys will stay here.
-        Card c = new Card(0,0,2);
+        Card c = new Card(0,0,1);
         int move = c.getMove();
 
         switch (keycode) {

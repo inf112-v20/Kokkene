@@ -190,21 +190,18 @@ public class Board {
         if (flag != null) {
             switch (flag.getTile().getId()) {
                 case 49:
-                    player.setObjective(2);
-                    if (player.getObjective() == 2)
-                        player.setBackup(player.getxPos(),player.getyPos());
+                    if (player.setObjective(2))
+                        player.setBackup(x, y);
                     break;
                 case 56:
-                    player.setObjective(3);
-                    if (player.getObjective() == 3)
-                        player.setBackup(player.getxPos(),player.getyPos());
+                    if (player.setObjective(3))
+                        player.setBackup(x, y);
                     break;
                 case 63:
-                    player.setObjective(4);
-                    if (player.getObjective() == 4)
-                        player.setBackup(player.getxPos(),player.getyPos());
+                    if (player.setObjective(4))
+                        player.setBackup(x, y);
                     break;
-                case 70: player.setObjective(5); break;//temporary solution
+                case 70: player.setObjective(5); break;//temporary solution to getting the 4th flag
             }
 
         }
@@ -316,7 +313,7 @@ public class Board {
 
     private boolean laser(int x, int y, int dir){
         if (playerLayer.getCell(x, y).getTile().getId() != 0){
-            return players[playerLayer.getCell(x, y).getTile().getId()].takeDamage();
+            players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-1);
         }
         else if (!isBlocked(x, y, dir)){
             int[] nb = getNeighbour(x, y, dir);

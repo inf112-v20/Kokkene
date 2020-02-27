@@ -173,11 +173,6 @@ public class Player  {
         }
     }
 
-    public boolean takeDamage(){
-        health--;
-        return true;
-    }
-
     /**
      * Changes the lifePoints
      * @param life is the amount of lifepoints lost/earned.
@@ -185,7 +180,7 @@ public class Player  {
      */
     private void addLifePoints(int life) {
         this.lifePoints += life;
-        if (life<0) resetPos();
+        if (life<0 && this.lifePoints>0) resetPos();
     }
 
     /**
@@ -214,8 +209,12 @@ public class Player  {
     /**
      * @param ob  new objective
      */
-    public void setObjective(int ob) {
-        if (ob-this.objective==1) this.objective = ob;
+    public boolean setObjective(int ob) {
+        if (ob-this.objective==1) {
+            this.objective = ob;
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -233,5 +232,4 @@ public class Player  {
             playerHand[i] = deck.Cards.poll();
         }
     }
-
 }
