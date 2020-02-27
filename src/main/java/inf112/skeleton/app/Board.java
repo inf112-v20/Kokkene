@@ -8,7 +8,7 @@ public class Board {
 
     TiledMap map;
     TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
-            wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer;
+            wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, cardLayer;
 
     int boardHeight, boardWidth;
 
@@ -31,9 +31,10 @@ public class Board {
         wrenchLayer = (TiledMapTileLayer) map.getLayers().get("Wrench");
         conveyorLayer = (TiledMapTileLayer) map.getLayers().get("Conveyor");
         gearLayer = (TiledMapTileLayer) map.getLayers().get("Gear");
+        cardLayer = (TiledMapTileLayer) map.getLayers().get("Card");
 
-        boardHeight = boardLayer.getHeight();
-        boardWidth = boardLayer.getWidth();
+        boardHeight = cardLayer.getHeight();
+        boardWidth = cardLayer.getWidth();
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
@@ -54,7 +55,7 @@ public class Board {
         //Gets the orientation from the player, in order to check which direction they should move
         int orientation = player.getOrientation();
 
-        if(move > 0) {
+        if(move > 0 || move == -1) {
             switch (orientation) {
                 //North
                 case (0):
@@ -80,7 +81,7 @@ public class Board {
                 case (2):
                     if (isBlocked(player, 2)) {
                         System.out.println("You cannot move in this direction");
-                    } else if (player.getyPos() < 0 || getHole != null) {
+                    } else if (player.getyPos() <= 0 || getHole != null) {
                         player.resetPos();
                     } else {
                         player.setyPos(player.getyPos() - 1);
@@ -90,7 +91,7 @@ public class Board {
                 case (3):
                     if (isBlocked(player, 3)) {
                         System.out.println("You cannot move in this direction");
-                    } else if (player.getxPos() < 0 || getHole != null) {
+                    } else if (player.getxPos() <= 0 || getHole != null) {
                         player.resetPos();
                     } else {
                         player.setxPos(player.getxPos() - 1);
@@ -105,61 +106,10 @@ public class Board {
         }
     }
 
-    public void backwardMove(Player player, Card card) {
-
-        TiledMapTileLayer.Cell getHole = holeLayer.getCell(player.getxPos(), player.getyPos());
-
-        playerLayer.setCell(player.getxPos(), player.getyPos(), null);
-
-        int orientation = player.getOrientation();
-
-        switch (orientation) {
-            //North
-            case (0):
-                if (isBlocked(player, 2)) {
-                    System.out.println("You cannot move in this direction");
-                } else if (player.getyPos() + card.getMove() <= 0 || getHole != null) {
-                    player.resetPos();
-                } else {
-                    player.setyPos(player.getyPos() + card.getMove());
-                }
-                break;
-            //East
-            case (1):
-                if (isBlocked(player, 3)) {
-                    System.out.println("You cannot move in this direction");
-                } else if (player.getxPos() + card.getMove() <= 0 || getHole != null) {
-                    player.resetPos();
-                } else {
-                    player.setxPos(player.getxPos() + card.getMove());
-                }
-                break;
-            //South
-            case (2):
-                if (isBlocked(player, 0)) {
-                    System.out.println("You cannot move in this direction");
-                }
-                else if (player.getyPos() - card.getMove() > boardHeight || getHole != null) {
-                    player.resetPos();
-                }
-                else {
-                    player.setyPos(player.getyPos() - card.getMove());
-                }
-                break;
-            //West
-            case(3):
-                if(isBlocked(player, 1)){
-                    System.out.println("You cannot move in this direction");
-                }
-                else if (player.getxPos() - card.getMove() > boardWidth || getHole != null) {
-                    player.resetPos();
-                }
-                else {
-                    player.setxPos(player.getxPos() - card.getMove());
-                }
-                break;
+    public void backwardMove(Player player) {
+        if (!isBlocked(player, (player.getOrientation() + 2) % 4)){
+            forwardMove(player, -1);
         }
-        afterTurn(player);
     }
 
 
