@@ -23,6 +23,7 @@ public class RoboRally extends InputAdapter implements Screen {
     private Music music;
 
     Deck deck;
+    Card[] playerHand;
 
     RoboRally(String mapFile) {
 
@@ -49,11 +50,11 @@ public class RoboRally extends InputAdapter implements Screen {
 
         startMusic(); //starts the background music.
 
-
+        //Makes deck and gives the initial set of cards. Will be moved once we implement rounds.
         try {
             deck = new Deck();
             deck.shuffle();
-            player.hand(deck);
+            playerHand = player.hand(deck);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -109,13 +110,6 @@ public class RoboRally extends InputAdapter implements Screen {
                 break;
         }
 
-        //Currently movement is limited to the five first cards in hand, over and over.
-        /*
-        System.out.println(player.getOrientation());
-        cardMove(player.playerHand[turn]);
-        turn = (turn + 1)%5;
-        */
-
         return false;
     }
 
@@ -165,24 +159,6 @@ public class RoboRally extends InputAdapter implements Screen {
     @Override
     public void hide() {
 
-    }
-
-
-    public void cardMove (Card card) {
-        switch(card.getName()){
-            //Forward
-            case (0):
-                board.forwardMove(player, card.getMove());
-                break;
-            //Backward
-            case (1):
-                board.backwardMove(player);
-                break;
-            //Turn
-            case (2):
-                player.turn(card.getMove());
-                break;
-        }
     }
 
     /**

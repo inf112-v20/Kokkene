@@ -36,7 +36,5 @@ public class Card {
     }
 
     //Getters might be redundant
-    public int getPriority() { return priority; }
     public int getMove() { return move; }
-    public int getName() { return name; }
 }

@@ -63,11 +63,9 @@ At the same time I work with the game Art, I also get to write a lot of code.
 
 #####Markus: Test leader
 As a test leader, I quality check tests and change them if needed.\
-Going into this role, \
-I had as little experience with testing as everyone else on the group,\
+Going into this role, I had as little experience with testing as everyone else on the group,\
 but seeing how integral testing is, I wanted to learn more about it.\
-The role doesn't feel too demanding either,\
-so it has let me focus on writing and refactoring code.
+The role doesn't feel too demanding either, so it has let me focus on writing and refactoring code.
 
 
 (Skriv om opplevelsene deres og hvorfor dere valgte rollen deres)

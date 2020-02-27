@@ -6,15 +6,14 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
 public class Board {
 
-    TiledMap map;
-    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
-            wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, cardLayer;
+    public TiledMap map;
+    public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
+             wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, cardLayer;
 
     int boardHeight, boardWidth;
     int cardHeight, cardWidth;
 
     Player[] players;
-    Player currentPlayer;
 
     /**
      *
@@ -47,7 +46,7 @@ public class Board {
     }
 
     /**
-     * Moves player in a direction
+     * Recursive function that moves player in a direction.
      * @param player to move
      * @param move how many spaces to move from current position
      */
@@ -109,12 +108,6 @@ public class Board {
         }
     }
 
-    public void backwardMove(Player player) {
-        if (!isBlocked(player, (player.getOrientation() + 2) % 4)){
-            forwardMove(player, -1);
-        }
-    }
-
 
     /**
      * Checking the rest of the layers after turn
@@ -155,23 +148,6 @@ public class Board {
             }
 
         }
-    }
-
-    /**
-     * Gets neighbour for the player to move to
-     * @return Array of coordinates for the neighbour in the direction the player is facing
-     */
-    public int[] getNeighbour(Player pl){
-        return getNeighbour(pl, pl.getOrientation());
-    }
-
-    /**
-     * Finds neighbour of current player in given direction
-     * @param direction to check neighbour
-     * @return Array of x- and y-coordinate for the neighbour in the given direction
-     */
-    public int[] getNeighbour(Player pl, int direction){
-        return getNeighbour(pl.getxPos(), pl.getyPos(), direction);
     }
 
     /**
@@ -242,17 +218,6 @@ public class Board {
      */
     private boolean isBlocked(Player player, int direction) {
         return isBlocked(player.getxPos(), player.getyPos(), direction);
-    }
-
-    private boolean laser(int x, int y, int dir){
-        if (playerLayer.getCell(x, y).getTile().getId() != 0){
-            players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-1);
-        }
-        else if (!isBlocked(x, y, dir)){
-            int[] nb = getNeighbour(x, y, dir);
-            return laser(nb[0], nb[1], dir);
-        }
-        return true;
     }
 
 }

@@ -27,9 +27,13 @@ public class PlayerState  {
         playerWon.setTile(new StaticTiledMapTile(tr[0][2]));
     }
 
+    /**
+     * Sets player status based on where it is on the board
+     * @return the player status
+     */
     public Cell getPlayerStatus() {
 
-        if(player.getLifePoints()<1) {
+        if(!player.isAlive()) {
             return playerDead;
         }
         else if (board.flagLayer.getCell(player.getxPos(), player.getyPos()) != null) {

@@ -38,8 +38,8 @@ public class Player  {
     //obvious sounds.
     private Sound damageSound;
 
-    private Card[] playerHand;
 
+    //Player constructor had to be like this for testing
     /**
      * @param name  the name for this robot.
      * @param xPos  starting x-position for this robot.
@@ -71,10 +71,6 @@ public class Player  {
         this.xBackup = xPos;
         this.yBackup = yPos;
         damageSound = new Sound("assets/sound/oof_sound.mp3");
-    }
-
-    public void damageSound() {
-        if (damageSound != null)  damageSound.play();
     }
 
     /**
@@ -166,19 +162,17 @@ public class Player  {
     private void setHealth(int health) {
         this.health = Math.min(health, 10);
         if (this.health<=0) {
-            addLifePoints(-1);
+            addLifePoints();
             this.health = 10;
         }
     }
 
     /**
      * Changes the lifePoints
-     * @param life is the amount of lifepoints lost/earned.
-     *             (-1 = 1 less life point)
      */
-    private void addLifePoints(int life) {
-        this.lifePoints += life;
-        if (life<0 && this.lifePoints>0) resetPos();
+    private void addLifePoints() {
+        this.lifePoints += -1;
+        if (isAlive()) resetPos();
     }
 
     /**
@@ -224,13 +218,18 @@ public class Player  {
         return TextureRegion.split(playerTexture, 300, 300);
     }
 
-    public void hand(Deck deck) {
-        playerHand = new Card[getHealth()];
+    /**
+     * gives cards to player based on how much health is left
+     * @param deck used to get cards from
+     * @return a list with cards
+     */
+    public Card[] hand(Deck deck) {
+        //The hand of the player.
+        Card[] playerHand = new Card[getHealth()];
         for(int i = 0; i < getHealth(); i++) {
             playerHand[i] = deck.Cards.poll();
         }
+        return playerHand;
     }
-
-    public Card[] getHand() { return playerHand; }
 
 }
