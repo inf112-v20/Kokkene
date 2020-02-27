@@ -87,4 +87,20 @@ Everyone is happy with the current twice a week meetings schedule.\
 
 The project-board we think might be a bit under utilized, and we will work on improving this in the future.
 
+#####Documentation
+The current build runs and displays at first a menu with two options. Start game or exit.\
+The testing we do is for the most part automatic tests, and some manual ones. \
+For the automatic tests we check if the player gets initialized with the correct values\
+and that it cant get more health or take more damage than possible.\
+We also check that the cards works correctly in priorities.
 
+We use manual tests to check if the movement and interactions with the board is correct.
+For example walking on a laser tile, will make the player lose 1 health and a sound will be played.\
+Walking off the screen or into a hole will reset the position of the player, and it will lose 1 health.\
+Health should also be updated procedurally on the HUD, so when we take damage from the laser, the HUD\
+will update how many healthpoints is left.
+
+Running the application should be smooth, and one can move around with arrowkeys.\
+Q to exit
+P to pause/resume music
+M to mute music
