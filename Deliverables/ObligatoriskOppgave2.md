@@ -43,7 +43,7 @@ Even so we feel that the roles we got suited us.
 The only thing is that we might have to prioritize having one more test coder.
 
 #####Kristoffer: Teamleader
-I feel like this role suits me because im not afraid to speak up when something is wrong or needs fixing.\
+I feel like this role suits me because i am not afraid to speak up when something is wrong or needs fixing.\
 I very much enjoy speaking in-front of people and have some control over what is happening.\
 my experience with this role so far is that it is more about being a part of every role of the team more so than controlling them.\
 People often like to do things their way, and im not going to tell them to do something else if it works fine.
@@ -58,6 +58,14 @@ real code. That is why I chose this role, and so far I am happy with it.
 #####Arthur: Visual chief
 
 #####Markus: Test leader
+As a test leader, I quality check tests and change them if needed.\
+Going into this role, \
+I had as little experience with testing as everyone else on the group,\
+but seeing how integral testing is, I wanted to learn more about it.\
+The role doesn't feel too demanding either,\
+so it has let me focus on writing and refactoring code.
+
+
 (Skriv om opplevelsene deres og hvorfor dere valgte rollen deres)
 
 #####Methodology
