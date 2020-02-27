@@ -2,7 +2,7 @@ package inf112.skeleton.app;
 
 public class Card {
     private final int priority, move, name;
-    private static final String[] names = {"Forward Card", "Backward Card", "Turn Card" , "Again Card"};
+    private static final String[] names = {"Forward Card", "Backward Card", "Turn Card"};
 
     public Card(int priority, int name, int move) {
         this.name = name;

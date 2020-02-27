@@ -78,23 +78,25 @@ public class RoboRally extends InputAdapter implements Screen {
 
         //temporary card, to work with the forwardmove.
         //Until cards are fully implemented, arrow keys will stay here.
-        Card c = new Card(0,0,1);
+        Card c = new Card(0,0,2);
+        int move = c.getMove();
+
         switch (keycode) {
             case (Input.Keys.UP):
                 player.setOrientation(0);
-                board.forwardMove(player, c);
+                board.forwardMove(player, move);
                 break;
             case (Input.Keys.RIGHT):
                 player.setOrientation(1);
-                board.forwardMove(player, c);
+                board.forwardMove(player, move);
                 break;
             case (Input.Keys.DOWN):
                 player.setOrientation(2);
-                board.forwardMove(player, c);
+                board.forwardMove(player, move);
                 break;
             case (Input.Keys.LEFT):
                 player.setOrientation(3);
-                board.forwardMove(player, c);
+                board.forwardMove(player, move);
                 break;
 
             case (Input.Keys.M):
