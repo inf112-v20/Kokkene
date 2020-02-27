@@ -218,7 +218,7 @@ public class Board {
      * @return Array of x- and y-coordinate for the neighbour in the given direction
      */
     public int[] getNeighbour(Player pl, int direction){
-        return getNeighbour(direction, pl.getxPos(), pl.getyPos());
+        return getNeighbour(pl.getxPos(), pl.getyPos(), direction);
     }
 
     /**
