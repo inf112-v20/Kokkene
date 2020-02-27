@@ -1,23 +1,24 @@
 ## RoboRally - a game made by Kokkene. 
 RoboRally is a multiplayer game in which robots move around the map attempting to get to all the flags. 
 
-### User Stories
+###User Stories:
 These are our user stories which are needed for completing the second obligatory task.
 
+
 #####User story 1:
-    As a player I expect the walls and holes on the board to behave appropriately.
+As a player I expect the walls and holes on the board to behave appropriately.
     
 #####Acceptance criterias:
-    1. The player is not able to cross over walls.
-    2. Walking out of the board reboots(kills) the player.
-    3. Falling into holes also reboots the player.
+1. The player is not able to cross over walls.
+2. Walking out of the board reboots(kills) the player.
+3. Falling into holes also reboots the player.
     
 #####User story 2:
-    As I player I want to be able to know my health and objective.
+As I player I want to be able to know my health and objective.
     
 #####Acceptance criterias:
-    1. Show the health of the robot as an overlay
-    2. Make the objective more obvious (display which flag to move to).
+1. Show the health of the robot as an overlay
+2. Make the objective more obvious (display which flag to move to).
 
 ###Project and Project-Structure
 
