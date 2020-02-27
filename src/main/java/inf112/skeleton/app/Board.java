@@ -205,23 +205,6 @@ public class Board {
     }
 
     /**
-     * Gets neighbour of the current player
-     * @return Array of coordinates in the direction the current player is facing
-     */
-    public int[] getNeighbour(){
-        return getNeighbour(currentPlayer);
-    }
-
-    /**
-     * Gets the neighbouring coordinates of currentPLayer in given direction
-     * @param dir to find neighbour
-     * @return Array of coordinates in given direction of the currentPlayer
-     */
-    public int[] getNeighbour(int dir){
-        return getNeighbour(currentPlayer, dir);
-    }
-
-    /**
      * Gets neighbour for the player to move to
      * @return Array of coordinates for the neighbour in the direction the player is facing
      */
