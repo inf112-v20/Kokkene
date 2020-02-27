@@ -45,7 +45,7 @@ The only thing is that we might have to prioritize having one more test coder.
 #####Kristoffer: Teamleader
 I feel like this role suits me because i am not afraid to speak up when something is wrong or needs fixing.\
 I very much enjoy speaking in-front of people and have some control over what is happening.\
-my experience with this role so far is that it is more about being a part of every role of the team more so than controlling them.\
+My experience with this role so far is that it is more about being a part of every role of the team more so than controlling them.\
 People often like to do things their way, and im not going to tell them to do something else if it works fine.
 
 #####Martin: Customer contact
@@ -55,7 +55,11 @@ real code. That is why I chose this role, and so far I am happy with it.
 
 #####Jan Kåre: Code leader
 
-#####Arthur: Visual chief
+#####Arthur: Artistic leader
+When it comes to making a game, the visual part of it is by far one of the most important parts of it.\
+Therefore I felt it was natural for me to work with the visual parts of this project.\
+I feel comfortable with working with sound and photo editing.\
+At the same time I work with the game Art, I also get to write a lot of code.
 
 #####Markus: Test leader
 As a test leader, I quality check tests and change them if needed.\
@@ -76,8 +80,8 @@ We have group session's twice a week where we arrange sprints, such that everyon
 
 #####Communication
 Everyone on the group have created a "Slack" account and post updates on our slack workspace when something is edited.\
-We have all grown quite accustomed to each-other at this point, and no one is afraid to ask questions when we meet up.\ 
-No arguments or disagreements have broken out and probably never will.
+We have all grown quite accustomed to each-other at this point, and no one is afraid to ask questions when we meet up.\
+No arguments or disagreements have broken out and probably never will.\
 Only negative is that we post a little bit infrequent on "Slack".
 
 #####Retrospection
