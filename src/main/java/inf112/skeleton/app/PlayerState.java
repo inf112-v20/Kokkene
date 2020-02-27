@@ -29,7 +29,7 @@ public class PlayerState  {
 
     public Cell getPlayerStatus() {
 
-        if(board.holeLayer.getCell(player.getxPos(), player.getyPos()) != null) {
+        if(player.getLifePoints()<1) {
             return playerDead;
         }
         else if (board.flagLayer.getCell(player.getxPos(), player.getyPos()) != null) {

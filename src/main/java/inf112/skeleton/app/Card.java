@@ -2,7 +2,7 @@ package inf112.skeleton.app;
 
 public class Card {
     private final int priority, move, name;
-    private static final String[] names = {"Movement Card", "Turn Card", "Again Card"};
+    private static final String[] names = {"Forward Card", "Backward Card", "Turn Card"};
 
     public Card(int priority, int name, int move) {
         this.name = name;
@@ -12,8 +12,7 @@ public class Card {
 
     //Method for testing/checking
     public String toString() {
-        String s = "Priority: " + this.priority + " | Type:  " + names[this.name] + " | Move: " + this.move;
-        return s;
+        return "Priority: " + this.priority + " | Type:  " + names[this.name] + " | Move: " + this.move;
     }
 
     //Method for testing
@@ -29,13 +28,7 @@ public class Card {
      * @return Returns -1 if the card is less, 1 if it is greater and 0 if they are equal.
      */
     public int compareTo(Card that) {
-        if (this.priority < that.priority) {
-            return -1;
-        }
-        if (this.priority > that.priority) {
-            return 1;
-        }
-        return 0;
+        return Integer.compare(this.priority, that.priority);
     }
 
     //Getters might be redundant

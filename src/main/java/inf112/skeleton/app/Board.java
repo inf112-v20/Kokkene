@@ -37,8 +37,7 @@ public class Board {
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
-            players[i] = new Player("Player " + i, 1, i, 0, true);
-
+            players[i] = new Player("Player " + (i + 1), 1, i, 0);
         }
 
     }
@@ -46,62 +45,165 @@ public class Board {
     /**
      * Moves player in a direction
      * @param player to move
+     * @param move how many spaces to move from current position
      */
-    public void move(Player player) {
+    public void forwardMove(Player player, int move) {
         //This is easier to modify, in order to make it work with cards
         TiledMapTileLayer.Cell getHole = holeLayer.getCell(player.getxPos(), player.getyPos());
+        playerLayer.setCell(player.getxPos(), player.getyPos(), null);
         //Gets the orientation from the player, in order to check which direction they should move
         int orientation = player.getOrientation();
 
-        switch(orientation) {
+        if(move > 0) {
+            switch (orientation) {
+                //North
+                case (0):
+                    if (isBlocked(player, 0)) {
+                        System.out.println("You cannot move in this direction");
+                    } else if (player.getyPos() >= boardHeight || getHole != null) {
+                        player.resetPos();
+                    } else {
+                        player.setyPos(player.getyPos() + 1);
+                    }
+                    break;
+                //East
+                case (1):
+                    if (isBlocked(player, 1)) {
+                        System.out.println("You cannot move in this direction");
+                    } else if (player.getxPos() >= boardWidth || getHole != null) {
+                        player.resetPos();
+                    } else {
+                        player.setxPos(player.getxPos() + 1);
+                    }
+                    break;
+                //South
+                case (2):
+                    if (isBlocked(player, 2)) {
+                        System.out.println("You cannot move in this direction");
+                    } else if (player.getyPos() < 0 || getHole != null) {
+                        player.resetPos();
+                    } else {
+                        player.setyPos(player.getyPos() - 1);
+                    }
+                    break;
+                //West
+                case (3):
+                    if (isBlocked(player, 3)) {
+                        System.out.println("You cannot move in this direction");
+                    } else if (player.getxPos() < 0 || getHole != null) {
+                        player.resetPos();
+                    } else {
+                        player.setxPos(player.getxPos() - 1);
+                    }
+                    break;
+            }
+            forwardMove(player, move-1);
+        }
+        else {
+            //Checks afterturn after every move for now, to make sure it works.
+            afterTurn(player);
+        }
+    }
+
+    /*
+
+    public void backwardMove(Player player, Card card) {
+
+        TiledMapTileLayer.Cell getHole = holeLayer.getCell(player.getxPos(), player.getyPos());
+
+        playerLayer.setCell(player.getxPos(), player.getyPos(), null);
+
+        int orientation = player.getOrientation();
+
+        switch (orientation) {
             //North
-            case(0):
-                if(isBlocked(0, player)) {
+            case (0):
+                if (isBlocked(player, 2)) {
                     System.out.println("You cannot move in this direction");
-                }
-                else if (player.getyPos() >= boardHeight - 1 || getHole != null) {
+                } else if (player.getyPos() + card.getMove() <= 0 || getHole != null) {
                     player.resetPos();
-                }
-                else {
-                    player.setyPos(player.getyPos() + 1);
+                } else {
+                    player.setyPos(player.getyPos() + card.getMove());
                 }
                 break;
             //East
-            case(1):
-                if(isBlocked(1, player)){
+            case (1):
+                if (isBlocked(player, 3)) {
                     System.out.println("You cannot move in this direction");
-                }
-                else if (player.getxPos() >= boardWidth - 1 || getHole != null) {
+                } else if (player.getxPos() + card.getMove() <= 0 || getHole != null) {
                     player.resetPos();
-                }
-                else {
-                    player.setxPos(player.getxPos() + 1);
+                } else {
+                    player.setxPos(player.getxPos() + card.getMove());
                 }
                 break;
             //South
-            case(2):
-                if (isBlocked(2, player)){
+            case (2):
+                if (isBlocked(player, 0)) {
                     System.out.println("You cannot move in this direction");
                 }
-                else if (player.getyPos() <= 0 || getHole != null) {
+                else if (player.getyPos() - card.getMove() > boardHeight || getHole != null) {
                     player.resetPos();
                 }
                 else {
-                    player.setyPos(player.getyPos() - 1);
+                    player.setyPos(player.getyPos() - card.getMove());
                 }
                 break;
             //West
             case(3):
-                if(isBlocked(3, player)){
+                if(isBlocked(player, 1)){
                     System.out.println("You cannot move in this direction");
                 }
-                else if (player.getxPos() <= 0 || getHole != null) {
+                else if (player.getxPos() - card.getMove() > boardWidth || getHole != null) {
                     player.resetPos();
                 }
                 else {
-                    player.setxPos(player.getxPos() - 1);
+                    player.setxPos(player.getxPos() - card.getMove());
                 }
                 break;
+        }
+        afterMove(player);
+    }
+
+     */
+
+    /**
+     * Checking the rest of the layers after turn
+     * @param player  the player to be affected.
+     */
+    private void afterTurn(Player player) {
+        int x = player.getxPos(), y = player.getyPos();
+        TiledMapTileLayer.Cell laser = laserLayer.getCell(x,y);
+
+        if (laser != null) {
+            player.addHealth(-1);
+        }
+        checkObjective(player);
+    }
+
+    /**
+     * Checks if the player has reached the objective, and updates the current objective.
+     * @param player to be checked.
+     */
+    private void checkObjective(Player player) {
+        int x = player.getxPos(), y = player.getyPos();
+        TiledMapTileLayer.Cell flag = flagLayer.getCell(x, y);
+        if (flag != null) {
+            switch (flag.getTile().getId()) {
+                case 49:
+                    if (player.setObjective(2))
+                        player.setBackup(x, y);
+                    break;
+                case 56:
+                    if (player.setObjective(3))
+                        player.setBackup(x, y);
+                    break;
+                case 63:
+                    if (player.setObjective(4))
+                        player.setBackup(x, y);
+                    break;
+                case 70: player.setObjective(5); break;//temporary solution to getting the 4th flag
+            }
+
         }
     }
 
@@ -111,6 +213,15 @@ public class Board {
      */
     public int[] getNeighbour(){
         return getNeighbour(currentPlayer);
+    }
+
+    /**
+     * Gets the neighbouring coordinates of currentPLayer in given direction
+     * @param dir to find neighbour
+     * @return Array of coordinates in given direction of the currentPlayer
+     */
+    public int[] getNeighbour(int dir){
+        return getNeighbour(currentPlayer, dir);
     }
 
     /**
@@ -137,7 +248,7 @@ public class Board {
      * @param y coordinate to check neighbour of
      * @return Array of x- and y-coordinate of the neighbour in the given direction
      */
-    public int[] getNeighbour(int direction, int x, int y){
+    public int[] getNeighbour(int x, int y, int direction){
         int[] neighbour = new int[]{x, y};
         switch (direction) {
             case (0):
@@ -156,30 +267,28 @@ public class Board {
         return neighbour;
     }
 
-    private boolean isBlocked(int x, int y, int dir){
-        // TODO
-        return true;
-    }
-
     /**
-     * Checks if you can move to given direction
-     * @param direction to check
-     * @param player who check direction for
-     * @return True if we can move in given direction, false otherwise
+     * Checks if path is blocked in given direction
+     * @param x coordinate to check from
+     * @param y coordinate to check in given direction of
+     * @param dir direction to check if it's blocked
+     * @return true if given direction is blocked
      */
-    private boolean isBlocked(int direction, Player player) {
+    private boolean isBlocked(int x, int y, int dir){
 
-        int[] coordinates = getNeighbour(player, direction);
-        int wallThis = 0, wallNext = 0, x = coordinates[0], y = coordinates[1];
+        int[] nb = getNeighbour(x, y, dir);
 
-        if (wallLayer.getCell(player.getxPos(), player.getyPos()) != null) {
-            wallThis = wallLayer.getCell(player.getxPos(), player.getyPos()).getTile().getId();
-        }
+        //The following line should be removed before code being delivered.
+        //if (playerLayer.getCell(nb[0], nb[1]) != null){ return isBlocked(nb[0], nb[1], dir); }
+
+        int wallThis = 0, wallNext = 0;
         if (wallLayer.getCell(x, y) != null) {
-            wallNext = wallLayer.getCell(x, y).getTile().getId();
+            wallThis = wallLayer.getCell(x, y).getTile().getId();
         }
-
-        switch (direction) {
+        if (wallLayer.getCell(nb[0], nb[1]) != null) {
+            wallNext = wallLayer.getCell(nb[0], nb[1]).getTile().getId();
+        }
+        switch (dir) {
             case 0:
                 return wallThis == 28 || wallNext == 26;
             case 1:
@@ -188,6 +297,27 @@ public class Board {
                 return wallThis == 26 || wallNext == 28;
             case 3:
                 return wallThis == 27 || wallNext == 21;
+        }
+        return true;
+    }
+
+    /**
+     * Checks if given direction is blocked for given player
+     * @param direction to move in
+     * @param player to be moved
+     * @return true if the path is blocked
+     */
+    private boolean isBlocked(Player player, int direction) {
+        return isBlocked(player.getxPos(), player.getyPos(), direction);
+    }
+
+    private boolean laser(int x, int y, int dir){
+        if (playerLayer.getCell(x, y).getTile().getId() != 0){
+            players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-1);
+        }
+        else if (!isBlocked(x, y, dir)){
+            int[] nb = getNeighbour(x, y, dir);
+            return laser(nb[0], nb[1], dir);
         }
         return true;
     }

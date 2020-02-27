@@ -13,8 +13,8 @@ Kristoffer from 15:00, due to crash course
     Tests
 	
 **Todays agenda:**
-    Movement by cards, instead of key presses
-    Write tests
+    Movement by cards, instead of key presses\
+    Write some tests for our code\
     Setup one last meeting before delivering the assignment
 
 **Agenda for the next meeting:**
