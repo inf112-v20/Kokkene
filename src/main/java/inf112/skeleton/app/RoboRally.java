@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 
 import java.io.IOException;
 
@@ -29,8 +31,8 @@ public class RoboRally extends InputAdapter implements Screen {
 
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, board.boardWidth+2, board.boardHeight+2);
-        camera.position.x = board.boardWidth/2f+1;
-        camera.position.y = board.boardHeight/2f+1;
+        camera.position.x = board.cardWidth/2f; //board.boardWidth/2f;
+        camera.position.y = board.cardHeight/2f; //board.boardHeight/2f;
         camera.update();
 
         float unitScale = 1/300f;
@@ -43,7 +45,7 @@ public class RoboRally extends InputAdapter implements Screen {
         ps = new PlayerState(player, board, tr);
 
         //sets up the hud to display information about the player in real time.
-        hud = new HUD(player);
+        hud = new HUD(player,board);
 
         startMusic(); //starts the background music.
 
@@ -98,6 +100,9 @@ public class RoboRally extends InputAdapter implements Screen {
             case (Input.Keys.P):
                 music.pauseToggle();
                 break;
+            case (Input.Keys.F11):
+                fullscreenToggle();
+                break;
             case (Input.Keys.Q):
                 System.out.println("Quitting!");
                 Gdx.app.exit();
@@ -114,6 +119,21 @@ public class RoboRally extends InputAdapter implements Screen {
         return false;
     }
 
+    private void fullscreenToggle() {
+        try {
+            if (Display.isFullscreen()) {
+                Display.setFullscreen(false);
+                Display.setResizable(true);
+            }
+            else {
+                Display.setFullscreen(true);
+                Display.setResizable(false);
+            }
+        }
+        catch (LWJGLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void dispose(){
