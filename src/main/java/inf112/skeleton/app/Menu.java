@@ -19,6 +19,8 @@ public class Menu implements Screen {
     private final Button gameButton;
     private final Button exitButton;
 
+    public static String mapFile;
+
     //private Texture background;
 
     Game game;
@@ -103,7 +105,7 @@ public class Menu implements Screen {
     }
 
     public void LoadGame() {
-        game.setScreen(new RoboRally(game));
+        game.setScreen(new RoboRally(game, mapFile));
     }
 
 }

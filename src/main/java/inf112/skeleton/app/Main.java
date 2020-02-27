@@ -14,7 +14,7 @@ public class Main {
         cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
 
         MainApplication menu = new MainApplication();
-        RoboRally.mapFile = "maps/12by12DizzyDash.tmx";
+        Menu.mapFile = "maps/12by12DizzyDash.tmx";
         //Sets the current map
         new LwjglApplication(menu, cfg);
     }

@@ -10,8 +10,6 @@ import java.io.IOException;
 
 public class RoboRally extends InputAdapter implements Screen {
 
-    public static String mapFile;
-
     private Board board;
     private HUD hud;
 
@@ -24,7 +22,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     Deck deck;
 
-    RoboRally(Game game) {
+    RoboRally(Game game, String mapFile) {
 
         //Initializes the board and HUD
         board = new Board(mapFile, 0);
