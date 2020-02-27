@@ -152,12 +152,20 @@ public class Board {
     private void afterMove(Player player) {
         int x = player.getxPos(), y = player.getyPos();
         TiledMapTileLayer.Cell laser = laserLayer.getCell(x,y);
-        TiledMapTileLayer.Cell flag = flagLayer.getCell(x, y);
 
         if (laser != null) {
             player.addHealth(-1);
         }
+        checkObjective(player);
+    }
 
+    /**
+     * Checks if the player has reached the objective, and updates the current objective.
+     * @param player to be checked.
+     */
+    private void checkObjective(Player player) {
+        int x = player.getxPos(), y = player.getyPos();
+        TiledMapTileLayer.Cell flag = flagLayer.getCell(x, y);
         if (flag != null) {
             switch (flag.getTile().getId()) {
                 case 49:
