@@ -20,6 +20,20 @@ As I player I want to be able to know my health and objective.
 1. Show the health of the robot as an overlay
 2. Make the objective more obvious (display which flag to move to).
 
+#####User story 3:
+As I player I want to be able to get a hand of cards.
+    
+#####Acceptance criterias:
+1. Create a card element.
+1. Give "cards" and give it to the player.
+
+#####User story 4:
+As I player I want to have sound in my game.
+    
+#####Acceptance criterias:
+1. Create some music and play it to the player.
+2. Have the player make a sound when it gets hurt.
+
 ###Project and Project-Structure
 
 #####Roles

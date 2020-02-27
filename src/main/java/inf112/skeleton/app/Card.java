@@ -2,6 +2,7 @@ package inf112.skeleton.app;
 
 public class Card {
     private final int priority, move, name;
+    //We need this to print out the name of the card type
     private static final String[] names = {"Forward Card", "Backward Card", "Turn Card"};
 
     public Card(int priority, int name, int move) {
@@ -15,7 +16,10 @@ public class Card {
         return "Priority: " + this.priority + " | Type:  " + names[this.name] + " | Move: " + this.move;
     }
 
-    //Method for testing
+    /**
+     * @param that for the card to be compared
+     * @return true if it is equal
+     */
     public boolean equals(Card that) {
         return this.priority == that.priority
                 && this.name == that.name
