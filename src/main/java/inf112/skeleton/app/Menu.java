@@ -35,11 +35,11 @@ public class Menu implements Screen {
         int width = Gdx.graphics.getWidth();
 
         //Start Game button
-        gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("button.png"))));
+        gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         gameButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height /2f)-(gameButton.getHeight()/2)*2);
 
         //Exit Game button
-        exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("button.png"))));
+        exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         exitButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height /2f)-(gameButton.getHeight()/2)*4);
 
         stage.addActor(gameButton);

@@ -11,7 +11,7 @@ public class Music {
     com.badlogic.gdx.audio.Music music;
 
     //May be in unpacked file format.
-    static String musicFilePath = "assets/S31-CrackedOutRobot.wav";
+    static String musicFilePath = "assets/sound/S31-CrackedOutRobot.wav";
 
     Music() {
         music = Gdx.audio.newMusic(Gdx.files.internal(musicFilePath));

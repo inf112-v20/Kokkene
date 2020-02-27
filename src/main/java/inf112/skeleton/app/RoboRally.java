@@ -41,7 +41,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
         //Sets up one player and texture for testing purposes
         player = new Player("Test", 0, 0, 0);
-        TextureRegion[][] tr = player.setPlayerTextures("assets/player.png");
+        TextureRegion[][] tr = player.setPlayerTextures("assets/pictures/player.png");
         ps = new PlayerState(player, board, tr);
 
         //sets up the hud to display information about the player in real time.

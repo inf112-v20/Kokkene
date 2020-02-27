@@ -70,7 +70,7 @@ public class Player  {
         this.orientation = orientation;
         this.xBackup = xPos;
         this.yBackup = yPos;
-        damageSound = new Sound("assets/oof_sound.mp3");
+        damageSound = new Sound("assets/sound/oof_sound.mp3");
     }
 
     public void damageSound() {

@@ -16,7 +16,7 @@ public class HUD {
 
     SpriteBatch batch = new SpriteBatch();
     BitmapFont font = new BitmapFont();
-    Texture heart = new Texture(Gdx.files.internal("heart.png"));
+    Texture heart = new Texture(Gdx.files.internal("pictures/heart.png"));
 
     public HUD(Player player, Board board) {
         this.board = board;
