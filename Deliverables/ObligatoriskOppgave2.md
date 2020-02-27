@@ -32,9 +32,12 @@ The only thing is that we might have to prioritize having one more test coder.
 I feel like this role suits me because im not afraid to speak up when something is wrong or needs fixing.\
 I very much enjoy speaking in-front of people and have some control over what is happening.\
 my experience with this role so far is that it is more about being a part of every role of the team more so than controlling them.\
-People often like to do things their way, and im not going to tell them to do something else it works fine.
+People often like to do things their way, and im not going to tell them to do something else if it works fine.
 
 #####Martin: Customer contact
+I enjoy the work from idea to product, I therefore felt like I could make an impact\
+in this role. I am very engaged in the boardgame and enjoy formulating the rules into\
+real code. That is why I chose this role, and so far I am happy with it.
 
 #####Jan Kåre: Code leader
 
