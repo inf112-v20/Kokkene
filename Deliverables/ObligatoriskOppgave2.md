@@ -23,25 +23,43 @@ As I player I want to be able to know my health and objective.
 ###Project and Project-Structure
 
 #####Roles
-Vi føler at rollene ikke har blitt utnyttet noe særlig.
-Dette var litt mentaliteten gående inn i dette, siden vi alle ønsket å prøve litt av alt.
-Vi føler at rollene fungerer greit som de er nå.
-Trenger gjerne mer enn en testkoder.
-TODO alle må skrive noe om rollen sin og erfaringen med den.
+We feel that the assigned roles could have been utilized more properly.
+This was fortunately the idea we had going into this, because everyone wanted to try a bit of everything.
+Even so we feel that the roles we got suited us.
+The only thing is that we might have to prioritize having one more test coder.
+
+#####Kristoffer: Teamleader
+I feel like this role suits me because im not afraid to speak up when something is wrong or needs fixing.\
+I very much enjoy speaking in-front of people and have some control over what is happening.\
+my experience with this role so far is that it is more about being a part of every role of the team more so than controlling them.\
+People often like to do things their way, and im not going to tell them to do something else it works fine.
+
+#####Martin: Customer contact
+
+#####Jan Kåre: Code leader
+
+#####Arthur: Visual chief
+
+#####Markus: Test leader
+(Skriv om opplevelsene deres og hvorfor dere valgte rollen deres)
 
 #####Methodology
-Vi føler at team mettodikken som vi valgte fungerer bra med holdningene våre.
-Alle jobber i sammen bra, men det er fremdeles mulighet for koding alene.
+The group feels like we hit the spot on our methodology.\
+We decided to go with the "Scrum" methodology since everyone is comfortable working alone and as a team.\
+There are some risks involved with scrum, however we feel like the positives outweigh the negatives.
+We have group session's twice a week where we arrange sprints, such that everyone can come with ideas and ask for help with coding. 
 
 #####Communication
-Alle på gruppen kommuniserer bra enten det er på slack eller på grupperom.
-Har ikke vært noe uenigheter eller krangler(ennå hvertfall).
-
-komuniskajonen er grei, men kan gjerne bli litt forbedret når det koommer til meldinger.
+Everyone on the group have created a "Slack" account and post updates on our slack workspace when something is edited.\
+We have all grown quite accustomed to each-other at this point, and no one is afraid to ask questions when we meet up.\ 
+No arguments or disagreements have broken out and probably never will.
+Only negative is that we post a little bit infrequent on "Slack".
 
 #####Retrospection
-Vi har vært veldig flinke til å gjøre det som skal bli gjort.
-Vi satte oss mål og tidslinjer som alle følgte, dette var veldig bra.
-Alle liker møtene som blir holdt 2 ganger i uken, her kan vi komme med ideer og tanker.
-Litt mer som kunne bli ønsket når det kom til bruk av projectboardet.
+The group feel's like we hit our goals and are quite good at setting reasonable ones.\
+Every deadline we have set has been met so far and everyone are contributing in some way shape and form.\
+Everyone is happy with the current twice a week meetings schedule.\
+
+The project-board we think might be a bit under utilized, and we will work on improving this in the future.
+
 

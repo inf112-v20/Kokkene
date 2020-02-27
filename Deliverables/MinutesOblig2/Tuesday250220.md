@@ -19,6 +19,7 @@ Kristoffer from 15:00, due to crash course
 
 **Agenda for the next meeting:**
 1. Finish everything for the assignment
+
 **Minutes submitted by:**
 Markus Jensen
 
