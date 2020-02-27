@@ -34,11 +34,11 @@ public class Menu implements Screen {
         int height = Gdx.graphics.getHeight();
         int width = Gdx.graphics.getWidth();
 
-        //Change button
+        //Start Game button
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("button.png"))));
         gameButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height /2f)-(gameButton.getHeight()/2)*2);
 
-        //Change button
+        //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("button.png"))));
         exitButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height /2f)-(gameButton.getHeight()/2)*4);
 
@@ -105,7 +105,7 @@ public class Menu implements Screen {
     }
 
     public void LoadGame() {
-        game.setScreen(new RoboRally(game, mapFile));
+        game.setScreen(new RoboRally(mapFile));
     }
 
 }

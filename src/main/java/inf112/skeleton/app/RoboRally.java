@@ -24,7 +24,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     Deck deck;
 
-    RoboRally(Game game, String mapFile) {
+    RoboRally(String mapFile) {
 
         //Initializes the board and HUD
         board = new Board(mapFile, 0);
