@@ -54,6 +54,13 @@ in this role. I am very engaged in the boardgame and enjoy formulating the rules
 real code. That is why I chose this role, and so far I am happy with it.
 
 #####Jan Kåre: Code leader
+I enjoy coding and find it relaxing.\
+We needed someone to look through the code to find errors, incompatibilities, inefficiencies and such.\
+This seemed to be something which I could enjoy, which in retrospect was a good call.\
+I spend most of my time in this role talking with the others about specific implementation of code.\
+As in how and where to implement a specific idea into the game, and how to do it practically.\
+Due to all of us being skilled coders I have had no problems with any of my duties.\
+The only hiccups are inexperience with both the role and libGDX causing a somewhat low tempo. 
 
 #####Arthur: Artistic leader
 When it comes to making a game, the visual part of it is by far one of the most important parts of it.\
