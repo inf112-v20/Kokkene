@@ -20,3 +20,13 @@ Taking damage should reduce health by one and play the damage sound.
 When the player is moving by either 1,2 or 3 steps per keyUp, \
 if there is a wall in front of the player.\
 The player should never move through the wall.
+
+
+## Updating HUD
+When walking into a hole or outside of the map, you take damage,\
+and it should update the current health of the player, in the top right corner
+
+## Healthpoints and lifepoints
+Healthpoints are updated procedurally in the top right corner.\
+When losing over 10 health, you lose a lifepoint, and it is showed - \
+on the player.

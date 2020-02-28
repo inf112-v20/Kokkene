@@ -13,12 +13,12 @@ public class Sound {
     private float pitch = 0.5f;
 
     //May be in unpacked file format.
-    private static String soundFilePath;
+    private String soundFilePath;
 
     Sound(String filePath) {
-        soundFilePath = filePath;
-        sound = Gdx.audio.newSound(Gdx.files.internal(soundFilePath));
-        id = sound.play((float) 0);
+        this.soundFilePath = filePath;
+        this.sound = Gdx.audio.newSound(Gdx.files.internal(soundFilePath));
+        this.id = sound.play((float) 0);
     }
 
     public void play() {
