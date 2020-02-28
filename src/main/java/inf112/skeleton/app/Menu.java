@@ -13,8 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import java.awt.*;
-
 public class Menu implements Screen {
 
     private final Stage stage;
@@ -48,11 +46,11 @@ public class Menu implements Screen {
 
         //Start Game button
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        gameButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height /2f)-(gameButton.getHeight()/2)*2);
+        gameButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height/2f)-(gameButton.getHeight()/2)*2);
 
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        exitButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height /2f)-(gameButton.getHeight()/2)*4);
+        exitButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height/2f)-(gameButton.getHeight()/2)*4);
 
         stage.addActor(gameButton);
         stage.addActor(exitButton);
@@ -84,12 +82,12 @@ public class Menu implements Screen {
         batch.begin();
 
         //draw start game title on gamebutton
-        font.draw(batch, "Start Game!", width/2-(gameButton.getWidth()/2) + 40,
-                (height /2f)-(gameButton.getHeight()/2));
+        font.draw(batch, "Start Game!", (width/2f)-(gameButton.getWidth()/2)+47,
+                (height /2f)-(gameButton.getHeight()/2)+27);
 
         //draw exit title on button
-        font.draw(batch, "Exit game!", width/2-(exitButton.getWidth()/2) + 40,
-                (height/4));
+        font.draw(batch, "Exit game!", (width/2f)-(exitButton.getWidth()/2) + 70,
+                (height/4f)-10);
 
         batch.end();
 
