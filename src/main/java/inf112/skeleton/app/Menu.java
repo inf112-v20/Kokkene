@@ -25,7 +25,7 @@ public class Menu implements Screen {
     public static String mapFile;
 
     private GlyphLayout glyphLayout;
-    private BitmapFont font;
+    private BitmapFont font, titleFont;
     private SpriteBatch batch;
 
     private int height = Gdx.graphics.getHeight();
@@ -43,17 +43,21 @@ public class Menu implements Screen {
         batch = new SpriteBatch();
         glyphLayout = new GlyphLayout();
         font = new BitmapFont();
-        font.setColor(Color.RED);
+        font.setColor(Color.WHITE);
         font.getData().setScale(4);
+        titleFont = new BitmapFont();
+        titleFont.setColor(Color.RED);
+        titleFont.getData().setScale(6);
+
 
 
         //Start Game button
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        gameButton.setPosition((width /2f)-(gameButton.getWidth()/2), (height/2f)-(gameButton.getHeight()/2)*2);
+        gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f - gameButton.getHeight());
 
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        exitButton.setPosition((width /2f)-(exitButton.getWidth()/2), (height /2f)-(exitButton.getHeight()/2)*4);
+        exitButton.setPosition(width/2f - exitButton.getWidth()/2, height/2f - 2*exitButton.getHeight());
 
         stage.addActor(gameButton);
         stage.addActor(exitButton);
@@ -84,13 +88,17 @@ public class Menu implements Screen {
         stage.draw();
         batch.begin();
 
-        //draw start game title on gameButton
+        glyphLayout.setText(titleFont, "RoboRally");
+        titleFont.draw(batch, glyphLayout, width/2f - glyphLayout.width/2,
+                height - 1.5f*glyphLayout.height);
+
+        //draw 'Start Game' text on gameButton
         glyphLayout.setText(font, "Start Game");
         font.draw(batch, glyphLayout, gameButton.getX() + (gameButton.getWidth() - glyphLayout.width)/2,
                 gameButton.getY() + (gameButton.getHeight() + glyphLayout.height)/2);
 
 
-        //draw exit title on button
+        //draw 'Exit Game' text on exitButton
         glyphLayout.setText(font, "Exit Game");
         font.draw(batch, glyphLayout, exitButton.getX() + (exitButton.getWidth() - glyphLayout.width)/2,
                 exitButton.getY() + (exitButton.getHeight() + glyphLayout.height)/2);
