@@ -92,7 +92,7 @@ public class Menu implements Screen {
 
         //draw exit title on button
         glyphLayout.setText(font, "Exit Game");
-        font.draw(batch, glyphLayout, exitButton.center().getX() + (exitButton.getWidth() - glyphLayout.width)/2,
+        font.draw(batch, glyphLayout, exitButton.getX() + (exitButton.getWidth() - glyphLayout.width)/2,
                 exitButton.getY() + (exitButton.getHeight() + glyphLayout.height)/2);
 
         batch.end();
