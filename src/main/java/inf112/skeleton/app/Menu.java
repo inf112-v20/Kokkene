@@ -20,8 +20,9 @@ public class Menu implements Screen {
     private final SpriteBatch sb;
     private final Button gameButton;
     private final Button exitButton;
+    //private final SelectBox<String> selectMap;
 
-    public static String mapFile;
+    private String select;
 
     private GlyphLayout glyphLayout;
     private BitmapFont font, titleFont;
@@ -45,17 +46,25 @@ public class Menu implements Screen {
         titleFont.setColor(Color.RED);
         titleFont.getData().setScale(6);
 
-        mapFile = "maps/12by12DizzyDash.tmx";
+        select = "12by12DizzyDash";
 
         //Start Game button
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f - gameButton.getHeight());
+        gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f);
+
+
+        /*
+        selectMap = new SelectBox<>(skin);
+        selectMap.setItems("12by12DizzyDash", "fiveTiles", "testConveyors", "testMostElements");
+        selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight());
+         */
 
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        exitButton.setPosition(width/2f - exitButton.getWidth()/2, height/2f - 2*exitButton.getHeight());
+        exitButton.setPosition(width/2f - exitButton.getWidth()/2, gameButton.getY() - 2*exitButton.getHeight());
 
         stage.addActor(gameButton);
+        //stage.addActor(selectMap);
         stage.addActor(exitButton);
     }
 
@@ -82,7 +91,6 @@ public class Menu implements Screen {
         glyphLayout.setText(font, "Start Game");
         font.draw(batch, glyphLayout, gameButton.getX() + (gameButton.getWidth() - glyphLayout.width)/2,
                 gameButton.getY() + (gameButton.getHeight() + glyphLayout.height)/2);
-
 
         //draw 'Exit Game' text on exitButton
         glyphLayout.setText(font, "Exit Game");
@@ -125,7 +133,7 @@ public class Menu implements Screen {
     }
 
     public void LoadGame() {
-        game.setScreen(new RoboRally(mapFile));
+        game.setScreen(new RoboRally("maps/" + select + ".tmx"));
     }
 
 }
