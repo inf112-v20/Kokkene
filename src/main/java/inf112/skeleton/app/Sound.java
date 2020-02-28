@@ -2,8 +2,6 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
 
-import java.util.Random;
-
 public class Sound {
     //store sound object
     private com.badlogic.gdx.audio.Sound sound;
