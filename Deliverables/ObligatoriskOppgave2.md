@@ -40,7 +40,6 @@ As a player I want to have sound in my game.
 We feel that the assigned roles could have been utilized more properly.
 This was fortunately the idea we had going into this, because everyone wanted to try a bit of everything.
 Even so we feel that the roles we got suited us.
-The only thing is that we might have to prioritize having one more test coder.
 
 #####Kristoffer: Teamleader
 I feel like this role suits me because i am not afraid to speak up when something is wrong or needs fixing.\
@@ -74,9 +73,6 @@ Going into this role, I had as little experience with testing as everyone else o
 but seeing how integral testing is, I wanted to learn more about it.\
 The role doesn't feel too demanding either, so it has let me focus on writing and refactoring code.
 
-
-(Skriv om opplevelsene deres og hvorfor dere valgte rollen deres)
-
 #####Methodology
 The group feels like we hit the spot on our methodology.\
 We decided to go with the "Scrum" methodology since everyone is comfortable working alone and as a team.\
@@ -105,7 +101,7 @@ We also check that the cards works correctly in priorities.
 
 We use manual tests to check if the movement and interactions with the board is correct.
 For example walking on a laser tile, will make the player lose 1 health and a sound will be played.\
-Walking off the screen or into a hole will reset the position of the player, and it will lose 1 health.\
+Walking off the screen or into a hole will currently only reset the position of the player.\
 Health should also be updated procedurally on the HUD, so when we take damage from the laser, the HUD\
 will update how many healthpoints is left.
 
