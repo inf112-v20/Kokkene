@@ -14,7 +14,6 @@ public class Main {
         cfg.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
 
         MainApplication menu = new MainApplication();
-        //Sets the current map
         new LwjglApplication(menu, cfg);
     }
 }
