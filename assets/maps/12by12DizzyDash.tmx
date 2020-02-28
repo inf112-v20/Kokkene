@@ -161,7 +161,7 @@
 0,0,0,0,0,0,0,0,0,0,56,0
 </data>
  </layer>
- <layer id="11" name="Card" width="14" height="14">
+ <layer id="11" name="Border" width="14" height="14">
   <data encoding="csv">
 6,6,6,6,6,6,6,6,6,6,6,6,6,6,
 6,6,6,6,6,6,6,6,6,6,6,6,6,6,

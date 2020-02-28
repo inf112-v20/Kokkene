@@ -8,7 +8,7 @@ public class Board {
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
-             wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, cardLayer;
+             wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, borderLayer;
 
     int boardHeight, boardWidth;
     int cardHeight, cardWidth;
@@ -31,12 +31,12 @@ public class Board {
         wrenchLayer = (TiledMapTileLayer) map.getLayers().get("Wrench");
         conveyorLayer = (TiledMapTileLayer) map.getLayers().get("Conveyor");
         gearLayer = (TiledMapTileLayer) map.getLayers().get("Gear");
-        cardLayer = (TiledMapTileLayer) map.getLayers().get("Card");
+        borderLayer = (TiledMapTileLayer) map.getLayers().get("Border");
 
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
-        cardHeight = cardLayer.getHeight();
-        cardWidth = cardLayer.getWidth();
+        cardHeight = borderLayer.getHeight();
+        cardWidth = borderLayer.getWidth();
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
