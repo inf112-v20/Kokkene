@@ -22,6 +22,6 @@ if there is a wall in front of the player.\
 The player should never move through the wall.
 
 ## Healthpoints and lifepoints
-Healthpoints are updated procedurally in the top right corner.\
+Healthpoints are updated procedurally in the top left corner.\
 When losing over 10 health, you lose a lifepoint, and it is showed - \
 on the player. To test, walk into a laser path. 
