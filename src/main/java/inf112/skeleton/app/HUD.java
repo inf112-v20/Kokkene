@@ -34,8 +34,8 @@ public class HUD {
             batch.draw(heart, (i*25), HEIGHT-40, heartSize, heartSize);
         }
         int lifeP = player.getLifePoints();
-        int tileX = Display.getWidth()/board.cardWidth;
-        int tileY = Display.getHeight()/board.cardHeight;
+        int tileX = Display.getWidth()/board.borderWidth;
+        int tileY = Display.getHeight()/board.borderHeight;
         for(int i = lifeP; 0 < i; i--) {
             batch.draw(heart,
                     ((player.getxPos()+1)*tileX)-((tileX/(lifeP+1f))*i)-heartSize/2f,

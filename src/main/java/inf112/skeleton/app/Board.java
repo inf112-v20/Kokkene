@@ -11,7 +11,7 @@ public class Board {
              wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, borderLayer;
 
     int boardHeight, boardWidth;
-    int cardHeight, cardWidth;
+    int borderHeight, borderWidth;
 
     Player[] players;
 
@@ -35,8 +35,8 @@ public class Board {
 
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
-        cardHeight = borderLayer.getHeight();
-        cardWidth = borderLayer.getWidth();
+        borderHeight = borderLayer.getHeight();
+        borderWidth = borderLayer.getWidth();
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
