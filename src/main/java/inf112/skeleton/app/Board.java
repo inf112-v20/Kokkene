@@ -8,7 +8,7 @@ public class Board {
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
-            wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, borderLayer;
+             wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, borderLayer;
 
     int boardHeight, boardWidth;
     int borderHeight, borderWidth;
@@ -42,6 +42,7 @@ public class Board {
         for (int i = 0; i < nrPlayers; i++){
             players[i] = new Player("Player " + (i + 1), 1, i, 0);
         }
+
     }
 
     /**
@@ -107,6 +108,12 @@ public class Board {
         }
     }
 
+    public void backwardMove(Player player) {
+        if (!isBlocked(player, (player.getOrientation() + 2) % 4)){
+            forwardMove(player, -1);
+        }
+    }
+
     /**
      * Checking the rest of the layers after turn
      * @param player  the player to be affected.
@@ -144,7 +151,25 @@ public class Board {
                     break;
                 case 70: player.setObjective(5); break;//temporary solution to getting the 4th flag
             }
+
         }
+    }
+
+    /**
+     * Gets neighbour for the player to move to
+     * @return Array of coordinates for the neighbour in the direction the player is facing
+     */
+    public int[] getNeighbour(Player pl){
+        return getNeighbour(pl, pl.getOrientation());
+    }
+
+    /**
+     * Finds neighbour of current player in given direction
+     * @param direction to check neighbour
+     * @return Array of x- and y-coordinate for the neighbour in the given direction
+     */
+    public int[] getNeighbour(Player pl, int direction){
+        return getNeighbour(pl.getxPos(), pl.getyPos(), direction);
     }
 
     /**
@@ -183,7 +208,6 @@ public class Board {
     private boolean isBlocked(int x, int y, int dir){
         int[] nb = getNeighbour(x, y, dir);
         int wallThis = 0, wallNext = 0;
-
         if (wallLayer.getCell(x, y) != null) {
             wallThis = wallLayer.getCell(x, y).getTile().getId();
         }
@@ -211,5 +235,16 @@ public class Board {
      */
     private boolean isBlocked(Player player, int direction) {
         return isBlocked(player.getxPos(), player.getyPos(), direction);
+    }
+
+    private boolean laser(int x, int y, int dir){
+        if (playerLayer.getCell(x, y).getTile().getId() != 0){
+            players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-1);
+        }
+        else if (!isBlocked(x, y, dir)){
+            int[] nb = getNeighbour(x, y, dir);
+            return laser(nb[0], nb[1], dir);
+        }
+        return true;
     }
 }

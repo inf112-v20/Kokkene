@@ -125,6 +125,23 @@ public class RoboRally extends InputAdapter implements Screen {
         }
     }
 
+    public void cardMove (Card card) {
+        switch(card.getName()){
+            //Forward
+            case (0):
+                board.forwardMove(player, card.getMove());
+                break;
+            //Backward
+            case (1):
+                board.backwardMove(player);
+                break;
+            //Turn
+            case (2):
+                player.turn(card.getMove());
+                break;
+        }
+    }
+
     @Override
     public void dispose(){
     }
