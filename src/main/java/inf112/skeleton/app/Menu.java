@@ -45,6 +45,8 @@ public class Menu implements Screen {
         titleFont.setColor(Color.RED);
         titleFont.getData().setScale(6);
 
+        mapFile = "maps/12by12DizzyDash.tmx";
+
         //Start Game button
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f - gameButton.getHeight());
