@@ -88,7 +88,7 @@ Only negative is that we post a little bit infrequent on "Slack".
 #####Retrospection
 The group feels like we hit our goals and are quite good at setting reasonable ones.\
 Every deadline we have set has been met so far and everyone are contributing in some way shape and form.\
-Everyone is happy with the current twice a week meetings schedule.\
+Everyone is happy with the current twice a week meetings schedule.
 
 The project-board we think might be a bit under utilized, and we will work on improving this in the future.
 
