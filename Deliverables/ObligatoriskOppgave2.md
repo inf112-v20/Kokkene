@@ -8,29 +8,29 @@ These are our user stories which are needed for completing the second obligatory
 #####User story 1:
 As a player I expect the walls and holes on the board to behave appropriately.
     
-#####Acceptance criterias:
+#####Acceptance criteria:
 1. The player is not able to cross over walls.
 2. Walking out of the board reboots(kills) the player.
 3. Falling into holes also reboots the player.
     
 #####User story 2:
-As I player I want to be able to know my health and objective.
+As a player I want to be able to know my health and objective.
     
-#####Acceptance criterias:
+#####Acceptance criteria:
 1. Show the health of the robot as an overlay
 2. Make the objective more obvious (display which flag to move to).
 
 #####User story 3:
-As I player I want to be able to get a hand of cards.
+As a player I want to be able to get a hand of cards.
     
-#####Acceptance criterias:
+#####Acceptance criteria:
 1. Create a card element.
 1. Give "cards" and give it to the player.
 
 #####User story 4:
-As I player I want to have sound in my game.
+As a player I want to have sound in my game.
     
-#####Acceptance criterias:
+#####Acceptance criteria:
 1. Create some music and play it to the player.
 2. Have the player make a sound when it gets hurt.
 
@@ -90,7 +90,7 @@ No arguments or disagreements have broken out and probably never will.\
 Only negative is that we post a little bit infrequent on "Slack".
 
 #####Retrospection
-The group feel's like we hit our goals and are quite good at setting reasonable ones.\
+The group feels like we hit our goals and are quite good at setting reasonable ones.\
 Every deadline we have set has been met so far and everyone are contributing in some way shape and form.\
 Everyone is happy with the current twice a week meetings schedule.\
 
