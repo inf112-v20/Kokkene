@@ -18,7 +18,6 @@ public class Menu implements Screen {
 
     private final Stage stage;
     private final SpriteBatch sb;
-
     private final Button gameButton;
     private final Button exitButton;
 
@@ -30,9 +29,6 @@ public class Menu implements Screen {
 
     private int height = Gdx.graphics.getHeight();
     private int width = Gdx.graphics.getWidth();
-
-    //private Texture background;
-
     Game game;
 
     public Menu(Game game) {
@@ -49,8 +45,6 @@ public class Menu implements Screen {
         titleFont.setColor(Color.RED);
         titleFont.getData().setScale(6);
 
-
-
         //Start Game button
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f - gameButton.getHeight());
@@ -61,10 +55,6 @@ public class Menu implements Screen {
 
         stage.addActor(gameButton);
         stage.addActor(exitButton);
-
-        //Change background
-        //background = new Texture("");
-
     }
 
     @Override
@@ -77,12 +67,6 @@ public class Menu implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        /*
-         * sb.begin();
-         * sb.draw(background, 0, 0, width, height);
-         * sb.end();
-         */
 
         stage.act(delta);
         stage.draw();
@@ -111,8 +95,6 @@ public class Menu implements Screen {
         if(exitButton.isPressed()) {
             Gdx.app.exit();
         }
-
-
     }
 
     @Override

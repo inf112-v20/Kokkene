@@ -13,7 +13,6 @@ public class Sound {
     private float pitch = 0.5f;
 
     Sound(String filePath) {
-
         this.sound = Gdx.audio.newSound(Gdx.files.internal(filePath));
         this.id = sound.play((float) 0);
     }
@@ -22,7 +21,5 @@ public class Sound {
         id = sound.play(0.5f);
     }
 
-    public void dispose() {
-        sound.dispose();
-    }
+    //public void dispose() { sound.dispose(); }
 }

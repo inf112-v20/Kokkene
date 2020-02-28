@@ -1,4 +1,4 @@
-##Minutes- Kokkene Thursday 20.02.2020
+## Minutes- Kokkene Thursday 20.02.2020
 **Opening:**
 14:00 to 16:00 HiB grupperom 205M3
 
@@ -27,6 +27,6 @@ Write the minute
 1. Finish up most of the programming.
 2. Start writing tests
 3. Setup a last meeting to finish the delivery of this sprint.
+
 **Minutes submitted by:**
 Martin Johnsen
-

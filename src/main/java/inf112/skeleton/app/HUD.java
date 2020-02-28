@@ -11,7 +11,6 @@ public class HUD {
 
     private Board board;
     private Player player;
-    int WIDTH = Main.cfg.width;
     int HEIGHT = Main.cfg.height;
 
     SpriteBatch batch = new SpriteBatch();
@@ -25,11 +24,12 @@ public class HUD {
         font.getData().setScale(2,2);
     }
 
-    // renders a HUD statically on the top of the game window.
+    /**
+     * renders a HUD statically on the top of the game window.
+     */
     public void render() {
         batch.begin();
         int heartSize = Display.getWidth()/40;
-        //font.draw(batch, "HP: " + player.getHealth(), WIDTH-100, HEIGHT-10);
         for(int i = 0; i < player.getHealth(); i++) {
             batch.draw(heart, (i*25), HEIGHT-40, heartSize, heartSize);
         }

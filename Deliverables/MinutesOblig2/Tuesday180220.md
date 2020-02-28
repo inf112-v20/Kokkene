@@ -1,4 +1,4 @@
-##Minutes- Kokkene Tuesday 18.02.2020
+## Minutes- Kokkene Tuesday 18.02.2020
 **Opening:**
 14:00 to 16:00 HiB 510N3
 
@@ -25,4 +25,3 @@ Write the minute
 
 **Minutes submitted by:**
 Kristoffer Kraft Johansen
-

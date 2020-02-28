@@ -1,4 +1,4 @@
-##Minutes- Kokkene Thursday 27.02.2020
+## Minutes- Kokkene Thursday 27.02.2020
 **Opening:**
 14:00 to 16:00 HiB grupperom 209M1
 
@@ -21,4 +21,3 @@ Jan Kåre, Markus, Arthur, Martin and Kristoffer
 
 **Minutes submitted by:**
 Kristoffer Kraft Johansen
-

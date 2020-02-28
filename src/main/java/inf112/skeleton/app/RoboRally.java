@@ -11,7 +11,6 @@ import org.lwjgl.opengl.Display;
 import java.io.IOException;
 
 public class RoboRally extends InputAdapter implements Screen {
-
     private Board board;
     private HUD hud;
 
@@ -26,7 +25,6 @@ public class RoboRally extends InputAdapter implements Screen {
     Card[] playerHand;
 
     RoboRally(String mapFile) {
-
         //Initializes the board and HUD
         board = new Board(mapFile, 0);
 
@@ -48,7 +46,8 @@ public class RoboRally extends InputAdapter implements Screen {
         //sets up the hud to display information about the player in real time.
         hud = new HUD(player,board);
 
-        startMusic(); //starts the background music.
+        //starts the background music.
+        startMusic();
 
         //Makes deck and gives the initial set of cards. Will be moved once we implement rounds.
         try {
@@ -70,10 +69,8 @@ public class RoboRally extends InputAdapter implements Screen {
 
     @Override
     public boolean keyUp(int keycode) {
-        //Checks the keycode
-
-        //temporary card, to work with the forwardmove.
-        //Until cards are fully implemented, arrow keys will stay here.
+        /*temporary card, to work with the forwardmove.
+        Until cards are fully implemented, arrow keys will stay here.*/
         Card c = new Card(0,0,1);
         int move = c.getMove();
 
@@ -109,7 +106,6 @@ public class RoboRally extends InputAdapter implements Screen {
                 Gdx.app.exit();
                 break;
         }
-
         return false;
     }
 
@@ -141,7 +137,6 @@ public class RoboRally extends InputAdapter implements Screen {
         board.playerLayer.setCell(player.getxPos(), player.getyPos(), ps.getPlayerStatus());
         mapRenderer.render();
         hud.render();
-
     }
 
     @Override

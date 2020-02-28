@@ -38,7 +38,6 @@ public class Player  {
     //obvious sounds.
     private Sound damageSound;
 
-
     //Player constructor had to be like this for testing
     /**
      * @param name  the name for this robot.
@@ -56,7 +55,7 @@ public class Player  {
         this.yBackup = yPos;
         this.soundBool = playerSoundBool;
         if (playerSoundBool) { //Have to do this to make testing be possible
-            damageSound = new Sound("assets/oof_sound.mp3");
+            damageSound = new Sound("assets/sound/oof_sound.mp3");
         }
     }
 
@@ -231,5 +230,4 @@ public class Player  {
         }
         return playerHand;
     }
-
 }

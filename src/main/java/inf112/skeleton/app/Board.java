@@ -8,7 +8,7 @@ public class Board {
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
-             wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, borderLayer;
+            wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, borderLayer;
 
     int boardHeight, boardWidth;
     int borderHeight, borderWidth;
@@ -42,7 +42,6 @@ public class Board {
         for (int i = 0; i < nrPlayers; i++){
             players[i] = new Player("Player " + (i + 1), 1, i, 0);
         }
-
     }
 
     /**
@@ -108,7 +107,6 @@ public class Board {
         }
     }
 
-
     /**
      * Checking the rest of the layers after turn
      * @param player  the player to be affected.
@@ -146,7 +144,6 @@ public class Board {
                     break;
                 case 70: player.setObjective(5); break;//temporary solution to getting the 4th flag
             }
-
         }
     }
 
@@ -184,13 +181,9 @@ public class Board {
      * @return true if given direction is blocked
      */
     private boolean isBlocked(int x, int y, int dir){
-
         int[] nb = getNeighbour(x, y, dir);
-
-        //The following line should be removed before code being delivered.
-        //if (playerLayer.getCell(nb[0], nb[1]) != null){ return isBlocked(nb[0], nb[1], dir); }
-
         int wallThis = 0, wallNext = 0;
+
         if (wallLayer.getCell(x, y) != null) {
             wallThis = wallLayer.getCell(x, y).getTile().getId();
         }
@@ -219,5 +212,4 @@ public class Board {
     private boolean isBlocked(Player player, int direction) {
         return isBlocked(player.getxPos(), player.getyPos(), direction);
     }
-
 }

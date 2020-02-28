@@ -32,15 +32,12 @@ public class PlayerState  {
      * @return the player status
      */
     public Cell getPlayerStatus() {
-
         if(!player.isAlive()) {
             return playerDead;
         }
         else if (board.flagLayer.getCell(player.getxPos(), player.getyPos()) != null) {
             return playerWon;
         }
-
         return playerNorm;
     }
-
 }

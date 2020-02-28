@@ -1,4 +1,4 @@
-##Minutes- Kokkene Tuesday 25.02.2020
+## Minutes- Kokkene Tuesday 25.02.2020
 **Opening:**
 14:00 to 16:00 HiB 510N3
 
@@ -22,4 +22,3 @@ Kristoffer from 15:00, due to crash course
 
 **Minutes submitted by:**
 Markus Jensen
-
