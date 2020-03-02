@@ -230,4 +230,6 @@ public class Player  {
         }
         return playerHand;
     }
+
+    public void muteToggle() { soundBool=!soundBool; }
 }

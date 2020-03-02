@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class Menu implements Screen {
@@ -20,7 +22,7 @@ public class Menu implements Screen {
     private final SpriteBatch sb;
     private final Button gameButton;
     private final Button exitButton;
-    //private final SelectBox<String> selectMap;
+    private final SelectBox<String> selectMap;
 
     private String select;
 
@@ -52,19 +54,18 @@ public class Menu implements Screen {
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f);
 
-
-        /*
+        Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
         selectMap = new SelectBox<>(skin);
         selectMap.setItems("12by12DizzyDash", "fiveTiles", "testConveyors", "testMostElements");
+        selectMap.setWidth(200);
         selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight());
-         */
 
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         exitButton.setPosition(width/2f - exitButton.getWidth()/2, gameButton.getY() - 2*exitButton.getHeight());
 
         stage.addActor(gameButton);
-        //stage.addActor(selectMap);
+        stage.addActor(selectMap);
         stage.addActor(exitButton);
     }
 
@@ -76,7 +77,8 @@ public class Menu implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClearColor(.3f, .3f, .3f, 1); //background color DARK GREY
+        //Gdx.gl.glClearColor(1, 1, 1, 1); //background color WHITE
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(delta);
@@ -133,6 +135,7 @@ public class Menu implements Screen {
     }
 
     public void LoadGame() {
+        select = selectMap.getSelected();
         game.setScreen(new RoboRally("maps/" + select + ".tmx"));
     }
 
