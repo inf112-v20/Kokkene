@@ -40,4 +40,16 @@ public class PlayerState  {
         }
         return playerNorm;
     }
+
+    public Cell getPlayerHealth() {
+        switch (player.getLifePoints()) {
+            case (3):
+                return playerWon; //3 health
+            case (2):
+                return playerDead; //2 health
+            case (1):
+                return playerNorm; //1 health
+        }
+        return null; //no healthbar
+    }
 }

@@ -26,9 +26,12 @@ public class Menu implements Screen {
 
     private String select;
 
-    private GlyphLayout glyphLayout;
     private BitmapFont font, titleFont;
     private SpriteBatch batch;
+
+    private Texture roborally = new Texture(Gdx.files.internal("pictures/Roborally.png"));
+    private Texture startGame = new Texture(Gdx.files.internal("pictures/StartGame.png"));
+    private Texture exitGame = new Texture(Gdx.files.internal("pictures/ExitGame.png"));
 
     private int height = Gdx.graphics.getHeight();
     private int width = Gdx.graphics.getWidth();
@@ -40,7 +43,6 @@ public class Menu implements Screen {
         sb = new SpriteBatch();
         stage = new Stage();
         batch = new SpriteBatch();
-        glyphLayout = new GlyphLayout();
         font = new BitmapFont();
         font.setColor(Color.WHITE);
         font.getData().setScale(4);
@@ -85,19 +87,9 @@ public class Menu implements Screen {
         stage.draw();
         batch.begin();
 
-        glyphLayout.setText(titleFont, "RoboRally");
-        titleFont.draw(batch, glyphLayout, width/2f - glyphLayout.width/2,
-                height - 1.5f*glyphLayout.height);
-
-        //draw 'Start Game' text on gameButton
-        glyphLayout.setText(font, "Start Game");
-        font.draw(batch, glyphLayout, gameButton.getX() + (gameButton.getWidth() - glyphLayout.width)/2,
-                gameButton.getY() + (gameButton.getHeight() + glyphLayout.height)/2);
-
-        //draw 'Exit Game' text on exitButton
-        glyphLayout.setText(font, "Exit Game");
-        font.draw(batch, glyphLayout, exitButton.getX() + (exitButton.getWidth() - glyphLayout.width)/2,
-                exitButton.getY() + (exitButton.getHeight() + glyphLayout.height)/2);
+        batch.draw(roborally, width/2-roborally.getWidth()/2, height*.75f, roborally.getWidth(), roborally.getHeight());
+        batch.draw(startGame, width/2-gameButton.getWidth()/2, height*.54f, gameButton.getWidth(), gameButton.getHeight()*.65f);
+        batch.draw(exitGame, width/2-exitButton.getWidth()/2, height*.16f, exitButton.getWidth(), exitButton.getHeight()*.65f);
 
         batch.end();
 

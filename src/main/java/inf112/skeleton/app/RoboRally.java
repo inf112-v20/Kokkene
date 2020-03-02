@@ -18,6 +18,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private Player player;
     private PlayerState ps;
+    private PlayerState hb;
 
     private Music music;
 
@@ -30,8 +31,8 @@ public class RoboRally extends InputAdapter implements Screen {
 
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(false, board.boardWidth+2, board.boardHeight+2);
-        camera.position.x = board.borderWidth /2f; //board.boardWidth/2f;
-        camera.position.y = board.borderHeight /2f; //board.boardHeight/2f;
+        camera.position.x = board.boardWidth /2f;
+        camera.position.y = board.boardHeight /2f;
         camera.update();
 
         float unitScale = 1/300f;
@@ -42,6 +43,9 @@ public class RoboRally extends InputAdapter implements Screen {
         player = new Player("Test", 0, 0, 0);
         TextureRegion[][] tr = player.setPlayerTextures("assets/pictures/player.png");
         ps = new PlayerState(player, board, tr);
+
+        TextureRegion[][] healthbars = player.setPlayerTextures("assets/pictures/healthbars.png");
+        hb = new PlayerState(player, board, healthbars);
 
         //sets up the hud to display information about the player in real time.
         hud = new HUD(player,board);
@@ -157,6 +161,8 @@ public class RoboRally extends InputAdapter implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         board.playerLayer.setCell(player.getxPos(), player.getyPos(), ps.getPlayerStatus());
+        board.healthLayer.setCell(player.getxPos(), player.getyPos(), hb.getPlayerHealth());
+
         mapRenderer.render();
         hud.render();
     }

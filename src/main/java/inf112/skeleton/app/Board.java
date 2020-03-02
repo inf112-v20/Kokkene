@@ -8,10 +8,10 @@ public class Board {
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
-             wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, borderLayer;
+             wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, healthLayer;
 
     int boardHeight, boardWidth;
-    int borderHeight, borderWidth;
+    int healthHeight, healthWidth;
 
     Player[] players;
 
@@ -31,12 +31,12 @@ public class Board {
         wrenchLayer = (TiledMapTileLayer) map.getLayers().get("Wrench");
         conveyorLayer = (TiledMapTileLayer) map.getLayers().get("Conveyor");
         gearLayer = (TiledMapTileLayer) map.getLayers().get("Gear");
-        borderLayer = (TiledMapTileLayer) map.getLayers().get("Border");
+        healthLayer = (TiledMapTileLayer) map.getLayers().get("Healthbar");
 
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
-        borderHeight = borderLayer.getHeight();
-        borderWidth = borderLayer.getWidth();
+        healthHeight = healthLayer.getHeight();
+        healthWidth = healthLayer.getWidth();
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
@@ -54,6 +54,7 @@ public class Board {
         //This is easier to modify, in order to make it work with cards
         TiledMapTileLayer.Cell getHole = holeLayer.getCell(player.getxPos(), player.getyPos());
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
+        healthLayer.setCell(player.getxPos(), player.getyPos(), null);
         //Gets the orientation from the player, in order to check which direction they should move
         int orientation = player.getOrientation();
 

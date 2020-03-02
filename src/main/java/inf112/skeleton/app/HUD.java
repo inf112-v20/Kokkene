@@ -33,15 +33,6 @@ public class HUD {
         for(int i = 0; i < player.getHealth(); i++) {
             batch.draw(heart, (i*25), HEIGHT-40, heartSize, heartSize);
         }
-        int lifeP = player.getLifePoints();
-        int tileX = Display.getWidth()/board.borderWidth;
-        int tileY = Display.getHeight()/board.borderHeight;
-        for(int i = lifeP; 0 < i; i--) {
-            batch.draw(heart,
-                    ((player.getxPos()+1)*tileX)-((tileX/(lifeP+1f))*i)-heartSize/2f,
-                    player.getyPos()*tileY+heartSize/2f,
-                    heartSize, heartSize);
-        }
         font.draw(batch, "Objective: " + player.getObjective(),275, HEIGHT-10);
         batch.end();
     }
