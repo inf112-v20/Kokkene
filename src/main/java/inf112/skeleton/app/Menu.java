@@ -82,9 +82,9 @@ public class Menu implements Screen {
         batch.begin();
 
         batch.draw(roborally, width/2f-roborally.getWidth()/2f, height*.75f, roborally.getWidth(), roborally.getHeight());
-        batch.draw(startGame, width/2f-gameButton.getWidth()/2, gameButton.getY()+gameButton.getHeight()/3.5f, gameButton.getWidth(),
+        batch.draw(startGame, width/2f-gameButton.getWidth()/2, gameButton.getY()+gameButton.getHeight()/4f, gameButton.getWidth(),
                 gameButton.getHeight()*(gameButton.getWidth()/gameButton.getHeight()/4));
-        batch.draw(exitGame, width/2f-exitButton.getWidth()/2, exitButton.getY()+exitButton.getHeight()/3.5f, exitButton.getWidth(),
+        batch.draw(exitGame, width/2f-exitButton.getWidth()/2, exitButton.getY()+exitButton.getHeight()/4f, exitButton.getWidth(),
                 exitButton.getHeight()*(exitButton.getWidth()/exitButton.getHeight()/4));
 
         batch.end();
