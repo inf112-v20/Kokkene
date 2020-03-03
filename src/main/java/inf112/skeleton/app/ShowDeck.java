@@ -20,7 +20,7 @@ public class ShowDeck extends InputAdapter {
     private Player player;
     private final Vector2 mouseInWorld2D = new Vector2();
 
-    public TextureRegion[] texturedCards = new TextureRegion[player.getCards().length];
+    public TextureRegion[] texturedCards;
 
     SpriteBatch batch = new SpriteBatch();
     BitmapFont font = new BitmapFont();
@@ -28,9 +28,9 @@ public class ShowDeck extends InputAdapter {
     TextureRegion tr = new TextureRegion(card);
 
 
-
     public ShowDeck(Player player) {
         this.player = player;
+        texturedCards = new TextureRegion[player.getCards().length];
         font.setColor(Color.BLACK);
         createCardTexture();
     }
@@ -47,7 +47,7 @@ public class ShowDeck extends InputAdapter {
         batch.begin();
         for (int i = 0; i < player.getCards().length; i++) {
 
-            batch.draw(tr, (Main.cfg.width/2)-(i*5),40-(i*10),0,0, 40, 80, 4,4, (i*10)-20);
+            batch.draw(tr, (Main.cfg.width/2f)-(i*5),40-(i*10),0,0, 40, 80, 4,4, (i*10)-20);
 
         }
 

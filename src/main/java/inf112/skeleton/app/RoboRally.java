@@ -50,7 +50,6 @@ public class RoboRally extends InputAdapter implements Screen {
         //sets up the hud to display information about the player in real time.
         hud = new HUD(player,board);
 
-        showDeck = new ShowDeck(player);
 
         //starts the background music.
         startMusic();
@@ -60,12 +59,11 @@ public class RoboRally extends InputAdapter implements Screen {
             deck = new Deck();
             deck.shuffle();
             player.setHand(deck);
+            showDeck = new ShowDeck(player);
             playerHand = player.getCards();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

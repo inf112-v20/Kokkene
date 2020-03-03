@@ -137,9 +137,35 @@ public class Board {
         if (wrench != null) {
             player.addHealth(1);
         }
-
-
         checkObjective(player);
+    }
+
+    private void afterPhase(Player player){
+        int x = player.getxPos(), y = player.getyPos();
+        TiledMapTileLayer.Cell conveyor = conveyorLayer.getCell(x, y);
+        TiledMapTileLayer.Cell push = pushLayer.getCell(x, y);
+        TiledMapTileLayer.Cell gear = gearLayer.getCell(x, y);
+
+        if (conveyor != null){
+            moveConveyor(player, conveyor);
+        }
+        if (push != null){
+            //TODO
+        }
+        if (gear != null){
+            switch (gear.getTile().getId()){
+                case (47):
+                    player.turn(-1); // Turn left
+                    break;
+                case (48):
+                    player.turn(1); // Turn right
+                    break;
+            }
+        }
+    }
+
+    private void moveConveyor(Player player, TiledMapTileLayer.Cell conveyor){
+        //TODO
     }
 
     /**
@@ -165,7 +191,6 @@ public class Board {
                     break;
                 case 70: player.setObjective(5); break;//temporary solution to getting the 4th flag
             }
-
         }
     }
 
