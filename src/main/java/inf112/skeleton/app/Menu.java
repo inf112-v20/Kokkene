@@ -128,7 +128,7 @@ public class Menu implements Screen {
 
     public void LoadGame() {
         select = selectMap.getSelected();
-        game.setScreen(new RoboRally("maps/" + select + ".tmx"));
+        game.setScreen(new RoboRally("assets/maps/" + select + ".tmx"));
     }
 
 }

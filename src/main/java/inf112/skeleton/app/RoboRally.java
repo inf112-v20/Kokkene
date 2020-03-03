@@ -13,6 +13,7 @@ import java.io.IOException;
 public class RoboRally extends InputAdapter implements Screen {
     private Board board;
     private HUD hud;
+    private ShowDeck showDeck;
 
     private OrthogonalTiledMapRenderer mapRenderer;
 
@@ -50,6 +51,8 @@ public class RoboRally extends InputAdapter implements Screen {
         //sets up the hud to display information about the player in real time.
         hud = new HUD(player,board);
 
+        showDeck = new ShowDeck(player);
+
         //starts the background music.
         startMusic();
 
@@ -57,7 +60,8 @@ public class RoboRally extends InputAdapter implements Screen {
         try {
             deck = new Deck();
             deck.shuffle();
-            playerHand = player.hand(deck);
+            player.setHand(deck);
+            playerHand = player.getCards();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -166,6 +170,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
         mapRenderer.render();
         hud.render();
+        showDeck.render();
     }
 
     @Override

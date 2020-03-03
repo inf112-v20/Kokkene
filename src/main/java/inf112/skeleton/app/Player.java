@@ -38,6 +38,9 @@ public class Player  {
     //obvious sounds.
     private Sound damageSound;
 
+    //the cards the player holds
+    private Card[] cards;
+
     //Player constructor had to be like this for testing
     /**
      * @param name  the name for this robot.
@@ -222,13 +225,21 @@ public class Player  {
      * @param deck used to get cards from
      * @return a list with cards
      */
-    public Card[] hand(Deck deck) {
+    public void setHand(Deck deck) {
         //The hand of the player.
         Card[] playerHand = new Card[getHealth()];
         for(int i = 0; i < getHealth(); i++) {
             playerHand[i] = deck.Cards.poll();
         }
-        return playerHand;
+        this.cards = playerHand;
+    }
+
+    /**
+     *
+     * @return returns the cards the current player is holding
+     */
+    public Card[] getCards() {
+        return this.cards;
     }
 
     public void muteToggle() { soundBool=!soundBool; }
