@@ -29,8 +29,14 @@ public class RoboRally extends InputAdapter implements Screen {
         //Initializes the board and HUD
         board = new Board(mapFile, 0);
 
+        int extraSpace = 8;
+        float displayWidthHeightRatio = ((float) Display.getWidth()) / ((float) Display.getHeight());
+
         OrthographicCamera camera = new OrthographicCamera();
-        camera.setToOrtho(false, board.boardWidth+4, board.boardHeight+8);
+        camera.setToOrtho(
+                false,
+                board.boardWidth+extraSpace*displayWidthHeightRatio,
+                board.boardHeight+extraSpace);
         camera.position.x = board.boardWidth/2f;
         camera.position.y = board.boardHeight/2f - 3;
         camera.update();
