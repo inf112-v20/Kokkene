@@ -112,6 +112,7 @@ public class Board {
         }
         else {
             //Checks afterturn after every move for now, to make sure it works.
+            afterPhase(player);
             afterRound(player);
         }
     }
