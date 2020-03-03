@@ -112,7 +112,7 @@ public class Board {
         }
         else {
             //Checks afterturn after every move for now, to make sure it works.
-            afterTurn(player);
+            afterRound(player);
         }
     }
 
@@ -126,7 +126,7 @@ public class Board {
      * Checking the rest of the layers after turn
      * @param player  the player to be affected.
      */
-    private void afterTurn(Player player) {
+    private void afterRound(Player player) {
         int x = player.getxPos(), y = player.getyPos();
         TiledMapTileLayer.Cell laser = laserLayer.getCell(x,y);
         TiledMapTileLayer.Cell wrench = wrenchLayer.getCell(x,y);
