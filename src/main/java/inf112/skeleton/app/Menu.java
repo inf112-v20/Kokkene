@@ -3,11 +3,8 @@ package inf112.skeleton.app;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -15,6 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
+
+import java.io.File;
+import java.util.Objects;
 
 public class Menu implements Screen {
 
@@ -26,7 +27,6 @@ public class Menu implements Screen {
 
     private String select;
 
-    private BitmapFont font, titleFont;
     private SpriteBatch batch;
 
     private Texture roborally = new Texture(Gdx.files.internal("pictures/Roborally.png"));
@@ -43,12 +43,6 @@ public class Menu implements Screen {
         sb = new SpriteBatch();
         stage = new Stage();
         batch = new SpriteBatch();
-        font = new BitmapFont();
-        font.setColor(Color.WHITE);
-        font.getData().setScale(4);
-        titleFont = new BitmapFont();
-        titleFont.setColor(Color.RED);
-        titleFont.getData().setScale(6);
 
         select = "12by12DizzyDash";
 
@@ -58,13 +52,13 @@ public class Menu implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
         selectMap = new SelectBox<>(skin);
-        selectMap.setItems("12by12DizzyDash", "fiveTiles", "testConveyors", "testMostElements");
-        selectMap.setWidth(200);
-        selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight());
+        selectMap.setItems(getMaps());
+        selectMap.setWidth(gameButton.getWidth()*.87f);
+        selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight()*2);
 
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        exitButton.setPosition(width/2f - exitButton.getWidth()/2, gameButton.getY() - 2*exitButton.getHeight());
+        exitButton.setPosition(width/2f - exitButton.getWidth()/2, selectMap.getY() - exitButton.getHeight() - selectMap.getHeight()*3);
 
         stage.addActor(gameButton);
         stage.addActor(selectMap);
@@ -87,9 +81,11 @@ public class Menu implements Screen {
         stage.draw();
         batch.begin();
 
-        batch.draw(roborally, width/2-roborally.getWidth()/2, height*.75f, roborally.getWidth(), roborally.getHeight());
-        batch.draw(startGame, width/2-gameButton.getWidth()/2, height*.54f, gameButton.getWidth(), gameButton.getHeight()*.65f);
-        batch.draw(exitGame, width/2-exitButton.getWidth()/2, height*.16f, exitButton.getWidth(), exitButton.getHeight()*.65f);
+        batch.draw(roborally, width/2f-roborally.getWidth()/2f, height*.75f, roborally.getWidth(), roborally.getHeight());
+        batch.draw(startGame, width/2f-gameButton.getWidth()/2, gameButton.getY()+gameButton.getHeight()/4f, gameButton.getWidth(),
+                gameButton.getHeight()*(gameButton.getWidth()/gameButton.getHeight()/4));
+        batch.draw(exitGame, width/2f-exitButton.getWidth()/2, exitButton.getY()+exitButton.getHeight()/4f, exitButton.getWidth(),
+                exitButton.getHeight()*(exitButton.getWidth()/exitButton.getHeight()/4));
 
         batch.end();
 
@@ -129,6 +125,17 @@ public class Menu implements Screen {
     public void LoadGame() {
         select = selectMap.getSelected();
         game.setScreen(new RoboRally("assets/maps/" + select + ".tmx"));
+    }
+
+    public Array<String> getMaps(){
+        Array<String> mapArray = new Array<>();
+        File maps = new File("assets/maps");
+        for (String m : Objects.requireNonNull(maps.list())){
+            if (m.endsWith(".tmx")){
+                mapArray.add(m.substring(0, m.length()-4));
+            }
+        }
+        return mapArray;
     }
 
 }

@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-
 import java.io.IOException;
 
 public class RoboRally extends InputAdapter implements Screen {
@@ -115,7 +114,6 @@ public class RoboRally extends InputAdapter implements Screen {
                 fullscreenToggle();
                 break;
             case (Input.Keys.Q):
-                System.out.println("Quitting!");
                 Gdx.app.exit();
                 break;
         }
