@@ -130,10 +130,16 @@ public class Board {
     private void afterTurn(Player player) {
         int x = player.getxPos(), y = player.getyPos();
         TiledMapTileLayer.Cell laser = laserLayer.getCell(x,y);
+        TiledMapTileLayer.Cell wrench = wrenchLayer.getCell(x,y);
 
         if (laser != null) {
             player.addHealth(-1);
         }
+        if (wrench != null) {
+            player.addHealth(1);
+        }
+
+
         checkObjective(player);
     }
 
