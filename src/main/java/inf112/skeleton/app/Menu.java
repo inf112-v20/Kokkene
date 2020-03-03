@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -58,6 +57,7 @@ public class Menu implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
         selectMap = new SelectBox<>(skin);
+
         selectMap.setItems("12by12DizzyDash", "fiveTiles", "testConveyors", "testMostElements");
         selectMap.setWidth(200);
         selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight());
@@ -86,10 +86,13 @@ public class Menu implements Screen {
         stage.act(delta);
         stage.draw();
         batch.begin();
+        int exitHeightDivWidth = exitGame.getHeight()/exitGame.getWidth();
 
         batch.draw(roborally, width/2-roborally.getWidth()/2, height*.75f, roborally.getWidth(), roborally.getHeight());
-        batch.draw(startGame, width/2-gameButton.getWidth()/2, height*.54f, gameButton.getWidth(), gameButton.getHeight()*.65f);
-        batch.draw(exitGame, width/2-exitButton.getWidth()/2, height*.16f, exitButton.getWidth(), exitButton.getHeight()*.65f);
+        batch.draw(startGame, width/2-gameButton.getWidth()/2, gameButton.getY()+gameButton.getHeight()/3.5f, gameButton.getWidth(),
+                gameButton.getHeight()*(gameButton.getWidth()/gameButton.getHeight()/4));
+        batch.draw(exitGame, width/2-exitButton.getWidth()/2, exitButton.getY()+exitButton.getHeight()/3.5f, exitButton.getWidth(),
+                exitButton.getHeight()*(exitButton.getWidth()/exitButton.getHeight()/4));
 
         batch.end();
 
