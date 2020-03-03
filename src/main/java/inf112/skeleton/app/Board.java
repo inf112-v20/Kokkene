@@ -12,6 +12,7 @@ public class Board {
 
     int boardHeight, boardWidth;
     int healthHeight, healthWidth;
+    public int objectives;
 
     Player[] players;
 
@@ -43,6 +44,13 @@ public class Board {
             players[i] = new Player("Player " + (i + 1), 1, i, 0);
         }
 
+        for(int i = 0; i < flagLayer.getWidth(); i++) {
+            for(int j = 0; j < flagLayer.getHeight(); j++) {
+                if (flagLayer.getCell(i,j) != null) {
+                    objectives++;
+                }
+            }
+        }
     }
 
     /**

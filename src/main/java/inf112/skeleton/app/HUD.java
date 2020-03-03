@@ -33,7 +33,13 @@ public class HUD {
         for(int i = 0; i < player.getHealth(); i++) {
             batch.draw(heart, (i*25), HEIGHT-40, heartSize, heartSize);
         }
-        font.draw(batch, "Objective: " + player.getObjective(),275, HEIGHT-10);
+        if(board.objectives == player.getObjective()-1) {
+            font.draw(batch, "Objective: " + "won",275, HEIGHT-10);
+        }
+        else {
+            font.draw(batch, "Objective: " + player.getObjective(),275, HEIGHT-10);
+        }
+
         batch.end();
     }
 }

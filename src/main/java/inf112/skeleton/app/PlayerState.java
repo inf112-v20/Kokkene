@@ -35,7 +35,7 @@ public class PlayerState  {
         if(!player.isAlive()) {
             return playerDead;
         }
-        else if (board.flagLayer.getCell(player.getxPos(), player.getyPos()) != null) {
+        else if (board.objectives == player.getObjective()-1) {
             return playerWon;
         }
         return playerNorm;
