@@ -12,8 +12,10 @@ public class Board {
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
              wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, healthLayer;
 
-    int boardHeight, boardWidth;
-    int healthHeight, healthWidth;
+    int boardHeight,
+            boardWidth;
+    int healthHeight,
+            healthWidth;
     public int objectives;
 
     Player[] players;

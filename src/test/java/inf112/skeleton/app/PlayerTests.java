@@ -10,7 +10,10 @@ public class PlayerTests {
 
     Player player;
     int xPos, yPos = 1;
-    int upValue = 0, rightValue = 1, downValue = 2, leftValue = 3;
+    int upValue = 0,
+            rightValue = 1,
+            downValue = 2,
+            leftValue = 3;
     int maxHealth = 10, maxLifePoints = 3;
 
     @Before

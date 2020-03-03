@@ -1,13 +1,15 @@
 package inf112.skeleton.app;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
 //deck1994 does not contain the correct priorities but follows the rule: (3m -> 2m -> 1m/-1m -> left/right/U-turn)
 public class Deck {
-    int priority, name, move, indexNext;
+    int priority,
+            name,
+            move,
+            indexNext;
     Scanner Scn = new Scanner(new File("assets/deck1994.txt"));
 
     //Saves all the cards from the given txt file in this queue
@@ -33,6 +35,6 @@ public class Deck {
 
     //Shuffles the Current deck
     public void shuffle() {
-        Collections.shuffle((List<Card>) Cards);
+        Collections.shuffle((List<?>) Cards);
     }
 }
