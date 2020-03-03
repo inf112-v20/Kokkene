@@ -64,14 +64,13 @@ public class Board {
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
         healthLayer.setCell(player.getxPos(), player.getyPos(), null);
         //Gets the orientation from the player, in order to check which direction they should move
-        int orientation = player.getOrientation();
 
         if(move > 0 || move == -1) {
-            switch (orientation) {
+            switch (player.getOrientation()) {
                 //North
                 case (0):
                     if (isBlocked(player, 0)) {
-                        System.out.println("You cannot move in this direction");
+                        break;
                     } else if (player.getyPos() >= boardHeight-1 || getHole != null) {
                         player.resetPos();
                     } else {
@@ -81,7 +80,7 @@ public class Board {
                 //East
                 case (1):
                     if (isBlocked(player, 1)) {
-                        System.out.println("You cannot move in this direction");
+                        break;
                     } else if (player.getxPos() >= boardWidth-1 || getHole != null) {
                         player.resetPos();
                     } else {
@@ -91,7 +90,7 @@ public class Board {
                 //South
                 case (2):
                     if (isBlocked(player, 2)) {
-                        System.out.println("You cannot move in this direction");
+                        break;
                     } else if (player.getyPos() <= 0 || getHole != null) {
                         player.resetPos();
                     } else {
@@ -101,7 +100,7 @@ public class Board {
                 //West
                 case (3):
                     if (isBlocked(player, 3)) {
-                        System.out.println("You cannot move in this direction");
+                        break;
                     } else if (player.getxPos() <= 0 || getHole != null) {
                         player.resetPos();
                     } else {

@@ -110,7 +110,6 @@ public class RoboRally extends InputAdapter implements Screen {
                 fullscreenToggle();
                 break;
             case (Input.Keys.Q):
-                System.out.println("Quitting!");
                 Gdx.app.exit();
                 break;
         }
