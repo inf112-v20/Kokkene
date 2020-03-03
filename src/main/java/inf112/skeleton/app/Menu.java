@@ -53,12 +53,12 @@ public class Menu implements Screen {
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
         selectMap = new SelectBox<>(skin);
         selectMap.setItems(getMaps());
-        selectMap.setWidth(gameButton.getWidth());
-        selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight());
+        selectMap.setWidth(gameButton.getWidth()*.87f);
+        selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight()*2);
 
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        exitButton.setPosition(width/2f - exitButton.getWidth()/2, selectMap.getY() - exitButton.getHeight());
+        exitButton.setPosition(width/2f - exitButton.getWidth()/2, selectMap.getY() - exitButton.getHeight() - selectMap.getHeight()*3);
 
         stage.addActor(gameButton);
         stage.addActor(selectMap);
