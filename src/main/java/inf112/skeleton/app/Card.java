@@ -1,9 +1,11 @@
 package inf112.skeleton.app;
 
-public class Card {
+public class Card implements Comparable<Card>{
     private final int priority, move, name;
     //We need this to print out the name of the card type
     private static final String[] names = {"Forward Card", "Backward Card", "Turn Card"};
+
+    private Player owner;
 
     public Card(int priority, int name, int move) {
         this.name = name;
@@ -26,11 +28,7 @@ public class Card {
                 && this.move == that.move;
     }
 
-    /**
-     * Checks if our card's priority is greater than the other
-     * @param that the card we are going to compare with.
-     * @return Returns -1 if the card is less, 1 if it is greater and 0 if they are equal.
-     */
+    @Override
     public int compareTo(Card that) {
         return Integer.compare(this.priority, that.priority);
     }
@@ -39,4 +37,12 @@ public class Card {
     public int getPriority() { return priority; }
     public int getName() { return name; }
     public int getMove() { return move; }
+
+    public Player getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
 }

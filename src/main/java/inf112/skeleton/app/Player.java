@@ -223,13 +223,14 @@ public class Player  {
     /**
      * gives cards to player based on how much health is left
      * @param deck used to get cards from
-     * @return a list with cards
      */
     public void setHand(Deck deck) {
         //The hand of the player.
         Card[] playerHand = new Card[getHealth()];
         for(int i = 0; i < getHealth(); i++) {
             playerHand[i] = deck.Cards.poll();
+            assert playerHand[i] != null;
+            playerHand[i].setOwner(this);
         }
         this.cards = playerHand;
     }

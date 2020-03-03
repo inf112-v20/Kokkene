@@ -4,6 +4,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 
+import java.util.Arrays;
+
 public class Board {
 
     public TiledMap map;
@@ -112,14 +114,61 @@ public class Board {
         }
         else {
             //Checks afterturn after every move for now, to make sure it works.
-            afterPhase(player);
             afterRound(player);
         }
     }
 
+    /**
+     * Moves the player backwards without changing orientation
+     * @param player to move backwards
+     */
     public void backwardMove(Player player) {
         if (!isBlocked(player, (player.getOrientation() + 2) % 4)){
             forwardMove(player, -1);
+        }
+    }
+
+    /**
+     * Modify given player as the cards instructs
+     * @param card instructions for the player
+     * @param pl player to move
+     */
+    public void cardMove(Card card, Player pl) {
+        switch(card.getName()){
+            //Forward
+            case (0):
+                forwardMove(pl, card.getMove());
+                break;
+            //Backward
+            case (1):
+                backwardMove(pl);
+                break;
+            //Turn
+            case (2):
+                pl.turn(card.getMove());
+                break;
+        }
+    }
+
+    /**
+     * Does the entire turn in the correct order
+     */
+    public void doTurn(){
+        for (int i = 0; i < 5; i++){
+            for (Card c : sortPhase(i)){
+                cardMove(c, c.getOwner());
+            }
+            afterPhase();
+        }
+        afterRound();
+    }
+
+    /**
+     * Checks the position of every player at the end of turn for interaction with the board objects
+     */
+    private void afterRound(){
+        for (Player p : players){
+            afterRound(p);
         }
     }
 
@@ -141,6 +190,36 @@ public class Board {
         checkObjective(player);
     }
 
+    /**
+     * Sorts the cards of all the players in the given phase
+     * @param phase which phase we're currently in
+     * @return sorted list of cards of all the players in ascending priority
+     */
+    private Card[] sortPhase(int phase){
+        Card[] cardArray = new Card[players.length];
+        int i = 0;
+        for (Player p : players){
+            cardArray[i] = p.getCards()[phase];
+            i++;
+        }
+        Arrays.sort(cardArray);
+        return cardArray;
+    }
+
+
+    /**
+     * Makes all the players interact with the board objects
+     */
+    private void afterPhase(){
+        for (Player p : players){
+            afterPhase(p);
+        }
+    }
+
+    /**
+     * Makes the given player interact with all board objects
+     * @param player to interact
+     */
     private void afterPhase(Player player){
         int x = player.getxPos(), y = player.getyPos();
         TiledMapTileLayer.Cell conveyor = conveyorLayer.getCell(x, y);
@@ -152,6 +231,7 @@ public class Board {
         }
         if (push != null){
             //TODO
+            return;
         }
         if (gear != null){
             switch (gear.getTile().getId()){
