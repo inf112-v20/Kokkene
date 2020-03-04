@@ -4,6 +4,7 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -153,8 +154,13 @@ public class RoboRally extends InputAdapter implements Screen {
         //Gdx.gl.glClearColor(1, 1, 1, 1); //background color WHITE
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        board.playerLayer.setCell(player.getxPos(), player.getyPos(), ps.getPlayerStatus());
-        board.healthLayer.setCell(player.getxPos(), player.getyPos(), hb.getPlayerHealth());
+        int x = player.getxPos(), y = player.getyPos();
+
+        board.playerLayer.setCell(x, y, ps.getPlayerStatus());
+        board.playerLayer.getCell(x, y).setRotation(player.getOrientation());
+
+        board.healthLayer.setCell(x, y, hb.getPlayerHealth());
+        board.healthLayer.getCell(x, y).setRotation(player.getOrientation());
 
         mapRenderer.render();
         hud.render();
