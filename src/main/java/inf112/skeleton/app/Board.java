@@ -234,10 +234,10 @@ public class Board {
         if (gear != null){
             switch (gear.getTile().getId()){
                 case (47):
-                    player.turn(-1); // Turn left
+                    player.turn(1); // Turn left
                     break;
                 case (48):
-                    player.turn(1); // Turn right
+                    player.turn(-1); // Turn right
                     break;
             }
         }

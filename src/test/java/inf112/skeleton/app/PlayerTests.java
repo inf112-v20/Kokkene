@@ -81,14 +81,14 @@ public class PlayerTests {
 
     @Test
     public void PlayerCanTurnRight() {
-        int turnRight = 1;
+        int turnRight = -1;
         player.turn(turnRight);
         assertEquals(rightValue, player.getOrientation());
     }
 
     @Test
     public void PlayerCanTurnLeft() {
-        int turnLeft = -1;
+        int turnLeft = 1;
         player.turn(turnLeft);
         assertEquals(leftValue, player.getOrientation());
     }
