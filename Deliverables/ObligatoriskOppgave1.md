@@ -53,24 +53,37 @@ in order to fulfill our goal of what we consider a working application.
 
 ### High level requirements
 For our final product our version of the MVP will have these functionalities.
-- Board
-   - Board elements (Pits, Lasers, Conveyor belts)
- - Maps / Courses
- - Timer
- - Program Registers
-   - Amount of cards received based on damage
- - Card decks
- - Program robots
- - Damage & Destruction
- - Phase sequences in multiple rounds
- - Repairing
+  - Board
+  
+  - Board elements (Pits, Lasers, Conveyor belts)
+  
+  - Maps / Courses
+  
+  - Timer
+  
+  - Program Registers
+  
+  - Amount of cards received based on damage
+  
+  - Card decks
+  
+  - Program robots
+  
+  - Damage & Destruction
+  
+  - Phase sequences in multiple rounds
+  
+  - Repairing
     -Wrench
- - Robots
-   - Events (Pushing, Laser, Powerdown)
-   - Health
- - Multiplayer (LAN)
- - Win condition 
-   - Flags / Checkpoints
+    
+  - Robots
+     - Events (Pushing, Laser, Powerdown)
+     - Health
+     
+  - Multiplayer (LAN)
+  
+  - Win condition 
+     - Flags / Checkpoints
 
 ### First iteration deliverables
 [X] Player\
