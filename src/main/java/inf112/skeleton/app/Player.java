@@ -136,7 +136,7 @@ public class Player  {
      * @param orientation  orientation is the direction in a 0-3 scale.
      */
     public void setOrientation(int orientation) {
-        this.orientation = Math.abs(orientation);
+        this.orientation = Math.abs(orientation)%4;
     }
 
     /**

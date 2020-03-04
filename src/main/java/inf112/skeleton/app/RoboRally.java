@@ -92,8 +92,8 @@ public class RoboRally extends InputAdapter implements Screen {
                 player.setOrientation(0);
                 board.forwardMove(player, move);
                 break;
-            case (Input.Keys.D):
-            case (Input.Keys.RIGHT):
+            case (Input.Keys.A):
+            case (Input.Keys.LEFT):
                 player.setOrientation(1);
                 board.forwardMove(player, move);
                 break;
@@ -102,8 +102,8 @@ public class RoboRally extends InputAdapter implements Screen {
                 player.setOrientation(2);
                 board.forwardMove(player, move);
                 break;
-            case (Input.Keys.A):
-            case (Input.Keys.LEFT):
+            case (Input.Keys.D):
+            case (Input.Keys.RIGHT):
                 player.setOrientation(3);
                 board.forwardMove(player, move);
                 break;

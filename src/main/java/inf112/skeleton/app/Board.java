@@ -77,14 +77,14 @@ public class Board {
                         player.setyPos(player.getyPos() + 1);
                     }
                     break;
-                //East
+                //West
                 case (1):
                     if (isBlocked(player, 1)) {
                         break;
-                    } else if (player.getxPos() >= boardWidth-1 || getHole != null) {
+                    } else if (player.getxPos() <= 0 || getHole != null) {
                         player.addHealth(-player.getMaxHealth());
                     } else {
-                        player.setxPos(player.getxPos() + 1);
+                        player.setxPos(player.getxPos() - 1);
                     }
                     break;
                 //South
@@ -97,14 +97,14 @@ public class Board {
                         player.setyPos(player.getyPos() - 1);
                     }
                     break;
-                //West
+                //East
                 case (3):
                     if (isBlocked(player, 3)) {
                         break;
-                    } else if (player.getxPos() <= 0 || getHole != null) {
+                    } else if (player.getxPos() >= boardWidth-1 || getHole != null) {
                         player.addHealth(-player.getMaxHealth());
                     } else {
-                        player.setxPos(player.getxPos() - 1);
+                        player.setxPos(player.getxPos() + 1);
                     }
                     break;
             }
@@ -304,13 +304,13 @@ public class Board {
                 neighbour[1]++;
                 break;
             case (1):
-                neighbour[0]++;
+                neighbour[0]--;
                 break;
             case (2):
                 neighbour[1]--;
                 break;
             case (3):
-                neighbour[0]--;
+                neighbour[0]++;
                 break;
         }
         return neighbour;
@@ -336,11 +336,11 @@ public class Board {
             case 0:
                 return wallThis == 28 || wallNext == 26;
             case 1:
-                return wallThis == 21 || wallNext == 27;
+                return wallThis == 27 || wallNext == 21;
             case 2:
                 return wallThis == 26 || wallNext == 28;
             case 3:
-                return wallThis == 27 || wallNext == 21;
+                return wallThis == 21 || wallNext == 27;
         }
         return true;
     }
@@ -355,6 +355,13 @@ public class Board {
         return isBlocked(player.getxPos(), player.getyPos(), direction);
     }
 
+    /**
+     * Checks the direction the laser at given coords is pointing until it hits a player or wall
+     * @param x coordinate of laser
+     * @param y coordinate of laser
+     * @param dir direction laser is pointing
+     * @return true when the laser has hit something
+     */
     private boolean laser(int x, int y, int dir){
         if (playerLayer.getCell(x, y).getTile().getId() != 0){
             players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-1);
