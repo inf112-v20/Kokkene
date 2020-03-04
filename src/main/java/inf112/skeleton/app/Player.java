@@ -41,6 +41,9 @@ public class Player  {
     //the cards the player holds
     private Card[] cards;
 
+    //Constant variables
+    private static final int MAXHEALTH = 10;
+
     //Player constructor had to be like this for testing
     /**
      * @param name  the name for this robot.
@@ -144,6 +147,8 @@ public class Player  {
         setOrientation((getOrientation() + change + 4) % 4);
     }
 
+    public int getMaxHealth() { return MAXHEALTH; }
+
     /**
      *
      * @return current health total.
@@ -162,19 +167,19 @@ public class Player  {
      * @param health  The value that health will be set to.
      */
     private void setHealth(int health) {
-        this.health = Math.min(health, 10);
+        this.health = Math.min(health, MAXHEALTH);
         if (this.health<=0) {
-            addLifePoints();
-            this.health = 10;
+            addLifePoints(-1);
+            this.health = MAXHEALTH;
         }
     }
 
     /**
      * Changes the lifePoints
      */
-    private void addLifePoints() {
-        this.lifePoints += -1;
-        if (isAlive()) resetPos();
+    private void addLifePoints(int life) {
+        this.lifePoints += life;
+        if (isAlive() && life < 0) resetPos();
     }
 
     /**
@@ -190,7 +195,6 @@ public class Player  {
     public void resetPos() {
         setxPos(getxBackup());
         setyPos(getyBackup());
-        if (soundBool) damageSound.play();
     }
 
     /**

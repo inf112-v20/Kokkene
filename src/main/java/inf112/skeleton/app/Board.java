@@ -76,7 +76,7 @@ public class Board {
                     if (isBlocked(player, 0)) {
                         break;
                     } else if (player.getyPos() >= boardHeight-1 || getHole != null) {
-                        player.resetPos();
+                        player.addHealth(-player.getMaxHealth());
                     } else {
                         player.setyPos(player.getyPos() + 1);
                     }
@@ -86,7 +86,7 @@ public class Board {
                     if (isBlocked(player, 1)) {
                         break;
                     } else if (player.getxPos() >= boardWidth-1 || getHole != null) {
-                        player.resetPos();
+                        player.addHealth(-player.getMaxHealth());
                     } else {
                         player.setxPos(player.getxPos() + 1);
                     }
@@ -96,7 +96,7 @@ public class Board {
                     if (isBlocked(player, 2)) {
                         break;
                     } else if (player.getyPos() <= 0 || getHole != null) {
-                        player.resetPos();
+                        player.addHealth(-player.getMaxHealth());
                     } else {
                         player.setyPos(player.getyPos() - 1);
                     }
@@ -106,7 +106,7 @@ public class Board {
                     if (isBlocked(player, 3)) {
                         break;
                     } else if (player.getxPos() <= 0 || getHole != null) {
-                        player.resetPos();
+                        player.addHealth(-player.getMaxHealth());
                     } else {
                         player.setxPos(player.getxPos() - 1);
                     }

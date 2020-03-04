@@ -16,7 +16,7 @@ public class Sound {
     }
 
     public void play() {
-        id = sound.play(0.5f);
+        id = sound.play(pitch);
     }
 
     //public void dispose() { sound.dispose(); }
