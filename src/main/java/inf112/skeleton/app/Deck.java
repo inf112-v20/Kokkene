@@ -6,7 +6,7 @@ import java.util.*;
 
 //deck1994 does not contain the correct priorities but follows the rule: (3m -> 2m -> 1m/-1m -> left/right/U-turn)
 public class Deck {
-    int priority,
+    private int priority,
             name,
             move,
             indexNext;

@@ -32,5 +32,4 @@ public class CardTest {
         Card otherCard = new Card(400, 0, 1);
         assertFalse(card.equals(otherCard));
     }
-
 }
