@@ -12,10 +12,8 @@ public class Board {
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
              wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, healthLayer;
 
-    int boardHeight,
-            boardWidth;
-    int healthHeight,
-            healthWidth;
+    int boardHeight, boardWidth;
+
     public int objectives;
 
     Player[] players;
@@ -40,8 +38,6 @@ public class Board {
 
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
-        healthHeight = healthLayer.getHeight();
-        healthWidth = healthLayer.getWidth();
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
