@@ -6,6 +6,7 @@
 Jan Kåre, Markus, Arthur, Martin and Kristoffer
 
 **Absent:**
+None
 
 **Business from previous meetings:**
     Implement cards
