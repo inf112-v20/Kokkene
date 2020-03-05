@@ -53,41 +53,42 @@ in order to fulfill our goal of what we consider a working application.
 
 ### High level requirements
 For our final product our version of the MVP will have these functionalities.
-- Board
-   - Board elements (Pits, Lasers, Conveyor belts)
+
+-  Board
+  -  Board elements (Pits, Lasers, Conveyor belts)
    
-- Maps / Courses
+-  Maps / Courses
 
-- Timer
+-  Timer
 
-- Program Registers
+-  Program Registers
 
-- Card decks
-   - Amount of cards received based on damage
+-  Card decks
+ -   Amount of cards received based on damage
   
-- Program robots
+-  Program robots
 
-- Damage & Destruction
+-  Damage & Destruction
 
-- Phase sequences in multiple rounds
+-  Phase sequences in multiple rounds
 
-- Repairing
-   - Wrench
+-  Repairing
+  -  Wrench
   
-- Robots
-   - Events (Pushing, Laser, Powerdown)
-   - Health
+-  Robots
+  -  Events (Pushing, Laser, Powerdown)
+  -  Health
     
-- Multiplayer (LAN)
+-  Multiplayer (LAN)
 
-- Win condition
-    - Flags / Checkpoints
+-  Win condition
+   - Flags / Checkpoints
 
 ### First iteration deliverables
-  - [x] Player
-  - [x] One simple board
-  - [x] Simple visual elements
-  - [x] Place the player on the board and move
+- [x] Player
+- [x] One simple board
+- [x] Simple visual elements
+- [x] Place the player on the board and move
 
 ## Task 3 
 ### Project Methodology 
