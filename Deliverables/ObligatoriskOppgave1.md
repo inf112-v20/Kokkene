@@ -1,4 +1,4 @@
-## RoboRally - a game made by Kokkene. 
+## RoboRally - a game made by Kokkene
 RoboRally is a multiplayer game in which robots move around the map attempting to get to all the flags. 
 
 ## Task 1
@@ -53,43 +53,41 @@ in order to fulfill our goal of what we consider a working application.
 
 ### High level requirements
 For our final product our version of the MVP will have these functionalities.
-  - Board
-  
+- Board
   - Board elements (Pits, Lasers, Conveyor belts)
   
-  - Maps / Courses
+- Maps / Courses
   
-  - Timer
+- Timer
   
-  - Program Registers
+- Program Registers
   
+- Card decks
   - Amount of cards received based on damage
   
-  - Card decks
+- Program robots
   
-  - Program robots
+- Damage & Destruction
   
-  - Damage & Destruction
+- Phase sequences in multiple rounds
   
-  - Phase sequences in multiple rounds
+- Repairing
+  - Wrench
   
-  - Repairing
-    -Wrench
-    
-  - Robots
-     - Events (Pushing, Laser, Powerdown)
-     - Health
-     
-  - Multiplayer (LAN)
+- Robots
+  - Events (Pushing, Laser, Powerdown)
+  - Health
   
-  - Win condition 
-     - Flags / Checkpoints
+- Multiplayer (LAN)
+  
+- Win condition
+  - Flags / Checkpoints
 
 ### First iteration deliverables
-[X] Player\
-[X] One simple board\
-[X] Simple visual elements\
-[X] Place the player on the board and move
+-[X] Player
+-[X] One simple board
+-[X] Simple visual elements
+-[X] Place the player on the board and move
 
 ## Task 3 
 ### Project Methodology 
@@ -119,13 +117,11 @@ While each of us will try to keep to our specialties, we will of course offer ea
 ### User Stories
 These are our user stories which are needed for completing the first obligatory task.
 
-**User stories for the board**
-
+**User stories for the board**\
 P1 - As a player, I want to see the board I am going to play on.\
 P2 - As a player, I want to be able to move around the board.
 
-**User stories for the pieces**
-
+**User stories for the pieces**\
 P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
 P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
 
