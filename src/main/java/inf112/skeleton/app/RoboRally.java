@@ -29,7 +29,7 @@ public class RoboRally extends InputAdapter implements Screen {
     Deck deck;
     Card[] playerHand;
 
-    RoboRally(String mapFile) {
+    RoboRally(String mapFile, String playerFile) {
         //Initializes the board and HUD
         board = new Board(mapFile, 0);
 
@@ -39,7 +39,7 @@ public class RoboRally extends InputAdapter implements Screen {
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(
                 false,
-                board.boardWidth+extraSpace*displayWidthHeightRatio,
+                (board.boardWidth+extraSpace)*displayWidthHeightRatio,
                 board.boardHeight+extraSpace);
         camera.position.x = board.boardWidth/2f;
         camera.position.y = board.boardHeight/2f - 3;
@@ -51,7 +51,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
         //Sets up one player and texture for testing purposes
         player = new Player("Test", 0, 0, 0);
-        TextureRegion[][] tr = player.setPlayerTextures("assets/pictures/player.png");
+        TextureRegion[][] tr = player.setPlayerTextures(playerFile);
         ps = new PlayerState(player, board, tr);
 
         TextureRegion[][] healthbars = player.setPlayerTextures("assets/pictures/healthbars.png");
@@ -163,7 +163,10 @@ public class RoboRally extends InputAdapter implements Screen {
         board.playerLayer.getCell(x, y).setRotation(player.getOrientation());
 
         board.healthLayer.setCell(x, y, hb.getPlayerHealth());
-        board.healthLayer.getCell(x, y).setRotation(player.getOrientation());
+        try {
+            board.healthLayer.getCell(x, y).setRotation(player.getOrientation()); }
+        catch (NullPointerException ignored) {}
+
 
         mapRenderer.render();
         hud.render();

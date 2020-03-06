@@ -46,7 +46,7 @@ public class Board {
 
         for(int i = 0; i < flagLayer.getWidth(); i++) {
             for(int j = 0; j < flagLayer.getHeight(); j++) {
-                if (flagLayer.getCell(i,j) != null) {
+                if (hasTile(flagLayer,i,j)) {
                     objectives++;
                 }
             }
@@ -60,7 +60,7 @@ public class Board {
      */
     public void forwardMove(Player player, int move) {
         //This is easier to modify, in order to make it work with cards
-        TiledMapTileLayer.Cell getHole = holeLayer.getCell(player.getxPos(), player.getyPos());
+        boolean isHole = hasTile(holeLayer,player.getxPos(),player.getyPos());
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
         healthLayer.setCell(player.getxPos(), player.getyPos(), null);
         //Gets the orientation from the player, in order to check which direction they should move
@@ -71,7 +71,7 @@ public class Board {
                 case (0):
                     if (isBlocked(player, 0)) {
                         break;
-                    } else if (player.getyPos() >= boardHeight-1 || getHole != null) {
+                    } else if (player.getyPos() >= boardHeight-1 || isHole ) {
                         player.addHealth(-player.getMaxHealth());
                     } else {
                         player.setyPos(player.getyPos() + 1);
@@ -81,7 +81,7 @@ public class Board {
                 case (1):
                     if (isBlocked(player, 1)) {
                         break;
-                    } else if (player.getxPos() <= 0 || getHole != null) {
+                    } else if (player.getxPos() <= 0 || isHole) {
                         player.addHealth(-player.getMaxHealth());
                     } else {
                         player.setxPos(player.getxPos() - 1);
@@ -91,7 +91,7 @@ public class Board {
                 case (2):
                     if (isBlocked(player, 2)) {
                         break;
-                    } else if (player.getyPos() <= 0 || getHole != null) {
+                    } else if (player.getyPos() <= 0 || isHole) {
                         player.addHealth(-player.getMaxHealth());
                     } else {
                         player.setyPos(player.getyPos() - 1);
@@ -101,7 +101,7 @@ public class Board {
                 case (3):
                     if (isBlocked(player, 3)) {
                         break;
-                    } else if (player.getxPos() >= boardWidth-1 || getHole != null) {
+                    } else if (player.getxPos() >= boardWidth-1 || isHole) {
                         player.addHealth(-player.getMaxHealth());
                     } else {
                         player.setxPos(player.getxPos() + 1);
@@ -149,6 +149,20 @@ public class Board {
     }
 
     /**
+     * @return true if the tile is not null
+     */
+    public boolean hasTile(TiledMapTileLayer layer, int x, int y) {
+        return (layer.getCell(x, y) != null);
+    }
+
+    /**
+     * @return true if the tile is not null
+     */
+    public boolean hasTile(TiledMapTileLayer.Cell Cell) {
+        return (Cell != null);
+    }
+
+    /**
      * Does the entire turn in the correct order
      */
     public void doTurn(){
@@ -179,10 +193,10 @@ public class Board {
         TiledMapTileLayer.Cell laser = laserLayer.getCell(x,y);
         TiledMapTileLayer.Cell wrench = wrenchLayer.getCell(x,y);
 
-        if (laser != null) {
+        if (hasTile(laser)) {
             player.addHealth(-1);
         }
-        if (wrench != null) {
+        if (hasTile(wrench)) {
             player.addHealth(1);
         }
         checkObjective(player);
@@ -224,14 +238,14 @@ public class Board {
         TiledMapTileLayer.Cell push = pushLayer.getCell(x, y);
         TiledMapTileLayer.Cell gear = gearLayer.getCell(x, y);
 
-        if (conveyor != null){
+        if (hasTile(conveyor)){
             moveConveyor(player, conveyor);
         }
-        if (push != null){
+        if (hasTile(push)){
             //TODO
             return;
         }
-        if (gear != null){
+        if (hasTile(gear)){
             switch (gear.getTile().getId()){
                 case (47):
                     player.turn(1); // Turn left
@@ -254,7 +268,7 @@ public class Board {
     private void checkObjective(Player player) {
         int x = player.getxPos(), y = player.getyPos();
         TiledMapTileLayer.Cell flag = flagLayer.getCell(x, y);
-        if (flag != null) {
+        if (hasTile(flag)) {
             switch (flag.getTile().getId()) {
                 case 49:
                     if (player.setObjective(2))
@@ -326,10 +340,10 @@ public class Board {
     private boolean isBlocked(int x, int y, int dir){
         int[] nb = getNeighbour(x, y, dir);
         int wallThis = 0, wallNext = 0;
-        if (wallLayer.getCell(x, y) != null) {
+        if (hasTile(wallLayer, x, y)) {
             wallThis = wallLayer.getCell(x, y).getTile().getId();
         }
-        if (wallLayer.getCell(nb[0], nb[1]) != null) {
+        if (hasTile(wallLayer, nb[0], nb[1])) {
             wallNext = wallLayer.getCell(nb[0], nb[1]).getTile().getId();
         }
         switch (dir) {
@@ -363,7 +377,7 @@ public class Board {
      * @return true when the laser has hit something
      */
     private boolean laser(int x, int y, int dir){
-        if (playerLayer.getCell(x, y).getTile().getId() != 0){
+        if (hasTile(playerLayer, x, y)){
             players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-1);
         }
         else if (!isBlocked(x, y, dir)){

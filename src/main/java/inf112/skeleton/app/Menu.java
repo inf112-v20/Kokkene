@@ -24,6 +24,7 @@ public class Menu implements Screen {
     private final Button gameButton;
     private final Button exitButton;
     private final SelectBox<String> selectMap;
+    private final SelectBox<String> selectPlayer;
 
     private String select;
 
@@ -44,8 +45,6 @@ public class Menu implements Screen {
         stage = new Stage();
         batch = new SpriteBatch();
 
-        select = "12by12DizzyDash";
-
         //Start Game button
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f);
@@ -56,12 +55,18 @@ public class Menu implements Screen {
         selectMap.setWidth(gameButton.getWidth()*.87f);
         selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight()*2);
 
+        selectPlayer = new SelectBox<>(skin);
+        selectPlayer.setItems(getPlayers());
+        selectPlayer.setWidth(gameButton.getWidth()*.87f);
+        selectPlayer.setPosition(width/2f - selectPlayer.getWidth()/2, gameButton.getY() - selectMap.getHeight()*4);
+
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
-        exitButton.setPosition(width/2f - exitButton.getWidth()/2, selectMap.getY() - exitButton.getHeight() - selectMap.getHeight()*3);
+        exitButton.setPosition(width/2f - exitButton.getWidth()/2, selectMap.getY() - exitButton.getHeight() - selectMap.getHeight()*5);
 
         stage.addActor(gameButton);
         stage.addActor(selectMap);
+        stage.addActor(selectPlayer);
         stage.addActor(exitButton);
     }
 
@@ -124,7 +129,7 @@ public class Menu implements Screen {
 
     public void LoadGame() {
         select = selectMap.getSelected();
-        game.setScreen(new RoboRally("assets/maps/" + select + ".tmx"));
+        game.setScreen(new RoboRally("assets/maps/" + select + ".tmx", "assets/pictures/" + selectPlayer.getSelected() + " Player.png"));
     }
 
     public Array<String> getMaps(){
@@ -136,6 +141,17 @@ public class Menu implements Screen {
             }
         }
         return mapArray;
+    }
+
+    public Array<String> getPlayers(){
+         Array<String> playerArray = new Array<>();
+        File players = new File("assets/pictures");
+        for (String p : Objects.requireNonNull(players.list())){
+            if (p.contains("Player")){
+                playerArray.add(p.substring(0, p.lastIndexOf(" ")));
+            }
+        }
+        return playerArray;
     }
 
 }

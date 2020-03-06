@@ -170,7 +170,8 @@ public class Player  {
         this.health = Math.min(health, MAXHEALTH);
         if (this.health<=0) {
             addLifePoints(-1);
-            this.health = MAXHEALTH;
+            if (getLifePoints()>0)
+                this.health = MAXHEALTH;
         }
     }
 
