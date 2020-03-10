@@ -118,6 +118,9 @@ public class RoboRally extends InputAdapter implements Screen {
                 player.setOrientation(3);
                 board.forwardMove(player, move);
                 break;
+            case (Input.Keys.SPACE):
+                board.forwardMove(player,0);
+                break;
 
             case (Input.Keys.M):
                 music.muteToggle();
