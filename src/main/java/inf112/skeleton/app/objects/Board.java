@@ -3,11 +3,12 @@ package inf112.skeleton.app.objects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.player.Player;
 
 import java.util.Arrays;
 
-public class Board {
+public class Board extends Tile{
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
@@ -342,24 +343,24 @@ public class Board {
      */
     private boolean isBlocked(int x, int y, int dir){
         int[] nb = getNeighbour(x, y, dir);
-        int wallThis = 0, wallNext = 0;
+        int wallThis = 9, wallNext = 9;
         if (hasTile(wallLayer, x, y)) {
-            wallThis = wallLayer.getCell(x, y).getTile().getId();
+            wallThis = wallSide(wallLayer, x, y);
         }
         if (hasTile(wallLayer, nb[0], nb[1])) {
-            wallNext = wallLayer.getCell(nb[0], nb[1]).getTile().getId();
+            wallNext = wallSide(wallLayer, nb[0], nb[1]);
         }
         switch (dir) {
             case 0:
-                return wallThis == 28 || wallNext == 26;
+                return wallThis == 0 || wallNext == 2;
             case 1:
-                return wallThis == 27 || wallNext == 21;
+                return wallThis == 1 || wallNext == 3;
             case 2:
-                return wallThis == 26 || wallNext == 28;
+                return wallThis == 2 || wallNext == 0;
             case 3:
-                return wallThis == 21 || wallNext == 27;
+                return wallThis == 3 || wallNext == 1;
         }
-        return true;
+        return false;
     }
 
     /**
