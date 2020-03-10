@@ -23,7 +23,7 @@ public class Music {
         music.setLooping(true);
     }
 
-    public void  pause() {
+    public void pause() {
         music.pause();
     }
 

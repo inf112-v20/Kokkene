@@ -36,7 +36,7 @@ public class Menu implements Screen {
 
     private int height = Gdx.graphics.getHeight();
     private int width = Gdx.graphics.getWidth();
-    Game game;
+    private Game game;
 
     public Menu(Game game) {
         this.game = game;

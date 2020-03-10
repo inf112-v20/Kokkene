@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 
 public class DeckTest {
 
-    Deck deck;
+    private Deck deck;
 
     @Before
     public void makeDeck() throws IOException {

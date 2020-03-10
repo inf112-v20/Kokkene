@@ -1,5 +1,6 @@
 package inf112.skeleton.app.game;
 
+
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,12 +32,9 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private Music music;
 
-    Deck deck;
-    Card[] playerHand;
+    private Game game;
 
-    Game game;
-
-    int num = 0;
+    private int num = 0;
 
     RoboRally(Game game, String mapFile, String playerFile) {
         //Initializes the board and HUD
@@ -76,11 +74,11 @@ public class RoboRally extends InputAdapter implements Screen {
 
         //Makes deck and gives the initial set of cards. Will be moved once we implement rounds.
         try {
-            deck = new Deck();
+            Deck deck = new Deck();
             deck.shuffle();
             player.setHand(deck);
             showDeck = new ShowDeck(player);
-            playerHand = player.getCards();
+            Card[] playerHand = player.getCards();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -210,7 +208,6 @@ public class RoboRally extends InputAdapter implements Screen {
 
     @Override
     public void hide() {
-
     }
 
     /**

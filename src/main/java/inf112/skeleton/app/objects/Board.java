@@ -17,7 +17,7 @@ public class Board {
 
     public int objectives;
 
-    Player[] players;
+    public Player[] players;
 
     /**
      *
@@ -65,9 +65,10 @@ public class Board {
         playerLayer.setCell(player.getxPos(), player.getyPos(), null);
         healthLayer.setCell(player.getxPos(), player.getyPos(), null);
         //Gets the orientation from the player, in order to check which direction they should move
+        int orientation = player.getOrientation();
 
         if(move > 0 || move == -1) {
-            switch (player.getOrientation()) {
+            switch (orientation) {
                 //North
                 case (0):
                     if (isBlocked(player, 0)) {
@@ -133,7 +134,8 @@ public class Board {
      * @param pl player to move
      */
     public void cardMove(Card card, Player pl) {
-        switch(card.getName()){
+        int name = card.getName();
+        switch(name){
             //Forward
             case (0):
                 forwardMove(pl, card.getMove());

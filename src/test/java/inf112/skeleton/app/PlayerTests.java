@@ -9,100 +9,101 @@ import static org.junit.Assert.assertFalse;
 
 public class PlayerTests {
 
-    Player player;
-    int xPos, yPos = 1;
-    int upValue = 0,
-            leftValue = 1,
-            downValue = 2,
-            rightValue = 3;
+    private Player player;
+    private int xPos = 1;
+    private int yPos = 1;
+    private int upValue = 0;
     int maxHealth = 10, maxLifePoints = 3;
 
     @Before
-    public void MakePlayer() {
+    public void makePlayer() {
         player = new Player("player", xPos, yPos, upValue,false);
     }
 
     @Test
-    public void PlayerHasTenHealthAfterInitiation() {
+    public void playerHasTenHealthAfterInitiation() {
         assertEquals(10, player.getHealth());
     }
 
     @Test
-    public void PlayerHasThreeLivesAfterInitiation() {
+    public void playerHasThreeLivesAfterInitiation() {
         assertEquals(3, player.getLifePoints());
     }
 
     @Test
-    public void PlayerHasOrientationOneAfterInitiation() {
+    public void playerHasOrientationOneAfterInitiation() {
         assertEquals(upValue, player.getOrientation());
     }
 
     @Test
-    public void PlayerXPositionIsOneAfterInitiation() {
+    public void playerXPositionIsOneAfterInitiation() {
         assertEquals(player.getxPos(),xPos);
     }
 
     @Test
-    public void PlayerYPositionIsOneAfterInitiation() {
+    public void playerYPositionIsOneAfterInitiation() {
         assertEquals(player.getyPos(),yPos);
     }
 
     @Test
-    public void PlayerXBackupIsOneAfterMoving() {
+    public void playerXBackupIsOneAfterMoving() {
         player.setxPos(7);
         assertEquals(xPos, player.getxBackup());
     }
 
     @Test
-    public void PlayerYBackupIsOneAfterMoving() {
+    public void playerYBackupIsOneAfterMoving() {
         player.setyPos(7);
         assertEquals(yPos, player.getyBackup());
     }
 
     @Test
-    public void PlayerTakesOneDamageOnCall() {
+    public void playerTakesOneDamageOnCall() {
         int damage = -1;
         player.addHealth(damage);
         assertEquals(maxHealth + damage, player.getHealth());
     }
 
     @Test
-    public void PlayerLoseOneLifePointWhenTakingTenDamage() {
+    public void playerLoseOneLifePointWhenTakingTenDamage() {
         int damage = -10;
         player.addHealth(damage);
         assertEquals(maxLifePoints-1, player.getLifePoints());
     }
 
     @Test
-    public void PlayerIsDeadAfterLosingTenHealthThreeTimes() {
+    public void playerIsDeadAfterLosingTenHealthThreeTimes() {
         int damage = -10;
         player.addHealth(damage); player.addHealth(damage); player.addHealth(damage);
         assertFalse(player.isAlive());
     }
 
     @Test
-    public void PlayerCanTurnRight() {
+    public void playerCanTurnRight() {
         int turnRight = -1;
         player.turn(turnRight);
+        int rightValue = 3;
         assertEquals(rightValue, player.getOrientation());
     }
 
     @Test
-    public void PlayerCanTurnLeft() {
+    public void playerCanTurnLeft() {
         int turnLeft = 1;
         player.turn(turnLeft);
+        int leftValue = 1;
         assertEquals(leftValue, player.getOrientation());
     }
 
     @Test
-    public void PlayerCanTurn180degrees() {
+    public void playerCanTurn180degrees() {
         int turnAround = 2;
         player.turn(turnAround);
+        int downValue = 2;
         assertEquals(downValue, player.getOrientation());
     }
 
     @Test
-    public void PlayerObjectiveCanOnlyChangeToOneMore() {
+    public void playerObjectiveCanOnlyChangeToOneMore() {
         int initialObjective = 1, newObjective = 3; //Objective is initially 1
         player.setObjective(newObjective);
         assertEquals(initialObjective, player.getObjective());
