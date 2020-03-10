@@ -5,13 +5,24 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import java.util.Objects;
 
 public enum Tile {
+    //Pistons
     PUSHDOWN2(1), PUSHLEFT2(2), PUSHUP2(3), PUSHRIGHT2(4),
     PUSHDOWN1(8), PUSHLEFT1(9), PUSHUP1(10), PUSHRIGHT1(11),
+
+    //Wrench
     WRENCH2(7), WRENCH1(14),
+
+    //Conveyors
     MOVEUP2(12), MOVERIGHT2(13), MOVEDOWN2(19), MOVELEFT2(20),
     MOVEUP1(43), MOVEDOWN1(44), MOVELEFT1(45), MOVERIGHT1(46),
+
+    //Walls
     WALLRIGHT(21), WALLDOWN(26), WALLLEFT(27), WALLUP(28),
+
+    //Rotating gears
     GEARLEFT(47), GEARRIGHT(48),
+
+    //Objectives
     FLAG1(49), FLAG2(56), FLAG3(63), FLAG4(70);
 
     public final int num;

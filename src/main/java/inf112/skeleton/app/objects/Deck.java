@@ -1,15 +1,14 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.objects;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-//deck1994 does not contain the correct priorities but follows the rule: (3m -> 2m -> 1m/-1m -> left/right/U-turn)
 public class Deck {
     Scanner Scn = new Scanner(new File("assets/deck1994.txt"));
 
     //Saves all the cards from the given txt file in this queue
-    Queue<Card> Cards = new LinkedList<>();
+    public Queue<Card> Cards = new LinkedList<>();
 
     //Creates a deck from the text file set inside the constructor
     public Deck() throws IOException {

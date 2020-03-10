@@ -1,10 +1,18 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.game;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import inf112.skeleton.app.HUD;
+import inf112.skeleton.app.ShowDeck;
+import inf112.skeleton.app.objects.Board;
+import inf112.skeleton.app.objects.Card;
+import inf112.skeleton.app.objects.Deck;
+import inf112.skeleton.app.player.Player;
+import inf112.skeleton.app.player.PlayerState;
+import inf112.skeleton.app.sound.Music;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 

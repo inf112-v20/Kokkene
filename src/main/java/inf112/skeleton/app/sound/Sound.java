@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.sound;
 
 import com.badlogic.gdx.Gdx;
 
@@ -10,7 +10,7 @@ public class Sound {
     private long id;
     private float pitch = 0.5f;
 
-    Sound(String filePath) {
+    public Sound(String filePath) {
         this.sound = Gdx.audio.newSound(Gdx.files.internal(filePath));
         this.id = sound.play((float) 0);
     }

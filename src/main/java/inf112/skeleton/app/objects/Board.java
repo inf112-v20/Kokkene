@@ -1,8 +1,9 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.objects;
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import inf112.skeleton.app.player.Player;
 
 import java.util.Arrays;
 
@@ -12,7 +13,7 @@ public class Board {
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
              wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, healthLayer;
 
-    int boardHeight, boardWidth;
+    public int boardHeight, boardWidth;
 
     public int objectives;
 

@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.sound;
 
 import com.badlogic.gdx.Gdx;
 
@@ -13,7 +13,7 @@ public class Music {
     //May be in unpacked file format.
     static String musicFilePath = "assets/sound/S31-CrackedOutRobot.wav";
 
-    Music() {
+    public Music() {
         music = Gdx.audio.newMusic(Gdx.files.internal(musicFilePath));
         music.setVolume(0.1f);
     }

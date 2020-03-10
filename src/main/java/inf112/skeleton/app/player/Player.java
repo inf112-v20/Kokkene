@@ -1,7 +1,10 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.player;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import inf112.skeleton.app.objects.Card;
+import inf112.skeleton.app.objects.Deck;
+import inf112.skeleton.app.sound.Sound;
 
 /**
  *
