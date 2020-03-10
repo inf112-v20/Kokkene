@@ -2,7 +2,9 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,24 +19,30 @@ public class ShowDeck extends InputAdapter {
      */
 
     private Player player;
-    private final Vector2 mouseInWorld2D = new Vector2();
     private int WIDTH = Main.cfg.width;
     private int HEIGHT = Main.cfg.height;
 
     public TextureRegion[] texturedCards;
 
-    SpriteBatch batch = new SpriteBatch();
-    BitmapFont font = new BitmapFont();
-    Texture card = new Texture(Gdx.files.internal("pictures/card.png"));
-    TextureRegion tr = new TextureRegion(card);
+    SpriteBatch batch;
+    //BitmapFont font = new BitmapFont();
+    //Texture card = new Texture(Gdx.files.internal("pictures/card.png"));
+    //TextureRegion tr = new TextureRegion(card);
+    Pixmap pixmap;
+    Texture texture;
 
-    float widthHeightRatio = (float)tr.getRegionHeight()/(float)tr.getRegionWidth();
+
+    //float widthHeightRatio = (float)tr.getRegionHeight()/(float)tr.getRegionWidth();
 
     public ShowDeck(Player player) {
+        Gdx.input.setInputProcessor(this);
         this.player = player;
         texturedCards = new TextureRegion[player.getCards().length];
-        font.setColor(Color.BLACK);
-        createCardTexture();
+        //font.setColor(Color.BLACK);
+        //createCardTexture();
+        batch = new SpriteBatch();
+        pixmap = new Pixmap(Gdx.files.internal("pictures/card.png"));
+        texture = new Texture(pixmap);
 
     }
 
@@ -44,12 +52,9 @@ public class ShowDeck extends InputAdapter {
      * like in hearthstone TODO
      */
     public void render() {
-
-        mouseInWorld2D.x = Gdx.input.getX();
-        mouseInWorld2D.y = Gdx.input.getY();
         batch.begin();
         for (int i = 0; i < player.getCards().length; i++) {
-            batch.draw(tr, i*(WIDTH/player.getCards().length), 0,WIDTH/(player.getCards().length), (WIDTH/(player.getCards().length)* widthHeightRatio));
+            batch.draw(texture,0, 0);
 
         }
 
@@ -59,12 +64,21 @@ public class ShowDeck extends InputAdapter {
     /**
      * TODO
      * Create the texture for the cards and save them into the array texturedCards.
-     */
+     *
     private void createCardTexture() {
         for(int i = 0; i < texturedCards.length; i++) {
             this.texturedCards[i] = new TextureRegion(card);
 
         }
 
+    }
+     */
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        pixmap.setColor(Color.GREEN);
+        pixmap.fillCircle(screenX,screenY, 5);
+        texture.draw(pixmap,0,0);
+        return true;
     }
 }

@@ -178,7 +178,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
         mapRenderer.render();
         hud.render();
-        showDeck.render();
+        //showDeck.render();
 
         if(player.getObjective() == board.objectives+1) {
             if (num == 1) {
