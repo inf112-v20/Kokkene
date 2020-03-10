@@ -180,7 +180,7 @@ public class RoboRally extends InputAdapter implements Screen {
         hud.render();
         //showDeck.render();
 
-        if(player.getObjective() == board.objectives+1) {
+        if(player.getObjective() == board.objectives+1 && board.objectives != 0) {
             if (num == 1) {
                 try {
                     Thread.sleep(3000);

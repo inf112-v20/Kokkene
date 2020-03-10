@@ -82,13 +82,11 @@ public class Player  {
     }
 
     /**
-     * Set a new spawn position with an x and a y value.
-     * @param xBackup  the new x-coordinate for spawn point.
-     * @param yBackup  the new y-coordinate for spawn point.
+     * The current position is the new backup
      */
-    public void setBackup(int xBackup, int yBackup) {
-        this.xBackup = xBackup;
-        this.yBackup = yBackup;
+    public void newBackup() {
+        this.xBackup = this.xPos;
+        this.xBackup = this.xPos;
     }
 
     /**
@@ -213,6 +211,7 @@ public class Player  {
      */
     public void checkObjective(int ob) {
         if (ob==this.objective) {
+            newBackup();
             this.objective += 1;
         }
     }
