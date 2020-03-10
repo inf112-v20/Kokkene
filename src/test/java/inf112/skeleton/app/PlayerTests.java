@@ -104,8 +104,8 @@ public class PlayerTests {
 
     @Test
     public void playerObjectiveCanOnlyChangeToOneMore() {
-        int initialObjective = 1, newObjective = 3; //Objective is initially 1
-        player.setObjective(newObjective);
+        int initialObjective = 1, newObjective = 2; //Objective is initially 1
+        player.checkObjective(newObjective);
         assertEquals(initialObjective, player.getObjective());
     }
 }

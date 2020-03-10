@@ -211,12 +211,10 @@ public class Player  {
     /**
      * @param ob  new objective
      */
-    public boolean setObjective(int ob) {
-        if (ob-this.objective==1) {
-            this.objective = ob;
-            return true;
+    public void checkObjective(int ob) {
+        if (ob==this.objective) {
+            this.objective += 1;
         }
-        return false;
     }
 
     /**

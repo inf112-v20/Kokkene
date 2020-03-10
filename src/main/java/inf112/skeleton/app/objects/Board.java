@@ -271,23 +271,8 @@ public class Board extends Tile{
      */
     private void checkObjective(Player player) {
         int x = player.getxPos(), y = player.getyPos();
-        TiledMapTileLayer.Cell flag = flagLayer.getCell(x, y);
-        if (hasTile(flag)) {
-            switch (flag.getTile().getId()) {
-                case 49:
-                    if (player.setObjective(2))
-                        player.setBackup(x, y);
-                    break;
-                case 56:
-                    if (player.setObjective(3))
-                        player.setBackup(x, y);
-                    break;
-                case 63:
-                    if (player.setObjective(4))
-                        player.setBackup(x, y);
-                    break;
-                case 70: player.setObjective(5); break;//temporary solution to getting the 4th flag
-            }
+        if (hasTile(flagLayer.getCell(x,y))) {
+            player.checkObjective(flagValue(flagLayer,x,y));
         }
     }
 
