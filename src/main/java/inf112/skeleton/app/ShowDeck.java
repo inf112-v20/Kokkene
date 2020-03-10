@@ -17,6 +17,8 @@ public class ShowDeck extends InputAdapter {
 
     private Player player;
     private final Vector2 mouseInWorld2D = new Vector2();
+    private int WIDTH = Main.cfg.width;
+    private int HEIGHT = Main.cfg.height;
 
     public TextureRegion[] texturedCards;
 
@@ -25,12 +27,14 @@ public class ShowDeck extends InputAdapter {
     Texture card = new Texture(Gdx.files.internal("pictures/card.png"));
     TextureRegion tr = new TextureRegion(card);
 
+    float widthHeightRatio = (float)tr.getRegionHeight()/(float)tr.getRegionWidth();
 
     public ShowDeck(Player player) {
         this.player = player;
         texturedCards = new TextureRegion[player.getCards().length];
         font.setColor(Color.BLACK);
         createCardTexture();
+
     }
 
     /**
@@ -44,8 +48,7 @@ public class ShowDeck extends InputAdapter {
         mouseInWorld2D.y = Gdx.input.getY();
         batch.begin();
         for (int i = 0; i < player.getCards().length; i++) {
-
-            batch.draw(tr, (Main.cfg.width/2f)-(i*5),40-(i*10),0,0, 40, 80, 4,4, (i*10)-20);
+            batch.draw(tr, i*(WIDTH/player.getCards().length), 0,WIDTH/(player.getCards().length), (WIDTH/(player.getCards().length)* widthHeightRatio));
 
         }
 
