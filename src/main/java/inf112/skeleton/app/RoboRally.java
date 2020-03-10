@@ -1,9 +1,6 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,8 +26,13 @@ public class RoboRally extends InputAdapter implements Screen {
     Deck deck;
     Card[] playerHand;
 
-    RoboRally(String mapFile, String playerFile) {
+    Game game;
+
+    int num = 0;
+
+    RoboRally(Game game, String mapFile, String playerFile) {
         //Initializes the board and HUD
+        this.game = game;
         board = new Board(mapFile, 0);
 
         int extraSpace = 8;
@@ -149,6 +151,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     @Override
     public void dispose(){
+        music.dispose();
     }
 
     @Override
@@ -167,10 +170,22 @@ public class RoboRally extends InputAdapter implements Screen {
             board.healthLayer.getCell(x, y).setRotation(player.getOrientation()); }
         catch (NullPointerException ignored) {}
 
-
         mapRenderer.render();
         hud.render();
         showDeck.render();
+
+        if(player.getObjective() == board.objectives+1) {
+            if (num == 1) {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                dispose();
+                game.setScreen(new Menu(game));
+            }
+            num = 1;
+        }
     }
 
     @Override
