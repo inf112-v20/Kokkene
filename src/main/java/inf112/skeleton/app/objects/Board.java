@@ -247,12 +247,20 @@ public class Board extends Tile{
         int x = player.getxPos(), y = player.getyPos();
 
         if (hasTile(conveyorLayer, x, y)){
-            moveConveyor(player);
+            moveDoubleConveyor(player, x, y);
+            //TODO render between each part of the phases, but only if player moved.
         }
-        else if (hasTile(pushLayer, x, y)){
+        x = player.getxPos(); y = player.getyPos();
+        //Must update x and y because player may change position.
+        if (hasTile(conveyorLayer, x, y)){
+            moveConveyor(player, x, y);
+        }
+        x = player.getxPos(); y = player.getyPos();
+        if (hasTile(pushLayer, x, y)){
             doPush(player, phase, x, y);
         }
-        else if (hasTile(gearLayer, x, y)){
+        x = player.getxPos(); y = player.getyPos();
+        if (hasTile(gearLayer, x, y)){
             player.turn(gearDirection(gearLayer, x, y));
         }
     }
@@ -271,8 +279,42 @@ public class Board extends Tile{
         }
     }
 
-    private void moveConveyor(Player player){
-        //TODO
+    /**
+     * Moves a player if he is on a double conveyor
+     * @param player player to move
+     * @param x position of player
+     * @param y position of player
+     */
+    private void moveDoubleConveyor(Player player, int x, int y){
+        if (conveyorValue(conveyorLayer, x, y) == 2) {
+            int direction = conveyorDirection(conveyorLayer, x, y);
+            move(player, direction);
+            doConveyorTurn(player, direction);
+        }
+    }
+
+    /**
+     * Moves a player who is on a conveyor
+     * @param player player to move
+     * @param x position of player
+     * @param y position of player
+     */
+    private void moveConveyor(Player player, int x, int y){
+        int direction = conveyorDirection(conveyorLayer, x, y);
+        move(player, direction);
+        doConveyorTurn(player, direction);
+    }
+
+    /**
+     * Turns a player according to the conveyors
+     * @param player that will turn
+     * @param lastDirection from the last conveyor
+     */
+    private void doConveyorTurn(Player player, int lastDirection) {
+        int x = player.getxPos(), y = player.getyPos();
+        if (hasTile(conveyorLayer, x, y)) {
+            player.turn(conveyorDirection(conveyorLayer, x, y)-lastDirection);
+        }
     }
 
     /**

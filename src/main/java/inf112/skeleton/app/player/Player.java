@@ -142,10 +142,14 @@ public class Player  {
 
     /**
      * Turns the robot
-     * @param change positive numbers are to the right, negative turns to the left
+     * @param change positive numbers are to the left, negative turns to the right
      */
     public void turn(int change){
-        setOrientation((getOrientation() + change + 4) % 4);
+        change += getOrientation();
+
+        while (change<0) change +=4;
+        //change will never be less than 0;
+        setOrientation(change % 4);
     }
 
     public int getMaxHealth() { return MAXHEALTH; }

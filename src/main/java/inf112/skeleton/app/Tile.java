@@ -14,11 +14,33 @@ public class Tile {
         //Wrench
         WRENCH2(7,2,0), WRENCH1(14,1,0),
 
-        //Conveyors
-        MOVEUP2(12,2,0), MOVERIGHT2(13,2,3),
-        MOVEDOWN2(19,2,2), MOVELEFT2(20,2,1),
-        MOVEUP1(43,1,0), MOVERIGHT1(46,1,3),
-        MOVEDOWN1(44,1,2), MOVELEFT1(45,1,1),
+        //Double conveyors
+        CONUP2(12,2,0), CONRIGHT2(13,2,3),
+        CONDOWN2(19,2,2), CONLEFT2(20,2,1),
+        CONDOWN21(15,2, 2), CONLEFT21(16,2,1),
+        CONRIGHT21(17,2,3),CONDOWN22(18,2,2),
+        CONRIGHT22(22,2,3),CONUP21(23,2,0),
+        CONUP22(24,2,0),CONLEFT22(25,2,1),
+        CONUP23(64,2,0),CONRIGHT23(65,2,3),
+        CONDOWN23(66,2,2),CONLEFT23(67,2,1),
+        CONUP24(68,2,0),CONRIGHT24(69,2,3),
+        CONRIGHT25(71,2,3),CONDOWN25(72,2,2),
+        CONLEFT25(73,2,1),CONUP25(74,2,0),
+        CONLEFT24(75,2,1),CONDOWN24(76,2,2),
+
+        //Single conveyors
+        CONDOWN11(29,1,2),CONLEFT11(30,1,1),
+        CONRIGHT11(31,1,3),CONDOWN12(32,1,2),
+        CONRIGHT12(36,1,3),CONUP11(37,1,0),
+        CONUP12(38,1,0),CONLEFT(39,1,1),
+        CONUP1(43,1,0), CONDOWN1(44,1,2),
+        CONLEFT1(45,1,1), CONRIGHT1(46,1,3),
+        CONUP13(50,1,0),CONRIGHT13(51,1,3),
+        CONDOWN13(52,1,2),CONLEFT13(53,1,1),
+        CONRIGHT14(54,1,3),CONDOWN14(55,1,2),
+        CONUP15(57,1,0),CONRIGHT15(58,1,3),
+        CONDOWN15(59,1,2),CONLEFT15(60,1,1),
+        CONUP14(61,1,0),CONLEFT14(62,1,1),
 
         //Walls
         WALLRIGHT(21,0,3), WALLDOWN(26,0,2),
@@ -119,6 +141,9 @@ public class Tile {
         return getTile(conveyorLayer.getCell(x, y).getTile().getId()).val;
     }
 
+    /**
+     * @return direction of conveyor
+     */
     public int conveyorDirection(TiledMapTileLayer conveyorLayer, int x, int y) {
         return getTile(conveyorLayer.getCell(x, y).getTile().getId()).dir;
     }
