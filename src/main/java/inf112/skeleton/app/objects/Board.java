@@ -289,7 +289,7 @@ public class Board extends Tile{
         if (conveyorValue(conveyorLayer, x, y) == 2) {
             int direction = conveyorDirection(conveyorLayer, x, y);
             move(player, direction);
-            doConveyorTurn(player, direction);
+            //doConveyorTurn(player, direction);
         }
     }
 
@@ -302,7 +302,7 @@ public class Board extends Tile{
     private void moveConveyor(Player player, int x, int y){
         int direction = conveyorDirection(conveyorLayer, x, y);
         move(player, direction);
-        doConveyorTurn(player, direction);
+        //doConveyorTurn(player, direction);
     }
 
     /**
