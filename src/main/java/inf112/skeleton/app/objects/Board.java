@@ -12,7 +12,7 @@ public class Board extends Tile{
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
-             wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, healthLayer;
+            wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, healthLayer;
 
     public int boardHeight, boardWidth;
 
@@ -60,16 +60,17 @@ public class Board extends Tile{
      * @param player to move
      * @param direction to go
      */
-    private void move(Player player, int direction) {
+    private boolean move(Player player, int direction) {
         int x = player.getxPos(), y = player.getyPos();
         boolean isHole = hasTile(holeLayer,x,y);
         switch (direction) {
             //North
             case (0):
                 if (isBlocked(player, 0)) {
-                    break;
+                    return false;
                 } else if (y >= boardHeight-1 || isHole ) {
                     player.addHealth(-player.getMaxHealth());
+                    return false;
                 } else {
                     player.setyPos(y + 1);
                 }
@@ -77,9 +78,10 @@ public class Board extends Tile{
             //West
             case (1):
                 if (isBlocked(player, 1)) {
-                    break;
+                    return false;
                 } else if (x <= 0 || isHole) {
                     player.addHealth(-player.getMaxHealth());
+                    return false;
                 } else {
                     player.setxPos(x - 1);
                 }
@@ -87,9 +89,10 @@ public class Board extends Tile{
             //South
             case (2):
                 if (isBlocked(player, 2)) {
-                    break;
+                    return false;
                 } else if (y <= 0 || isHole) {
                     player.addHealth(-player.getMaxHealth());
+                    return false;
                 } else {
                     player.setyPos(y - 1);
                 }
@@ -97,14 +100,16 @@ public class Board extends Tile{
             //East
             case (3):
                 if (isBlocked(player, 3)) {
-                    break;
+                    return false;
                 } else if (x >= boardWidth-1 || isHole) {
                     player.addHealth(-player.getMaxHealth());
+                    return false;
                 } else {
                     player.setxPos(x + 1);
                 }
                 break;
         }
+        return true;
     }
 
     /**
@@ -112,7 +117,9 @@ public class Board extends Tile{
      * @param player to move
      * @param move how many spaces to move from current position
      */
-    public void forwardMove(Player player, int move) {
+    public void forwardMove(Player player, int move) {forwardMove(player, move, true); }
+
+    public void forwardMove(Player player, int move, boolean legalMove) {
         //This is easier to modify, in order to make it work with cards
         int x = player.getxPos(), y = player.getyPos();
         playerLayer.setCell(x, y, null);
@@ -121,8 +128,10 @@ public class Board extends Tile{
         int orientation = player.getOrientation();
 
         if(move > 0 || move == -1) {
-            move(player, orientation);
-            forwardMove(player, move-1);
+            if (legalMove) {
+                legalMove = move(player, orientation);
+            }
+            forwardMove(player, move-1, legalMove);
         }
         else {
             //Checks afterturn after every move for now, to make sure it works.
@@ -273,7 +282,7 @@ public class Board extends Tile{
      * @param y position
      */
     private void doPush(Player player, int phase, int x, int y) {
-        if (phase%2==pushRound(pushLayer, x, y)){
+        if (phase%2 == pushRound(pushLayer, x, y)){
             int direction = pushDirection(pushLayer,x,y);
             move(player, direction);
         }
