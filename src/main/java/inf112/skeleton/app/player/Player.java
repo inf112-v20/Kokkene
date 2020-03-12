@@ -86,7 +86,7 @@ public class Player  {
      */
     public void newBackup() {
         this.xBackup = this.xPos;
-        this.xBackup = this.xPos;
+        this.yBackup = this.yPos;
     }
 
     /**
