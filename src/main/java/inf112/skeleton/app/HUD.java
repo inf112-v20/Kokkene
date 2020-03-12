@@ -33,13 +33,15 @@ public class HUD {
         batch.begin();
         int heartSize = Display.getWidth()/40;
         for(int i = 0; i < player.getHealth(); i++) {
-            batch.draw(heart, (i*25), HEIGHT-40, heartSize, heartSize);
+            batch.draw(heart, i*(heartSize/2f), HEIGHT-heartSize, heartSize, heartSize);
         }
+        float obX = (heartSize*player.getMaxHealth() + heartSize)/2f;
+        float obY = HEIGHT - heartSize/4f;
         if(board.objectives == player.getObjective()-1) {
-            font.draw(batch, "Objective: " + "Won!",275, HEIGHT-10);
+            font.draw(batch, "Objective: " + "Won!", obX, obY);
         }
         else {
-            font.draw(batch, "Objective: " + player.getObjective(),275, HEIGHT-10);
+            font.draw(batch, "Objective: " + player.getObjective(), obX, obY);
         }
 
         batch.end();
