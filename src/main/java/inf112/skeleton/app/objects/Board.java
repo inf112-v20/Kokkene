@@ -128,7 +128,10 @@ public class Board extends Tile{
         int orientation = player.getOrientation();
 
         if(move > 0 || move == -1) {
-            if (legalMove) {
+            if(move == -1) {
+                backwardMove(player);
+            }
+            else if (legalMove) {
                 legalMove = move(player, orientation);
             }
             forwardMove(player, move-1, legalMove);
@@ -145,10 +148,8 @@ public class Board extends Tile{
      * @param player to move backwards
      */
     public void backwardMove(Player player) {
-        int direction = (player.getOrientation() + 2) % 4;
-        if (!isBlocked(player, direction)){
-            move(player, direction);
-        }
+        int orientation = (player.getOrientation() + 2) % 4;
+        move(player, orientation);
     }
 
     /**
