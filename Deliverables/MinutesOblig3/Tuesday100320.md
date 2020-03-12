@@ -9,8 +9,7 @@ Markus, Arthur , Kristoffer and Martin
 Jan Kåre (sick)
 
 **Business from previous meetings:**\
-    User stories and what to do in the next oblig.
-    
+    User stories and what to do in the next oblig.    
 	
 **Todays agenda:**\
     Catch up with the project.\
