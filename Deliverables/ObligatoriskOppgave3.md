@@ -27,6 +27,10 @@ At the same time we agree that project board has a big potential that\
 we 
 
 #### Communication
+The communication in the group works really well, we use slack and github project board\
+to keep in touch and inform eachother of updates we have made. We also meet twice a week\
+for 2 hours where we go through tasks to be done, and work on the project together.\
+We get along well and will see this project through.
 
 #### User Stories
 
