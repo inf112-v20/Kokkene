@@ -19,7 +19,8 @@ Jan Kåre
     Make all elements on the board work properly.
 
 **Agenda for the next meeting:**\
-    Continue oblig 3 requirements.
+    Continue oblig 3 requirements.\
+    Make more user stories.
 
 **Minutes submitted by:**
 Arthur Andersen
