@@ -26,8 +26,6 @@ public class Menu implements Screen {
     private final SelectBox<String> selectMap;
     private final SelectBox<String> selectPlayer;
 
-    private String select;
-
     private SpriteBatch batch;
 
     private Texture roborally = new Texture(Gdx.files.internal("pictures/Roborally.png"));
@@ -95,7 +93,7 @@ public class Menu implements Screen {
         batch.end();
 
         if(gameButton.isPressed()){
-            LoadGame();
+            loadGame();
         }
         if(exitButton.isPressed()) {
             Gdx.app.exit();
@@ -127,8 +125,8 @@ public class Menu implements Screen {
         stage.dispose();
     }
 
-    public void LoadGame() {
-        select = selectMap.getSelected();
+    public void loadGame() {
+        String select = selectMap.getSelected();
         game.setScreen(new RoboRally(game,"assets/maps/" + select + ".tmx", "assets/pictures/" + selectPlayer.getSelected() + " Player.png"));
     }
 
