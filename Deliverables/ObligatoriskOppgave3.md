@@ -23,8 +23,14 @@ Scrum and XP is still our strategy for teamwork.
 
 #### Retrospection
 Project board has become a better tool in our group.\
-At the same time we agree that project board has a big potential that\
-we 
+At the same time we agree that the project board is hard to use to its\
+fullest potential.
+
+#### Improvement in retrospection
+Project board shall be used efficiently.
+
+#### Task priorities
+TODO
 
 #### Communication
 The communication in the group works really well, we use slack and github project board\
@@ -56,4 +62,8 @@ We get along well and will see this project through.
     1. TODO
 
 2. Board objects work as intended
-    1. TODO
+    1. Tile class added
+        1. All important tiles registered as enums.
+        2. Methods to get all values and directions.
+    2. Used Tile.java methods in Board.java.
+    3. Refactored Board.java
