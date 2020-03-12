@@ -82,13 +82,11 @@ public class Player  {
     }
 
     /**
-     * Set a new spawn position with an x and a y value.
-     * @param xBackup  the new x-coordinate for spawn point.
-     * @param yBackup  the new y-coordinate for spawn point.
+     * The current position is the new backup
      */
-    public void setBackup(int xBackup, int yBackup) {
-        this.xBackup = xBackup;
-        this.yBackup = yBackup;
+    public void newBackup() {
+        this.xBackup = this.xPos;
+        this.xBackup = this.xPos;
     }
 
     /**
@@ -144,10 +142,14 @@ public class Player  {
 
     /**
      * Turns the robot
-     * @param change positive numbers are to the right, negative turns to the left
+     * @param change positive numbers are to the left, negative turns to the right
      */
     public void turn(int change){
-        setOrientation((getOrientation() + change + 4) % 4);
+        change += getOrientation();
+
+        while (change<0) change +=4;
+        //change will never be less than 0;
+        setOrientation(change % 4);
     }
 
     public int getMaxHealth() { return MAXHEALTH; }
@@ -211,12 +213,11 @@ public class Player  {
     /**
      * @param ob  new objective
      */
-    public boolean setObjective(int ob) {
-        if (ob-this.objective==1) {
-            this.objective = ob;
-            return true;
+    public void checkObjective(int ob) {
+        if (ob==this.objective) {
+            newBackup();
+            this.objective += 1;
         }
-        return false;
     }
 
     /**

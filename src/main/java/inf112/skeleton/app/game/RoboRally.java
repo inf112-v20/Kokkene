@@ -68,7 +68,6 @@ public class RoboRally extends InputAdapter implements Screen {
         //sets up the hud to display information about the player in real time.
         hud = new HUD(player,board);
 
-
         //starts the background music.
         startMusic();
 
@@ -118,6 +117,9 @@ public class RoboRally extends InputAdapter implements Screen {
                 player.setOrientation(3);
                 board.forwardMove(player, move);
                 break;
+            case (Input.Keys.SPACE):
+                board.forwardMove(player,0);
+                break;
 
             case (Input.Keys.M):
                 music.muteToggle();
@@ -153,8 +155,6 @@ public class RoboRally extends InputAdapter implements Screen {
         }
     }
 
-
-
     @Override
     public void dispose(){
         music.dispose();
@@ -180,7 +180,7 @@ public class RoboRally extends InputAdapter implements Screen {
         hud.render();
         //showDeck.render();
 
-        if(player.getObjective() == board.objectives+1) {
+        if(player.getObjective() == board.objectives+1 && board.objectives != 0) {
             if (num == 1) {
                 try {
                     Thread.sleep(3000);

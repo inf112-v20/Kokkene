@@ -56,66 +56,78 @@ public class Board extends Tile{
     }
 
     /**
-     * Recursive function that moves player in a direction.
+     * Tries to move a player in a direction, without changing orientation
+     * @param player to move
+     * @param direction to go
+     */
+    private void move(Player player, int direction) {
+        int x = player.getxPos(), y = player.getyPos();
+        boolean isHole = hasTile(holeLayer,x,y);
+        switch (direction) {
+            //North
+            case (0):
+                if (isBlocked(player, 0)) {
+                    break;
+                } else if (y >= boardHeight-1 || isHole ) {
+                    player.addHealth(-player.getMaxHealth());
+                } else {
+                    player.setyPos(y + 1);
+                }
+                break;
+            //West
+            case (1):
+                if (isBlocked(player, 1)) {
+                    break;
+                } else if (x <= 0 || isHole) {
+                    player.addHealth(-player.getMaxHealth());
+                } else {
+                    player.setxPos(x - 1);
+                }
+                break;
+            //South
+            case (2):
+                if (isBlocked(player, 2)) {
+                    break;
+                } else if (y <= 0 || isHole) {
+                    player.addHealth(-player.getMaxHealth());
+                } else {
+                    player.setyPos(y - 1);
+                }
+                break;
+            //East
+            case (3):
+                if (isBlocked(player, 3)) {
+                    break;
+                } else if (x >= boardWidth-1 || isHole) {
+                    player.addHealth(-player.getMaxHealth());
+                } else {
+                    player.setxPos(x + 1);
+                }
+                break;
+        }
+    }
+
+    /**
+     * Recursive function that moves player forward.
      * @param player to move
      * @param move how many spaces to move from current position
      */
     public void forwardMove(Player player, int move) {
         //This is easier to modify, in order to make it work with cards
-        boolean isHole = hasTile(holeLayer,player.getxPos(),player.getyPos());
-        playerLayer.setCell(player.getxPos(), player.getyPos(), null);
-        healthLayer.setCell(player.getxPos(), player.getyPos(), null);
+        int x = player.getxPos(), y = player.getyPos();
+        playerLayer.setCell(x, y, null);
+        healthLayer.setCell(x, y, null);
         //Gets the orientation from the player, in order to check which direction they should move
         int orientation = player.getOrientation();
 
         if(move > 0 || move == -1) {
-            switch (orientation) {
-                //North
-                case (0):
-                    if (isBlocked(player, 0)) {
-                        break;
-                    } else if (player.getyPos() >= boardHeight-1 || isHole ) {
-                        player.addHealth(-player.getMaxHealth());
-                    } else {
-                        player.setyPos(player.getyPos() + 1);
-                    }
-                    break;
-                //West
-                case (1):
-                    if (isBlocked(player, 1)) {
-                        break;
-                    } else if (player.getxPos() <= 0 || isHole) {
-                        player.addHealth(-player.getMaxHealth());
-                    } else {
-                        player.setxPos(player.getxPos() - 1);
-                    }
-                    break;
-                //South
-                case (2):
-                    if (isBlocked(player, 2)) {
-                        break;
-                    } else if (player.getyPos() <= 0 || isHole) {
-                        player.addHealth(-player.getMaxHealth());
-                    } else {
-                        player.setyPos(player.getyPos() - 1);
-                    }
-                    break;
-                //East
-                case (3):
-                    if (isBlocked(player, 3)) {
-                        break;
-                    } else if (player.getxPos() >= boardWidth-1 || isHole) {
-                        player.addHealth(-player.getMaxHealth());
-                    } else {
-                        player.setxPos(player.getxPos() + 1);
-                    }
-                    break;
-            }
+            move(player, orientation);
             forwardMove(player, move-1);
         }
         else {
             //Checks afterturn after every move for now, to make sure it works.
             afterRound(player);
+            afterPhase(player,1); //testing purpose
         }
     }
 
@@ -124,8 +136,9 @@ public class Board extends Tile{
      * @param player to move backwards
      */
     public void backwardMove(Player player) {
-        if (!isBlocked(player, (player.getOrientation() + 2) % 4)){
-            forwardMove(player, -1);
+        int direction = (player.getOrientation() + 2) % 4;
+        if (!isBlocked(player, direction)){
+            move(player, direction);
         }
     }
 
@@ -155,15 +168,8 @@ public class Board extends Tile{
     /**
      * @return true if the tile is not null
      */
-    public boolean hasTile(TiledMapTileLayer layer, int x, int y) {
+    private boolean hasTile(TiledMapTileLayer layer, int x, int y) {
         return (layer.getCell(x, y) != null);
-    }
-
-    /**
-     * @return true if the tile is not null
-     */
-    public boolean hasTile(TiledMapTileLayer.Cell Cell) {
-        return (Cell != null);
     }
 
     /**
@@ -174,7 +180,7 @@ public class Board extends Tile{
             for (Card c : sortPhase(i)){
                 cardMove(c, c.getOwner());
             }
-            afterPhase();
+            afterPhase(i+1);
         }
         afterRound();
     }
@@ -194,14 +200,13 @@ public class Board extends Tile{
      */
     private void afterRound(Player player) {
         int x = player.getxPos(), y = player.getyPos();
-        TiledMapTileLayer.Cell laser = laserLayer.getCell(x,y);
-        TiledMapTileLayer.Cell wrench = wrenchLayer.getCell(x,y);
 
-        if (hasTile(laser)) {
-            player.addHealth(-1);
+        if (hasTile(laserLayer,x,y)) { //not in correct form.
+            player.addHealth(-laserValue(laserLayer, x, y));
         }
-        if (hasTile(wrench)) {
-            player.addHealth(1);
+        if (hasTile(wrenchLayer, x, y)) {
+            player.newBackup();
+            player.addHealth(wrenchValue(wrenchLayer,x,y));
         }
         checkObjective(player);
     }
@@ -225,44 +230,91 @@ public class Board extends Tile{
 
     /**
      * Makes all the players interact with the board objects
+     * @param phase to do
      */
-    private void afterPhase(){
+    private void afterPhase(int phase){
         for (Player p : players){
-            afterPhase(p);
+            afterPhase(p, phase);
         }
     }
 
     /**
      * Makes the given player interact with all board objects
      * @param player to interact
+     * @param phase to do
      */
-    private void afterPhase(Player player){
+    private void afterPhase(Player player, int phase){
         int x = player.getxPos(), y = player.getyPos();
-        TiledMapTileLayer.Cell conveyor = conveyorLayer.getCell(x, y);
-        TiledMapTileLayer.Cell push = pushLayer.getCell(x, y);
-        TiledMapTileLayer.Cell gear = gearLayer.getCell(x, y);
 
-        if (hasTile(conveyor)){
-            moveConveyor(player, conveyor);
+        if (hasTile(conveyorLayer, x, y)){
+            moveDoubleConveyor(player, x, y);
+            //TODO render between each part of the phases, but only if player moved.
         }
-        if (hasTile(push)){
-            //TODO
-            return;
+        x = player.getxPos(); y = player.getyPos();
+        //Must update x and y because player may change position.
+        if (hasTile(conveyorLayer, x, y)){
+            moveConveyor(player, x, y);
         }
-        if (hasTile(gear)){
-            switch (gear.getTile().getId()){
-                case (47):
-                    player.turn(1); // Turn left
-                    break;
-                case (48):
-                    player.turn(-1); // Turn right
-                    break;
-            }
+        x = player.getxPos(); y = player.getyPos();
+        if (hasTile(pushLayer, x, y)){
+            doPush(player, phase, x, y);
+        }
+        x = player.getxPos(); y = player.getyPos();
+        if (hasTile(gearLayer, x, y)){
+            player.turn(gearDirection(gearLayer, x, y));
         }
     }
 
-    private void moveConveyor(Player player, TiledMapTileLayer.Cell conveyor){
-        //TODO
+    /**
+     * Does a push
+     * @param player to push
+     * @param phase to do
+     * @param x position
+     * @param y position
+     */
+    private void doPush(Player player, int phase, int x, int y) {
+        if (phase%2==pushRound(pushLayer, x, y)){
+            int direction = pushDirection(pushLayer,x,y);
+            move(player, direction);
+        }
+    }
+
+    /**
+     * Moves a player if he is on a double conveyor
+     * @param player player to move
+     * @param x position of player
+     * @param y position of player
+     */
+    private void moveDoubleConveyor(Player player, int x, int y){
+        if (conveyorValue(conveyorLayer, x, y) == 2) {
+            int direction = conveyorDirection(conveyorLayer, x, y);
+            move(player, direction);
+            //doConveyorTurn(player, direction);
+        }
+    }
+
+    /**
+     * Moves a player who is on a conveyor
+     * @param player player to move
+     * @param x position of player
+     * @param y position of player
+     */
+    private void moveConveyor(Player player, int x, int y){
+        int direction = conveyorDirection(conveyorLayer, x, y);
+        move(player, direction);
+        //doConveyorTurn(player, direction);
+    }
+
+    /**
+     * Turns a player according to the conveyors
+     * @param player that will turn
+     * @param lastDirection from the last conveyor
+     */
+    private void doConveyorTurn(Player player, int lastDirection) {
+        int x = player.getxPos(), y = player.getyPos();
+        if (hasTile(conveyorLayer, x, y)) {
+            player.turn(conveyorDirection(conveyorLayer, x, y)-lastDirection);
+        }
     }
 
     /**
@@ -271,23 +323,8 @@ public class Board extends Tile{
      */
     private void checkObjective(Player player) {
         int x = player.getxPos(), y = player.getyPos();
-        TiledMapTileLayer.Cell flag = flagLayer.getCell(x, y);
-        if (hasTile(flag)) {
-            switch (flag.getTile().getId()) {
-                case 49:
-                    if (player.setObjective(2))
-                        player.setBackup(x, y);
-                    break;
-                case 56:
-                    if (player.setObjective(3))
-                        player.setBackup(x, y);
-                    break;
-                case 63:
-                    if (player.setObjective(4))
-                        player.setBackup(x, y);
-                    break;
-                case 70: player.setObjective(5); break;//temporary solution to getting the 4th flag
-            }
+        if (hasTile(flagLayer, x, y)) {
+            player.checkObjective(flagValue(flagLayer,x,y));
         }
     }
 
