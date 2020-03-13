@@ -13,7 +13,8 @@ public class PlayerTests {
     private int xPos = 1;
     private int yPos = 1;
     private int upValue = 0;
-    int maxHealth = 10, maxLifePoints = 3;
+    int maxHealth = 10,
+            maxLifePoints = 3;
 
     @Before
     public void makePlayer() {
@@ -104,7 +105,8 @@ public class PlayerTests {
 
     @Test
     public void playerObjectiveCanOnlyChangeToOneMore() {
-        int initialObjective = 1, newObjective = 2; //Objective is initially 1
+        int initialObjective = 1,
+                newObjective = 2; //Objective is initially 1
         player.checkObjective(newObjective);
         assertEquals(initialObjective, player.getObjective());
     }

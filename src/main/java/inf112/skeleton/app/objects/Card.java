@@ -3,7 +3,9 @@ package inf112.skeleton.app.objects;
 import inf112.skeleton.app.player.Player;
 
 public class Card implements Comparable<Card>{
-    private final int priority, move, name;
+    private final int priority,
+            move,
+            name;
     //We need this to print out the name of the card type
     private static final String[] names = {"Forward Card", "Backward Card", "Turn Card"};
 

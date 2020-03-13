@@ -11,10 +11,20 @@ import java.util.Arrays;
 public class Board extends Tile{
 
     public TiledMap map;
-    public TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer,
-            wallLayer, laserLayer, pushLayer, wrenchLayer, conveyorLayer, gearLayer, healthLayer;
+    public TiledMapTileLayer boardLayer,
+            playerLayer,
+            holeLayer,
+            flagLayer,
+            wallLayer,
+            laserLayer,
+            pushLayer,
+            wrenchLayer,
+            conveyorLayer,
+            gearLayer,
+            healthLayer;
 
-    public int boardHeight, boardWidth;
+    public int boardHeight,
+            boardWidth;
 
     public int objectives;
 
@@ -121,7 +131,8 @@ public class Board extends Tile{
 
     public void forwardMove(Player player, int move, boolean legalMove) {
         //This is easier to modify, in order to make it work with cards
-        int x = player.getxPos(), y = player.getyPos();
+        int x = player.getxPos(),
+                y = player.getyPos();
         playerLayer.setCell(x, y, null);
         healthLayer.setCell(x, y, null);
         //Gets the orientation from the player, in order to check which direction they should move
@@ -209,7 +220,8 @@ public class Board extends Tile{
      * @param player  the player to be affected.
      */
     private void afterRound(Player player) {
-        int x = player.getxPos(), y = player.getyPos();
+        int x = player.getxPos(),
+                y = player.getyPos();
 
         if (hasTile(laserLayer,x,y)) { //not in correct form.
             player.addHealth(-laserValue(laserLayer, x, y));
@@ -254,7 +266,8 @@ public class Board extends Tile{
      * @param phase to do
      */
     private void afterPhase(Player player, int phase){
-        int x = player.getxPos(), y = player.getyPos();
+        int x = player.getxPos(),
+                y = player.getyPos();
 
         if (hasTile(conveyorLayer, x, y)){
             moveDoubleConveyor(player, x, y);
@@ -321,7 +334,8 @@ public class Board extends Tile{
      * @param lastDirection from the last conveyor
      */
     private void doConveyorTurn(Player player, int lastDirection) {
-        int x = player.getxPos(), y = player.getyPos();
+        int x = player.getxPos(),
+                y = player.getyPos();
         if (hasTile(conveyorLayer, x, y)) {
             player.turn(conveyorDirection(conveyorLayer, x, y)-lastDirection);
         }
@@ -332,7 +346,8 @@ public class Board extends Tile{
      * @param player to be checked.
      */
     private void checkObjective(Player player) {
-        int x = player.getxPos(), y = player.getyPos();
+        int x = player.getxPos(),
+                y = player.getyPos();
         if (hasTile(flagLayer, x, y)) {
             player.checkObjective(flagValue(flagLayer,x,y));
         }
@@ -390,7 +405,8 @@ public class Board extends Tile{
      */
     private boolean isBlocked(int x, int y, int dir){
         int[] nb = getNeighbour(x, y, dir);
-        int wallThis = 9, wallNext = 9;
+        int wallThis = 9,
+                wallNext = 9;
         if (hasTile(wallLayer, x, y)) {
             wallThis = wallSide(wallLayer, x, y);
         }

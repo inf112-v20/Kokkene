@@ -24,13 +24,17 @@ public class Player  {
     private String name;
 
     //Main position and Backup Position on the board
-    private int xPos, yPos, xBackup, yBackup;
+    private int xPos,
+            yPos,
+            xBackup,
+            yBackup;
 
     //Direction the robot is facing (north=0, east=1, south=2, west=3)
     private int orientation;
 
     //Health of the robot
-    private int health = 10, lifePoints = 3;
+    private int health = 10,
+            lifePoints = 3;
 
     //The next objective the Player has to go to to score points.
     private int objective = 1;
