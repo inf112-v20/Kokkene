@@ -165,7 +165,8 @@ public class RoboRally extends InputAdapter implements Screen {
         //Gdx.gl.glClearColor(1, 1, 1, 1); //background color WHITE
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        int x = player.getxPos(), y = player.getyPos();
+        int x = player.getxPos(),
+                y = player.getyPos();
 
         board.playerLayer.setCell(x, y, ps.getPlayerStatus());
         board.playerLayer.getCell(x, y).setRotation(player.getOrientation());
