@@ -25,11 +25,11 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private OrthogonalTiledMapRenderer mapRenderer;
 
-    private Player player;
+    private static Player player;
     private PlayerState ps;
     private PlayerState hb;
 
-    private Music music;
+    private static Music music;
 
     private Game game;
 
@@ -123,11 +123,7 @@ public class RoboRally extends InputAdapter implements Screen {
                 break;
 
             case (Input.Keys.M):
-                music.muteToggle();
-                player.muteToggle();
-                break;
-            case (Input.Keys.P):
-                music.pauseToggle();
+                muteToggle();
                 break;
             case (Input.Keys.F11):
                 fullscreenToggle();
@@ -140,7 +136,12 @@ public class RoboRally extends InputAdapter implements Screen {
         return false;
     }
 
-    private void fullscreenToggle() {
+    public static void muteToggle() {
+        music.muteToggle();
+        player.muteToggle();
+    }
+
+    public static void fullscreenToggle() {
         try {
             if (Display.isFullscreen()) {
                 Display.setFullscreen(false);

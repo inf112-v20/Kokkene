@@ -40,7 +40,7 @@ public class Player  {
     private int objective = 1;
 
     //If player makes sound.
-    private boolean soundBool = true;
+    private static boolean soundBool = true;
 
     //obvious sounds.
     private Sound damageSound;
@@ -256,5 +256,5 @@ public class Player  {
         return this.cards;
     }
 
-    public void muteToggle() { soundBool=!soundBool; }
+    public static void muteToggle() { soundBool=!soundBool; }
 }

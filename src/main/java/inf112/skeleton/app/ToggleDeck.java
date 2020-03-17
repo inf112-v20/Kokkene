@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.math.Vector2;
+import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.player.Player;
 
@@ -70,6 +72,23 @@ public class ToggleDeck extends InputAdapter implements Screen {
         }
         return false;
 
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        switch (keycode) {
+            case (Input.Keys.M):
+                RoboRally.muteToggle();
+                break;
+            case (Input.Keys.F11):
+                RoboRally.fullscreenToggle();
+                break;
+            case (Input.Keys.ESCAPE):
+            case (Input.Keys.Q):
+                Gdx.app.exit();
+                break;
+        }
+        return false;
     }
 
     @Override

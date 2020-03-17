@@ -6,6 +6,7 @@
 Markus, Jan Kåre, Arthur, Martin and Kristoffer 
 
 **Absent:**
+None
 
 **Business from previous meetings:**\
     Oblig 3 tasks\
