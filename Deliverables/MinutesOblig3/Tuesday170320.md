@@ -12,11 +12,14 @@ Markus, Jan Kåre, Arthur, Martin and Kristoffer
     Make all elements on board works
 	
 **Todays agenda:**\
-    Oblig 3 taks
+    Oblig 3 tasks
     Work on cards
+    Make rotations on conveyor belts work as intended.
 
 **Agenda for the next meeting:**\
-    Continue oblig 3 requirements.\
+    Continue working on the oblig 3 deliverable.
+    Continue working on cards.
+
 
 **Minutes submitted by:**
-Markus JEnsen
+Markus Jensen
