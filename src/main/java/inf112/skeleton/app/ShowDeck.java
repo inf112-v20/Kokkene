@@ -75,7 +75,5 @@ public class ShowDeck {
             cards.dispose();
             resizedCards.dispose();
         }
-
     }
-
 }
