@@ -32,7 +32,7 @@ public class Tile {
         CONDOWN11(29,1,2),CONLEFT11(30,1,1),
         CONRIGHT11(31,1,3),CONDOWN12(32,1,2),
         CONRIGHT12(36,1,3),CONUP11(37,1,0),
-        CONUP12(38,1,0),CONLEFT(39,1,1),
+        CONUP12(38,1,0),CONLEFT12(39,1,1),
         CONUP1(43,1,0), CONDOWN1(44,1,2),
         CONLEFT1(45,1,1), CONRIGHT1(46,1,3),
         CONUP13(50,1,0),CONRIGHT13(51,1,3),
@@ -146,6 +146,77 @@ public class Tile {
      */
     public int conveyorDirection(TiledMapTileLayer conveyorLayer, int x, int y) {
         return getTile(conveyorLayer.getCell(x, y).getTile().getId()).dir;
+    }
+
+    /**
+     * @param conveyorLayer
+     * @param x of new position
+     * @param y of new position
+     * @param lastDirection direction of the last conveyor
+     * @return true if player will turn
+     */
+    public boolean conveyorWillTurn(TiledMapTileLayer conveyorLayer, int x, int y, int lastDirection) {
+        switch (getTile(conveyorLayer.getCell(x, y).getTile().getId())) {
+            case CONDOWN21:
+            case CONUP22:
+            case CONDOWN11:
+            case CONUP12:
+            case CONDOWN13:
+            case CONUP15:
+            case CONDOWN23:
+            case CONUP24:
+                if (lastDirection==1)
+                    return true;
+                break;
+            case CONLEFT21:
+            case CONRIGHT21:
+            case CONLEFT11:
+            case CONRIGHT11:
+            case CONLEFT13:
+            case CONRIGHT15:
+            case CONLEFT23:
+            case CONRIGHT24:
+                if (lastDirection==0)
+                    return true;
+                break;
+            case CONDOWN22:
+            case CONUP21:
+            case CONDOWN12:
+            case CONUP11:
+            case CONUP13:
+            case CONDOWN15:
+            case CONUP23:
+            case CONDOWN24:
+                 if (lastDirection==3)
+                    return true;
+                break;
+            case CONRIGHT22:
+            case CONLEFT22:
+            case CONRIGHT12:
+            case CONLEFT12:
+            case CONRIGHT13:
+            case CONLEFT15:
+            case CONRIGHT23:
+            case CONLEFT24:
+                if (lastDirection==2)
+                    return true;
+                break;
+            case CONRIGHT14:
+            case CONRIGHT25:
+            case CONLEFT14:
+            case CONLEFT25:
+                if (lastDirection==0 || lastDirection==2)
+                    return true;
+                break;
+            case CONUP14:
+            case CONUP25:
+            case CONDOWN14:
+            case CONDOWN25:
+                if (lastDirection==1 || lastDirection==3)
+                    return true;
+                break;
+        }
+        return false;
     }
 
     /**
