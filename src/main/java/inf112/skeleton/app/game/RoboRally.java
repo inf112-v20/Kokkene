@@ -10,22 +10,19 @@ import inf112.skeleton.app.HUD;
 import inf112.skeleton.app.ShowDeck;
 import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.objects.Card;
-import inf112.skeleton.app.objects.Deck;
 import inf112.skeleton.app.player.Player;
 import inf112.skeleton.app.player.PlayerState;
 import inf112.skeleton.app.sound.Music;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
-import java.io.IOException;
-
 public class RoboRally extends InputAdapter implements Screen {
-    private Board board;
+    private static Board board;
     private HUD hud;
 
     private OrthogonalTiledMapRenderer mapRenderer;
 
-    private static Player player;
+    public static Player player;
     private PlayerState ps;
     private PlayerState hb;
 
@@ -40,7 +37,7 @@ public class RoboRally extends InputAdapter implements Screen {
     RoboRally(Game game, String mapFile, String playerFile) {
         //Initializes the board and HUD
         this.game = game;
-        board = new Board(mapFile, 0);
+        board = new Board(mapFile, 1);
 
         int extraSpace = 8;
         float displayWidthHeightRatio = ((float) Display.getWidth()) / ((float) Display.getHeight());
@@ -59,7 +56,8 @@ public class RoboRally extends InputAdapter implements Screen {
         mapRenderer.setView(camera);
 
         //Sets up one player and texture for testing purposes
-        player = new Player("Test", 0, 0, 0);
+        int multiplayerPosition = 1;
+        player = board.players[multiplayerPosition-1];
         TextureRegion[][] tr = player.setPlayerTextures(playerFile);
         ps = new PlayerState(player, board, tr);
 
@@ -72,16 +70,11 @@ public class RoboRally extends InputAdapter implements Screen {
         //starts the background music.
         startMusic();
 
-        //Makes deck and gives the initial set of cards. Will be moved once we implement rounds.
-        try {
-            Deck deck = new Deck();
-            deck.shuffle();
-            player.setHand(deck);
-            showDeck = new ShowDeck(player);
-            Card[] playerHand = player.getCards();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        showDeck = new ShowDeck(player);
+    }
+
+    public static Board getBoard() {
+        return board;
     }
 
     @Override
@@ -132,13 +125,16 @@ public class RoboRally extends InputAdapter implements Screen {
             case (Input.Keys.Q):
                 Gdx.app.exit();
                 break;
+            default:
+                board.doTurn();
+                break;
         }
         return false;
     }
 
     public static void muteToggle() {
         music.muteToggle();
-        player.muteToggle();
+        Player.muteToggle();
     }
 
     public static void fullscreenToggle() {

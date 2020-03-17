@@ -9,6 +9,7 @@ public class Deck {
 
     //Saves all the cards from the given txt file in this queue
     public Queue<Card> Cards = new LinkedList<>();
+    public Queue<Card> Discard = new LinkedList<>();
 
     //Creates a deck from the text file set inside the constructor
     public Deck() throws IOException {
@@ -30,6 +31,18 @@ public class Deck {
 
     //Shuffles the Current deck
     public void shuffle() {
+        while (Cards.peek().getOwner() != null){
+            Card c = Cards.poll();
+            c.setOwner(null);
+            Cards.add(c);
+        }
         Collections.shuffle((List<?>) Cards);
+    }
+
+    public void empty(){
+        while (!Discard.isEmpty()){
+            Cards.add(Discard.poll());
+        }
+        shuffle();
     }
 }

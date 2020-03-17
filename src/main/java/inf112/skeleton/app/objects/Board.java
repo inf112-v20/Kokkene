@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.player.Player;
 
+import java.io.IOException;
 import java.util.Arrays;
 
 public class Board extends Tile{
@@ -30,6 +31,8 @@ public class Board extends Tile{
 
     public Player[] players;
 
+    private Deck deck;
+
     /**
      *
      * @param mapFile the file containing the map.
@@ -51,9 +54,17 @@ public class Board extends Tile{
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
 
+        try {
+            this.deck = new Deck();
+            deck.shuffle();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
             players[i] = new Player("Player " + (i + 1), 1, i, 0);
+            players[i].setHand(deck);
         }
 
         for(int i = 0; i < flagLayer.getWidth(); i++) {
@@ -147,11 +158,6 @@ public class Board extends Tile{
             }
             forwardMove(player, move-1, legalMove);
         }
-        else {
-            //Checks afterturn after every move for now, to make sure it works.
-            afterRound(player);
-            afterPhase(player,1); //testing purpose
-        }
     }
 
     /**
@@ -182,6 +188,9 @@ public class Board extends Tile{
             //Turn
             case (2):
                 pl.turn(card.getMove());
+                break;
+            default:
+                System.out.println(name);
                 break;
         }
     }
@@ -231,6 +240,7 @@ public class Board extends Tile{
             player.addHealth(wrenchValue(wrenchLayer,x,y));
         }
         checkObjective(player);
+        player.discardDraw(deck);
     }
 
     /**
@@ -240,10 +250,13 @@ public class Board extends Tile{
      */
     private Card[] sortPhase(int phase){
         Card[] cardArray = new Card[players.length];
-        int i = 0;
-        for (Player p : players){
-            cardArray[i] = p.getCards()[phase];
-            i++;
+        for (int i = 0; i < players.length; i++){
+            Player p = players[i];
+            if (p.getSelected().size() <= phase){
+                cardArray[i] = p.getLocked().get((p.getLocked().size() - 1) - (phase - p.getSelected().size()));
+                continue;
+            }
+            cardArray[i] = p.getSelected().get(phase);
         }
         Arrays.sort(cardArray);
         return cardArray;
@@ -442,16 +455,17 @@ public class Board extends Tile{
      * @param x coordinate of laser
      * @param y coordinate of laser
      * @param dir direction laser is pointing
-     * @return true when the laser has hit something
+     * @return true when the laser has hit a player, false if it hit a wall
      */
     private boolean laser(int x, int y, int dir){
         if (hasTile(playerLayer, x, y)){
             players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-1);
+            return true;
         }
         else if (!isBlocked(x, y, dir)){
             int[] nb = getNeighbour(x, y, dir);
             return laser(nb[0], nb[1], dir);
         }
-        return true;
+        return false;
     }
 }

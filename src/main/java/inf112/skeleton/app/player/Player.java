@@ -6,6 +6,10 @@ import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.objects.Deck;
 import inf112.skeleton.app.sound.Sound;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  *
  * The robot start with a name, xPos, yPos and orientation on the board.
@@ -48,6 +52,12 @@ public class Player  {
     //the cards the player holds
     private Card[] cards;
 
+    //Selected cards
+    private List<Card> selected;
+
+    //Locked registers
+    private ArrayList<Card> locked = new ArrayList<>();
+
     //Constant variables
     private static final int MAXHEALTH = 10;
 
@@ -66,7 +76,7 @@ public class Player  {
         this.orientation = orientation;
         this.xBackup = xPos;
         this.yBackup = yPos;
-        this.soundBool = playerSoundBool;
+        soundBool = playerSoundBool;
         if (playerSoundBool) { //Have to do this to make testing be possible
             damageSound = new Sound("assets/sound/oof_sound.mp3");
         }
@@ -182,6 +192,7 @@ public class Player  {
             if (getLifePoints()>0)
                 this.health = MAXHEALTH;
         }
+        lockRegister();
     }
 
     /**
@@ -234,17 +245,56 @@ public class Player  {
     }
 
     /**
+     * How many cards you may select in this round
+     * @return # of cards to select
+     */
+    public int cardsToSelect(){
+        return Math.min(5, getHealth() - 1);
+    }
+
+    /**
+     * How many registers are locked such that one cannot change the cards
+     * @return # of locked registers
+     */
+    public int lockedRegisters(){
+        return Math.max(0, 6-getHealth());
+    }
+
+    /**
+     * Lock the last selected card if damaged such that the register must lock
+     */
+    public void lockRegister(){
+        if (5 - locked.size() < selected.size()){
+            Card last = selected.get(selected.size()-1);
+            locked.add(last);
+            selected.remove(last);
+        }else if(5 - locked.size() > selected.size()){
+            selected.add(locked.get(locked.size()-1));
+            locked.remove(locked.size()-1);
+        }
+        if (5 - locked.size() != selected.size()){
+            lockRegister();
+        }
+        assert locked.size() == lockedRegisters();
+    }
+
+    /**
      * gives cards to player based on how much health is left
      * @param deck used to get cards from
      */
     public void setHand(Deck deck) {
         //The hand of the player.
-        Card[] playerHand = new Card[getHealth()];
-        for(int i = 0; i < getHealth(); i++) {
+        Card[] playerHand = new Card[getHealth()-1];
+        selected = new ArrayList<>();
+        for(int i = 0; i < playerHand.length; i++) {
+            if (deck.Cards.isEmpty()){ // shuffles when empty
+                deck.empty();
+            }
             playerHand[i] = deck.Cards.poll();
             assert playerHand[i] != null;
             playerHand[i].setOwner(this);
         }
+        Arrays.sort(playerHand);
         this.cards = playerHand;
     }
 
@@ -254,6 +304,49 @@ public class Player  {
      */
     public Card[] getCards() {
         return this.cards;
+    }
+
+    /**
+     * Toggles whether a card is selected or not
+     * @param c is the card we toggle
+     */
+    public void toggleCard(Card c){
+        if (selected.contains(c)){
+            selected.remove(c);
+            return;
+        }
+        selected.add(c);
+    }
+
+    /**
+     * Get the list of currently selected cards
+     * @return list of cards
+     */
+    public List<Card> getSelected(){
+        return selected;
+    }
+
+    /**
+     * Get the list of currently locked cards, this list will be in reverse order of execution
+     * @return list of locked cards
+     */
+    public ArrayList<Card> getLocked(){
+        return locked;
+    }
+
+    /**
+     * Discards all current cards except the ones locked, and draw a new hand
+     * @param deck deck to draw from and return the cards to
+     */
+    public void discardDraw(Deck deck){
+        for (Card c : cards) {
+            if (locked.contains(c) && locked.indexOf(c) < lockedRegisters()) {
+                continue;
+            }
+            deck.Discard.add(c);
+            locked.remove(c);
+        }
+        setHand(deck);
     }
 
     public static void muteToggle() { soundBool=!soundBool; }

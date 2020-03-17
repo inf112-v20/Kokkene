@@ -15,6 +15,7 @@ public class Card implements Comparable<Card>{
         this.name = name;
         this.move = move;
         this.priority = priority;
+        this.setOwner(null);
     }
 
     //Method for testing/checking
@@ -42,6 +43,10 @@ public class Card implements Comparable<Card>{
     public int getName() { return name; }
     public int getMove() { return move; }
 
+    /**
+     * Gets the owner of the card
+     * @return Player that owns the card
+     */
     public Player getOwner() {
         return owner;
     }

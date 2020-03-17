@@ -4,14 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.game.RoboRally;
-import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.player.Player;
 
 public class ToggleDeck extends InputAdapter implements Screen {
@@ -28,6 +26,8 @@ public class ToggleDeck extends InputAdapter implements Screen {
     Pixmap pixmap;
     Texture texture;
     Sprite playSprite;
+
+    Player player = RoboRally.player;
 
     //array of all card sprites
     Sprite[] allSprites;
@@ -61,11 +61,20 @@ public class ToggleDeck extends InputAdapter implements Screen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        /*if (player.getSelected().size() == player.cardsToSelect()){
+            //TODO must add button to the right of the cards that will call RoboRally.getBoard().doTurn()
+        }*/
         for(int i = 0; i < allSprites.length; i++) {
-            if (allSprites[i].getBoundingRectangle().contains(screenX, screenY)) {
+            if (allSprites[i].getBoundingRectangle().contains(screenX, screenY)
+                    && player.getSelected().size() < player.cardsToSelect()) {
 
-                allSprites[i].flip(true,true);
+                player.toggleCard(player.getCards()[i]);
 
+                allSprites[i].flip(true, true);
+
+                if (player.getSelected().size() >= player.cardsToSelect()){
+                    RoboRally.getBoard().doTurn();
+                }
 
                 return true;
             }
