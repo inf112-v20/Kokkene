@@ -180,7 +180,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
         mapRenderer.render();
         hud.render();
-        showDeck.render();
+        showDeck.render(delta);
 
         if(player.getObjective() == board.objectives+1 && board.objectives != 0) {
             //Need to render one last time before going back to menu,
