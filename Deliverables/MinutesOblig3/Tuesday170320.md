@@ -8,18 +8,17 @@ Markus, Jan Kåre, Arthur, Martin and Kristoffer
 **Absent:**
 
 **Business from previous meetings:**\
-    Oblig 3 tasks
+    Oblig 3 tasks\
     Make all elements on board works
 	
 **Todays agenda:**\
-    Oblig 3 tasks
-    Work on cards
+    Oblig 3 tasks\
+    Work on cards\
     Make rotations on conveyor belts work as intended.
 
 **Agenda for the next meeting:**\
-    Continue working on the oblig 3 deliverable.
+    Continue working on the oblig 3 deliverable.\
     Continue working on cards.
-
 
 **Minutes submitted by:**
 Markus Jensen
