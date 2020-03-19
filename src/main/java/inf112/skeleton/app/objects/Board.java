@@ -63,7 +63,7 @@ public class Board extends Tile{
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
-            players[i] = new Player("Player " + (i + 1), 1, i, 0);
+            players[i] = new Player("Player " + (i + 1), i, 0, 0);
             players[i].setHand(deck);
         }
 
@@ -138,9 +138,10 @@ public class Board extends Tile{
      * @param player to move
      * @param move how many spaces to move from current position
      */
-    public void forwardMove(Player player, int move) {forwardMove(player, move, true); }
+    public void doMove(Player player, int move) {
+        doMove(player, move, true); }
 
-    public void forwardMove(Player player, int move, boolean legalMove) {
+    public void doMove(Player player, int move, boolean legalMove) {
         //This is easier to modify, in order to make it work with cards
         int x = player.getxPos(),
                 y = player.getyPos();
@@ -156,7 +157,7 @@ public class Board extends Tile{
             else if (legalMove) {
                 legalMove = move(player, orientation);
             }
-            forwardMove(player, move-1, legalMove);
+            doMove(player, move-1, legalMove);
         }
     }
 
@@ -179,11 +180,8 @@ public class Board extends Tile{
         switch(name){
             //Forward
             case (0):
-                forwardMove(pl, card.getMove());
-                break;
-            //Backward
             case (1):
-                backwardMove(pl);
+                doMove(pl, card.getMove());
                 break;
             //Turn
             case (2):
