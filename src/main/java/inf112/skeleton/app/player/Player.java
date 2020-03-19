@@ -44,7 +44,7 @@ public class Player  {
     private int objective = 1;
 
     //If player makes sound.
-    private static boolean soundBool = true;
+    private static boolean soundBool;
 
     //obvious sounds.
     private Sound damageSound;
@@ -67,23 +67,6 @@ public class Player  {
      * @param xPos  starting x-position for this robot.
      * @param yPos  starting y-position for this robot.
      * @param orientation  orientation (direction) in a 0-3 scale.
-     * @param playerSoundBool  true/false = ON/OFF.
-     */
-    public Player(String name, int xPos, int yPos, int orientation, boolean playerSoundBool) {
-        this.name = name;
-        this.xPos = xPos;
-        this.yPos = yPos;
-        this.orientation = orientation;
-        this.xBackup = xPos;
-        this.yBackup = yPos;
-        soundBool = playerSoundBool;
-        if (playerSoundBool) { //Have to do this to make testing be possible
-            damageSound = new Sound("assets/sound/oof_sound.mp3");
-        }
-    }
-
-    /**
-     * Sounds are ON by default
      */
     public Player(String name, int xPos, int yPos, int orientation) {
         this.name = name;
@@ -92,7 +75,9 @@ public class Player  {
         this.orientation = orientation;
         this.xBackup = xPos;
         this.yBackup = yPos;
-        damageSound = new Sound("assets/sound/oof_sound.mp3");
+        if (soundBool) { //Have to do this to make testing be possible
+            damageSound = new Sound("assets/sound/oof_sound.mp3");
+        }
     }
 
     /**
@@ -175,7 +160,7 @@ public class Player  {
     public int getHealth() { return health; }
 
     /**
-     * @param health The amount to add or take away.
+     * @param health The amount
      */
     public void addHealth(int health) {
         setHealth(this.health+health);
@@ -348,4 +333,5 @@ public class Player  {
     }
 
     public static void muteToggle() { soundBool=!soundBool; }
+    public static void mute() { soundBool = false; }
 }

@@ -10,6 +10,7 @@ import static org.junit.Assert.assertFalse;
 public class PlayerTests {
 
     private Player player;
+
     private int xPos = 1;
     private int yPos = 1;
     private int upValue = 0;
@@ -18,7 +19,8 @@ public class PlayerTests {
 
     @Before
     public void makePlayer() {
-        player = new Player("player", xPos, yPos, upValue,false);
+        player = new Player("player", xPos, yPos, upValue);
+        Player.mute();
     }
 
     @Test

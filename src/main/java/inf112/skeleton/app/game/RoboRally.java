@@ -39,7 +39,7 @@ public class RoboRally extends InputAdapter implements Screen {
     RoboRally(Game game, String mapFile, String playerFile) {
         //Initializes the board and HUD
         this.game = game;
-        board = new Board(mapFile, 1);
+        setBoard(mapFile);
 
         int extraSpace = 8;
         float displayWidthHeightRatio = ((float) Display.getWidth()) / ((float) Display.getHeight());
@@ -58,8 +58,7 @@ public class RoboRally extends InputAdapter implements Screen {
         mapRenderer.setView(camera);
 
         //Sets up one player and texture for testing purposes
-        int multiplayerPosition = 1;
-        player = board.players[multiplayerPosition-1];
+        selectPlayer(1);
         TextureRegion[][] tr = player.setPlayerTextures(playerFile);
         ps = new PlayerState(player, board, tr);
 
@@ -74,6 +73,12 @@ public class RoboRally extends InputAdapter implements Screen {
 
         showDeck = new ShowDeck(player);
     }
+
+    //Selects the given player and updates the player field
+    public static void selectPlayer(int multiplayerPosition) {player = board.players[multiplayerPosition-1];}
+
+    //Selects the given board and updates the board field
+    private static void setBoard(String mapFile) {board = new Board(mapFile, 1);}
 
     public static Board getBoard() {
         return board;
