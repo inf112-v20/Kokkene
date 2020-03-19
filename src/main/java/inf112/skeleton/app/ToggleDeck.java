@@ -11,13 +11,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.game.RoboRally;
+import inf112.skeleton.app.objects.Board;
+import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.player.Player;
-
-import java.awt.*;
 
 public class ToggleDeck extends InputAdapter implements Screen {
 
@@ -40,6 +39,7 @@ public class ToggleDeck extends InputAdapter implements Screen {
     Sprite playSprite;
 
     Player player = RoboRally.player;
+    Board board;
 
     //array of all card sprites
     Sprite[] allSprites;
@@ -52,7 +52,7 @@ public class ToggleDeck extends InputAdapter implements Screen {
 
     //float widthHeightRatio = (float)tr.getRegionHeight()/(float)tr.getRegionWidth();
 
-    public ToggleDeck(Texture[] cards) {
+    public ToggleDeck(Texture[] cards, Board board) {
         batch = new SpriteBatch();
         pixmap = new Pixmap(Gdx.files.internal("pictures/card.png"));
         texture = new Texture(pixmap);
@@ -65,6 +65,7 @@ public class ToggleDeck extends InputAdapter implements Screen {
         confirm = false;
         createAllSprites(cards);
         //createButtons();
+        this.board = board;
     }
 
     private void createButtons(){
@@ -94,22 +95,23 @@ public class ToggleDeck extends InputAdapter implements Screen {
         /*if (player.getSelected().size() == player.cardsToSelect() && lockButton.getBoundingRectangle().contains(screenX, screenY)){
             //TODO must add button to the right of the cards that will call RoboRally.getBoard().doTurn()
         }*/
+        screenY = HEIGHT-screenY;
         for(int i = 0; i < allSprites.length; i++) {
             if (allSprites[i].getBoundingRectangle().contains(screenX, screenY)
                     && !confirm) {
 
-
                 //toggle to display number of order above card.
                 if(display[i]) {
                     player.toggleCard(player.getCards()[i]);
+                    allSprites[i].setColor(Color.WHITE);
                     display[i] = false;
                     order[i] = 0;
                     count--;
 
-
                 }
                 else {
                     player.toggleCard(player.getCards()[i]);
+                    allSprites[i].setColor(Color.GREEN);
                     display[i] = true;
                     order[i] = count;
                     count++;
@@ -132,12 +134,43 @@ public class ToggleDeck extends InputAdapter implements Screen {
             order[i] = 0;
             display[i] = false;
         }
+        for (Sprite s : allSprites) {
+            s.setColor(Color.WHITE);
+        }
         this.dispose();
     }
 
     @Override
     public boolean keyUp(int keycode) {
+
+        Card c = new Card(0,0,1);
+        int move = c.getMove();
+
         switch (keycode) {
+            case (Input.Keys.W):
+            case (Input.Keys.UP):
+                player.setOrientation(0);
+                arrowMove(player,move);
+                break;
+            case (Input.Keys.A):
+            case (Input.Keys.LEFT):
+                player.setOrientation(1);
+                arrowMove(player,move);
+                break;
+            case (Input.Keys.S):
+            case (Input.Keys.DOWN):
+                player.setOrientation(2);
+                arrowMove(player,move);
+                break;
+            case (Input.Keys.D):
+            case (Input.Keys.RIGHT):
+                player.setOrientation(3);
+                arrowMove(player,move);
+                break;
+            case (Input.Keys.SPACE):
+                arrowMove(player,0);
+                break;
+
             case (Input.Keys.C):
                 if(count == 6) {
                     RoboRally.getBoard().doTurn();
@@ -161,6 +194,11 @@ public class ToggleDeck extends InputAdapter implements Screen {
         return false;
     }
 
+    private void arrowMove(Player player, int move) {
+        board.doMove(player, move);
+        board.afterArrowMove(player);
+    }
+
     @Override
     public void show() {
 
@@ -177,8 +215,9 @@ public class ToggleDeck extends InputAdapter implements Screen {
         for (int i = 0; i < allSprites.length; i++) {
             int xPos = (int)(i*allSprites[i].getWidth());
             int yPos = 0;
-            batch.draw(allSprites[i],xPos, yPos);
-            allSprites[i].setPosition(xPos,HEIGHT-allSprites[i].getHeight());
+
+            allSprites[i].draw(batch);
+            allSprites[i].setPosition(xPos, yPos);
 
         }
 

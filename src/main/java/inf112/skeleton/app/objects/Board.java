@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.player.Player;
+import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -32,6 +33,9 @@ public class Board extends Tile{
     public Player[] players;
 
     private Deck deck;
+
+    private boolean soundBool = true;
+    private Sound damageSound;
 
     /**
      *
@@ -63,7 +67,7 @@ public class Board extends Tile{
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
-            players[i] = new Player("Player " + (i + 1), i, 0, 0);
+            players[i] = new Player("Player " + (i + 1), i, 0, 0, true);
             players[i].setHand(deck);
         }
 
@@ -74,6 +78,8 @@ public class Board extends Tile{
                 }
             }
         }
+
+        damageSound = new Sound("assets/sound/oof_sound.mp3");
     }
 
     /**
@@ -213,12 +219,19 @@ public class Board extends Tile{
         afterRound();
     }
 
+    public void afterArrowMove(Player player) {
+        afterRound(player);
+        afterPhase(player,1);
+    }
+
     /**
      * Checks the position of every player at the end of turn for interaction with the board objects
      */
     private void afterRound(){
         for (Player p : players){
             afterRound(p);
+            p.lockRegister();
+            p.discardDraw(deck);
         }
     }
 
@@ -232,14 +245,18 @@ public class Board extends Tile{
 
         if (hasTile(laserLayer,x,y)) { //not in correct form.
             player.addHealth(-laserValue(laserLayer, x, y));
+            playDamageSound();
         }
         if (hasTile(wrenchLayer, x, y)) {
             player.newBackup();
             player.addHealth(wrenchValue(wrenchLayer,x,y));
         }
         checkObjective(player);
-        player.lockRegister();
-        player.discardDraw(deck);
+    }
+
+    private void playDamageSound() {
+        if (soundBool)
+            damageSound.play();
     }
 
     /**
@@ -466,5 +483,9 @@ public class Board extends Tile{
             return laser(nb[0], nb[1], dir);
         }
         return false;
+    }
+
+    public void muteToggle() {
+        damageSound.muteToggle();
     }
 }

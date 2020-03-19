@@ -37,7 +37,6 @@ public class RoboRally extends InputAdapter implements Screen {
     ShowDeck showDeck;
 
     RoboRally(Game game, String mapFile, String playerFile) {
-        Player.startSound();
         //Initializes the board and HUD
         this.game = game;
         setBoard(mapFile);
@@ -72,7 +71,7 @@ public class RoboRally extends InputAdapter implements Screen {
         //starts the background music.
         startMusic();
 
-        showDeck = new ShowDeck(player);
+        showDeck = new ShowDeck(player, board);
     }
 
     //Selects the given player and updates the player field
@@ -92,7 +91,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     public static void muteToggle() {
         music.muteToggle();
-        Player.muteToggle();
+        board.muteToggle();
     }
 
     public static void fullscreenToggle() {

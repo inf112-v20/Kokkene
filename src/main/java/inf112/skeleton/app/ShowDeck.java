@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.player.Player;
 
 public class ShowDeck {
@@ -24,17 +25,19 @@ public class ShowDeck {
     Pixmap resizedCards;
     Texture[] texture;
     Sprite[] sp;
+    Board board;
 
     ToggleDeck toggleDeck;
 
-    public ShowDeck(Player player) {
+    public ShowDeck(Player player, Board board) {
         this.player = player;
         texture = new Texture[player.getCards().length];
         sp = new Sprite[player.getCards().length];
         font.setColor(Color.BLACK);
         createCardTexture();
         batch = new SpriteBatch();
-        toggleDeck = new ToggleDeck(texture);
+        this.board = board;
+        toggleDeck = new ToggleDeck(texture, board);
     }
 
     /**

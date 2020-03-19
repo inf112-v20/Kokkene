@@ -3,7 +3,6 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.player.Player;
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -19,8 +18,7 @@ public class PlayerTests {
 
     @Before
     public void makePlayer() {
-        Player.mute();
-        player = new Player("player", xPos, yPos, upValue);
+        player = new Player("player", xPos, yPos, upValue, false);
     }
 
     @Test

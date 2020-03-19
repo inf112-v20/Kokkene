@@ -43,9 +43,6 @@ public class Player  {
     //The next objective the Player has to go to to score points.
     private int objective = 1;
 
-    //If player makes sound.
-    private static boolean soundBool;
-
     //obvious sounds.
     private Sound damageSound;
 
@@ -59,7 +56,7 @@ public class Player  {
     private ArrayList<Card> locked = new ArrayList<>();
 
     //Constant variables
-    private static final int MAXHEALTH = 10;
+    private final int MAXHEALTH = 10;
 
     //Player constructor had to be like this for testing
     /**
@@ -68,16 +65,13 @@ public class Player  {
      * @param yPos  starting y-position for this robot.
      * @param orientation  orientation (direction) in a 0-3 scale.
      */
-    public Player(String name, int xPos, int yPos, int orientation) {
+    public Player(String name, int xPos, int yPos, int orientation, boolean soundBool) {
         this.name = name;
         this.xPos = xPos;
         this.yPos = yPos;
         this.orientation = orientation;
         this.xBackup = xPos;
         this.yBackup = yPos;
-        if (soundBool) { //Have to do this to make testing be possible
-            damageSound = new Sound("assets/sound/oof_sound.mp3");
-        }
     }
 
     /**
@@ -164,7 +158,6 @@ public class Player  {
      */
     public void addHealth(int health) {
         setHealth(this.health+health);
-        if (health<0 && soundBool) { damageSound.play(); }
     }
 
     /**
@@ -331,8 +324,4 @@ public class Player  {
         }
         setHand(deck);
     }
-
-    public static void muteToggle() { soundBool=!soundBool; }
-    public static void mute() { soundBool = false; }
-    public static void startSound() { soundBool = true; }
 }
