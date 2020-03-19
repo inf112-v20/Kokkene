@@ -1,7 +1,10 @@
 package inf112.skeleton.app.game;
 
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,7 +12,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.skeleton.app.HUD;
 import inf112.skeleton.app.ShowDeck;
 import inf112.skeleton.app.objects.Board;
-import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.player.Player;
 import inf112.skeleton.app.player.PlayerState;
 import inf112.skeleton.app.sound.Music;
@@ -79,57 +81,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(this);
         render(0);
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        /*temporary card, to work with the forwardmove.
-        Until cards are fully implemented, arrow keys will stay here.*/
-        Card c = new Card(0,0,1);
-        int move = c.getMove();
-
-        switch (keycode) {
-            case (Input.Keys.W):
-            case (Input.Keys.UP):
-                player.setOrientation(0);
-                board.forwardMove(player, move);
-                break;
-            case (Input.Keys.A):
-            case (Input.Keys.LEFT):
-                player.setOrientation(1);
-                board.forwardMove(player, move);
-                break;
-            case (Input.Keys.S):
-            case (Input.Keys.DOWN):
-                player.setOrientation(2);
-                board.forwardMove(player, move);
-                break;
-            case (Input.Keys.D):
-            case (Input.Keys.RIGHT):
-                player.setOrientation(3);
-                board.forwardMove(player, move);
-                break;
-            case (Input.Keys.SPACE):
-                board.forwardMove(player,0);
-                break;
-
-            case (Input.Keys.M):
-                muteToggle();
-                break;
-            case (Input.Keys.F11):
-                fullscreenToggle();
-                break;
-            case (Input.Keys.ESCAPE):
-            case (Input.Keys.Q):
-                Gdx.app.exit();
-                break;
-            default:
-                board.doTurn();
-                break;
-        }
-        return false;
     }
 
     public static void muteToggle() {

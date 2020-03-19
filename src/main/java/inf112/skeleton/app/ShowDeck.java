@@ -1,14 +1,12 @@
 package inf112.skeleton.app;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.player.Player;
 
 public class ShowDeck {
@@ -19,11 +17,9 @@ public class ShowDeck {
 
     private Player player;
     private int WIDTH = Main.cfg.width;
-    private int HEIGHT = Main.cfg.height;
 
     SpriteBatch batch;
     BitmapFont font = new BitmapFont();
-    Pixmap pixmap;
     Pixmap cards;
     Pixmap resizedCards;
     Texture[] texture;

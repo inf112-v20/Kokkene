@@ -188,7 +188,7 @@ public class Player  {
     private void setHealth(int health) {
         this.health = Math.min(health, MAXHEALTH);
         if (this.health<=0) {
-            addLifePoints(-1);
+            addLifePoints();
             if (getLifePoints()>0)
                 this.health = MAXHEALTH;
         }
@@ -197,9 +197,9 @@ public class Player  {
     /**
      * Changes the lifePoints
      */
-    private void addLifePoints(int life) {
-        this.lifePoints += life;
-        if (isAlive() && life < 0) resetPos();
+    private void addLifePoints() {
+        this.lifePoints += -1;
+        if (isAlive()) resetPos();
     }
 
     /**
