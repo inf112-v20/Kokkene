@@ -334,4 +334,5 @@ public class Player  {
 
     public static void muteToggle() { soundBool=!soundBool; }
     public static void mute() { soundBool = false; }
+    public static void startSound() { soundBool = true; }
 }

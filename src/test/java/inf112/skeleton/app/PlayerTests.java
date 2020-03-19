@@ -19,8 +19,8 @@ public class PlayerTests {
 
     @Before
     public void makePlayer() {
-        player = new Player("player", xPos, yPos, upValue);
         Player.mute();
+        player = new Player("player", xPos, yPos, upValue);
     }
 
     @Test
