@@ -192,7 +192,6 @@ public class Player  {
             if (getLifePoints()>0)
                 this.health = MAXHEALTH;
         }
-        lockRegister();
     }
 
     /**
@@ -271,7 +270,7 @@ public class Player  {
             selected.add(locked.get(locked.size()-1));
             locked.remove(locked.size()-1);
         }
-        if (5 - locked.size() != selected.size()){
+        if (locked.size() + selected.size() != 5){
             lockRegister();
         }
         assert locked.size() == lockedRegisters();

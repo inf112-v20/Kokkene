@@ -240,6 +240,7 @@ public class Board extends Tile{
             player.addHealth(wrenchValue(wrenchLayer,x,y));
         }
         checkObjective(player);
+        player.lockRegister();
         player.discardDraw(deck);
     }
 
