@@ -61,7 +61,7 @@ public class ToggleDeck extends InputAdapter implements Screen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        /*if (player.getSelected().size() == player.cardsToSelect()){
+        /*if (player.getSelected().size() == player.cardsToSelect() && lockButton.getBoundingRectangle().contains(screenX, screenY)){
             //TODO must add button to the right of the cards that will call RoboRally.getBoard().doTurn()
         }*/
         for(int i = 0; i < allSprites.length; i++) {

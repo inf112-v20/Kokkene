@@ -265,9 +265,8 @@ public class Player  {
      */
     public void lockRegister(){
         if (5 - locked.size() < selected.size()){
-            Card last = selected.get(selected.size()-1);
-            locked.add(last);
-            selected.remove(last);
+            locked.add(selected.get(selected.size()-1));
+            selected.remove(selected.size()-1);
         }else if(5 - locked.size() > selected.size()){
             selected.add(locked.get(locked.size()-1));
             locked.remove(locked.size()-1);
