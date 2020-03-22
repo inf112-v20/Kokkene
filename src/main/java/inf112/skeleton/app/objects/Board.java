@@ -210,12 +210,15 @@ public class Board extends Tile{
      * Does the entire turn in the correct order
      */
     public void doTurn(){
-        for (int i = 0; i < 5; i++){
-            for (Card c : sortPhase(i)){
-                cardMove(c, c.getOwner());
+
+        //This is very bad and will make the code crash in the future
+            for (int i = 0; i < 5; i++) {
+                for (Card c : sortPhase(i)) {
+                    cardMove(c, c.getOwner());
+                }
+                afterPhase(i + 1);
             }
-            afterPhase(i+1);
-        }
+
         afterRound();
     }
 
@@ -264,6 +267,7 @@ public class Board extends Tile{
      * @param phase which phase we're currently in
      * @return sorted list of cards of all the players in ascending priority
      */
+    //This caused a crash (Remove before hand-in)
     private Card[] sortPhase(int phase){
         Card[] cardArray = new Card[players.length];
         for (int i = 0; i < players.length; i++){

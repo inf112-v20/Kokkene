@@ -18,6 +18,8 @@ import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.player.Player;
 
+import java.util.Stack;
+
 public class ToggleDeck extends InputAdapter implements Screen {
 
     /**
@@ -26,10 +28,11 @@ public class ToggleDeck extends InputAdapter implements Screen {
 
     private int WIDTH = Main.cfg.width;
     private int HEIGHT = Main.cfg.height;
-    private int count;
+    private int countTracker;
+    //Keeps track of all the deselected cards
+    Stack<Integer> count = new Stack<>();
     private boolean confirm;
 
-    private Button resetButton;
     private Button lockInButton;
 
     SpriteBatch batch;
@@ -45,7 +48,7 @@ public class ToggleDeck extends InputAdapter implements Screen {
     Sprite[] allSprites;
 
     //shows if the sprite has been toggled or not
-    boolean[] display;
+    int[] display;
 
     //array to keep track of order of cards
     int[] order;
@@ -61,7 +64,7 @@ public class ToggleDeck extends InputAdapter implements Screen {
         font = new BitmapFont();
         font.setColor(Color.GREEN);
         font.getData().setScale(4,3);
-        count = 1;
+        countTracker = 1;
         confirm = false;
         createAllSprites(cards);
         //createButtons();
@@ -69,17 +72,18 @@ public class ToggleDeck extends InputAdapter implements Screen {
     }
 
     private void createButtons(){
-        resetButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
+        Button resetButton = new Button(new TextureRegionDrawable(new TextureRegion(
+                new Texture("assets/pictures/button.png"))));
         resetButton.setPosition(10, allSprites[0].getHeight()+10);
     }
 
     private void createAllSprites(Texture[] cards) {
         allSprites = new Sprite[cards.length];
-        display = new boolean[cards.length];
+        display = new int[cards.length];
         order = new int[cards.length];
         for(int i = 0; i < allSprites.length; i++) {
             allSprites[i] = new Sprite(cards[i]);
-            display[i] = false;
+            display[i] = 0;
             order[i] = 0;
         }
     }
@@ -96,43 +100,49 @@ public class ToggleDeck extends InputAdapter implements Screen {
             //TODO must add button to the right of the cards that will call RoboRally.getBoard().doTurn()
         }*/
         screenY = HEIGHT-screenY;
+        //toggle to display number of order above card.
         for(int i = 0; i < allSprites.length; i++) {
             if (allSprites[i].getBoundingRectangle().contains(screenX, screenY)
                     && !confirm) {
 
-                //toggle to display number of order above card.
-                if(display[i]) {
+                //Checks if the card has been selected before, and turns it white if this is true
+                if(display[i] != 0) {
                     player.toggleCard(player.getCards()[i]);
                     allSprites[i].setColor(Color.WHITE);
-                    display[i] = false;
+                    count.push(display[i]);
+                    display[i] = 0;
                     order[i] = 0;
-                    count--;
+                }
+                else if ((i) < player.getCards().length && !(count.isEmpty())) {
+                        player.toggleCard(player.getCards()[i]);
+                        allSprites[i].setColor(Color.GREEN);
+                        order[i] = display[i] = count.pop();
 
                 }
-                else {
+                else if((i) < player.getCards().length) {
                     player.toggleCard(player.getCards()[i]);
                     allSprites[i].setColor(Color.GREEN);
-                    display[i] = true;
-                    order[i] = count;
-                    count++;
-                }
-                if (count == 6){
-                    confirm = true;
+                    display[i] = countTracker;
+                    order[i] = countTracker;
+                    countTracker++;
                 }
 
+                if (countTracker == 6){
+                    confirm = true;
+                }
                 return true;
             }
         }
         return false;
-
     }
 
     private void resetOrder() {
-        count = 1;
+        countTracker = 1;
+        count.empty();
         confirm = false;
         for(int i = 0; i < order.length; i++) {
             order[i] = 0;
-            display[i] = false;
+            display[i] = 0;
         }
         for (Sprite s : allSprites) {
             s.setColor(Color.WHITE);
@@ -172,7 +182,7 @@ public class ToggleDeck extends InputAdapter implements Screen {
                 break;
 
             case (Input.Keys.C):
-                if(count == 6) {
+                if(countTracker == 6) {
                     RoboRally.getBoard().doTurn();
                     resetOrder();
                 }
@@ -222,9 +232,10 @@ public class ToggleDeck extends InputAdapter implements Screen {
         }
 
         for(int i = 0; i < display.length; i++) {
-            if(display[i]) {
-
-                font.draw(batch,Integer.toString(order[i]), (int)(i*allSprites[i].getWidth()) + (allSprites[i].getWidth()/2)-10 , allSprites[i].getHeight());
+            if(display[i] != 0) {
+                float spritesWidth = allSprites[i].getWidth();
+                font.draw(batch,Integer.toString(order[i]),
+                        (int)(i*spritesWidth) + (spritesWidth/2)-10 , allSprites[i].getHeight());
             }
         }
 

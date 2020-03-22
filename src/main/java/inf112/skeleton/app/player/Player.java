@@ -164,9 +164,16 @@ public class Player  {
      * @param health  The value that health will be set to.
      */
     private void setHealth(int health) {
-        this.health = Math.min(health, MAXHEALTH);
+
+        if (health <= 0) {
+            this.health = 0;
+        }
+        else {
+            this.health = Math.min(health, MAXHEALTH);
+        }
+
         if (this.health<=0) {
-            addLifePoints();
+            removeLifePoint();
             if (getLifePoints()>0)
                 this.health = MAXHEALTH;
         }
@@ -175,8 +182,8 @@ public class Player  {
     /**
      * Changes the lifePoints
      */
-    private void addLifePoints() {
-        this.lifePoints += -1;
+    private void removeLifePoint() {
+        this.lifePoints -= 1;
         if (isAlive()) resetPos();
     }
 
@@ -260,8 +267,17 @@ public class Player  {
      */
     public void setHand(Deck deck) {
         //The hand of the player.
-        Card[] playerHand = new Card[getHealth()-1];
+        Card[] playerHand;
+        //Checking the hand size
+        if (getHealth() <= 5) {
+            playerHand = new Card[5];
+        }
+         else {
+            playerHand = new Card[getHealth() - 1];
+        }
+
         selected = new ArrayList<>();
+
         for(int i = 0; i < playerHand.length; i++) {
             if (deck.Cards.isEmpty()){ // shuffles when empty
                 deck.empty();
@@ -287,6 +303,7 @@ public class Player  {
      * @param c is the card we toggle
      */
     public void toggleCard(Card c){
+
         if (selected.contains(c)){
             selected.remove(c);
             return;
