@@ -8,10 +8,10 @@ import com.badlogic.gdx.Gdx;
 public class Music {
 
     //store current position
-    com.badlogic.gdx.audio.Music music;
+    private com.badlogic.gdx.audio.Music music;
 
     //May be in unpacked file format.
-    static String musicFilePath = "assets/sound/S31-CrackedOutRobot.wav";
+    private static String musicFilePath = "assets/sound/S31-CrackedOutRobot.wav";
 
     public Music() {
         music = Gdx.audio.newMusic(Gdx.files.internal(musicFilePath));

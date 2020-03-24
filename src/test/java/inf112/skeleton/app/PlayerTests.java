@@ -13,12 +13,12 @@ public class PlayerTests {
     private int xPos = 1;
     private int yPos = 1;
     private int upValue = 0;
-    int maxHealth = 10,
+    private int maxHealth = 10,
             maxLifePoints = 3;
 
     @Before
     public void makePlayer() {
-        player = new Player("player", xPos, yPos, upValue, false);
+        player = new Player("player", xPos, yPos, upValue);
     }
 
     @Test

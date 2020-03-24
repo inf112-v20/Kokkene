@@ -43,9 +43,6 @@ public class Player  {
     //The next objective the Player has to go to to score points.
     private int objective = 1;
 
-    //obvious sounds.
-    private Sound damageSound;
-
     //the cards the player holds
     private Card[] cards;
 
@@ -65,7 +62,7 @@ public class Player  {
      * @param yPos  starting y-position for this robot.
      * @param orientation  orientation (direction) in a 0-3 scale.
      */
-    public Player(String name, int xPos, int yPos, int orientation, boolean soundBool) {
+    public Player(String name, int xPos, int yPos, int orientation) {
         this.name = name;
         this.xPos = xPos;
         this.yPos = yPos;

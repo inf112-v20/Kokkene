@@ -67,7 +67,7 @@ public class Board extends Tile{
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
-            players[i] = new Player("Player " + (i + 1), i, 0, 0, true);
+            players[i] = new Player("Player " + (i + 1), i, 0, 0);
             players[i].setHand(deck);
         }
 

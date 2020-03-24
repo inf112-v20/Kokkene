@@ -18,7 +18,7 @@ Kristoffer (final exam)
     Work with flags.
 
 **Agenda for the next meeting:**\
-    Finalise our biggest goals for mandatory assignment 3\
+    Finalise our biggest goals for mandatory assignment 3
 
 **Minutes submitted by:**
 Arthur Andersen

@@ -13,11 +13,11 @@ public class HUD {
 
     private Board board;
     private Player player;
-    int HEIGHT = Main.cfg.height;
+    private int HEIGHT = Main.cfg.height;
 
-    SpriteBatch batch = new SpriteBatch();
-    BitmapFont font = new BitmapFont();
-    Texture heart = new Texture(Gdx.files.internal("pictures/heart.png"));
+    private SpriteBatch batch = new SpriteBatch();
+    private BitmapFont font = new BitmapFont();
+    private Texture heart = new Texture(Gdx.files.internal("pictures/heart.png"));
 
     public HUD(Player player, Board board) {
         this.board = board;
