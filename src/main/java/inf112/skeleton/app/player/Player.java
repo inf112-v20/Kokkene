@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.objects.Deck;
-import inf112.skeleton.app.sound.Sound;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +25,7 @@ public class Player  {
 
     //ID of the robot
     private String name;
+    private int id;
 
     //Main position and Backup Position on the board
     private int xPos,
@@ -61,9 +61,11 @@ public class Player  {
      * @param xPos  starting x-position for this robot.
      * @param yPos  starting y-position for this robot.
      * @param orientation  orientation (direction) in a 0-3 scale.
+     * @param id numeric ID of the player
      */
-    public Player(String name, int xPos, int yPos, int orientation) {
+    public Player(String name, int xPos, int yPos, int orientation, int id) {
         this.name = name;
+        this.id = id;
         this.xPos = xPos;
         this.yPos = yPos;
         this.orientation = orientation;
@@ -169,10 +171,8 @@ public class Player  {
             this.health = Math.min(health, MAXHEALTH);
         }
 
-        if (this.health<=0) {
-            removeLifePoint();
-            if (getLifePoints()>0)
-                this.health = MAXHEALTH;
+        if (this.health <= 0) {
+            setyPos(id*200);
         }
     }
 
@@ -337,5 +337,15 @@ public class Player  {
             locked.remove(c);
         }
         setHand(deck);
+    }
+
+    /**
+     * Respawn function to be called after each round, will set position to backup coords and remove 1 life
+     */
+    public void respawn() {
+        if (getHealth() <= 0 && isAlive()){
+            removeLifePoint();
+            this.health = MAXHEALTH;
+        }
     }
 }
