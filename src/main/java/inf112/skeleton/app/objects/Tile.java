@@ -5,16 +5,22 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 public class Tile {
 
     private enum Tiles {
+        //Num = the tile number from tiles.png
+        //Dir = direction of the tile
+
         //Pistons
+        //val = 0 for even phase / 1 for odd phase
         PUSHDOWN2(1,0,2), PUSHLEFT2(2,0,1),
         PUSHUP2(3,0,0), PUSHRIGHT2(4,0,3),
         PUSHDOWN1(8,1,2), PUSHLEFT1(9,1,1),
         PUSHUP1(10,1,0), PUSHRIGHT1(11,1,3),
 
         //Wrench
+        //Val = 2 for double wrench / 1 for single wrench
         WRENCH2(7,2,0), WRENCH1(14,1,0),
 
         //Double conveyors
+        //Val = 2 because they have 2 arrows
         CONUP2(12,2,0), CONRIGHT2(13,2,3),
         CONDOWN2(19,2,2), CONLEFT2(20,2,1),
         CONDOWN21(15,2, 2), CONLEFT21(16,2,1),
@@ -29,6 +35,7 @@ public class Tile {
         CONLEFT24(75,2,1),CONDOWN24(76,2,2),
 
         //Single conveyors
+        //Val = 1 because they have 1 arrow
         CONDOWN11(29,1,2),CONLEFT11(30,1,1),
         CONRIGHT11(31,1,3),CONDOWN12(32,1,2),
         CONRIGHT12(36,1,3),CONUP11(37,1,0),
@@ -43,10 +50,13 @@ public class Tile {
         CONUP14(61,1,0),CONLEFT14(62,1,1),
 
         //Walls
+        //Dir = which side is blocked
         WALLRIGHT(21,0,3), WALLDOWN(26,0,2),
         WALLLEFT(27,0,1), WALLUP(28,0,0),
 
         //Lasers
+        //Val = amount to damage
+        //Dir = which direction does the laser go (lasers without shooters has two directions)
         LASERUP1(33,1,0),LASERRIGHT1(34,1,3),
         LASERDOWN1(40,1,2),LASERLEFT1(41,1,1),
         LASERH1(35,1,1),LASERV1(42,1,0),
@@ -55,9 +65,11 @@ public class Tile {
         LASERH2(91,2,1),LASERV2(90,2,0),
 
         //Rotating gears
+        //Val = which direction to rotate
         GEARLEFT(47,1,0), GEARRIGHT(48,-1,0),
 
         //Objectives
+        //Val = flag number
         FLAG1(49,1,0), FLAG2(56,2,0),
         FLAG3(63,3,0), FLAG4(70,4,0);
 
@@ -157,7 +169,7 @@ public class Tile {
      */
     public boolean conveyorWillTurn(TiledMapTileLayer conveyorLayer, int x, int y, int lastDirection) {
         switch (getTile(conveyorLayer.getCell(x, y).getTile().getId())) {
-            case CONDOWN21:
+            case CONDOWN21: //all these cases turn if you come from the right
             case CONUP22:
             case CONDOWN11:
             case CONUP12:
@@ -168,7 +180,7 @@ public class Tile {
                 if (lastDirection==1)
                     return true;
                 break;
-            case CONLEFT21:
+            case CONLEFT21: //all these cases turn if you come from the below
             case CONRIGHT21:
             case CONLEFT11:
             case CONRIGHT11:
@@ -179,7 +191,7 @@ public class Tile {
                 if (lastDirection==0)
                     return true;
                 break;
-            case CONDOWN22:
+            case CONDOWN22: //all these cases turn if you come from the left
             case CONUP21:
             case CONDOWN12:
             case CONUP11:
@@ -190,7 +202,7 @@ public class Tile {
                  if (lastDirection==3)
                     return true;
                 break;
-            case CONRIGHT22:
+            case CONRIGHT22: //all these cases turn if you come from above
             case CONLEFT22:
             case CONRIGHT12:
             case CONLEFT12:
@@ -201,20 +213,22 @@ public class Tile {
                 if (lastDirection==2)
                     return true;
                 break;
-            case CONRIGHT14:
+            case CONRIGHT14: //all these cases turn if you come from above or below
             case CONRIGHT25:
             case CONLEFT14:
             case CONLEFT25:
                 if (lastDirection==0 || lastDirection==2)
                     return true;
                 break;
-            case CONUP14:
+            case CONUP14: //all these cases turn if you come from the right or left
             case CONUP25:
             case CONDOWN14:
             case CONDOWN25:
                 if (lastDirection==1 || lastDirection==3)
                     return true;
                 break;
+            default:
+                return false;
         }
         return false;
     }
