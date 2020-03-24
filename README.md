@@ -12,12 +12,12 @@
 
 ## Table of Contents
 
-- [Requirements](#-requirements)
-- [Documentation](#-documentation)
-- [Shortcuts](#-shortcuts)
-- [Issues](#-issues)
-- [License](#-license)
-- [Bugs](#-bugs)
+- [Requirements](#requirements)
+- [Documentation](#documentation)
+- [Shortcuts](#shortcuts)
+- [Issues](#issues)
+- [License](#license)
+- [Bugs](#bugs)
 
 ## Requirements
 
