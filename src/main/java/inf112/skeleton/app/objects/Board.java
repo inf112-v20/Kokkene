@@ -232,6 +232,9 @@ public class Board extends Tile{
      */
     private void afterRound(){
         for (Player p : players){
+            if (!p.isAlive()){
+                continue;
+            }
             afterRound(p);
             p.respawn();
             p.lockRegister();

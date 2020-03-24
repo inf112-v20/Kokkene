@@ -172,7 +172,7 @@ public class Player  {
         }
 
         if (this.health <= 0) {
-            setyPos(id*200);
+            setyPos(200 + id);
         }
     }
 
