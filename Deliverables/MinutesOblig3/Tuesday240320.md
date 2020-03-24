@@ -1,4 +1,4 @@
-## Minutes- Kokkene Thursday 12.03.2020
+## Minutes- Kokkene Thursday 24.03.2020
 **Opening:**
 14:00 to 16:00 Discord
 
