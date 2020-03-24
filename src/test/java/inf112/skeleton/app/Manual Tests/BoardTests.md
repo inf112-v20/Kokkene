@@ -27,15 +27,14 @@ When losing over 10 health, you lose a lifepoint, and it is showed - \
 on the player. To test, walk into a laser path. 
 
 ## Selecting cards
-Selecting cards is done with the mouse.
-Upon clicking a card, it should indicate it has been chosen by turning green and having a number on it.
+Selecting cards is done with the mouse.\
+Upon clicking a card, it should indicate it has been chosen by turning green and having a number on it.\
 The number represents which turn the card will be played in.
 
-When you have selected 5 cards, the only way to do anything with the 5 cards should be clicking 'c' or 'r' on the keyboard.
+When you have selected 5 cards, the only way to do anything with the 5 cards should be clicking 'c' or 'r' on the keyboard.\
 'c' should confirm the cards, and move the player accordingly, while 'r' resets the cards and allows you to select 5 cards all over again.
 
-Currently, the player will always have the same amount of cards on hand, but they will not necessarily be clickable.
-For example, if one damage has been taken when receiving new cards, the last card will not be clickable.
-You will, however, always be able to select 5 cards, meaning the first 5 cards will always be clickable.
-This can be tested easily by using the arrow keys to move into a laser in order to take damage and then selecting 5 cards from the first hand.
-The second hand should then have cards locked according to the amount of damage taken.
+If one damage has been taken when receiving new cards, one less card will be received.\
+However, no matter how much damage has been taken, you will always receive 5 cards.\
+This can be tested easily by using the arrow keys to move into a laser in order to take damage and then selecting 5 cards from the first hand.\
+The second hand should then have less cards.

@@ -212,6 +212,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
             case (Input.Keys.C):
                 if(countTracker == 6) {
                     RoboRally.getBoard().doTurn();
+                    textures = new Texture[player.getCards().length];
                     createCardTexture();
                     createAllSprites(textures);
                     resetOrder();
