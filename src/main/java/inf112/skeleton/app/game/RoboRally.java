@@ -10,12 +10,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.skeleton.app.HUD;
-import inf112.skeleton.app.ShowDeck;
+import inf112.skeleton.app.HandVisualizer;
 import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.player.Player;
 import inf112.skeleton.app.player.PlayerState;
 import inf112.skeleton.app.sound.Music;
-import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
 public class RoboRally extends InputAdapter implements Screen {
@@ -34,7 +33,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private int num = 0;
 
-    private ShowDeck showDeck;
+    private HandVisualizer handVisualizer;
 
     RoboRally(Game game, String mapFile, String playerFile) {
         //Initializes the board and HUD
@@ -71,7 +70,7 @@ public class RoboRally extends InputAdapter implements Screen {
         //starts the background music.
         startMusic();
 
-        showDeck = new ShowDeck(player, board);
+        handVisualizer = new HandVisualizer(player);
     }
 
     //Selects the given player and updates the player field
@@ -92,22 +91,6 @@ public class RoboRally extends InputAdapter implements Screen {
     public static void muteToggle() {
         music.muteToggle();
         board.muteToggle();
-    }
-
-    public static void fullscreenToggle() {
-        try {
-            if (Display.isFullscreen()) {
-                Display.setFullscreen(false);
-                Display.setResizable(true);
-            }
-            else {
-                Display.setFullscreen(true);
-                Display.setResizable(false);
-            }
-        }
-        catch (LWJGLException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -134,7 +117,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
         mapRenderer.render();
         hud.render();
-        showDeck.render(delta);
+        handVisualizer.render(delta);
 
         if(player.getObjective() == board.objectives+1 && board.objectives != 0) {
             //Need to render one last time before going back to menu,
