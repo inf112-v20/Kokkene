@@ -35,12 +35,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private Stack<Integer> count = new Stack<>();
     private boolean confirm;
 
-    private Button lockInButton;
+    //private Button lockInButton;
 
     private SpriteBatch batch;
     private BitmapFont font;
-    private Texture texture;
-    private Sprite playSprite;
+    //private Texture texture;
+    //private Sprite playSprite;
 
     private Player player = RoboRally.player;
 
@@ -48,10 +48,10 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private Sprite[] allSprites;
 
     //shows if the sprite has been toggled or not
-    int[] display;
+    private int[] display;
 
     //array to keep track of order of cards
-    int[] order;
+    private int[] order;
 
     private Pixmap cards;
     private Texture[] textures;
@@ -100,11 +100,13 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
     }
 
+/*
     private void createButtons(){
         Button resetButton = new Button(new TextureRegionDrawable(new TextureRegion(
                 new Texture("assets/pictures/button.png"))));
         resetButton.setPosition(10, allSprites[0].getHeight()+10);
     }
+*/
 
     private void createAllSprites(Texture[] cards) {
         allSprites = new Sprite[cards.length];
@@ -260,6 +262,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public void show() {
+        //Must have this method because we implement Screen
     }
 
     @Override
@@ -293,21 +296,26 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public void resize(int i, int i1) {
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void pause() {
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void resume() {
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void hide() {
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void dispose() {
+        //Must have this method because we implement Screen
     }
 }
