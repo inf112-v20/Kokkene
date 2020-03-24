@@ -67,7 +67,7 @@ public class Board extends Tile{
 
         players = new Player[nrPlayers];
         for (int i = 0; i < nrPlayers; i++){
-            players[i] = new Player("Player " + (i + 1), i, 0, 0, true);
+            players[i] = new Player("Player " + (i + 1), i, 0, 0, i+1);
             players[i].setHand(deck);
         }
 
@@ -233,6 +233,7 @@ public class Board extends Tile{
     private void afterRound(){
         for (Player p : players){
             afterRound(p);
+            p.respawn();
             p.lockRegister();
             p.discardDraw(deck);
         }
@@ -272,6 +273,9 @@ public class Board extends Tile{
         Card[] cardArray = new Card[players.length];
         for (int i = 0; i < players.length; i++){
             Player p = players[i];
+            if (p.getHealth() <= 0 || !p.isAlive()){
+                continue;
+            }
             if (p.getSelected().size() <= phase){
                 cardArray[i] = p.getLocked().get((p.getLocked().size() - 1) - (phase - p.getSelected().size()));
                 continue;

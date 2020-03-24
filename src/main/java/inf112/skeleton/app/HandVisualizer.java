@@ -14,13 +14,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.game.RoboRally;
-import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.player.Player;
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
 
 import java.util.Stack;
 
-public class ToggleDeck extends InputAdapter implements Screen {
+public class HandVisualizer extends InputAdapter implements Screen {
 
     /**
      * TODO
@@ -37,12 +38,10 @@ public class ToggleDeck extends InputAdapter implements Screen {
 
     SpriteBatch batch;
     BitmapFont font;
-    Pixmap pixmap;
     Texture texture;
     Sprite playSprite;
 
     Player player = RoboRally.player;
-    Board board;
 
     //array of all card sprites
     Sprite[] allSprites;
@@ -53,22 +52,56 @@ public class ToggleDeck extends InputAdapter implements Screen {
     //array to keep track of order of cards
     int[] order;
 
+    Pixmap cards;
+    Pixmap resizedCards;
+    Texture[] textures;
+    Sprite[] sp;
+
     //float widthHeightRatio = (float)tr.getRegionHeight()/(float)tr.getRegionWidth();
 
-    public ToggleDeck(Texture[] cards, Board board) {
+    public HandVisualizer(Player player) {
+
+        this.player = player;
+        textures = new Texture[player.getCards().length];
+        sp = new Sprite[player.getCards().length];
+        createCardTexture();
+
         batch = new SpriteBatch();
-        pixmap = new Pixmap(Gdx.files.internal("pictures/card.png"));
-        texture = new Texture(pixmap);
-        playSprite = new Sprite(texture);
-        playSprite.setSize(texture.getWidth(),texture.getHeight());
         font = new BitmapFont();
         font.setColor(Color.GREEN);
         font.getData().setScale(4,3);
         countTracker = 1;
         confirm = false;
-        createAllSprites(cards);
+        createAllSprites(textures);
         //createButtons();
-        this.board = board;
+    }
+
+    /**
+     * TODO
+     * Create the texture for the cards and save them into the array texturedCards.
+     *
+     **/
+    private void createCardTexture() {
+
+        for(int i = 0; i < textures.length; i++) {
+            if(player.getCards()[i].getName() == 0) {
+                cards = new Pixmap(Gdx.files.internal("pictures/Move"+player.getCards()[i].getMove()+".png"));
+            }
+            else if(player.getCards()[i].getName() == 1) {
+                cards = new Pixmap(Gdx.files.internal("pictures/BackUp.png"));
+            }
+            else if(player.getCards()[i].getName() == 2) {
+                cards = new Pixmap(Gdx.files.internal("pictures/Turn"+player.getCards()[i].getMove()+".png"));
+            }
+
+            resizedCards = new Pixmap(WIDTH/10, 350, cards.getFormat());
+            resizedCards.drawPixmap(cards,
+                    0, 0, cards.getWidth(), cards.getHeight(),
+                    0, 0, resizedCards.getWidth(), resizedCards.getHeight());
+            textures[i] = new Texture(resizedCards);
+            cards.dispose();
+            resizedCards.dispose();
+        }
     }
 
     private void createButtons(){
@@ -184,6 +217,8 @@ public class ToggleDeck extends InputAdapter implements Screen {
             case (Input.Keys.C):
                 if(countTracker == 6) {
                     RoboRally.getBoard().doTurn();
+                    createCardTexture();
+                    createAllSprites(textures);
                     resetOrder();
                 }
                 break;
@@ -194,7 +229,7 @@ public class ToggleDeck extends InputAdapter implements Screen {
                 RoboRally.muteToggle();
                 break;
             case (Input.Keys.F11):
-                RoboRally.fullscreenToggle();
+                fullscreenToggle();
                 break;
             case (Input.Keys.ESCAPE):
             case (Input.Keys.Q):
@@ -204,9 +239,25 @@ public class ToggleDeck extends InputAdapter implements Screen {
         return false;
     }
 
+    private void fullscreenToggle() {
+        try {
+            if (Display.isFullscreen()) {
+                Display.setFullscreen(false);
+                Display.setResizable(true);
+            }
+            else {
+                Display.setFullscreen(true);
+                Display.setResizable(false);
+            }
+        }
+        catch (LWJGLException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void arrowMove(Player player, int move) {
-        board.doMove(player, move);
-        board.afterArrowMove(player);
+        RoboRally.getBoard().doMove(player, move);
+        RoboRally.getBoard().afterArrowMove(player);
     }
 
     @Override

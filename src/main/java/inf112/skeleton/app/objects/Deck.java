@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class Deck {
-    Scanner Scn = new Scanner(new File("assets/deck1994.txt"));
+    private Scanner Scn = new Scanner(new File("assets/deck1994.txt"));
 
     //Saves all the cards from the given txt file in this queue
     public Queue<Card> Cards = new LinkedList<>();
