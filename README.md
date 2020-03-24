@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  <strong>A boardgame made Kokkene</strong><br>
+  <strong>A boardgame made by Kokkene</strong><br>
 </p>
 
 [![Build Status](https://travis-ci.com/inf112-v20/Kokkene.svg?branch=master)](https://travis-ci.com/inf112-v20/Kokkene) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e588033d2e1445ab9b5d0fbda3b6719f)](https://app.codacy.com/gh/inf112-v20/Kokkene?utm_source=github.com&utm_medium=referral&utm_content=inf112-v20/Kokkene&utm_campaign=Badge_Grade_Dashboard)
@@ -21,13 +21,20 @@
 
 ## Requirements
 
-An IDE running on either Windows 10, Mac osx or linux.
+An IDE running on either Windows, Mac osx or linux.
 
-Java version 10+
+Java version 8+
 
 ## Documentation
 
-1. Run Main
+### Setup
+
+1. Install Maven
+2. Clone Git repository https://github.com/inf112-v20/Kokkene.git
+    
+### Running
+
+1. Run Main from "src\main\java\inf112\skeleton\app\Main.java"
 2. You will then be prompted by a menu.
 3. Choose the settings you want.
 4. Start game
