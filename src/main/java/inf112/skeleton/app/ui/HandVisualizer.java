@@ -20,9 +20,6 @@ import org.lwjgl.opengl.Display;
 
 public class HandVisualizer extends InputAdapter implements Screen {
 
-    /**
-     * TODO
-     */
 
     private int WIDTH = Main.cfg.width;
     private int HEIGHT = Main.cfg.height;
