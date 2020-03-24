@@ -3,6 +3,7 @@ package inf112.skeleton.app;
 import inf112.skeleton.app.player.Player;
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -18,7 +19,7 @@ public class PlayerTests {
 
     @Before
     public void makePlayer() {
-        player = new Player("player", xPos, yPos, upValue);
+        player = new Player("player", xPos, yPos, upValue, 1);
     }
 
     @Test
@@ -66,16 +67,19 @@ public class PlayerTests {
     }
 
     @Test
-    public void playerLoseOneLifePointWhenTakingTenDamage() {
+    public void playerLoseOneLifePointWhenRespawningWithNegativeHealth() {
         int damage = -10;
-        player.addHealth(damage);
+        player.addHealth(damage); player.respawn();
         assertEquals(maxLifePoints-1, player.getLifePoints());
     }
 
     @Test
-    public void playerIsDeadAfterLosingTenHealthThreeTimes() {
+    public void playerIsDeadAfterRespawningThreeTimesWithNegativeHealth() {
         int damage = -10;
-        player.addHealth(damage); player.addHealth(damage); player.addHealth(damage);
+        for (int i = 0; i < 3; i++) {
+            player.addHealth(damage);
+            player.respawn();
+        }
         assertFalse(player.isAlive());
     }
 
