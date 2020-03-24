@@ -3,7 +3,6 @@ package inf112.skeleton.app.objects;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import inf112.skeleton.app.Tile;
 import inf112.skeleton.app.player.Player;
 import inf112.skeleton.app.sound.Sound;
 

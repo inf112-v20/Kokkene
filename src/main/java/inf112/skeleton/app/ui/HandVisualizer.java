@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import inf112.skeleton.app.Main;
 import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.player.Player;

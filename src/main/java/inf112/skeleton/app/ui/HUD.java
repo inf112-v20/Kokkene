@@ -1,10 +1,11 @@
-package inf112.skeleton.app;
+package inf112.skeleton.app.ui;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import inf112.skeleton.app.Main;
 import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.player.Player;
 import org.lwjgl.opengl.Display;
