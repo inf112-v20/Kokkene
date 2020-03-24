@@ -60,7 +60,9 @@ We get along well and will see this project through.
 ##### Implementation
 
 1.    Program cards in the desired order
-      1.    TODO
+      1.    Cards can now be displayed through calling toggleDeck.render().
+      2.    You can click the cards in the order you want to program them.
+      3.    Confirm the order with the key "C" or reset it with "R".
 
 2.    Board objects work as intended
       1.    Tile class added
