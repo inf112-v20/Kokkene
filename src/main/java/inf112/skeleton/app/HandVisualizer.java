@@ -31,20 +31,20 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private int HEIGHT = Main.cfg.height;
     private int countTracker;
     //Keeps track of all the deselected cards
-    Stack<Integer> count = new Stack<>();
+    private Stack<Integer> count = new Stack<>();
     private boolean confirm;
 
     private Button lockInButton;
 
-    SpriteBatch batch;
-    BitmapFont font;
-    Texture texture;
-    Sprite playSprite;
+    private SpriteBatch batch;
+    private BitmapFont font;
+    private Texture texture;
+    private Sprite playSprite;
 
-    Player player = RoboRally.player;
+    private Player player = RoboRally.player;
 
     //array of all card sprites
-    Sprite[] allSprites;
+    private Sprite[] allSprites;
 
     //shows if the sprite has been toggled or not
     int[] display;
@@ -52,10 +52,8 @@ public class HandVisualizer extends InputAdapter implements Screen {
     //array to keep track of order of cards
     int[] order;
 
-    Pixmap cards;
-    Pixmap resizedCards;
-    Texture[] textures;
-    Sprite[] sp;
+    private Pixmap cards;
+    private Texture[] textures;
 
     //float widthHeightRatio = (float)tr.getRegionHeight()/(float)tr.getRegionWidth();
 
@@ -63,7 +61,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
         this.player = player;
         textures = new Texture[player.getCards().length];
-        sp = new Sprite[player.getCards().length];
         createCardTexture();
 
         batch = new SpriteBatch();
@@ -77,13 +74,11 @@ public class HandVisualizer extends InputAdapter implements Screen {
     }
 
     /**
-     * TODO
-     * Create the texture for the cards and save them into the array texturedCards.
-     *
+     * Create the texture for the cards and save them into the "textures" array.
      **/
     private void createCardTexture() {
 
-        for(int i = 0; i < textures.length; i++) {
+        for(int i = 0; i < player.getCards().length; i++) {
             if(player.getCards()[i].getName() == 0) {
                 cards = new Pixmap(Gdx.files.internal("pictures/Move"+player.getCards()[i].getMove()+".png"));
             }
@@ -94,7 +89,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 cards = new Pixmap(Gdx.files.internal("pictures/Turn"+player.getCards()[i].getMove()+".png"));
             }
 
-            resizedCards = new Pixmap(WIDTH/10, 350, cards.getFormat());
+            Pixmap resizedCards = new Pixmap(WIDTH / 10, 350, cards.getFormat());
             resizedCards.drawPixmap(cards,
                     0, 0, cards.getWidth(), cards.getHeight(),
                     0, 0, resizedCards.getWidth(), resizedCards.getHeight());
@@ -132,10 +127,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
         /*if (player.getSelected().size() == player.cardsToSelect() && lockButton.getBoundingRectangle().contains(screenX, screenY)){
             //TODO must add button to the right of the cards that will call RoboRally.getBoard().doTurn()
         }*/
-        screenY = HEIGHT-screenY;
         //toggle to display number of order above card.
         for(int i = 0; i < allSprites.length; i++) {
-            if (allSprites[i].getBoundingRectangle().contains(screenX, screenY)
+            if (allSprites[i].getBoundingRectangle().contains(screenX, HEIGHT - screenY)
                     && !confirm) {
 
                 //Checks if the card has been selected before, and turns it white if this is true
@@ -235,6 +229,8 @@ public class HandVisualizer extends InputAdapter implements Screen {
             case (Input.Keys.Q):
                 Gdx.app.exit();
                 break;
+            default:
+                break;
         }
         return false;
     }
@@ -262,7 +258,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -296,26 +291,21 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public void resize(int i, int i1) {
-
     }
 
     @Override
     public void pause() {
-
     }
 
     @Override
     public void resume() {
-
     }
 
     @Override
     public void hide() {
-
     }
 
     @Override
     public void dispose() {
-
     }
 }
