@@ -4,8 +4,7 @@ import inf112.skeleton.app.player.Player;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 public class PlayerTests {
 
@@ -67,10 +66,30 @@ public class PlayerTests {
     }
 
     @Test
+    public void playerIsOffTheBoardWhileDead(){
+        int damage = -10;
+        player.addHealth(damage);
+        assertTrue(player.getyPos() > 200);
+    }
+
+    @Test
     public void playerLoseOneLifePointWhenRespawningWithNegativeHealth() {
         int damage = -10;
         player.addHealth(damage); player.respawn();
         assertEquals(maxLifePoints-1, player.getLifePoints());
+    }
+
+    @Test
+    public void playerWillRespawnAtBackupLocation(){
+        player.setxPos(player.getxBackup()+1); //Moves away from backup location
+        player.setyPos(player.getyBackup()+1);
+
+        int damage = -10;
+        player.addHealth(damage);
+        player.respawn();
+
+        assertEquals(player.getxBackup(), player.getxPos());
+        assertEquals(player.getyBackup(), player.getyPos());
     }
 
     @Test
