@@ -1,6 +1,5 @@
 package inf112.skeleton.app.game;
 
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -108,7 +107,14 @@ public class RoboRally extends InputAdapter implements Screen {
                 y = player.getyPos();
 
         board.playerLayer.setCell(x, y, ps.getPlayerStatus());
-        board.playerLayer.getCell(x, y).setRotation(player.getOrientation());
+        try {
+            board.playerLayer.getCell(x, y).setRotation(player.getOrientation());
+        }
+        catch (NullPointerException e) {
+            System.out.println(player.getName() + " is missing from the board!");
+            e.printStackTrace();
+            System.exit(1);
+        }
 
         board.healthLayer.setCell(x, y, hb.getPlayerHealth());
         try {

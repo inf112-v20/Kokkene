@@ -50,7 +50,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
         batch = new SpriteBatch();
         font = new BitmapFont();
-        font.setColor(Color.GREEN);
+        font.setColor(Color.GREEN); //Number color
         font.getData().setScale(4, 3);
         createAllSprites(textures);
         //createButtons();
@@ -139,13 +139,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
                         && !player.getSelected().contains(player.getCards()[i])) { //If trying to select more than max
                     return true;
                 }
-
-                if (player.toggleCard(player.getCards()[i])) { //Toggles selected card, true if adding selected
-                    allSprites[i].setColor(Color.GREEN); // Turns green when selected
-                } else {
-                    allSprites[i].setColor(Color.WHITE); //Turns white when deselected
-                }
-
+                player.toggleCard(player.getCards()[i]);
                 return true;
             }
         }
@@ -239,8 +233,16 @@ public class HandVisualizer extends InputAdapter implements Screen {
     }
 
     private void arrowMove(Player player, int move) {
+        int playerHealth = player.getHealth();
         RoboRally.getBoard().doMove(player, move);
         RoboRally.getBoard().afterArrowMove(player);
+
+        if (player.getHealth() != playerHealth) {
+            textures = new Texture[player.getCards().length + player.getLocked().size()];
+            createCardTexture();
+            createAllSprites(textures);
+            resetOrder();
+        }
     }
 
     @Override
@@ -283,9 +285,11 @@ public class HandVisualizer extends InputAdapter implements Screen {
     public void drawRegisterNumbers() {
         float spriteWidth = allSprites[0].getWidth();
         for (int i = 0; i < player.getCards().length; i++) { //Draws register nr. on top of card
+            allSprites[i].setColor(Color.WHITE);
             Card c = player.getCards()[i];
             if (player.getSelected().contains(c)) { //Whether current card is selected
                 int nr = player.getSelected().indexOf(c) + 1; //Which register the card is in
+                allSprites[i].setColor(Color.GREEN);
                 font.draw(batch, Integer.toString(nr),
                         allSprites[i].getX() + spriteWidth / 2 - 10, allSprites[i].getHeight());
             }

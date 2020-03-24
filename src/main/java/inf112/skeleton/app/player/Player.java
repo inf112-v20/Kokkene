@@ -253,7 +253,7 @@ public class Player  {
             locked.remove(locked.size() - 1);
         }
         if (locked.size() != lockedRegisters() || selected.size() != cardsToSelect()) {
-            lockRegister();
+            lockRegister(); //TODO get rid of infinite loop?
         }
         assert locked.size() == lockedRegisters() : "Unexpected value: " + locked.size();
     }
