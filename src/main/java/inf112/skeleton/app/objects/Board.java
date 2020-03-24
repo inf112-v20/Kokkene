@@ -193,8 +193,7 @@ public class Board extends Tile{
                 pl.turn(card.getMove());
                 break;
             default:
-                System.out.println(name);
-                break;
+                throw new IllegalStateException("Unexpected value: " + name);
         }
     }
 
@@ -209,10 +208,11 @@ public class Board extends Tile{
      * Does the entire turn in the correct order
      */
     public void doTurn(){
-
-        //This is very bad and will make the code crash in the future
             for (int i = 0; i < 5; i++) {
                 for (Card c : sortPhase(i)) {
+                    if (c == null || c.getOwner() == null || c.getOwner().getHealth() <= 0) {
+                        continue;
+                    }
                     cardMove(c, c.getOwner());
                 }
                 afterPhase(i + 1);
@@ -260,8 +260,12 @@ public class Board extends Tile{
             if (p.getHealth() <= 0 || !p.isAlive()){
                 continue;
             }
-            if (p.getSelected().size() <= phase){
-                cardArray[i] = p.getLocked().get((p.getLocked().size() - 1) - (phase - p.getSelected().size()));
+            if (p.getSelected().size() <= phase) {
+                int lastLocked = p.getLocked().size() - 1,
+                        difference = phase - p.getSelected().size(),
+                        reverseOrder = lastLocked - difference;
+
+                cardArray[i] = p.getLocked().get(reverseOrder);
                 continue;
             }
             cardArray[i] = p.getSelected().get(phase);

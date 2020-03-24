@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.skeleton.app.ui.HUD;
-import inf112.skeleton.app.ui.HandVisualizer;
 import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.player.Player;
 import inf112.skeleton.app.player.PlayerState;
 import inf112.skeleton.app.sound.Music;
+import inf112.skeleton.app.ui.HUD;
+import inf112.skeleton.app.ui.HandVisualizer;
 import org.lwjgl.opengl.Display;
 
 public class RoboRally extends InputAdapter implements Screen {
@@ -65,12 +65,12 @@ public class RoboRally extends InputAdapter implements Screen {
         hb = new PlayerState(player, board, healthbars);
 
         //sets up the hud to display information about the player in real time.
-        hud = new HUD(player,board);
+        hud = new HUD(player, board);
 
         //starts the background music.
         startMusic();
 
-        handVisualizer = new HandVisualizer(player);
+        handVisualizer = new HandVisualizer(player, board);
     }
 
     //Selects the given player and updates the player field

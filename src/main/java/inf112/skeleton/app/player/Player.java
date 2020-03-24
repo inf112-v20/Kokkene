@@ -245,17 +245,17 @@ public class Player  {
      * Lock the last selected card if damaged such that the register must lock
      */
     public void lockRegister(){
-        if (5 - locked.size() < selected.size()){
-            locked.add(selected.get(selected.size()-1));
-            selected.remove(selected.size()-1);
-        }else if(5 - locked.size() > selected.size()){
-            selected.add(locked.get(locked.size()-1));
-            locked.remove(locked.size()-1);
+        if (locked.size() < lockedRegisters()) {
+            locked.add(selected.get(selected.size() - 1));
+            selected.remove(selected.size() - 1);
+        } else if (locked.size() > lockedRegisters()) {
+            selected.add(locked.get(locked.size() - 1));
+            locked.remove(locked.size() - 1);
         }
-        if (locked.size() + selected.size() != 5){
+        if (locked.size() != lockedRegisters() || selected.size() != cardsToSelect()) {
             lockRegister();
         }
-        assert locked.size() == lockedRegisters();
+        assert locked.size() == lockedRegisters() : "Unexpected value: " + locked.size();
     }
 
     /**
@@ -264,15 +264,7 @@ public class Player  {
      */
     public void setHand(Deck deck) {
         //The hand of the player.
-        Card[] playerHand;
-        //Checking the hand size
-        if (getHealth() <= 5) {
-            playerHand = new Card[5];
-        }
-         else {
-            playerHand = new Card[getHealth() - 1];
-        }
-
+        Card[] playerHand = new Card[getHealth() - 1];
         selected = new ArrayList<>();
 
         for(int i = 0; i < playerHand.length; i++) {
@@ -297,15 +289,16 @@ public class Player  {
 
     /**
      * Toggles whether a card is selected or not
+     *
      * @param c is the card we toggle
      */
-    public void toggleCard(Card c){
-
-        if (selected.contains(c)){
+    public boolean toggleCard(Card c) {
+        if (selected.contains(c)) {
             selected.remove(c);
-            return;
+            return false;
         }
         selected.add(c);
+        return true;
     }
 
     /**

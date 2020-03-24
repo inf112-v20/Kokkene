@@ -10,17 +10,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import inf112.skeleton.app.Main;
 import inf112.skeleton.app.game.RoboRally;
+import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.player.Player;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
-
-import java.util.Stack;
 
 public class HandVisualizer extends InputAdapter implements Screen {
 
@@ -30,10 +26,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     private int WIDTH = Main.cfg.width;
     private int HEIGHT = Main.cfg.height;
-    private int countTracker;
-    //Keeps track of all the deselected cards
-    private Stack<Integer> count = new Stack<>();
-    private boolean confirm;
 
     //private Button lockInButton;
 
@@ -42,34 +34,27 @@ public class HandVisualizer extends InputAdapter implements Screen {
     //private Texture texture;
     //private Sprite playSprite;
 
-    private Player player = RoboRally.player;
+    private Player player;
+    private Board board;
 
     //array of all card sprites
     private Sprite[] allSprites;
-
-    //shows if the sprite has been toggled or not
-    private int[] display;
-
-    //array to keep track of order of cards
-    private int[] order;
 
     private Pixmap cards;
     private Texture[] textures;
 
     //float widthHeightRatio = (float)tr.getRegionHeight()/(float)tr.getRegionWidth();
 
-    public HandVisualizer(Player player) {
-
+    public HandVisualizer(Player player, Board board) {
         this.player = player;
-        textures = new Texture[player.getCards().length];
+        this.board = board;
+        textures = new Texture[player.getCards().length + player.getLocked().size()];
         createCardTexture();
 
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.GREEN);
-        font.getData().setScale(4,3);
-        countTracker = 1;
-        confirm = false;
+        font.getData().setScale(4, 3);
         createAllSprites(textures);
         //createButtons();
     }
@@ -78,16 +63,15 @@ public class HandVisualizer extends InputAdapter implements Screen {
      * Create the texture for the cards and save them into the "textures" array.
      **/
     private void createCardTexture() {
+        int lastLocked = player.getLocked().size() - 1;
 
-        for(int i = 0; i < player.getCards().length; i++) {
-            if(player.getCards()[i].getName() == 0) {
-                cards = new Pixmap(Gdx.files.internal("pictures/Move"+player.getCards()[i].getMove()+".png"));
-            }
-            else if(player.getCards()[i].getName() == 1) {
-                cards = new Pixmap(Gdx.files.internal("pictures/BackUp.png"));
-            }
-            else if(player.getCards()[i].getName() == 2) {
-                cards = new Pixmap(Gdx.files.internal("pictures/Turn"+player.getCards()[i].getMove()+".png"));
+        for (int i = 0; i < textures.length; i++) { //Create textures for the selectable hand
+            if (i < player.getCards().length) {
+                cardPictureFactory(player.getCards()[i]); //Sets .png file for the card
+            } else { //Create textures for the locked cards
+                int difference = i - player.getCards().length,
+                        reverseLocked = lastLocked - difference;
+                cardPictureFactory(player.getLocked().get(reverseLocked));
             }
 
             Pixmap resizedCards = new Pixmap(WIDTH / 10, 350, cards.getFormat());
@@ -100,6 +84,27 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
     }
 
+    /**
+     * Sets the cards field to the address for the .png file of the card
+     *
+     * @param c Card to look up picture of
+     */
+    public void cardPictureFactory(Card c) {
+        switch (c.getName()) {
+            case (0):
+                cards = new Pixmap(Gdx.files.internal("pictures/Move" + c.getMove() + ".png"));
+                break;
+            case (1):
+                cards = new Pixmap(Gdx.files.internal("pictures/BackUp.png"));
+                break;
+            case (2):
+                cards = new Pixmap(Gdx.files.internal("pictures/Turn" + c.getMove() + ".png"));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + c.getName());
+        }
+    }
+
 /*
     private void createButtons(){
         Button resetButton = new Button(new TextureRegionDrawable(new TextureRegion(
@@ -108,14 +113,15 @@ public class HandVisualizer extends InputAdapter implements Screen {
     }
 */
 
+    /**
+     * Create all the sprites on the board
+     *
+     * @param cards Array of textures that will be turned into sprites
+     */
     private void createAllSprites(Texture[] cards) {
         allSprites = new Sprite[cards.length];
-        display = new int[cards.length];
-        order = new int[cards.length];
-        for(int i = 0; i < allSprites.length; i++) {
+        for (int i = 0; i < allSprites.length; i++) {
             allSprites[i] = new Sprite(cards[i]);
-            display[i] = 0;
-            order[i] = 0;
         }
     }
 
@@ -127,39 +133,22 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        /*if (player.getSelected().size() == player.cardsToSelect() && lockButton.getBoundingRectangle().contains(screenX, screenY)){
-            //TODO must add button to the right of the cards that will call RoboRally.getBoard().doTurn()
-        }*/
         //toggle to display number of order above card.
-        for(int i = 0; i < allSprites.length; i++) {
+        for (int i = 0; i < allSprites.length - player.getLocked().size(); i++) {
             if (allSprites[i].getBoundingRectangle().contains(screenX, HEIGHT - screenY)
-                    && !confirm) {
+                    && player.getSelected().size() <= player.cardsToSelect()) {
 
-                //Checks if the card has been selected before, and turns it white if this is true
-                if(display[i] != 0) {
-                    player.toggleCard(player.getCards()[i]);
-                    allSprites[i].setColor(Color.WHITE);
-                    count.push(display[i]);
-                    display[i] = 0;
-                    order[i] = 0;
-                }
-                else if ((i) < player.getCards().length && !(count.isEmpty())) {
-                        player.toggleCard(player.getCards()[i]);
-                        allSprites[i].setColor(Color.GREEN);
-                        order[i] = display[i] = count.pop();
-
-                }
-                else if((i) < player.getCards().length) {
-                    player.toggleCard(player.getCards()[i]);
-                    allSprites[i].setColor(Color.GREEN);
-                    display[i] = countTracker;
-                    order[i] = countTracker;
-                    countTracker++;
+                if (player.getSelected().size() == player.cardsToSelect()
+                        && !player.getSelected().contains(player.getCards()[i])) { //If trying to select more than max
+                    return true;
                 }
 
-                if (countTracker == 6){
-                    confirm = true;
+                if (player.toggleCard(player.getCards()[i])) { //Toggles selected card, true if adding selected
+                    allSprites[i].setColor(Color.GREEN); // Turns green when selected
+                } else {
+                    allSprites[i].setColor(Color.WHITE); //Turns white when deselected
                 }
+
                 return true;
             }
         }
@@ -167,15 +156,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
     }
 
     private void resetOrder() {
-        countTracker = 1;
-        count.empty();
-        confirm = false;
-        for(int i = 0; i < order.length; i++) {
-            order[i] = 0;
-            display[i] = 0;
-        }
-        for (Sprite s : allSprites) {
-            s.setColor(Color.WHITE);
+        for (int i = 0; i < allSprites.length; i++) {
+            if (i < player.getCards().length) {
+                allSprites[i].setColor(Color.WHITE);
+            } else {
+                allSprites[i].setColor(Color.RED); //Locked cards are red
+            }
         }
         this.dispose();
     }
@@ -205,16 +191,16 @@ public class HandVisualizer extends InputAdapter implements Screen {
             case (Input.Keys.D):
             case (Input.Keys.RIGHT):
                 player.setOrientation(3);
-                arrowMove(player,move);
+                arrowMove(player, move);
                 break;
             case (Input.Keys.SPACE):
-                arrowMove(player,0);
+                arrowMove(player, 0);
                 break;
 
             case (Input.Keys.C):
-                if(countTracker == 6) {
-                    RoboRally.getBoard().doTurn();
-                    textures = new Texture[player.getCards().length];
+                if (player.getSelected().size() == player.cardsToSelect()) {
+                    board.doTurn();
+                    textures = new Texture[player.getCards().length + player.getLocked().size()];
                     createCardTexture();
                     createAllSprites(textures);
                     resetOrder();
@@ -270,28 +256,49 @@ public class HandVisualizer extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(this);
         batch.begin();
 
-        font.draw(batch, "reset: R", 10, allSprites[0].getHeight()+40);
-        font.draw(batch, "confirm: C", 10, allSprites[0].getHeight()+90);
+        font.draw(batch, "reset: R", 10, allSprites[0].getHeight() + 40);
+        font.draw(batch, "confirm: C", 10, allSprites[0].getHeight() + 90);
 
+        drawCardSprites();
+        drawRegisterNumbers();
+
+        batch.end();
+
+    }
+
+    /**
+     * Draw the cards on the screen in the correct positions
+     */
+    public void drawCardSprites() {
         for (int i = 0; i < allSprites.length; i++) {
-            int xPos = (int)(i*allSprites[i].getWidth());
+            int xPos = (int) (i * allSprites[i].getWidth());
             int yPos = 0;
 
             allSprites[i].draw(batch);
             allSprites[i].setPosition(xPos, yPos);
-
         }
 
-        for(int i = 0; i < display.length; i++) {
-            if(display[i] != 0) {
-                float spritesWidth = allSprites[i].getWidth();
-                font.draw(batch,Integer.toString(order[i]),
-                        (int)(i*spritesWidth) + (spritesWidth/2)-10 , allSprites[i].getHeight());
+    }
+
+    /**
+     * Draws the register number on top of the cards
+     */
+    public void drawRegisterNumbers() {
+        float spriteWidth = allSprites[0].getWidth();
+        for (int i = 0; i < player.getCards().length; i++) { //Draws register nr. on top of card
+            Card c = player.getCards()[i];
+            if (player.getSelected().contains(c)) { //Whether current card is selected
+                int nr = player.getSelected().indexOf(c) + 1; //Which register the card is in
+                font.draw(batch, Integer.toString(nr),
+                        allSprites[i].getX() + spriteWidth / 2 - 10, allSprites[i].getHeight());
             }
         }
 
-        batch.end();
-
+        int register = allSprites.length - 1;
+        for (int i = 0; i < player.getLocked().size(); i++) { //Draw locked registers
+            font.draw(batch, Integer.toString(5 - i),
+                    allSprites[register - i].getX() + spriteWidth / 2 - 10, allSprites[register - i].getHeight());
+        }
     }
 
     @Override
