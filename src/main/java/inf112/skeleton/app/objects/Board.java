@@ -222,7 +222,6 @@ public class Board extends Tile{
     }
 
     public void afterArrowMove(Player player) {
-        afterRound(player);
         afterPhase(player,1);
     }
 
@@ -234,7 +233,6 @@ public class Board extends Tile{
             if (!p.isAlive()){
                 continue;
             }
-            afterRound(p);
             p.respawn();
             p.lockRegister();
             p.discardDraw(deck);
@@ -242,24 +240,8 @@ public class Board extends Tile{
     }
 
     /**
-     * Checking the rest of the layers after turn
-     * @param player  the player to be affected.
+     * Plays the damage sound
      */
-    private void afterRound(Player player) {
-        int x = player.getxPos(),
-                y = player.getyPos();
-
-        if (hasTile(laserLayer,x,y)) { //not in correct form.
-            player.addHealth(-laserValue(laserLayer, x, y));
-            playDamageSound();
-        }
-        if (hasTile(wrenchLayer, x, y)) {
-            player.newBackup();
-            player.addHealth(wrenchValue(wrenchLayer,x,y));
-        }
-        checkObjective(player);
-    }
-
     private void playDamageSound() {
         if (soundBool)
             damageSound.play();
@@ -325,6 +307,16 @@ public class Board extends Tile{
         if (hasTile(gearLayer, x, y)){
             player.turn(gearDirection(gearLayer, x, y));
         }
+        x = player.getxPos(); y = player.getyPos();
+        if (hasTile(laserLayer, x, y)) {
+            player.addHealth(-laserValue(laserLayer, x, y));
+            playDamageSound();
+        }
+        if (hasTile(wrenchLayer, x, y)) {
+            player.newBackup();
+            player.addHealth(wrenchValue(wrenchLayer, x, y));
+        }
+        checkObjective(player);
     }
 
     /**
