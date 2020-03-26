@@ -60,7 +60,7 @@ public class RoboRally extends InputAdapter implements Screen {
         TextureRegion[][] tr = player.setPlayerTextures(playerFile);
         ps = new PlayerState(player, board, tr);
 
-        TextureRegion[][] healthbars = player.setPlayerTextures("assets/pictures/healthbars.png");
+        TextureRegion[][] healthbars = player.setPlayerTextures("assets/pictures/healthbars2.png");
         hb = new PlayerState(player, board, healthbars);
 
         //sets up the hud to display information about the player in real time.
@@ -76,8 +76,8 @@ public class RoboRally extends InputAdapter implements Screen {
     public static void selectPlayer(int multiplayerPosition) {player = board.players[multiplayerPosition-1];}
 
     //Selects the given board and updates the board field
-    private static void setBoard(String mapFile, String deckFile, int nrPlayers) {
-        board = new Board(mapFile, deckFile, nrPlayers);
+    private void setBoard(String mapFile, String deckFile, int nrPlayers) {
+        board = new Board(this, mapFile, deckFile, nrPlayers);
     }
 
     public static Board getBoard() {
@@ -86,7 +86,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     @Override
     public void show() {
-        render(0);
+        render(Gdx.graphics.getDeltaTime());
     }
 
     public static void muteToggle() {

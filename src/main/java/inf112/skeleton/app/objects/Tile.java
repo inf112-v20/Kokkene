@@ -100,12 +100,20 @@ public class Tile {
     }
 
     /**
-     * @return values 0-3 (0=North)
+     * @return values 0-3 (0=North, 1=West)
      */
     public int laserDirection(TiledMapTileLayer laserLayer, int x, int y) {
         return getTile(laserLayer.getCell(x, y).getTile().getId()).dir;
     }
 
+    /**
+     * Checks whether given tile is a laser emitter
+     *
+     * @param laserLayer layer of lasers to check
+     * @param x          coordinate to check
+     * @param y          coordinate to check
+     * @return true if it's an emitter, false if laser light
+     */
     public boolean isLaserShooter(TiledMapTileLayer laserLayer, int x, int y) {
         switch (getTile(laserLayer.getCell(x, y).getTile().getId())) {
             case LASERH1:
@@ -161,9 +169,9 @@ public class Tile {
     }
 
     /**
-     * @param conveyorLayer
-     * @param x of new position
-     * @param y of new position
+     * @param conveyorLayer conveyorLayer is the map of cells where conveyors are stored
+     * @param x             of new position
+     * @param y             of new position
      * @param lastDirection direction of the last conveyor
      * @return true if player will turn
      */

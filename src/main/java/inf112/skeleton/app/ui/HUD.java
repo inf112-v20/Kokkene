@@ -14,7 +14,6 @@ public class HUD {
 
     private Player player;
     private int HEIGHT = Main.cfg.height;
-    private String[] dir = {"^", "<", "v", ">"};
 
     private SpriteBatch batch = new SpriteBatch();
     private BitmapFont font = new BitmapFont();
@@ -43,11 +42,6 @@ public class HUD {
         else {
             font.draw(batch, "Objective: " + player.getObjective(), obX, obY);
         }
-
-        // direction of which the laser will shoot
-        int xMove = (Main.cfg.width/3) / 12;
-        font.draw(batch, dir[player.getOrientation()], ((player.getxPos()*xMove) + Main.cfg.width/3) + xMove/3,
-                ((player.getyPos()*xMove) + HEIGHT/2) - xMove*2);
 
         batch.end();
     }

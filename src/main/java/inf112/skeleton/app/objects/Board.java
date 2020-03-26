@@ -1,15 +1,20 @@
 package inf112.skeleton.app.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.player.Player;
 import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Board extends Tile{
+public class Board extends Tile {
+
+    private RoboRally roboRally;
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer,
@@ -24,6 +29,8 @@ public class Board extends Tile{
             gearLayer,
             healthLayer;
 
+    private ArrayList<int[]> lasers;
+
     public int boardHeight,
             boardWidth;
 
@@ -37,11 +44,29 @@ public class Board extends Tile{
     private Sound damageSound;
 
     /**
-     *
      * @param mapFile the file containing the map.
      */
-    public Board(String mapFile, String deckFile, int nrPlayers) {
+    public Board(RoboRally game, String mapFile, String deckFile, int nrPlayers) {
+        roboRally = game;
         map = new TmxMapLoader().load(mapFile);
+        buildMap();
+
+        findLasers();
+
+        createDeck(deckFile);
+
+        generatePlayers(nrPlayers);
+
+        generateObjectives();
+
+        damageSound = new Sound("assets/sound/oof_sound.mp3");
+    }
+
+
+    /**
+     * Separates the map into different layers and stores the layers as fields
+     */
+    private void buildMap() {
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
@@ -56,39 +81,74 @@ public class Board extends Tile{
 
         boardHeight = boardLayer.getHeight();
         boardWidth = boardLayer.getWidth();
+    }
 
+    /**
+     * Finds all the lasers on the map and stores them in the lasers field
+     */
+    private void findLasers() {
+        lasers = new ArrayList<>();
+        for (int x = 0; x < boardWidth; x++) {
+            for (int y = 0; y < boardHeight; y++) {
+                if (hasTile(laserLayer, x, y) && isLaserShooter(laserLayer, x, y)) {
+                    int[] coords = new int[2];
+                    coords[0] = x;
+                    coords[1] = y;
+                    lasers.add(coords);
+                }
+            }
+        }
+    }
+
+    /**
+     * Creates a deck and stores it in the deck field, then shuffles the deck
+     *
+     * @param deckFile Location of the contents of the deck
+     */
+    private void createDeck(String deckFile) {
         try {
             this.deck = new Deck(deckFile);
             deck.shuffle();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        players = new Player[nrPlayers];
-        for (int i = 0; i < nrPlayers; i++){
-            players[i] = new Player("Player " + (i + 1), i, 0, 0, i+1);
+    /**
+     * Create a certain amount of players and store them in the players field
+     *
+     * @param nr # of players to create
+     */
+    private void generatePlayers(int nr) {
+        players = new Player[nr];
+        for (int i = 0; i < nr; i++) {
+            players[i] = new Player("Player " + (i + 1), i, 0, 0, i + 1);
             players[i].setHand(deck);
         }
+    }
 
-        for(int i = 0; i < flagLayer.getWidth(); i++) {
-            for(int j = 0; j < flagLayer.getHeight(); j++) {
-                if (hasTile(flagLayer,i,j)) {
+    /**
+     * Generates objectives from the map
+     */
+    private void generateObjectives() {
+        for (int i = 0; i < flagLayer.getWidth(); i++) {
+            for (int j = 0; j < flagLayer.getHeight(); j++) {
+                if (hasTile(flagLayer, i, j)) {
                     objectives++;
                 }
             }
         }
-
-        damageSound = new Sound("assets/sound/oof_sound.mp3");
     }
 
     /**
      * Tries to move a player in a direction, without changing orientation
-     * @param player to move
+     *
+     * @param player    to move
      * @param direction to go
      */
     private boolean move(Player player, int direction) {
         int x = player.getxPos(), y = player.getyPos();
-        boolean isHole = hasTile(holeLayer,x,y);
+        boolean isHole = hasTile(holeLayer, x, y);
         playerLayer.setCell(x, y, null);
         healthLayer.setCell(x, y, null);
 
@@ -156,13 +216,13 @@ public class Board extends Tile{
         int orientation = player.getOrientation();
 
         if(move > 0 || move == -1) {
-            if(move == -1) {
+            if (move == -1) {
                 backwardMove(player);
-            }
-            else if (legalMove) {
+            } else if (legalMove) {
                 legalMove = move(player, orientation);
             }
-            doMove(player, move-1, legalMove);
+            doMove(player, move - 1, legalMove);
+            roboRally.render(Gdx.graphics.getDeltaTime()); //TODO determine if necessary to render here
         }
     }
 
@@ -279,11 +339,16 @@ public class Board extends Tile{
 
     /**
      * Makes all the players interact with the board objects
+     *
      * @param phase to do
      */
-    private void afterPhase(int phase){
-        for (Player p : players){
+    private void afterPhase(int phase) {
+        for (Player p : players) {
             afterPhase(p, phase);
+        }
+        fireLasers();
+        for (Player finish : players) {
+            finishPhase(finish);
         }
     }
 
@@ -296,8 +361,9 @@ public class Board extends Tile{
         int x = player.getxPos(),
                 y = player.getyPos();
 
-        if (hasTile(conveyorLayer, x, y)){
+        if (hasTile(conveyorLayer, x, y)) {
             moveDoubleConveyor(player, x, y);
+            roboRally.render(Gdx.graphics.getDeltaTime());
             //TODO render between each part of the phases, but only if player moved.
         }
         x = player.getxPos(); y = player.getyPos();
@@ -313,16 +379,7 @@ public class Board extends Tile{
         if (hasTile(gearLayer, x, y)){
             player.turn(gearDirection(gearLayer, x, y));
         }
-        x = player.getxPos(); y = player.getyPos();
-        if (hasTile(laserLayer, x, y)) {
-            player.addHealth(-laserValue(laserLayer, x, y));
-            playDamageSound();
-        }
-        if (hasTile(wrenchLayer, x, y)) {
-            player.newBackup();
-            player.addHealth(wrenchValue(wrenchLayer, x, y));
-        }
-        checkObjective(player);
+        roboRally.render(Gdx.graphics.getDeltaTime());
     }
 
     /**
@@ -380,14 +437,19 @@ public class Board extends Tile{
     }
 
     /**
-     * Checks if the player has reached the objective, and updates the current objective.
+     * Checks if the player is on a wrench or flag, and updates the damage, backup and current objective.
+     *
      * @param player to be checked.
      */
-    private void checkObjective(Player player) {
+    private void finishPhase(Player player) {
         int x = player.getxPos(),
                 y = player.getyPos();
+        if (hasTile(wrenchLayer, x, y)) {
+            player.newBackup();
+            player.addHealth(wrenchValue(wrenchLayer, x, y));
+        }
         if (hasTile(flagLayer, x, y)) {
-            player.checkObjective(flagValue(flagLayer,x,y));
+            player.checkObjective(flagValue(flagLayer, x, y));
         }
     }
 
@@ -466,8 +528,9 @@ public class Board extends Tile{
 
     /**
      * Checks if given direction is blocked for given player
+     *
      * @param direction to move in
-     * @param player to be moved
+     * @param player    to be moved
      * @return true if the path is blocked
      */
     private boolean isBlocked(Player player, int direction) {
@@ -475,20 +538,37 @@ public class Board extends Tile{
     }
 
     /**
+     * Iterate through all lasers on the map and fire them. Plays the damage sound if anyone takes damage.
+     */
+    private void fireLasers() {
+        boolean damage = false;
+        for (int[] coords : lasers) {
+            int x = coords[0],
+                    y = coords[1];
+            damage = damage || laser(x, y, laserDirection(laserLayer, x, y));
+        }
+        if (damage) {
+            playDamageSound();
+        }
+    }
+
+    /**
      * Checks the direction the laser at given coords is pointing until it hits a player or wall
-     * @param x coordinate of laser
-     * @param y coordinate of laser
+     *
+     * @param x   coordinate of laser
+     * @param y   coordinate of laser
      * @param dir direction laser is pointing
      * @return true when the laser has hit a player, false if it hit a wall
      */
-    private boolean laser(int x, int y, int dir){
-        if (hasTile(playerLayer, x, y)){
-            players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-laserValue(laserLayer, x, y));
-            return true;
-        }
-        else if (!isBlocked(x, y, dir)){
-            int[] nb = getNeighbour(x, y, dir);
-            return laser(nb[0], nb[1], dir);
+    private boolean laser(int x, int y, int dir) {
+        if (hasTile(laserLayer, x, y)) {
+            if (hasTile(playerLayer, x, y)) {
+                players[playerLayer.getCell(x, y).getTile().getId() - 1].addHealth(-laserValue(laserLayer, x, y));
+                return true;
+            } else if (!isBlocked(x, y, dir)) {
+                int[] nb = getNeighbour(x, y, dir);
+                return laser(nb[0], nb[1], dir);
+            }
         }
         return false;
     }

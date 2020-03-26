@@ -80,7 +80,7 @@ public class Menu implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        render(0);
+        render(Gdx.graphics.getDeltaTime());
     }
 
     @Override
