@@ -89,21 +89,35 @@ public class Player  {
     /**
      * @return respawn y-position
      */
-    public int getyBackup() { return yBackup; }
+    public int getyBackup() {
+        return yBackup;
+    }
 
     /**
      * @return name of the specific robot.
      */
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @return ID of specific robot
+     */
+    public int getId() {
+        return id;
+    }
 
     /**
      * @return the current x Position for this robot.
      */
-    public int getxPos() { return xPos; }
+    public int getxPos() {
+        return xPos;
+    }
 
     /**
      * Replace x position with a new one
-     * @param xPos  new x position
+     *
+     * @param xPos new x position
      */
     public void setxPos(int xPos) { this.xPos = xPos; }
 

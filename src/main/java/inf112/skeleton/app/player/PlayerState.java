@@ -1,8 +1,8 @@
 package inf112.skeleton.app.player;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.skeleton.app.objects.Board;
 
 public class PlayerState  {
@@ -17,15 +17,19 @@ public class PlayerState  {
     public PlayerState(Player player, Board board, TextureRegion[][] tr) {
         this.player = player;
         this.board = board;
+        int id = player.getId();
 
         playerNorm = new Cell();
         playerNorm.setTile(new StaticTiledMapTile(tr[0][0]));
+        playerNorm.getTile().setId(id);
 
         playerDead = new Cell();
         playerDead.setTile(new StaticTiledMapTile(tr[0][1]));
+        playerDead.getTile().setId(id);
 
         playerWon = new Cell();
         playerWon.setTile(new StaticTiledMapTile(tr[0][2]));
+        playerWon.getTile().setId(id);
     }
 
     /**
