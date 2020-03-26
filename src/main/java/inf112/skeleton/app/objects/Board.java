@@ -89,6 +89,9 @@ public class Board extends Tile{
     private boolean move(Player player, int direction) {
         int x = player.getxPos(), y = player.getyPos();
         boolean isHole = hasTile(holeLayer,x,y);
+        playerLayer.setCell(x, y, null);
+        healthLayer.setCell(x, y, null);
+
         switch (direction) {
             //North
             case (0):
@@ -148,10 +151,7 @@ public class Board extends Tile{
 
     public void doMove(Player player, int move, boolean legalMove) {
         //This is easier to modify, in order to make it work with cards
-        int x = player.getxPos(),
-                y = player.getyPos();
-        playerLayer.setCell(x, y, null);
-        healthLayer.setCell(x, y, null);
+
         //Gets the orientation from the player, in order to check which direction they should move
         int orientation = player.getOrientation();
 
