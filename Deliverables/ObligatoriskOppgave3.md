@@ -19,7 +19,12 @@ As a counterpart, we may spend some time refactoring afterwards,\
 which is a decision we all agreed to.\
 
 #### Methodology
-Scrum and XP is still our strategy for teamwork.
+We are still using the same methodology as when we first started this project.\
+A mixture of Scrum and XP. At the beginning of working towards a mandatory assignment\
+we create a backlog of all the features which are to be added through user stories.\
+We then from week to week work on our separate feature as a sprint.\
+Then when we do the next meeting online(discord) we discuss any additions or changes\
+to do until the next meeting.
 
 #### Retrospection
 Project board has become a better tool in our group.\
