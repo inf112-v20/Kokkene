@@ -40,7 +40,7 @@ public class Board extends Tile{
      *
      * @param mapFile the file containing the map.
      */
-    public Board(String mapFile, int nrPlayers) {
+    public Board(String mapFile, String deckFile, int nrPlayers) {
         map = new TmxMapLoader().load(mapFile);
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
@@ -58,7 +58,7 @@ public class Board extends Tile{
         boardWidth = boardLayer.getWidth();
 
         try {
-            this.deck = new Deck();
+            this.deck = new Deck(deckFile);
             deck.shuffle();
         } catch (IOException e) {
             e.printStackTrace();

@@ -15,7 +15,7 @@ public class DeckTest {
 
     @Before
     public void makeDeck() throws IOException {
-        deck = new Deck();
+        deck = new Deck("assets/decks/deck1994.txt");
     }
 
     @Test

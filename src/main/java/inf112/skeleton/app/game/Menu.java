@@ -25,6 +25,7 @@ public class Menu implements Screen {
     private final Button exitButton;
     private final SelectBox<String> selectMap;
     private final SelectBox<String> selectPlayer;
+    private final SelectBox<String> selectDeck;
 
     private int nrPlayers = 1; //TODO add capability to change # of players
 
@@ -60,6 +61,11 @@ public class Menu implements Screen {
         selectPlayer.setWidth(gameButton.getWidth()*.87f);
         selectPlayer.setPosition(width/2f - selectPlayer.getWidth()/2, gameButton.getY() - selectMap.getHeight()*4);
 
+        selectDeck = new SelectBox<>(skin);
+        selectDeck.setItems(getDecks());
+        selectDeck.setWidth(gameButton.getWidth()*.87f);
+        selectDeck.setPosition(width/2f - selectPlayer.getWidth()/2, gameButton.getY() - selectMap.getHeight()*6);
+
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         exitButton.setPosition(width/2f - exitButton.getWidth()/2, selectMap.getY() - exitButton.getHeight() - selectMap.getHeight()*5);
@@ -67,6 +73,7 @@ public class Menu implements Screen {
         stage.addActor(gameButton);
         stage.addActor(selectMap);
         stage.addActor(selectPlayer);
+        stage.addActor(selectDeck);
         stage.addActor(exitButton);
     }
 
@@ -129,7 +136,8 @@ public class Menu implements Screen {
 
     public void loadGame() {
         game.setScreen(new RoboRally(game, "assets/maps/" + selectMap.getSelected() + ".tmx",
-                "assets/pictures/" + selectPlayer.getSelected() + " Player.png", nrPlayers, 1));
+                "assets/pictures/" + selectPlayer.getSelected() + " Player.png",
+                "assets/decks/" + selectDeck.getSelected()+".txt", nrPlayers, 1));
     }
 
     public Array<String> getMaps(){
@@ -152,6 +160,17 @@ public class Menu implements Screen {
             }
         }
         return playerArray;
+    }
+
+    public Array<String> getDecks(){
+        Array<String> deckArray = new Array<>();
+
+        File deck = new File("assets/decks");
+        for (String d : Objects.requireNonNull(deck.list())){
+            deckArray.add(d.substring(0, d.length()-4));
+        }
+
+        return deckArray;
     }
 
 }

@@ -34,7 +34,9 @@ The number represents which turn the card will be played in.
 When you have selected 5 cards, the only way to do anything with the 5 cards should be clicking 'c' or 'r' on the keyboard.\
 'c' should confirm the cards, and move the player accordingly, while 'r' resets the cards and allows you to select 5 cards all over again.
 
-If one damage has been taken when receiving new cards, one less card will be received.\
-However, no matter how much damage has been taken, you will always receive 5 cards.\
-This can be tested easily by using the arrow keys to move into a laser in order to take damage and then selecting 5 cards from the first hand.\
-The second hand should then have less cards.
+If damage is taken, then a card will be removed from the hand.\
+However, no matter how much damage has been taken, you will always have 5 cards on hand.\
+Taking damage when you only have 5 cards on hand, leads to cards starting to be locked in place.
+
+To test the amount of cards upon taking damage, do not use the arrow keys!\
+By picking the testDeck from the dropdown box in the menu, you get a non-shuffled deck with a set 9 cards.

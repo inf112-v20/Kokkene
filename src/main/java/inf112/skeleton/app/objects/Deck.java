@@ -5,14 +5,17 @@ import java.io.IOException;
 import java.util.*;
 
 public class Deck {
-    private Scanner Scn = new Scanner(new File("assets/decks/deck1994.txt"));
+    private Scanner Scn;
 
     //Saves all the cards from the given txt file in this queue
     public Queue<Card> Cards = new LinkedList<>();
     public Queue<Card> Discard = new LinkedList<>();
 
     //Creates a deck from the text file set inside the constructor
-    public Deck() throws IOException {
+    public Deck(String deck) throws IOException {
+
+        Scn = new Scanner(new File(deck));
+
         while (Scn.hasNextLine()) {
             String data = Scn.nextLine();
 
