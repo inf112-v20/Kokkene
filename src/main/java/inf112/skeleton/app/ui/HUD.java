@@ -6,13 +6,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
-import inf112.skeleton.app.objects.Board;
+import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.player.Player;
 import org.lwjgl.opengl.Display;
 
 public class HUD {
 
-    private Board board;
     private Player player;
     private int HEIGHT = Main.cfg.height;
     private String[] dir = {"^", "<", "v", ">"};
@@ -21,8 +20,7 @@ public class HUD {
     private BitmapFont font = new BitmapFont();
     private Texture heart = new Texture(Gdx.files.internal("pictures/heart.png"));
 
-    public HUD(Player player, Board board) {
-        this.board = board;
+    public HUD(Player player) {
         this.player = player;
         font.setColor(Color.RED);
         font.getData().setScale(2,2);
@@ -39,7 +37,7 @@ public class HUD {
         }
         float obX = (heartSize*player.getMaxHealth() + heartSize)/2f;
         float obY = HEIGHT - heartSize/4f;
-        if(board.objectives == player.getObjective()-1) {
+        if(RoboRally.getBoard().objectives == player.getObjective()-1) {
             font.draw(batch, "Objective: " + "Won!", obX, obY);
         }
         else {

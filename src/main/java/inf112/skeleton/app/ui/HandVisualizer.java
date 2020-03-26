@@ -24,12 +24,11 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private int WIDTH = Main.cfg.width;
     private int HEIGHT = Main.cfg.height;
 
-    //private Button lockInButton;
+    private Texture confirm = new Texture(Gdx.files.internal("pictures/Confirm.png"));
+    private Sprite lockInButton;
 
     private SpriteBatch batch;
     private BitmapFont font;
-    //private Texture texture;
-    //private Sprite playSprite;
 
     private Player player;
     private Board board;
@@ -39,8 +38,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     private Pixmap cards;
     private Texture[] textures;
-
-    //float widthHeightRatio = (float)tr.getRegionHeight()/(float)tr.getRegionWidth();
 
     public HandVisualizer(Player player, Board board) {
         this.player = player;
@@ -53,7 +50,8 @@ public class HandVisualizer extends InputAdapter implements Screen {
         font.setColor(Color.GREEN); //Number color
         font.getData().setScale(4, 3);
         createAllSprites(textures);
-        //createButtons();
+
+        createButtons();
     }
 
     /**
@@ -102,13 +100,25 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
     }
 
-/*
+
     private void createButtons(){
-        Button resetButton = new Button(new TextureRegionDrawable(new TextureRegion(
-                new Texture("assets/pictures/button.png"))));
-        resetButton.setPosition(10, allSprites[0].getHeight()+10);
+        Pixmap buttons = new Pixmap(Gdx.files.internal("assets/pictures/button.png"));
+        int width = WIDTH / 7;
+        int height = (int) (width * (((float) buttons.getHeight())/(float) buttons.getWidth()));
+
+        Pixmap resizedButton = new Pixmap(width, height, buttons.getFormat());
+        resizedButton.drawPixmap(buttons,
+                0, 0, buttons.getWidth(), buttons.getHeight(),
+                0, 0, resizedButton.getWidth(), resizedButton.getHeight());
+        Texture button = new Texture(resizedButton);
+
+        lockInButton = new Sprite(button);
+        lockInButton.setPosition(10 , allSprites[0].getHeight()+10);
+
+        buttons.dispose();
+        resizedButton.dispose();
     }
-*/
+
 
     /**
      * Create all the sprites on the board
@@ -142,6 +152,10 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 player.toggleCard(player.getCards()[i]);
                 return true;
             }
+        }
+
+        if (lockInButton.getBoundingRectangle().contains(screenX,HEIGHT - screenY)) {
+            tryLockIn();
         }
         return false;
     }
@@ -189,13 +203,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 break;
 
             case (Input.Keys.C):
-                if (player.getSelected().size() == player.cardsToSelect()) {
-                    board.doTurn();
-                    textures = new Texture[player.getCards().length + player.getLocked().size()];
-                    createCardTexture();
-                    createAllSprites(textures);
-                    resetVisuals();
-                }
+                tryLockIn();
                 break;
             case (Input.Keys.M):
                 RoboRally.muteToggle();
@@ -211,6 +219,16 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 break;
         }
         return false;
+    }
+
+    private void tryLockIn() {
+        if (player.getSelected().size() == player.cardsToSelect()) {
+            board.doTurn();
+            textures = new Texture[player.getCards().length + player.getLocked().size()];
+            createCardTexture();
+            createAllSprites(textures);
+            resetVisuals();
+        }
     }
 
     private void fullscreenToggle() {
@@ -252,13 +270,20 @@ public class HandVisualizer extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(this);
         batch.begin();
 
-        font.draw(batch, "Confirm: C", 10, allSprites[0].getHeight() + 40);
-
         drawCardSprites();
         drawRegisterNumbers();
+        drawButtons();
+
+        float scale = 1.5f;
+        batch.draw(confirm, 10+lockInButton.getWidth()/2f-confirm.getWidth()/(scale*2f), lockInButton.getY()+lockInButton.getHeight()/2f-confirm.getHeight()/(scale*2f),
+                confirm.getWidth()/scale, confirm.getHeight()/scale);
 
         batch.end();
+    }
 
+    private void drawButtons() {
+        lockInButton.draw(batch);
+        lockInButton.setPosition(10, allSprites[0].getHeight() + 10);
     }
 
     /**
