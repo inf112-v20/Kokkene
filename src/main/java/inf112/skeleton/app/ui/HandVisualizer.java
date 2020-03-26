@@ -146,7 +146,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         return false;
     }
 
-    private void resetOrder() {
+    private void resetVisuals() {
         for (int i = 0; i < allSprites.length; i++) {
             if (i < player.getCards().length) {
                 allSprites[i].setColor(Color.WHITE);
@@ -194,11 +194,8 @@ public class HandVisualizer extends InputAdapter implements Screen {
                     textures = new Texture[player.getCards().length + player.getLocked().size()];
                     createCardTexture();
                     createAllSprites(textures);
-                    resetOrder();
+                    resetVisuals();
                 }
-                break;
-            case (Input.Keys.R):
-                resetOrder();
                 break;
             case (Input.Keys.M):
                 RoboRally.muteToggle();
@@ -241,7 +238,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
             textures = new Texture[player.getCards().length + player.getLocked().size()];
             createCardTexture();
             createAllSprites(textures);
-            resetOrder();
+            resetVisuals();
         }
     }
 
@@ -255,8 +252,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(this);
         batch.begin();
 
-        font.draw(batch, "reset: R", 10, allSprites[0].getHeight() + 40);
-        font.draw(batch, "confirm: C", 10, allSprites[0].getHeight() + 90);
+        font.draw(batch, "Confirm: C", 10, allSprites[0].getHeight() + 40);
 
         drawCardSprites();
         drawRegisterNumbers();
