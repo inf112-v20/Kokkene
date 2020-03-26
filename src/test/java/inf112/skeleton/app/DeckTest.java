@@ -20,6 +20,7 @@ public class DeckTest {
 
     @Test
     public void deckContainsTheRightAmountOfCards() {
-        assertEquals(84, deck.Cards.size());
+        if(deck.deck.equals("assets/decks/deck1994.txt")) { assertEquals(84, deck.Cards.size()); }
+        else {assertEquals(9, deck.Cards.size());}
     }
 }

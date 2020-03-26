@@ -11,8 +11,12 @@ public class Deck {
     public Queue<Card> Cards = new LinkedList<>();
     public Queue<Card> Discard = new LinkedList<>();
 
+    public String deck;
+
     //Creates a deck from the text file set inside the constructor
     public Deck(String deck) throws IOException {
+
+        this.deck = deck;
 
         Scn = new Scanner(new File(deck));
 
