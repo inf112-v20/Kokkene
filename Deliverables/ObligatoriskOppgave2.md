@@ -108,3 +108,9 @@ Running the application should be smooth, and one can move around with arrowkeys
 Q to exit \
 P to pause/resume music \
 M to mute music
+
+##### Meeting minutes
+[Meeting 1](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig2/Tuesday180220.md)  
+[Meeting 2](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig2/Thursday200220.md)  
+[Meeting 3](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig2/Tuesday250220.md)  
+[Meeting 4](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig2/Thursday270220.md)

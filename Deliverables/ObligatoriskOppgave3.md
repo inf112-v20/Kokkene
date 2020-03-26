@@ -98,3 +98,11 @@ We get along well and will see this project through.
       2.    When implementing new tests be sure to check the set criteria
       3.    Remove any redundant/duplicate tests
       
+##### Meeting minutes
+[Meeting 1](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig3/Tuesday030320.md)  
+[Meeting 2](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig3/Tuesday100320.md)  
+[Meeting 3](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig3/Thursday120320.md)  
+[Meeting 4](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig3/Tuesday170320.md)  
+[Meeting 5](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig3/Thursday190320.md)  
+[Meeting 6](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig3/Tuesday240320.md)  
+[Meeting 7](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig3/Tuesday260320.md)
