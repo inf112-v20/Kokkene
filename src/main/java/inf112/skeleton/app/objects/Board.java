@@ -483,7 +483,7 @@ public class Board extends Tile{
      */
     private boolean laser(int x, int y, int dir){
         if (hasTile(playerLayer, x, y)){
-            players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-1);
+            players[playerLayer.getCell(x, y).getTile().getId()].addHealth(-laserValue(laserLayer, x, y));
             return true;
         }
         else if (!isBlocked(x, y, dir)){

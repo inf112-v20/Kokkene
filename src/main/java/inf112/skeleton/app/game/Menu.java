@@ -26,6 +26,8 @@ public class Menu implements Screen {
     private final SelectBox<String> selectMap;
     private final SelectBox<String> selectPlayer;
 
+    private int nrPlayers = 1; //TODO add capability to change # of players
+
     private SpriteBatch batch;
 
     private Texture roborally = new Texture(Gdx.files.internal("pictures/Roborally.png"));
@@ -126,8 +128,8 @@ public class Menu implements Screen {
     }
 
     public void loadGame() {
-        String select = selectMap.getSelected();
-        game.setScreen(new RoboRally(game,"assets/maps/" + select + ".tmx", "assets/pictures/" + selectPlayer.getSelected() + " Player.png"));
+        game.setScreen(new RoboRally(game, "assets/maps/" + selectMap.getSelected() + ".tmx",
+                "assets/pictures/" + selectPlayer.getSelected() + " Player.png", nrPlayers, 1));
     }
 
     public Array<String> getMaps(){
