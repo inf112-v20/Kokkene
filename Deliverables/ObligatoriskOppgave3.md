@@ -27,15 +27,23 @@ Then when we do the next meeting online(discord) we discuss any additions or cha
 to do until the next meeting.
 
 #### Retrospection
-Project board has become a better tool in our group.\
-At the same time we agree that the project board is hard to use to its\
-fullest potential.
+The project started off well. There was a lot to do, and everyone took initiative to work on smaller projects.\
+Communication was good, even if we did not take full advantage of what the project board on github was offering us.\
+This could have been a big detriment, due to bad organizing and prioritization.\
+However, we had weekly scheduled meetings. We met twice a week, where we share results and what we plan on working on next.\
+Communication also got even better over time, as every time someone made changes outside of the meetings, the results where shared on Slack.\
+The results shared, also included any bugs they had encountered,\
+making it easier for everyone work out a potential solution for the bugs they had encountered.
+
 
 #### Improvement in retrospection
-Project board shall be used efficiently.
+More efficient usage of the project board, as it is currently not being used to its full potential.
+
 
 #### Task priorities
-TODO
+Most of the game elements are now working, except for cards and some board objects.\
+We still need to fully implement phases and rounds, but in order to do that, we need the cards to work.\
+Therefore, our priority this time, is to make the cards work as intended.
 
 #### Communication
 The communication in the group works really well, we use slack and github project board\
