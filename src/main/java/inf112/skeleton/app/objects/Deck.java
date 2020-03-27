@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.*;
 
 public class Deck {
-    private Scanner Scn;
 
     //Saves all the cards from the given txt file in this queue
     public Queue<Card> Cards = new LinkedList<>();
@@ -18,10 +17,10 @@ public class Deck {
 
         this.deck = deck;
 
-        Scn = new Scanner(new File(deck));
+        Scanner scn = new Scanner(new File(deck));
 
-        while (Scn.hasNextLine()) {
-            String data = Scn.nextLine();
+        while (scn.hasNextLine()) {
+            String data = scn.nextLine();
 
             //Parsing through the information provided in the txt file and saving them for use in the card constructor
             int priority = Integer.parseInt(data.substring(0, data.indexOf("P")));
