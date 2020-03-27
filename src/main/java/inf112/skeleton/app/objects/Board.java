@@ -284,7 +284,6 @@ public class Board extends Tile {
     public void afterArrowMove(Player player) {
         afterPhase(player,1);
         player.respawn();
-        player.discardDraw(deck);
     }
 
     /**
