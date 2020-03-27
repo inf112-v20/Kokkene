@@ -592,30 +592,37 @@ public class Board extends Tile {
         return false;
     }
 
+    /**
+     * Set all cells on playerLayer to null, thus emptying the board of players
+     */
     public void nullPlayerBoard() {
         for (int x = 0; x < playerLayer.getWidth(); x++) {
-            for ( int y = 0; y < playerLayer.getHeight(); y++) {
-                playerLayer.setCell(x, y,null);
-                healthLayer.setCell(x, y,null);
+            for (int y = 0; y < playerLayer.getHeight(); y++) {
+                playerLayer.setCell(x, y, null);
+                healthLayer.setCell(x, y, null);
             }
         }
     }
 
+    /**
+     * Place all the players on the board in the correct positions
+     */
     public void setPlayersOnBoard() {
         for (Player p : players) {
-            if (p.isAlive()) {
-                if (p.getHealth() > 0) {
-                    int x = p.getxPos(),
-                            y = p.getyPos();
-                    playerLayer.setCell(x, y, p.getPlayerState().getPlayerStatus());
-                    playerLayer.getCell(x, y).setRotation(p.getOrientation());
-                    healthLayer.setCell(x, y, p.getHealthBars().getPlayerHealth());
-                    healthLayer.getCell(x, y).setRotation(p.getOrientation());
-                }
+            if (p.isAlive() && p.getHealth() > 0) {
+                int x = p.getxPos(),
+                        y = p.getyPos();
+                playerLayer.setCell(x, y, p.getPlayerState().getPlayerStatus());
+                playerLayer.getCell(x, y).setRotation(p.getOrientation());
+                healthLayer.setCell(x, y, p.getHealthBars().getPlayerHealth());
+                healthLayer.getCell(x, y).setRotation(p.getOrientation());
             }
         }
     }
 
+    /**
+     * Toggles whether the sounds are muted or not
+     */
     public void muteToggle() {
         damageSound.muteToggle();
     }
