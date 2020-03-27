@@ -20,6 +20,7 @@ public class PlayerTests {
     public void makePlayer() {
         player = new Player("player", xPos, yPos, upValue, 1);
     }
+    int damage = -10;
 
     @Test
     public void playerHasTenHealthAfterInitiation() {
@@ -60,21 +61,19 @@ public class PlayerTests {
 
     @Test
     public void playerTakesOneDamageOnCall() {
-        int damage = -1;
+        damage = -1;
         player.addHealth(damage);
         assertEquals(maxHealth + damage, player.getHealth());
     }
 
     @Test
     public void playerIsOffTheBoardWhileDead(){
-        int damage = -10;
         player.addHealth(damage);
         assertTrue(player.getyPos() > 200);
     }
 
     @Test
     public void playerLoseOneLifePointWhenRespawningWithNegativeHealth() {
-        int damage = -10;
         player.addHealth(damage); player.respawn();
         assertEquals(maxLifePoints-1, player.getLifePoints());
     }
@@ -84,7 +83,6 @@ public class PlayerTests {
         player.setxPos(player.getxBackup()+1); //Moves away from backup location
         player.setyPos(player.getyBackup()+1);
 
-        int damage = -10;
         player.addHealth(damage);
         player.respawn();
 
@@ -94,7 +92,7 @@ public class PlayerTests {
 
     @Test
     public void playerIsDeadAfterRespawningThreeTimesWithNegativeHealth() {
-        int damage = -10;
+
         for (int i = 0; i < 3; i++) {
             player.addHealth(damage);
             player.respawn();

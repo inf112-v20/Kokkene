@@ -109,6 +109,7 @@ public class RoboRally extends InputAdapter implements Screen {
                 y = player.getyPos();
 
         board.playerLayer.setCell(x, y, ps.getPlayerStatus());
+        /*
         try {
             board.playerLayer.getCell(x, y).setRotation(player.getOrientation());
         }
@@ -117,6 +118,7 @@ public class RoboRally extends InputAdapter implements Screen {
             e.printStackTrace();
             System.exit(1);
         }
+         */
 
         board.healthLayer.setCell(x, y, hb.getPlayerHealth());
         try {
