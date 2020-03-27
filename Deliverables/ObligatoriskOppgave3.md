@@ -16,7 +16,7 @@ each role.
 Our choices have been mostly done by our team members individually.\
 Doing that, we waste little time on planning together.\
 As a counterpart, we may spend some time refactoring afterwards,\
-which is a decision we all agreed to.\
+which is a decision we all agreed to.
 
 #### Methodology
 We are still using the same methodology as when we first started this project.\
@@ -30,15 +30,18 @@ to do until the next meeting.
 The project started off well. There was a lot to do, and everyone took initiative to work on smaller projects.\
 Communication was good, even if we did not take full advantage of what the project board on github had to offer.\
 This could have been a big detriment, due to bad organizing and prioritization.\
-However, we had weekly scheduled meetings. We met twice a week, where we shared results and talked about what we planned to work on until next time.\
-Communication also got even better over time, as every time someone made changes outside of the meetings, the results where shared on Slack.\
+However, we had weekly scheduled meetings. We met twice a week,\
+where we shared results and talked about what we planned to work on until next time.\
+Communication also got even better over time, as every time someone made changes outside of the meetings,\
+the results where shared on Slack.\
 The results shared, also included any bugs they had encountered,\
-making it easier for everyone to work out a potential solution for the bugs that had been encountered.
-
+making it easier for everyone to work out a potential solution for the bugs that had been encountered.\
+Even though, communication is good. We are very lacking when it comes to commit messages, and documenting code.
 
 #### Improvement in retrospection
-More efficient usage of the project board, as it is currently not being used to its full potential.
-
+More efficient usage of the project board, as it is currently not being used to its full potential.\
+Better commit messages, and documentation of code.\
+We can start to use more functions github offers in general, for example issues.
 
 #### Task priorities
 Most of the game elements are now working, except for cards and some board objects.\
@@ -82,7 +85,7 @@ We get along well and will see this project through.
 1.    Program cards in the desired order
       1.    Cards can now be displayed through calling toggleDeck.render().
       2.    You can click the cards in the order you want to program them.
-      3.    Confirm the order with the key "C" or reset it with "R".
+      3.    Confirm the order with the key "C" or the button on screen.
 
 2.    Board objects work as intended
       1.    Tile class added
