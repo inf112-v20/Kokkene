@@ -345,13 +345,12 @@ public class Player {
      *
      * @param c is the card we toggle
      */
-    public boolean toggleCard(Card c) {
+    public void toggleCard(Card c) {
         if (selected.contains(c)) {
             selected.remove(c);
-            return false;
+            return;
         }
         selected.add(c);
-        return true;
     }
 
     /**
