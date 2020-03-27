@@ -65,7 +65,9 @@ public class RoboRally extends InputAdapter implements Screen {
     }
 
     //Selects the given player and updates the player field
-    public static void selectPlayer(int multiplayerPosition) {player = board.players[multiplayerPosition-1];}
+    public static void selectPlayer(int multiplayerPosition) {
+        player = board.getPlayers()[multiplayerPosition - 1];
+    }
 
     //Selects the given board and updates the board field
     private void setBoard(String mapFile, String playerFile, String deckFile, int nrPlayers) {
@@ -105,19 +107,22 @@ public class RoboRally extends InputAdapter implements Screen {
 
         board.nullPlayerBoard();
 
-        checkFinished(allPlayersAreDead());
+        checkFinished();
     }
 
     private boolean allPlayersAreDead() {
-        for (Player p : board.players) {
+        for (Player p : board.getPlayers()) {
             if (p.isAlive())
                 return false;
         }
         return true;
     }
 
-    private void checkFinished(boolean finished) {
-        if (finished || (player.getObjective() == board.objectives + 1 && board.objectives != 0)) {
+    /**
+     * Checks if the game is finished and returns to Main Menu
+     */
+    private void checkFinished() {
+        if (allPlayersAreDead() || (player.getObjective() == board.objectives + 1 && board.objectives != 0)) {
             //Need to render one last time before going back to menu,
             // since it stops at the tile before the last objective if not.
             if (num == 1) {

@@ -38,7 +38,7 @@ public class Board extends Tile {
 
     public int objectives;
 
-    public Player[] players;
+    private Player[] players;
 
     private Deck deck;
 
@@ -132,6 +132,15 @@ public class Board extends Tile {
             players[i].setHealthBars(new PlayerState(players[i], this, hb));
             players[i].setHand(deck);
         }
+    }
+
+    /**
+     * Gets the array of players on the board
+     *
+     * @return A Player Array containing all the players on the board
+     */
+    public Player[] getPlayers() {
+        return players;
     }
 
     /**
