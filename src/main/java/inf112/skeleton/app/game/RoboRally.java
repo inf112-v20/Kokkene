@@ -110,6 +110,10 @@ public class RoboRally extends InputAdapter implements Screen {
         checkFinished();
     }
 
+    /**
+     * Check if all players are dead
+     * @return true if all are dead
+     */
     private boolean allPlayersAreDead() {
         for (Player p : board.getPlayers()) {
             if (p.isAlive())
