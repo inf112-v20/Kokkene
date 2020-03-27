@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.player.Player;
-import inf112.skeleton.app.player.PlayerState;
 import inf112.skeleton.app.sound.Music;
 import inf112.skeleton.app.ui.HUD;
 import inf112.skeleton.app.ui.HandVisualizer;
@@ -22,8 +21,8 @@ public class RoboRally extends InputAdapter implements Screen {
     private OrthogonalTiledMapRenderer mapRenderer;
 
     public static Player player;
-    private PlayerState ps;
-    private PlayerState hb;
+
+    int num = 0;
 
     private static Music music;
 
@@ -52,10 +51,8 @@ public class RoboRally extends InputAdapter implements Screen {
         mapRenderer = new OrthogonalTiledMapRenderer(board.map, unitScale);
         mapRenderer.setView(camera);
 
-        //Sets up one player and texture for testing purposes
+        //Selects the player to show the hand of visually
         selectPlayer(thisPlayer);
-        ps = player.getPlayerState();
-
 
 
         //sets up the hud to display information about the player in real time.
@@ -135,13 +132,16 @@ public class RoboRally extends InputAdapter implements Screen {
         if (finished || (player.getObjective() == board.objectives + 1 && board.objectives != 0)) {
             //Need to render one last time before going back to menu,
             // since it stops at the tile before the last objective if not.
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (num == 1) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                dispose();
+                game.setScreen(new Menu(game));
             }
-            dispose();
-            game.setScreen(new Menu(game));
+            num = 1;
         }
     }
 
