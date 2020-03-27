@@ -1,11 +1,13 @@
 package inf112.skeleton.app.objects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.player.Player;
+import inf112.skeleton.app.player.PlayerState;
 import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;
@@ -44,9 +46,10 @@ public class Board extends Tile {
     private Sound damageSound;
 
     /**
-     * @param mapFile the file containing the map.
+     * @param mapFile    the file containing the map.
+     * @param playerFile location of the file of the player texture
      */
-    public Board(RoboRally game, String mapFile, String deckFile, int nrPlayers) {
+    public Board(RoboRally game, String mapFile, String playerFile, String deckFile, int nrPlayers) {
         roboRally = game;
         map = new TmxMapLoader().load(mapFile);
         buildMap();
@@ -55,7 +58,7 @@ public class Board extends Tile {
 
         createDeck(deckFile);
 
-        generatePlayers(nrPlayers);
+        generatePlayers(nrPlayers, playerFile);
 
         generateObjectives();
 
@@ -119,10 +122,14 @@ public class Board extends Tile {
      *
      * @param nr # of players to create
      */
-    private void generatePlayers(int nr) {
+    private void generatePlayers(int nr, String playerFile) {
         players = new Player[nr];
         for (int i = 0; i < nr; i++) {
             players[i] = new Player("Player " + (i + 1), i, 0, 0, i + 1);
+            TextureRegion[][] tr = players[i].setPlayerTextures(playerFile);
+            players[i].setPlayerState(new PlayerState(players[i], this, tr));
+            TextureRegion[][] hb = players[i].setPlayerTextures("assets/pictures/healthbars2.png");
+            players[i].setHealthBars(new PlayerState(players[i], this, hb));
             players[i].setHand(deck);
         }
     }
@@ -289,12 +296,16 @@ public class Board extends Tile {
     /**
      * Checks the position of every player at the end of turn for interaction with the board objects
      */
-    private void afterRound(){
-        for (Player p : players){
-            if (!p.isAlive()){
+    private void afterRound() {
+        for (Player p : players) {
+            if (!p.isAlive()) {
                 continue;
             }
+            playerLayer.setCell(p.getxPos(), p.getyPos(), null);
+            healthLayer.setCell(p.getxPos(), p.getyPos(), null);
             p.respawn();
+            playerLayer.setCell(p.getxPos(), p.getyPos(), p.getPlayerState().getPlayerStatus());
+            healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealth());
             p.lockRegister();
             p.discardDraw(deck);
         }
@@ -560,11 +571,11 @@ public class Board extends Tile {
      * @return true when the laser has hit a player, false if it hit a wall
      */
     private boolean laser(int x, int y, int dir) {
-        if (hasTile(laserLayer, x, y)) {
-            if (hasTile(playerLayer, x, y)) {
+        if (hasTile(laserLayer, x, y)) { //If there is a laser there
+            if (hasTile(playerLayer, x, y)) { //If there is a player there
                 players[playerLayer.getCell(x, y).getTile().getId() - 1].addHealth(-laserValue(laserLayer, x, y));
                 return true;
-            } else if (!isBlocked(x, y, dir)) {
+            } else if (!isBlocked(x, y, dir)) { //Continues if it isn't blocked
                 int[] nb = getNeighbour(x, y, dir);
                 return laser(nb[0], nb[1], dir);
             }

@@ -21,11 +21,14 @@ import java.util.List;
  *
  */
 
-public class Player  {
+public class Player {
 
     //ID of the robot
     private String name;
     private int id;
+
+    private PlayerState ps;
+    private PlayerState hb;
 
     //Main position and Backup Position on the board
     private int xPos,
@@ -71,6 +74,42 @@ public class Player  {
         this.orientation = orientation;
         this.xBackup = xPos;
         this.yBackup = yPos;
+    }
+
+    /**
+     * Get the PlayerState containing the various textures for the player
+     *
+     * @return PlayerState of this player
+     */
+    public PlayerState getPlayerState() {
+        return ps;
+    }
+
+    /**
+     * Set the PlayeState of this player
+     *
+     * @param ps PlayerState to store in a field in this player
+     */
+    public void setPlayerState(PlayerState ps) {
+        this.ps = ps;
+    }
+
+    /**
+     * Get the PlayerState containing the textures of the healthbars
+     *
+     * @return PlayerState of HealthBars of this player
+     */
+    public PlayerState getHealthBars() {
+        return hb;
+    }
+
+    /**
+     * Set the PlayerState containing the textures of the healthbars
+     *
+     * @param hb PlayerState of HealthBars to store in a field in this player
+     */
+    public void setHealthBars(PlayerState hb) {
+        this.hb = hb;
     }
 
     /**
