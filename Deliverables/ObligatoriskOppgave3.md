@@ -28,12 +28,12 @@ to do until the next meeting.
 
 #### Retrospection
 The project started off well. There was a lot to do, and everyone took initiative to work on smaller projects.\
-Communication was good, even if we did not take full advantage of what the project board on github was offering us.\
+Communication was good, even if we did not take full advantage of what the project board on github had to offer.\
 This could have been a big detriment, due to bad organizing and prioritization.\
-However, we had weekly scheduled meetings. We met twice a week, where we share results and what we plan on working on next.\
+However, we had weekly scheduled meetings. We met twice a week, where we shared results and talked about what we planned to work on until next time.\
 Communication also got even better over time, as every time someone made changes outside of the meetings, the results where shared on Slack.\
 The results shared, also included any bugs they had encountered,\
-making it easier for everyone work out a potential solution for the bugs they had encountered.
+making it easier for everyone to work out a potential solution for the bugs that had been encountered.
 
 
 #### Improvement in retrospection
