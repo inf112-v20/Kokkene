@@ -133,7 +133,7 @@ public class RoboRally extends InputAdapter implements Screen {
     }
 
     /**
-     * Checks if the game is finished and returns to Main Menu
+     * Checks if the game is finished and returns to Main Menu after rendering one final time
      */
     private void checkFinished() {
         if (allPlayersAreDead() || (player.getObjective() == board.objectives + 1 && board.objectives != 0)) {

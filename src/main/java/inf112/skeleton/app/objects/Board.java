@@ -472,22 +472,6 @@ public class Board extends Tile {
         }
     }
 
-    /**
-     * Gets neighbour for the player to move to
-     * @return Array of coordinates for the neighbour in the direction the player is facing
-     */
-    public int[] getNeighbour(Player pl){
-        return getNeighbour(pl, pl.getOrientation());
-    }
-
-    /**
-     * Finds neighbour of current player in given direction
-     * @param direction to check neighbour
-     * @return Array of x- and y-coordinate for the neighbour in the given direction
-     */
-    public int[] getNeighbour(Player pl, int direction){
-        return getNeighbour(pl.getxPos(), pl.getyPos(), direction);
-    }
 
     /**
      * Gets neighbour in given direction from position given by x and y
