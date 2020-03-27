@@ -5,7 +5,8 @@
 </h1>
 
 <p align="center">
-  <strong>A boardgame made by Kokkene</strong><br>
+  <strong>An online recreation of the popular boardgame from 1994</strong><br>
+  <strong>Made by Kokkene</strong><br>
 </p>
 
 [![Build Status](https://travis-ci.com/inf112-v20/Kokkene.svg?branch=master)](https://travis-ci.com/inf112-v20/Kokkene) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/e588033d2e1445ab9b5d0fbda3b6719f)](https://app.codacy.com/gh/inf112-v20/Kokkene?utm_source=github.com&utm_medium=referral&utm_content=inf112-v20/Kokkene&utm_campaign=Badge_Grade_Dashboard)
@@ -21,7 +22,7 @@
 
 ## Requirements
 
-An IDE running on either Windows, Mac osx or linux.
+An IDE running on either Windows, Mac osx or Linux.
 
 Java version 8+
 
@@ -41,8 +42,9 @@ Java version 8+
 
 ## Shortcuts
     
-            Exit game:      Q/Escape
-    Toggle mute sound:      M
+                 Exit game:      Q/Escape
+         Toggle mute sound:      M
+    Confirm card Selection:      C
 
 ## Issues
 
