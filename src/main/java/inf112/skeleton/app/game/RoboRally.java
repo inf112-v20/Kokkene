@@ -97,36 +97,24 @@ public class RoboRally extends InputAdapter implements Screen {
         //Gdx.gl.glClearColor(1, 1, 1, 1); //background color WHITE
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-
-        boolean finished = updatePlayers();
-
+        board.setPlayersOnBoard();
 
         mapRenderer.render();
         hud.render();
         handVisualizer.render(delta);
 
-        checkFinished(finished);
+        board.nullPlayerBoard();
 
-
+        checkFinished(allPlayersAreDead());
     }
 
-
-    private boolean updatePlayers() {
-        boolean finished = true;
+    private boolean allPlayersAreDead() {
         for (Player p : board.players) {
-            finished = finished && !p.isAlive();
-            int x = player.getxPos(),
-                    y = player.getyPos();
-            board.playerLayer.setCell(x, y, p.getPlayerState().getPlayerStatus());
-            board.healthLayer.setCell(x, y, p.getHealthBars().getPlayerHealth());
-            if (board.playerLayer.getCell(x, y) != null) {
-                board.playerLayer.getCell(x, y).setRotation(p.getOrientation());
-                board.healthLayer.getCell(x, y).setRotation(p.getOrientation());
-            }
+            if (p.isAlive())
+                return false;
         }
-        return finished;
+        return true;
     }
-
 
     private void checkFinished(boolean finished) {
         if (finished || (player.getObjective() == board.objectives + 1 && board.objectives != 0)) {

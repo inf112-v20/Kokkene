@@ -156,8 +156,6 @@ public class Board extends Tile {
     private boolean move(Player player, int direction) {
         int x = player.getxPos(), y = player.getyPos();
         boolean isHole = hasTile(holeLayer, x, y);
-        playerLayer.setCell(x, y, null);
-        healthLayer.setCell(x, y, null);
 
         switch (direction) {
             //North
@@ -356,7 +354,9 @@ public class Board extends Tile {
         for (Player p : players) {
             afterPhase(p, phase);
         }
+        setPlayersOnBoard();
         fireLasers();
+        nullPlayerBoard();
         for (Player finish : players) {
             finishPhase(finish);
         }
@@ -581,6 +581,30 @@ public class Board extends Tile {
             }
         }
         return false;
+    }
+
+    public void nullPlayerBoard() {
+        for (int x = 0; x < playerLayer.getWidth(); x++) {
+            for ( int y = 0; y < playerLayer.getHeight(); y++) {
+                playerLayer.setCell(x, y,null);
+                healthLayer.setCell(x, y,null);
+            }
+        }
+    }
+
+    public void setPlayersOnBoard() {
+        for (Player p : players) {
+            if (p.isAlive()) {
+                if (p.getHealth() > 0) {
+                    int x = p.getxPos(),
+                            y = p.getyPos();
+                    playerLayer.setCell(x, y, p.getPlayerState().getPlayerStatus());
+                    playerLayer.getCell(x, y).setRotation(p.getOrientation());
+                    healthLayer.setCell(x, y, p.getHealthBars().getPlayerHealth());
+                    healthLayer.getCell(x, y).setRotation(p.getOrientation());
+                }
+            }
+        }
     }
 
     public void muteToggle() {

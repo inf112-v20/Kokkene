@@ -100,7 +100,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
     }
 
-
+    /**
+     * Makes the buttons in a proper scale.
+     */
     private void createButtons(){
         Pixmap buttons = new Pixmap(Gdx.files.internal("assets/pictures/button.png"));
         int width = WIDTH / 7;
@@ -221,6 +223,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
         return false;
     }
 
+    /**
+     * Does the turn if you are done selecting cards
+     */
     private void tryLockIn() {
         if (player.getSelected().size() == player.cardsToSelect()) {
             board.doTurn();
