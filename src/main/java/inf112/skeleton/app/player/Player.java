@@ -223,11 +223,11 @@ public class Player {
         else {
             this.health = Math.min(health, MAXHEALTH);
         }
-/*
+
         if (this.health <= 0) {
             setyPos(200 + id);
         }
-*/    }
+    }
 
     /**
      * Changes the lifePoints
