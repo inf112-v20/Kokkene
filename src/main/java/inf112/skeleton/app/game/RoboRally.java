@@ -30,8 +30,6 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private Game game;
 
-    private int num = 0;
-
     private HandVisualizer handVisualizer;
 
     RoboRally(Game game, String mapFile, String playerFile, String deckFile, int nrPlayers, int thisPlayer) {
@@ -132,16 +130,13 @@ public class RoboRally extends InputAdapter implements Screen {
         if(player.getObjective() == board.objectives+1 && board.objectives != 0) {
             //Need to render one last time before going back to menu,
             // since it stops at the tile before the last objective if not.
-            if (num == 1) {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                dispose();
-                game.setScreen(new Menu(game));
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            num = 1;
+            dispose();
+            game.setScreen(new Menu(game));
         }
     }
 

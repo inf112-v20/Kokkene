@@ -1,6 +1,7 @@
 # Manual tests for board
 We tried mocking, but we kept getting errors, making it too time consuming.\
-Therefore, we settled for manual tests.
+Therefore, we settled for manual tests. You can move around using the arrow keys,\
+but you cant interact with checkpoints or take damage(hp).
 
 ## Out of bounds on x-axis or y-axis
 We can test player movement by moving with either the arrow keys or selecting cards.\
