@@ -115,9 +115,9 @@ public class RoboRally extends InputAdapter implements Screen {
 
 
     private boolean updatePlayers() {
-        boolean unfinished = false;
+        boolean finished = true;
         for (Player p : board.players) {
-            unfinished = unfinished || p.isAlive();
+            finished = finished && !p.isAlive();
             int x = player.getxPos(),
                     y = player.getyPos();
             board.playerLayer.setCell(x, y, p.getPlayerState().getPlayerStatus());
@@ -127,7 +127,7 @@ public class RoboRally extends InputAdapter implements Screen {
                 board.healthLayer.getCell(x, y).setRotation(p.getOrientation());
             }
         }
-        return !unfinished;
+        return finished;
     }
 
 
