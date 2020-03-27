@@ -64,16 +64,23 @@ public class RoboRally extends InputAdapter implements Screen {
         handVisualizer = new HandVisualizer(player, board);
     }
 
-    //Selects the given player and updates the player field
+    /**
+     * Selects the given player and updates the player field
+     */
     public static void selectPlayer(int multiplayerPosition) {
         player = board.getPlayers()[multiplayerPosition - 1];
     }
 
-    //Selects the given board and updates the board field
+    /**
+     * Selects the given board and updates the board field
+     */
     private void setBoard(String mapFile, String playerFile, String deckFile, int nrPlayers) {
         board = new Board(this, mapFile, playerFile, deckFile, nrPlayers);
     }
 
+    /**
+     * @return board of the current game
+     */
     public static Board getBoard() {
         return board;
     }
@@ -83,6 +90,9 @@ public class RoboRally extends InputAdapter implements Screen {
         render(Gdx.graphics.getDeltaTime());
     }
 
+    /**
+     * Toggle all sounds
+     */
     public static void muteToggle() {
         music.muteToggle();
         board.muteToggle();
