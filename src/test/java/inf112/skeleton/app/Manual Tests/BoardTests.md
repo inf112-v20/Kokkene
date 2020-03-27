@@ -15,7 +15,6 @@ Lasers should only damage the player, if the robot stops on top of the laser for
 Meaning, if the player moves by 1 and ends up on top of the laser, damage is taken.\
 If the player moves by 2 or 3, it doesn't end its turn on top of the laser, so no damage is taken.\
 
-
 ## Movement stops on walls
 When the player is moving by either 1, 2 or 3 tiles, \
 and there is a wall in front of the player,\
@@ -39,5 +38,3 @@ while the one with a wrench and hammer should recover two healthpoints.
 Moving on a gear should change the players direction according to the arrows on it.\
 Gear with green arrows should change the direction of the player to its right.\
 Gear with orange arrows should change the direction of the player to its left.
-
-
