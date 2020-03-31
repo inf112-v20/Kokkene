@@ -24,6 +24,7 @@ public class AI extends Player {
             }
             toggleCard(getCards()[rand]);
         }
+        assert getSelected().size() == cardsToSelect() : "Should be " + cardsToSelect() + ", not " + getSelected().size();
         setReady(true);
     }
 }

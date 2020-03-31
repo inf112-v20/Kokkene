@@ -13,7 +13,7 @@ import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 
 public class Board extends Tile {
 
@@ -338,15 +338,15 @@ public class Board extends Tile {
 
     /**
      * Sorts the cards of all the players in the given phase
+     *
      * @param phase which phase we're currently in
      * @return sorted list of cards of all the players in ascending priority
      */
     //This caused a crash (Remove before hand-in)
-    private Card[] sortPhase(int phase){
-        Card[] cardArray = new Card[players.length];
-        for (int i = 0; i < players.length; i++){
-            Player p = players[i];
-            if (p.getHealth() <= 0 || !p.isAlive()){
+    private ArrayList<Card> sortPhase(int phase) {
+        ArrayList<Card> cardList = new ArrayList<>();
+        for (Player p : players) {
+            if (p.getHealth() <= 0 || !p.isAlive()) {
                 continue;
             }
             if (p.getSelected().size() <= phase) {
@@ -354,13 +354,13 @@ public class Board extends Tile {
                         difference = phase - p.getSelected().size(),
                         reverseOrder = lastLocked - difference;
 
-                cardArray[i] = p.getLocked().get(reverseOrder);
+                cardList.add(p.getLocked().get(reverseOrder));
                 continue;
             }
-            cardArray[i] = p.getSelected().get(phase);
+            cardList.add(p.getSelected().get(phase));
         }
-        Arrays.sort(cardArray);
-        return cardArray;
+        Collections.sort(cardList);
+        return cardList;
     }
 
 
