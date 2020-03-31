@@ -537,9 +537,6 @@ public class Board extends Tile {
             case 3:
                 return wallThis == 3 || wallNext == 1;
         }
-        if (hasTile(playerLayer, nb[0], nb[1])) {
-            return move(players[playerLayer.getCell(nb[0],nb[1]).getTile().getId()-1], dir); //tries to move next player.
-        }
         return false;
     }
 
@@ -551,7 +548,19 @@ public class Board extends Tile {
      * @return true if the path is blocked
      */
     private boolean isBlocked(Player player, int direction) {
-        return isBlocked(player.getxPos(), player.getyPos(), direction);
+        if (isBlocked(player.getxPos(), player.getyPos(), direction)) {
+            return true;
+        }
+        else {
+            int[] nb = getNeighbour(player.getxPos(), player.getyPos(), direction);
+            setPlayersOnBoard();
+            if (hasTile(playerLayer, nb[0], nb[1])) {
+                nullPlayerBoard();
+                return !move(players[playerLayer.getCell(nb[0],nb[1]).getTile().getId()-1], direction); //tries to move next player.
+            }
+            nullPlayerBoard();
+            return false;
+        }
     }
 
     /**
