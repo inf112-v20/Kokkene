@@ -17,16 +17,21 @@ This way of communicating works well with our group.
 
 #### User Stories
 TODO
-1.    
+1.    As a player, I want someone to play with.
+
+2.    As a developer, I want good commit messages, such that i can easily see what was edited.
 
 #### Acceptance Criterias
 TODO
-1.    
+1.    Have a simple computer that plays some cards.
+
+2.    The message contains all noteworthy changes, and documents them properly.
 
 ##### Implementation
 TODO
-1.    
+1.    Create a non-player object that does some legal moves.
+
+2.    Make the team agree on/ or create a suitable template for git commits.
       
 ##### Meeting minutes
 [Meeting 1](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday310320.md)  
-
