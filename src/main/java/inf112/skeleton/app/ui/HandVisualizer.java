@@ -42,16 +42,15 @@ public class HandVisualizer extends InputAdapter implements Screen {
     public HandVisualizer(Player player, Board board) {
         this.player = player;
         this.board = board;
-        textures = new Texture[player.getCards().length + player.getLocked().size()];
-        createCardTexture();
 
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.GREEN); //Number color
         font.getData().setScale(4, 3);
-        createAllSprites(textures);
 
         createButtons();
+
+        createTextures();
     }
 
     /**
@@ -115,7 +114,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         Texture button = new Texture(resizedButton);
 
         lockInButton = new Sprite(button);
-        lockInButton.setPosition(10 , allSprites[0].getHeight()+10);
+        lockInButton.setPosition(10, 360);
 
         buttons.dispose();
         resizedButton.dispose();
@@ -156,19 +155,27 @@ public class HandVisualizer extends InputAdapter implements Screen {
             }
         }
 
-        if (lockInButton.getBoundingRectangle().contains(screenX,HEIGHT - screenY)) {
+        if (lockInButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
             tryLockIn();
         }
         return false;
     }
 
-    private void resetVisuals() {
+    /**
+     * Sets all the cards to the correct color depending on whether locked or not
+     */
+    private void resetColors() {
         for (int i = 0; i < allSprites.length; i++) {
             if (i < player.getCards().length) {
                 allSprites[i].setColor(Color.WHITE);
             } else {
                 allSprites[i].setColor(Color.RED); //Locked cards are red
             }
+        }
+        if (player.getReady()) {
+            lockInButton.setColor(Color.GREEN);
+        } else {
+            lockInButton.setColor(Color.WHITE);
         }
         this.dispose();
     }
@@ -224,15 +231,15 @@ public class HandVisualizer extends InputAdapter implements Screen {
     }
 
     /**
-     * Does the turn if you are done selecting cards
+     * Toggles the ready signal if all the cards are selected
      */
     private void tryLockIn() {
         if (player.getSelected().size() == player.cardsToSelect()) {
-            board.doTurn();
-            textures = new Texture[player.getCards().length + player.getLocked().size()];
-            createCardTexture();
-            createAllSprites(textures);
-            resetVisuals();
+            if (player.toggleReady()) {
+                lockInButton.setColor(Color.GREEN);
+            } else {
+                lockInButton.setColor(Color.WHITE);
+            }
         }
     }
 
@@ -261,7 +268,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
             textures = new Texture[player.getCards().length + player.getLocked().size()];
             createCardTexture();
             createAllSprites(textures);
-            resetVisuals();
+            resetColors();
         }
     }
 
@@ -326,6 +333,16 @@ public class HandVisualizer extends InputAdapter implements Screen {
             font.draw(batch, Integer.toString(5 - i),
                     allSprites[register - i].getX() + spriteWidth / 2 - 10, allSprites[register - i].getHeight());
         }
+    }
+
+    /**
+     * Creates all the textures, will be called after every round
+     */
+    public void createTextures() {
+        textures = new Texture[player.getCards().length + player.getLocked().size()];
+        createCardTexture();
+        createAllSprites(textures);
+        resetColors();
     }
 
     @Override

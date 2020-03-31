@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.game.RoboRally;
+import inf112.skeleton.app.player.AI;
 import inf112.skeleton.app.player.Player;
 import inf112.skeleton.app.player.PlayerState;
 import inf112.skeleton.app.sound.Sound;
@@ -46,10 +47,11 @@ public class Board extends Tile {
     private Sound damageSound;
 
     /**
-     * @param mapFile    the file containing the map.
-     * @param playerFile location of the file of the player texture
+     * @param mapFile      the file containing the map.
+     * @param playerFile   location of the file of the player texture
+     * @param humanPlayers # of human players
      */
-    public Board(RoboRally game, String mapFile, String playerFile, String deckFile, int nrPlayers) {
+    public Board(RoboRally game, String mapFile, String playerFile, String deckFile, int nrPlayers, int humanPlayers) {
         roboRally = game;
         map = new TmxMapLoader().load(mapFile);
         buildMap();
@@ -58,7 +60,7 @@ public class Board extends Tile {
 
         createDeck(deckFile);
 
-        generatePlayers(nrPlayers, playerFile);
+        generatePlayers(nrPlayers, playerFile, humanPlayers);
 
         generateObjectives();
 
@@ -120,12 +122,17 @@ public class Board extends Tile {
     /**
      * Create a certain amount of players and store them in the players field
      *
-     * @param nr # of players to create
+     * @param nr           # of players to create
+     * @param humanPlayers # of human players
      */
-    private void generatePlayers(int nr, String playerFile) {
+    private void generatePlayers(int nr, String playerFile, int humanPlayers) {
         players = new Player[nr];
         for (int i = 0; i < nr; i++) {
-            players[i] = new Player("Player " + (i + 1), i, 0, 0, i + 1);
+            if (i < humanPlayers) {
+                players[i] = new Player("Player " + (i + 1), i, 0, 0, i + 1);
+            } else {
+                players[i] = new AI("AI " + (i + 1), i, 0, 0, i + 1);
+            }
             TextureRegion[][] tr = players[i].setPlayerTextures(playerFile);
             players[i].setPlayerState(new PlayerState(players[i], this, tr));
             TextureRegion[][] hb = players[i].setPlayerTextures("assets/pictures/healthbars2.png");
@@ -281,16 +288,19 @@ public class Board extends Tile {
     /**
      * Does the entire turn in the correct order
      */
-    public void doTurn(){
-            for (int i = 0; i < 5; i++) {
-                for (Card c : sortPhase(i)) {
-                    if (c == null || c.getOwner() == null || c.getOwner().getHealth() <= 0) {
-                        continue;
-                    }
-                    cardMove(c, c.getOwner());
+    public void doTurn() {
+        for (Player p : players) {
+            p.setReady(false);
+        }
+        for (int i = 0; i < 5; i++) {
+            for (Card c : sortPhase(i)) {
+                if (c == null || c.getOwner() == null || c.getOwner().getHealth() <= 0) {
+                    continue;
                 }
-                afterPhase(i + 1);
+                cardMove(c, c.getOwner());
             }
+            afterPhase(i + 1);
+        }
 
         afterRound();
     }
@@ -470,6 +480,7 @@ public class Board extends Tile {
         if (hasTile(flagLayer, x, y)) {
             player.checkObjective(flagValue(flagLayer, x, y));
         }
+        player.setReady(false);
     }
 
 

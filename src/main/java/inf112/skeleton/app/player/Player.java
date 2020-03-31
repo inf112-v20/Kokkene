@@ -55,10 +55,14 @@ public class Player {
     //Locked registers
     private ArrayList<Card> locked = new ArrayList<>();
 
+    //Ready to play selected cards
+    private boolean ready;
+
     //Constant variables
     private final int MAXHEALTH = 10;
 
     //Player constructor had to be like this for testing
+
     /**
      * @param name  the name for this robot.
      * @param xPos  starting x-position for this robot.
@@ -74,6 +78,7 @@ public class Player {
         this.orientation = orientation;
         this.xBackup = xPos;
         this.yBackup = yPos;
+        this.ready = false;
     }
 
     /**
@@ -110,6 +115,32 @@ public class Player {
      */
     public void setHealthBars(PlayerState hb) {
         this.hb = hb;
+    }
+
+    /**
+     * Get whether the player is done selecting cards and thus is ready to play
+     *
+     * @return whether player is ready
+     */
+    public boolean getReady() {
+        return this.ready;
+    }
+
+    /**
+     * Set the readiness of the player to given boolean value b
+     *
+     * @param b boolean value to set the ready field to
+     */
+    public void setReady(boolean b) {
+        this.ready = b;
+    }
+
+    /**
+     * Toggles whether ready or not
+     */
+    public boolean toggleReady() {
+        this.ready = !this.ready;
+        return this.ready;
     }
 
     /**

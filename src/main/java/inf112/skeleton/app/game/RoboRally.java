@@ -30,10 +30,10 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private HandVisualizer handVisualizer;
 
-    RoboRally(Game game, String mapFile, String playerFile, String deckFile, int nrPlayers, int thisPlayer) {
+    RoboRally(Game game, String mapFile, String playerFile, String deckFile, int nrPlayers, int thisPlayer, int humanPlayers) {
         //Initializes the board and HUD
         this.game = game;
-        setBoard(mapFile, playerFile, deckFile, nrPlayers);
+        setBoard(mapFile, playerFile, deckFile, nrPlayers, humanPlayers);
 
         int extraSpace = 8;
         float displayWidthHeightRatio = ((float) Display.getWidth()) / ((float) Display.getHeight());
@@ -74,8 +74,8 @@ public class RoboRally extends InputAdapter implements Screen {
     /**
      * Selects the given board and updates the board field
      */
-    private void setBoard(String mapFile, String playerFile, String deckFile, int nrPlayers) {
-        board = new Board(this, mapFile, playerFile, deckFile, nrPlayers);
+    private void setBoard(String mapFile, String playerFile, String deckFile, int nrPlayers, int humanPlayers) {
+        board = new Board(this, mapFile, playerFile, deckFile, nrPlayers, humanPlayers);
     }
 
     /**
@@ -115,13 +115,33 @@ public class RoboRally extends InputAdapter implements Screen {
         hud.render();
         handVisualizer.render(delta);
 
+        if (checkReady()) {
+            board.doTurn();
+            handVisualizer.createTextures();
+        }
+
         board.nullPlayerBoard();
 
         checkFinished();
     }
 
     /**
+     * Checks whether all players are ready to play their hand
+     *
+     * @return true if selected the correct number of cards and locked in
+     */
+    private boolean checkReady() {
+        for (Player p : board.getPlayers()) {
+            if (!p.getReady()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Check if all players are dead
+     *
      * @return true if all are dead
      */
     private boolean allPlayersAreDead() {

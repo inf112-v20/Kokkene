@@ -27,7 +27,7 @@ public class Menu implements Screen {
     private final SelectBox<String> selectPlayer;
     private final SelectBox<String> selectDeck;
 
-    private int nrPlayers = 1; //TODO add capability to change # of players
+    private int nrPlayers = 2; //TODO add capability to change # of players
 
     private SpriteBatch batch;
 
@@ -137,7 +137,7 @@ public class Menu implements Screen {
     public void loadGame() {
         game.setScreen(new RoboRally(game, "assets/maps/" + selectMap.getSelected() + ".tmx",
                 "assets/pictures/" + selectPlayer.getSelected() + " Player.png",
-                "assets/decks/" + selectDeck.getSelected()+".txt", nrPlayers, 1));
+                "assets/decks/" + selectDeck.getSelected() + ".txt", nrPlayers, 1, 1));
     }
 
     public Array<String> getMaps(){
