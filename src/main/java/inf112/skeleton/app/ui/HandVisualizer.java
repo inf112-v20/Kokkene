@@ -284,6 +284,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
         drawCardSprites();
         drawRegisterNumbers();
+        drawPriorityNumbers();
         drawButtons();
 
         float scale = 1.5f;
@@ -291,6 +292,13 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 lockInButton.getY()+lockInButton.getHeight()/2f-confirm.getHeight()/(scale*2f),
                 confirm.getWidth()/scale, confirm.getHeight()/scale);
         batch.end();
+    }
+
+    private void drawPriorityNumbers() {
+        for(int i = 0; i < player.getCards().length; i++) {
+            font.getData().setScale(2.5f);
+            font.draw(batch, "" + player.getCards()[i].getPriority(), allSprites[i].getX()+ allSprites[i].getWidth()/3, 50);
+        }
     }
 
     private void drawButtons() {
@@ -316,6 +324,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
      * Draws the register number on top of the cards
      */
     public void drawRegisterNumbers() {
+        font.getData().setScale(4, 3);
         float spriteWidth = allSprites[0].getWidth();
         for (int i = 0; i < player.getCards().length; i++) { //Draws register nr. on top of card
             allSprites[i].setColor(Color.WHITE);
