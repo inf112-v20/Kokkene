@@ -96,7 +96,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 cards = new Pixmap(Gdx.files.internal("pictures/Turn" + c.getMove() + ".png"));
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + c.getName());
+                throw new IllegalStateException("Unexpected value: " + c.toString());
         }
     }
 
@@ -280,9 +280,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
         drawButtons();
 
         float scale = 1.5f;
-        batch.draw(confirm, 10+lockInButton.getWidth()/2f-confirm.getWidth()/(scale*2f), lockInButton.getY()+lockInButton.getHeight()/2f-confirm.getHeight()/(scale*2f),
+        batch.draw(confirm, 10+lockInButton.getWidth()/2f-confirm.getWidth()/(scale*2f),
+                lockInButton.getY()+lockInButton.getHeight()/2f-confirm.getHeight()/(scale*2f),
                 confirm.getWidth()/scale, confirm.getHeight()/scale);
-
         batch.end();
     }
 

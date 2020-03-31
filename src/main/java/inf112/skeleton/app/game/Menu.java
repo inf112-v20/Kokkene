@@ -31,7 +31,7 @@ public class Menu implements Screen {
 
     private SpriteBatch batch;
 
-    private Texture roborally = new Texture(Gdx.files.internal("pictures/Roborally.png"));
+    private Texture roboRally = new Texture(Gdx.files.internal("pictures/Roborally.png"));
     private Texture startGame = new Texture(Gdx.files.internal("pictures/StartGame.png"));
     private Texture exitGame = new Texture(Gdx.files.internal("pictures/ExitGame.png"));
 
@@ -93,7 +93,7 @@ public class Menu implements Screen {
         stage.draw();
         batch.begin();
 
-        batch.draw(roborally, width/2f-roborally.getWidth()/2f, height*.75f, roborally.getWidth(), roborally.getHeight());
+        batch.draw(roboRally, width/2f-roboRally.getWidth()/2f, height*.75f, roboRally.getWidth(), roboRally.getHeight());
         batch.draw(startGame, width/2f-gameButton.getWidth()/2, gameButton.getY()+gameButton.getHeight()/4f, gameButton.getWidth(),
                 gameButton.getHeight()*(gameButton.getWidth()/gameButton.getHeight()/4));
         batch.draw(exitGame, width/2f-exitButton.getWidth()/2, exitButton.getY()+exitButton.getHeight()/4f, exitButton.getWidth(),
