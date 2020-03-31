@@ -537,6 +537,9 @@ public class Board extends Tile {
             case 3:
                 return wallThis == 3 || wallNext == 1;
         }
+        if (hasTile(playerLayer, nb[0], nb[1])) {
+            return move(players[playerLayer.getCell(nb[0],nb[1]).getTile().getId()-1], dir); //tries to move next player.
+        }
         return false;
     }
 
