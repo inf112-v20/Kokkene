@@ -555,8 +555,9 @@ public class Board extends Tile {
             int[] nb = getNeighbour(player.getxPos(), player.getyPos(), direction);
             setPlayersOnBoard();
             if (hasTile(playerLayer, nb[0], nb[1])) {
+                Player otherPlayer = players[playerLayer.getCell(nb[0],nb[1]).getTile().getId()-1];
                 nullPlayerBoard();
-                return !move(players[playerLayer.getCell(nb[0],nb[1]).getTile().getId()-1], direction); //tries to move next player.
+                return !move(otherPlayer, direction); //tries to move next player.
             }
             nullPlayerBoard();
             return false;
