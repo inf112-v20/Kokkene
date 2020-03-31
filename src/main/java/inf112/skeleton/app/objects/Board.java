@@ -43,7 +43,6 @@ public class Board extends Tile {
 
     private Deck deck;
 
-    private boolean soundBool = true;
     private Sound damageSound;
 
     /**
@@ -332,8 +331,7 @@ public class Board extends Tile {
      * Plays the damage sound
      */
     private void playDamageSound() {
-        if (soundBool)
-            damageSound.play();
+        damageSound.play();
     }
 
     /**
