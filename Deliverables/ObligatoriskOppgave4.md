@@ -3,6 +3,15 @@
 ## RoboRally - a game made by Kokkene
 RoboRally is a multiplayer game in which robots move around the map attempting to get to all the flags. 
 
+#### Project Methodology
+Our project methodology has been the same throughout the project, with little changes.\
+We feel that we chose correct early on and did quick revisions of our methodology when needed.\
+To summarize how our methodology have evolved; Firstly we started out with Scrum and XP,\
+doing 1 week sprint intervals of what we had on our project board. From that we noticed a\
+need of a quick revision cycle, such that we could easily identify new needs the customer had, or problems.\
+Secondly we made the sprints into 3/4 days cycles. Such that we had a much more even feedback loop.\
+This corresponded well with the meetings we set up, and we personally feel that we got a good development structure.
+
 #### Retrospection
 TODO
 
