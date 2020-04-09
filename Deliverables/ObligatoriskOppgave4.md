@@ -3,6 +3,40 @@
 ## RoboRally - a game made by Kokkene
 RoboRally is a multiplayer game in which robots move around the map attempting to get to all the flags. 
 
+### Team
+As a team I think we hit the mark pretty good with our roles selection and philosophy.\
+We picked the roles we wanted ourselves and felt most comfortable with.\
+This is probably one of the reasons we do not feel the need to change up the different roles.\
+We discussed the possibility of reassigning Kristoffer, as we felt like the team lead role\
+was not the most necessary for our team-methodology. Ultimately we choose to stick with the current\
+roles as these have been working great for us.
+
+####Team roles:
+##### Kristoffer Kraft Johansen
+Role: Team leader   
+Main tasks: Ensure that the task is completed in the given time frames. Making sure communication between\
+the group members is good. Updating the project board and arranging group meetings.
+
+##### Martin Johnsen
+Role: Customer Contact  
+Main tasks: Take care of all enquiries regarding the project. Making sure the project is up to our set requirements.\
+Updating the README.md file with useful information, and providing a UML diagram for the project.
+
+##### Markus Jensen 
+Role: Head of testing  
+Main tasks: Creating useful tests that helps the developers understand, and future proof the code.\
+General upkeep of the code and adding helpful comments in the code.
+
+##### Jan Kåre Sandblåst
+Role: Coding director 
+Main tasks: Focus on creating useful and easy to implement code. Having the ability to help other team members\
+understanding the code. 
+
+##### Arthur Andersen 
+Role: Lead designer 
+Main tasks: Learning how to use Tiled and implementing maps from tiled into the game. Creating the different\
+textures we need. Generally improving the experience for a real player
+
 #### Project Methodology
 Our project methodology has been the same throughout the project, with little changes.\
 We feel that we chose correct early on and did quick revisions of our methodology when needed.\
