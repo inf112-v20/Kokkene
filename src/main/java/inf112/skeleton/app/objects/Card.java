@@ -5,14 +5,14 @@ import inf112.skeleton.app.player.Player;
 public class Card implements Comparable<Card>{
     private final int priority,
             move,
-            name;
-    //We need this to print out the name of the card type
-    private static final String[] names = {"Forward Card", "Backward Card", "Turn Card"};
+            type;
+    //We need this to print out the type of the card
+    private static final String[] types = {"Forward Card", "Backward Card", "Turn Card"};
 
     private Player owner;
 
-    public Card(int priority, int name, int move) {
-        this.name = name;
+    public Card(int priority, int type, int move) {
+        this.type = type;
         this.move = move;
         this.priority = priority;
         this.setOwner(null);
@@ -20,7 +20,7 @@ public class Card implements Comparable<Card>{
 
     //Method for testing/checking
     public String toString() {
-        return "Priority: " + this.priority + " | Type:  " + names[this.name] + " | Move: " + this.move;
+        return "Priority: " + this.priority + " | Type:  " + types[this.type] + " | Move: " + this.move;
     }
 
     /**
@@ -29,7 +29,7 @@ public class Card implements Comparable<Card>{
      */
     public boolean equals(Card that) {
         return this.priority == that.priority
-                && this.name == that.name
+                && this.type == that.type
                 && this.move == that.move;
     }
 
@@ -40,7 +40,7 @@ public class Card implements Comparable<Card>{
 
     //Getters might be redundant
     public int getPriority() { return priority; }
-    public int getName() { return name; }
+    public int getType() { return type; }
     public int getMove() { return move; }
 
     /**

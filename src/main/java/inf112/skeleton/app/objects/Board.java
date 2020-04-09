@@ -261,8 +261,8 @@ public class Board extends Tile {
      * @param pl player to move
      */
     public void cardMove(Card card, Player pl) {
-        int name = card.getName();
-        switch(name){
+        int type = card.getType();
+        switch(type){
             //Forward
             case (0):
             case (1):
@@ -273,7 +273,7 @@ public class Board extends Tile {
                 pl.turn(card.getMove());
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + name);
+                throw new IllegalStateException("Unexpected value: " + type);
         }
     }
 

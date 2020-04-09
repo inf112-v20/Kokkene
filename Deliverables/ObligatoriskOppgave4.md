@@ -29,13 +29,13 @@ General upkeep of the code and adding helpful comments in the code.
 
 ##### Jan Kåre Sandblåst
 Role: Coding director 
-Main tasks: Focus on creating useful and easy to implement code. Having the ability to help other team members\
-understanding the code. 
+Main tasks: Focus on creating useful and easy to implement code. Creating the mainframe/skeleton of our code,\
+while also having the ability to help other team-members understand it. 
 
 ##### Arthur Andersen 
 Role: Lead designer 
 Main tasks: Learning how to use Tiled and implementing maps from tiled into the game. Creating the different\
-textures we need. Generally improving the experience for a real player
+textures we need. In general thinking about improving the experience for a real player.
 
 #### Project Methodology
 Our project methodology has been the same throughout the project, with little changes.\
@@ -72,10 +72,10 @@ This way of communicating works well with our group.
 
 2.  The message contains all noteworthy changes, and documents them properly.
 
-3.  All implemented features which the player can interact with, should work accordingly, and without game-breaking bugs.
+3.  All implemented features the player can interact with, should work accordingly, and without game-breaking bugs.
 
 ##### Implementation
-TODO
+
 1.  Create a non-player object that does some legal moves.
         
 2.  Make the team agree on/ or create a suitable template for git commits.

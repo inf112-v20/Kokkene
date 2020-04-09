@@ -31,7 +31,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private BitmapFont font;
 
     private Player player;
-    private Board board;
 
     //array of all card sprites
     private Sprite[] allSprites;
@@ -41,7 +40,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     public HandVisualizer(Player player, Board board) {
         this.player = player;
-        this.board = board;
 
         batch = new SpriteBatch();
         font = new BitmapFont();
@@ -84,7 +82,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
      * @param c Card to look up picture of
      */
     public void cardPictureFactory(Card c) {
-        switch (c.getName()) {
+        switch (c.getType()) {
             case (0):
                 cards = new Pixmap(Gdx.files.internal("pictures/Move" + c.getMove() + ".png"));
                 break;
