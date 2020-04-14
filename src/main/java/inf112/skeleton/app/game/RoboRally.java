@@ -36,12 +36,13 @@ public class RoboRally extends InputAdapter implements Screen {
         setBoard(mapFile, playerFile, deckFile, nrPlayers, humanPlayers);
 
         int extraSpace = 8;
+        int widthHeightDifference = board.boardWidth-board.boardHeight;
         float displayWidthHeightRatio = ((float) Display.getWidth()) / ((float) Display.getHeight());
 
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(
                 false,
-                (board.boardWidth+extraSpace)*displayWidthHeightRatio,
+                (board.boardWidth+extraSpace-widthHeightDifference*2)*displayWidthHeightRatio,
                 board.boardHeight+extraSpace);
         camera.position.x = board.boardWidth/2f;
         camera.position.y = board.boardHeight/2f - 3;

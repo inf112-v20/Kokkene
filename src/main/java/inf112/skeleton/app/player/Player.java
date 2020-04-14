@@ -37,7 +37,7 @@ public class Player implements IActor {
             xBackup,
             yBackup;
 
-    //Direction the robot is facing (north=0, east=1, south=2, west=3)
+    //Direction the robot is facing (north=0, west=1, south=2, east=3)
     private int orientation;
 
     //Health of the robot

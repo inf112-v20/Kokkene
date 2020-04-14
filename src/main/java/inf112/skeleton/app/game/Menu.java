@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -107,6 +108,14 @@ public class Menu implements Screen {
         batch.draw(exitGame, width/2f-exitButton.getWidth()/2, exitButton.getY()+exitButton.getHeight()/4f, exitButton.getWidth(),
                 exitButton.getHeight()*(exitButton.getWidth()/exitButton.getHeight()/4));
 
+        batch.end();
+
+        BitmapFont font;
+        font = new BitmapFont(Gdx.files.internal("assets/skins/default.fnt"));
+        batch.begin();
+        font.draw(batch, "Map select:", selectMap.getX() - 105, selectMap.getY()+selectMap.getHeight()-10);
+        font.draw(batch, "Player select:", selectPlayer.getX() - 105, selectPlayer.getY()+selectPlayer.getHeight()-10);
+        font.draw(batch, "Deck select:", selectDeck.getX() - 105, selectDeck.getY()+selectDeck.getHeight()-10);
         batch.end();
 
         if(gameButton.isPressed()){
