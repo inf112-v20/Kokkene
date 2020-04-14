@@ -26,8 +26,10 @@ public class Menu implements Screen {
     private final SelectBox<String> selectMap;
     private final SelectBox<String> selectPlayer;
     private final SelectBox<String> selectDeck;
+    private final SelectBox<String> selectOpponents;
+    private final String[] opponents = {"1 AI","2 AI","3 AI","4 AI","5 AI","6 AI","7 AI"};
 
-    private int nrPlayers = 2; //TODO add capability to change # of players
+    private int nrPlayers; //TODO add capability to change # of players
 
     private SpriteBatch batch;
 
@@ -51,6 +53,11 @@ public class Menu implements Screen {
         gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f);
 
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
+        selectOpponents = new SelectBox<>(skin);
+        selectOpponents.setItems(opponents);
+        selectOpponents.setWidth(gameButton.getWidth()*.87f);
+        selectOpponents.setPosition(width/1.5f - selectOpponents.getWidth()/2, gameButton.getY() - selectOpponents.getHeight()*2);
+
         selectMap = new SelectBox<>(skin);
         selectMap.setItems(getMaps());
         selectMap.setWidth(gameButton.getWidth()*.87f);
@@ -71,6 +78,7 @@ public class Menu implements Screen {
         exitButton.setPosition(width/2f - exitButton.getWidth()/2, selectMap.getY() - exitButton.getHeight() - selectMap.getHeight()*5);
 
         stage.addActor(gameButton);
+        stage.addActor(selectOpponents);
         stage.addActor(selectMap);
         stage.addActor(selectPlayer);
         stage.addActor(selectDeck);
@@ -102,6 +110,8 @@ public class Menu implements Screen {
         batch.end();
 
         if(gameButton.isPressed()){
+            //When starting the game, create the board with the selected amount of computer opponents.
+            this.nrPlayers = selectOpponents.getSelectedIndex()+2;
             loadGame();
         }
         if(exitButton.isPressed()) {
