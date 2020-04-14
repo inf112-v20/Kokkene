@@ -130,6 +130,11 @@ public class RoboRally extends InputAdapter implements Screen {
                 buildPhases();
                 nextPhase = phases.remove(0);
             }
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             nextPhase = doTurn(nextPhase);
         }
 
