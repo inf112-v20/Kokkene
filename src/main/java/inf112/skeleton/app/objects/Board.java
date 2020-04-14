@@ -324,9 +324,9 @@ public class Board extends Tile {
             healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealth());
             if(p.playerPower) {
                 p.addHealth(1);
-                p.playerPower = false;
             }
             p.lockRegister();
+            p.playerPower = false;
             p.discardDraw(deck);
         }
     }

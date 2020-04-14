@@ -195,8 +195,14 @@ public class Player implements IActor {
 
     public void lockRegister(){
         if (locked.size() < lockedRegisters()) {
-            locked.add(selected.get(selected.size() - 1));
-            selected.remove(selected.size() - 1);
+            if(playerPower) {
+                locked.add(getCards()[getCards().length-1]);
+                selected.remove(getCards()[getCards().length-1]);
+            }
+            else {
+                locked.add(selected.get(selected.size() - 1));
+                selected.remove(selected.size() - 1);
+            }
         } else if (locked.size() > lockedRegisters()) {
             selected.add(locked.get(locked.size() - 1));
             locked.remove(locked.size() - 1);
