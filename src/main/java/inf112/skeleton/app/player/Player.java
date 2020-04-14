@@ -338,6 +338,9 @@ public class Player {
             selected.add(locked.get(locked.size() - 1));
             locked.remove(locked.size() - 1);
         }
+        if (locked.size() != lockedRegisters()) {
+            lockRegister(); //TODO get rid of infinite loop?
+        }
         assert locked.size() == lockedRegisters() : "Unexpected value: " + locked.size();
     }
 
