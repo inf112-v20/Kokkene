@@ -26,6 +26,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     private Texture confirm = new Texture(Gdx.files.internal("pictures/Confirm.png"));
     private Sprite lockInButton;
+    private Sprite powerButton;
 
     private SpriteBatch batch;
     private BitmapFont font;
@@ -114,6 +115,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
         lockInButton = new Sprite(button);
         lockInButton.setPosition(10, 360);
 
+        powerButton = new Sprite(button);
+        powerButton.setPosition(lockInButton.getWidth() + 20, 360);
+
         buttons.dispose();
         resizedButton.dispose();
     }
@@ -155,6 +159,10 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
         if (lockInButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
             tryLockIn();
+        }
+        else if (powerButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
+            player.playerPower = true;
+            player.toggleReady();
         }
         return false;
     }
@@ -302,6 +310,8 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private void drawButtons() {
         lockInButton.draw(batch);
         lockInButton.setPosition(10, allSprites[0].getHeight() + 10);
+        powerButton.draw(batch);
+        powerButton.setPosition(lockInButton.getWidth() + 20, 360);
     }
 
     /**

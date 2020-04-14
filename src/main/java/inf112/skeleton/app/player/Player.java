@@ -61,6 +61,8 @@ public class Player {
     //Constant variables
     private final int MAXHEALTH = 10;
 
+    public boolean playerPower = false;
+
     //Player constructor had to be like this for testing
 
     /**
@@ -335,9 +337,6 @@ public class Player {
         } else if (locked.size() > lockedRegisters()) {
             selected.add(locked.get(locked.size() - 1));
             locked.remove(locked.size() - 1);
-        }
-        if (locked.size() != lockedRegisters() || selected.size() != cardsToSelect()) {
-            lockRegister(); //TODO get rid of infinite loop?
         }
         assert locked.size() == lockedRegisters() : "Unexpected value: " + locked.size();
     }

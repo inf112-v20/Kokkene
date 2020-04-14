@@ -322,6 +322,10 @@ public class Board extends Tile {
             p.respawn();
             playerLayer.setCell(p.getxPos(), p.getyPos(), p.getPlayerState().getPlayerStatus());
             healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealth());
+            if(p.playerPower) {
+                p.addHealth(1);
+                p.playerPower = false;
+            }
             p.lockRegister();
             p.discardDraw(deck);
         }
@@ -347,7 +351,11 @@ public class Board extends Tile {
             if (p.getHealth() <= 0 || !p.isAlive()) {
                 continue;
             }
-            if (p.getSelected().size() <= phase) {
+            if (p.playerPower) {
+                cardList.add(new Card(0,0,0));
+                continue;
+            }
+            else if (p.getSelected().size() <= phase) {
                 int lastLocked = p.getLocked().size() - 1,
                         difference = phase - p.getSelected().size(),
                         reverseOrder = lastLocked - difference;
@@ -358,6 +366,7 @@ public class Board extends Tile {
             cardList.add(p.getSelected().get(phase));
         }
         Collections.sort(cardList);
+
         return cardList;
     }
 
