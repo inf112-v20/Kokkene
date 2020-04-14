@@ -6,9 +6,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.game.RoboRally;
-import inf112.skeleton.app.player.AI;
-import inf112.skeleton.app.player.Player;
-import inf112.skeleton.app.player.PlayerState;
+import inf112.skeleton.app.actor.AI;
+import inf112.skeleton.app.actor.Player;
+import inf112.skeleton.app.actor.PlayerState;
 import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;

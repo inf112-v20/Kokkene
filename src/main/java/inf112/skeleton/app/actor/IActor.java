@@ -1,4 +1,4 @@
-package inf112.skeleton.app.player;
+package inf112.skeleton.app.actor;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.objects.Card;

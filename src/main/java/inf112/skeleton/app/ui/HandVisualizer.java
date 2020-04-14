@@ -14,7 +14,7 @@ import inf112.skeleton.app.Main;
 import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.objects.Card;
-import inf112.skeleton.app.player.Player;
+import inf112.skeleton.app.actor.Player;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 

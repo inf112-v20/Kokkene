@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
 import inf112.skeleton.app.game.RoboRally;
-import inf112.skeleton.app.player.Player;
+import inf112.skeleton.app.actor.Player;
 import org.lwjgl.opengl.Display;
 
 public class HUD {

@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.app.player.Player;
+import inf112.skeleton.app.actor.Player;
 import org.junit.Before;
 import org.junit.Test;
 

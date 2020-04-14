@@ -1,6 +1,6 @@
 package inf112.skeleton.app.objects;
 
-import inf112.skeleton.app.player.Player;
+import inf112.skeleton.app.actor.Player;
 
 public class Card implements Comparable<Card>{
     private final int priority,

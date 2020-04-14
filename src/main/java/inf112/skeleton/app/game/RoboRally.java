@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.skeleton.app.objects.Board;
-import inf112.skeleton.app.player.Player;
+import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.sound.Music;
 import inf112.skeleton.app.ui.HUD;
 import inf112.skeleton.app.ui.HandVisualizer;

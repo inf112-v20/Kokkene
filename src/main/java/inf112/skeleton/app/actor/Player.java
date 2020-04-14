@@ -1,4 +1,4 @@
-package inf112.skeleton.app.player;
+package inf112.skeleton.app.actor;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -79,6 +79,7 @@ public class Player implements IActor {
         this.ready = false;
     }
 
+    //Getters and setters
     public PlayerState getPlayerState() {
         return ps;
     }
@@ -101,16 +102,6 @@ public class Player implements IActor {
 
     public void setReady(boolean b) {
         this.ready = b;
-    }
-
-    public boolean toggleReady() {
-        this.ready = !this.ready;
-        return this.ready;
-    }
-
-    public void newBackup() {
-        this.xBackup = this.xPos;
-        this.yBackup = this.yPos;
     }
 
     public int getxBackup() { return xBackup; }
@@ -145,6 +136,26 @@ public class Player implements IActor {
         this.orientation = Math.abs(orientation)%4;
     }
 
+    public int getMaxHealth() { return MAXHEALTH; }
+
+    public int getHealth() { return health; }
+
+    public int getLifePoints() { return this.lifePoints; }
+
+    public int getObjective() {
+        return this.objective;
+    }
+
+    public boolean toggleReady() {
+        this.ready = !this.ready;
+        return this.ready;
+    }
+
+    public void newBackup() {
+        this.xBackup = this.xPos;
+        this.yBackup = this.yPos;
+    }
+
     public void turn(int change){
         change += getOrientation();
 
@@ -153,25 +164,15 @@ public class Player implements IActor {
         setOrientation(change % 4);
     }
 
-    public int getMaxHealth() { return MAXHEALTH; }
-
-    public int getHealth() { return health; }
-
     public void addHealth(int health) {
         setHealth(this.health+health);
     }
-
-    public int getLifePoints() { return this.lifePoints; }
 
     public boolean isAlive() { return getLifePoints()>0; }
 
     public void resetPos() {
         setxPos(getxBackup());
         setyPos(getyBackup());
-    }
-
-    public int getObjective() {
-        return this.objective;
     }
 
     public void checkObjective(int ob) {
@@ -185,6 +186,7 @@ public class Player implements IActor {
         Texture playerTexture = new Texture(texture);
         return TextureRegion.split(playerTexture, 300, 300);
     }
+    //all these hand methods could maybe be moved to a seperate "hand" class
 
     public int cardsToSelect(){
         return Math.min(5, getHealth() - 1);
