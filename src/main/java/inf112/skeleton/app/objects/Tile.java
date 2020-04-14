@@ -71,7 +71,9 @@ public class Tile {
         //Objectives
         //Val = flag number
         FLAG1(49,1,0), FLAG2(56,2,0),
-        FLAG3(63,3,0), FLAG4(70,4,0);
+        FLAG3(63,3,0), FLAG4(70,4,0),
+
+        START(78,0,0);
 
         public final int num;
         public final int val;
@@ -253,5 +255,9 @@ public class Tile {
      */
     public int flagValue(TiledMapTileLayer flagLayer, int x, int y) {
         return getTile(flagLayer.getCell(x, y).getTile().getId()).val;
+    }
+
+    public boolean isStart(TiledMapTileLayer boardLayer, int x, int y) {
+        return (getTile(boardLayer.getCell(x, y).getTile().getId()) == Tiles.START);
     }
 }

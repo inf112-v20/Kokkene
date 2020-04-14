@@ -3,11 +3,11 @@
  <tileset firstgid="1" source="tiles.tsx"/>
  <layer id="1" name="Board" width="5" height="5">
   <data encoding="csv">
+78,5,5,5,5,
 5,5,5,5,5,
 5,5,5,5,5,
 5,5,5,5,5,
-5,5,5,5,5,
-5,5,5,5,5
+78,5,5,5,78
 </data>
  </layer>
  <layer id="2" name="Hole" width="5" height="5">
