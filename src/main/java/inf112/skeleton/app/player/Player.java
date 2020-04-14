@@ -8,6 +8,7 @@ import inf112.skeleton.app.objects.Deck;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -196,8 +197,8 @@ public class Player implements IActor {
     public void lockRegister(){
         if (locked.size() < lockedRegisters()) {
             if(playerPower) {
-                locked.add(getCards()[getCards().length-1]);
-                selected.remove(getCards()[getCards().length-1]);
+                //Maybe add a copy of cards on hand so we can remove cards, that way we don't get dupes
+                locked.add(getCards()[new Random().nextInt(getCards().length-1)]);
             }
             else {
                 locked.add(selected.get(selected.size() - 1));
