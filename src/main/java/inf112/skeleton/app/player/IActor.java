@@ -7,6 +7,10 @@ import inf112.skeleton.app.objects.Deck;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * An actor is a Robot on the board that can interact with the board elements, and is either controlled by the
+ * computer (AI) or the user (Player).
+ */
 interface IActor {
 
     //Constant Fields
@@ -85,7 +89,7 @@ interface IActor {
     int getId();
 
     /**
-     * @return the current x Position for this the actor.
+     * @return the current x Position for this actor.
      */
     int getxPos();
 
@@ -97,12 +101,12 @@ interface IActor {
     void setxPos(int xPos);
 
     /**
-     * @return the current y position for this the actor.
+     * @return the current y position for this actor.
      */
     int getyPos();
 
     /**
-     * @param yPos  the y-value this the actor should have.
+     * @param yPos  the y-value this actor should have.
      */
     void setyPos(int yPos);
 
@@ -118,7 +122,7 @@ interface IActor {
     void setOrientation(int orientation);
 
     /**
-     * Turns the the actor
+     * Turns the actor
      * @param change positive numbers are to the left, negative turns to the right
      */
     void turn(int change);
