@@ -54,34 +54,35 @@ public class Menu implements Screen {
         gameButton.setPosition(width/2f - gameButton.getWidth()/2, height/2f);
 
         Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
-        selectOpponents = new SelectBox<>(skin);
-        selectOpponents.setItems(opponents);
-        selectOpponents.setWidth(gameButton.getWidth()*.87f);
-        selectOpponents.setPosition(width/1.5f - selectOpponents.getWidth()/2, gameButton.getY() - selectOpponents.getHeight()*2);
 
         selectMap = new SelectBox<>(skin);
         selectMap.setItems(getMaps());
         selectMap.setWidth(gameButton.getWidth()*.87f);
-        selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight()*2);
+        selectMap.setPosition(width/2f - selectMap.getWidth()/2, gameButton.getY() - selectMap.getHeight()*1.5f);
 
         selectPlayer = new SelectBox<>(skin);
         selectPlayer.setItems(getPlayers());
         selectPlayer.setWidth(gameButton.getWidth()*.87f);
-        selectPlayer.setPosition(width/2f - selectPlayer.getWidth()/2, gameButton.getY() - selectMap.getHeight()*4);
+        selectPlayer.setPosition(width/2f - selectPlayer.getWidth()/2, selectMap.getY() - selectMap.getHeight()*1.5f);
+
+        selectOpponents = new SelectBox<>(skin);
+        selectOpponents.setItems(opponents);
+        selectOpponents.setWidth(gameButton.getWidth()*.87f);
+        selectOpponents.setPosition(width/2f - selectOpponents.getWidth()/2, selectPlayer.getY() - selectMap.getHeight()*1.5f);
 
         selectDeck = new SelectBox<>(skin);
         selectDeck.setItems(getDecks());
         selectDeck.setWidth(gameButton.getWidth()*.87f);
-        selectDeck.setPosition(width/2f - selectPlayer.getWidth()/2, gameButton.getY() - selectMap.getHeight()*6);
+        selectDeck.setPosition(width/2f - selectPlayer.getWidth()/2, selectOpponents.getY() - selectMap.getHeight()*1.5f);
 
         //Exit Game button
         exitButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         exitButton.setPosition(width/2f - exitButton.getWidth()/2, selectMap.getY() - exitButton.getHeight() - selectMap.getHeight()*5);
 
         stage.addActor(gameButton);
-        stage.addActor(selectOpponents);
         stage.addActor(selectMap);
         stage.addActor(selectPlayer);
+        stage.addActor(selectOpponents);
         stage.addActor(selectDeck);
         stage.addActor(exitButton);
     }
@@ -113,9 +114,12 @@ public class Menu implements Screen {
         BitmapFont font;
         font = new BitmapFont(Gdx.files.internal("assets/skins/default.fnt"));
         batch.begin();
-        font.draw(batch, "Map select:", selectMap.getX() - 105, selectMap.getY()+selectMap.getHeight()-10);
-        font.draw(batch, "Player select:", selectPlayer.getX() - 105, selectPlayer.getY()+selectPlayer.getHeight()-10);
-        font.draw(batch, "Deck select:", selectDeck.getX() - 105, selectDeck.getY()+selectDeck.getHeight()-10);
+
+        font.draw(batch, "Map select:", selectMap.getX() - selectMap.getWidth()/3, selectMap.getY()+selectMap.getHeight()-10);
+        font.draw(batch, "Player select:", selectPlayer.getX() - selectPlayer.getWidth()/3, selectPlayer.getY()+selectPlayer.getHeight()-10);
+        font.draw(batch, "Computers:", selectOpponents.getX() - selectOpponents.getWidth()/3, selectOpponents.getY()+selectOpponents.getHeight()-10);
+        font.draw(batch, "Deck select:", selectDeck.getX() - selectDeck.getWidth()/3, selectDeck.getY()+selectDeck.getHeight()-10);
+
         batch.end();
 
         if(gameButton.isPressed()){

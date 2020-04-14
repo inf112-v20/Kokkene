@@ -15,6 +15,7 @@ import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.actor.Player;
+import inf112.skeleton.app.sound.Sound;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 
@@ -25,8 +26,11 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private int HEIGHT = Main.cfg.height;
 
     private Texture confirm = new Texture(Gdx.files.internal("pictures/Confirm.png"));
+    private Texture powerDown = new Texture(Gdx.files.internal("pictures/PowerDown.png"));
     private Sprite lockInButton;
     private Sprite powerButton;
+
+    private Sound powerSound;
 
     private SpriteBatch batch;
     private BitmapFont font;
@@ -50,6 +54,8 @@ public class HandVisualizer extends InputAdapter implements Screen {
         createButtons();
 
         createTextures();
+
+        powerSound = new Sound("assets/sound/MachinePowerOff.ogg");
     }
 
     /**
@@ -116,7 +122,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         lockInButton.setPosition(10, 360);
 
         powerButton = new Sprite(button);
-        powerButton.setPosition(lockInButton.getWidth() + 20, 360);
+        powerButton.setPosition(Display.getWidth() - powerButton.getWidth() - 10, 360);
 
         buttons.dispose();
         resizedButton.dispose();
@@ -163,6 +169,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         else if (powerButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
             player.playerPower = true;
             player.toggleReady();
+            powerSound.play();
         }
         return false;
     }
@@ -294,9 +301,13 @@ public class HandVisualizer extends InputAdapter implements Screen {
         drawButtons();
 
         float scale = 1.5f;
-        batch.draw(confirm, 10+lockInButton.getWidth()/2f-confirm.getWidth()/(scale*2f),
+        batch.draw(confirm, lockInButton.getX()+lockInButton.getWidth()/2f-confirm.getWidth()/(scale*2f),
                 lockInButton.getY()+lockInButton.getHeight()/2f-confirm.getHeight()/(scale*2f),
                 confirm.getWidth()/scale, confirm.getHeight()/scale);
+        scale = 1.75f;
+        batch.draw(powerDown, powerButton.getX()+powerButton.getWidth()/2f-powerDown.getWidth()/(scale*2f),
+                powerButton.getY()+powerButton.getHeight()/2f-powerDown.getHeight()/(scale*2f),
+                powerDown.getWidth()/scale, powerDown.getHeight()/scale);
         batch.end();
     }
 
@@ -309,9 +320,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     private void drawButtons() {
         lockInButton.draw(batch);
-        lockInButton.setPosition(10, allSprites[0].getHeight() + 10);
+        lockInButton.setPosition(10, 360);
         powerButton.draw(batch);
-        powerButton.setPosition(lockInButton.getWidth() + 20, 360);
+        powerButton.setPosition(Display.getWidth() - powerButton.getWidth() - 10, 360);
     }
 
     /**

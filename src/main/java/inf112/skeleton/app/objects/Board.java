@@ -43,6 +43,7 @@ public class Board extends Tile {
     private Deck deck;
 
     private final Sound damageSound;
+    private final Sound laserSound;
 
     public int phase = 0;
 
@@ -65,6 +66,7 @@ public class Board extends Tile {
         generateObjectives();
 
         damageSound = new Sound("assets/sound/oof_sound.mp3");
+        laserSound = new Sound("assets/sound/laserfire01.ogg");
     }
 
 
@@ -330,13 +332,6 @@ public class Board extends Tile {
     }
 
     /**
-     * Plays the damage sound
-     */
-    private void playDamageSound() {
-        damageSound.play();
-    }
-
-    /**
      * Sorts the cards of all the players in the given phase
      *
      * @param phase which phase we're currently in
@@ -570,7 +565,8 @@ public class Board extends Tile {
             damage = damage || laser(x, y, laserDirection(laserLayer, x, y));
         }
         if (damage) {
-            playDamageSound();
+            laserSound.play();
+            damageSound.play();
         }
     }
 
