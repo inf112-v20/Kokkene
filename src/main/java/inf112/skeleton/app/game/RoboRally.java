@@ -7,18 +7,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.skeleton.app.objects.Board;
 import inf112.skeleton.app.actor.Player;
+import inf112.skeleton.app.objects.Board;
+import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.sound.Music;
 import inf112.skeleton.app.ui.HUD;
 import inf112.skeleton.app.ui.HandVisualizer;
 import org.lwjgl.opengl.Display;
 
+import java.util.ArrayList;
+
 public class RoboRally extends InputAdapter implements Screen {
     private static Board board;
-    private HUD hud;
+    private final HUD hud;
 
-    private OrthogonalTiledMapRenderer mapRenderer;
+    private final OrthogonalTiledMapRenderer mapRenderer;
 
     public static Player player;
 
@@ -26,9 +29,15 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private static Music music;
 
-    private Game game;
+    private final Game game;
 
-    private HandVisualizer handVisualizer;
+    private final HandVisualizer handVisualizer;
+
+    private final ArrayList<ArrayList<Card>> phases = new ArrayList<>();
+
+    private ArrayList<Card> nextPhase;
+
+    private boolean builtPhases = false;
 
     RoboRally(Game game, String mapFile, String playerFile, String deckFile, int nrPlayers, int thisPlayer, int humanPlayers) {
         //Initializes the board and HUD
@@ -36,7 +45,7 @@ public class RoboRally extends InputAdapter implements Screen {
         setBoard(mapFile, playerFile, deckFile, nrPlayers, humanPlayers);
 
         int extraSpace = 8;
-        int widthHeightDifference = board.boardWidth-board.boardHeight;
+        int widthHeightDifference = board.boardWidth - board.boardHeight;
         float displayWidthHeightRatio = ((float) Display.getWidth()) / ((float) Display.getHeight());
 
         OrthographicCamera camera = new OrthographicCamera();
@@ -117,8 +126,11 @@ public class RoboRally extends InputAdapter implements Screen {
         handVisualizer.render(delta);
 
         if (checkReady()) {
-            board.doTurn();
-            handVisualizer.createTextures();
+            if (!builtPhases) {
+                buildPhases();
+                nextPhase = phases.remove(0);
+            }
+            nextPhase = doTurn(nextPhase);
         }
 
         board.nullPlayerBoard();
@@ -160,17 +172,53 @@ public class RoboRally extends InputAdapter implements Screen {
         if (allPlayersAreDead() || (player.getObjective() == board.objectives + 1 && board.objectives != 0)) {
             //Need to render one last time before going back to menu,
             // since it stops at the tile before the last objective if not.
-            if (num == 1) {
+            if (num >= 2) {
                 try {
                     Thread.sleep(2000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                num = 0;
                 dispose();
                 game.setScreen(new Menu(game));
             }
-            num = 1;
+            num++;
         }
+    }
+
+    /**
+     * Creates lists of cards to be played in each phase
+     */
+    private void buildPhases() {
+        for (int i = 0; i < 5; i++) {
+            phases.add(board.sortPhase(i));
+        }
+        this.builtPhases = true;
+    }
+
+    /**
+     * Does the turn one move at a time in the correct order such that it renders between each move
+     *
+     * @param currentPhase List of cards for the current phase listen by increasing priority
+     * @return currentPhase after the first card has been used
+     */
+    private ArrayList<Card> doTurn(ArrayList<Card> currentPhase) {
+        if (currentPhase.isEmpty()) {
+            board.afterPhase();
+            if (phases.isEmpty()) {
+                board.afterRound();
+                this.builtPhases = false;
+                handVisualizer.createTextures();
+                return currentPhase;
+            }
+            return phases.remove(0);
+        }
+        Card c = currentPhase.remove(0);
+        if (c == null || c.getOwner() == null || c.getOwner().getHealth() <= 0) {
+            return currentPhase;
+        }
+        board.cardMove(c, c.getOwner());
+        return currentPhase;
     }
 
     @Override

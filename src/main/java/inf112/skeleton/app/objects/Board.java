@@ -1,14 +1,13 @@
 package inf112.skeleton.app.objects;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.actor.AI;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.actor.PlayerState;
+import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;
@@ -17,7 +16,7 @@ import java.util.Collections;
 
 public class Board extends Tile {
 
-    private RoboRally roboRally;
+    private final RoboRally roboRally;
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer,
@@ -43,7 +42,9 @@ public class Board extends Tile {
 
     private Deck deck;
 
-    private Sound damageSound;
+    private final Sound damageSound;
+
+    public int phase = 0;
 
     /**
      * @param mapFile      the file containing the map.
@@ -242,7 +243,6 @@ public class Board extends Tile {
                 legalMove = move(player, orientation);
             }
             doMove(player, move - 1, legalMove);
-            roboRally.render(Gdx.graphics.getDeltaTime()); //TODO determine if necessary to render here
         }
     }
 
@@ -288,9 +288,6 @@ public class Board extends Tile {
      * Does the entire turn in the correct order
      */
     public void doTurn() {
-        for (Player p : players) {
-            p.setReady(false);
-        }
         for (int i = 0; i < 5; i++) {
             for (Card c : sortPhase(i)) {
                 if (c == null || c.getOwner() == null || c.getOwner().getHealth() <= 0) {
@@ -298,9 +295,8 @@ public class Board extends Tile {
                 }
                 cardMove(c, c.getOwner());
             }
-            afterPhase(i + 1);
+            afterPhase();
         }
-
         afterRound();
     }
 
@@ -312,11 +308,12 @@ public class Board extends Tile {
     /**
      * Checks the position of every player at the end of turn for interaction with the board objects
      */
-    private void afterRound() {
+    public void afterRound() {
         for (Player p : players) {
             if (!p.isAlive()) {
                 continue;
             }
+            p.setReady(false);
             playerLayer.setCell(p.getxPos(), p.getyPos(), null);
             healthLayer.setCell(p.getxPos(), p.getyPos(), null);
             p.respawn();
@@ -329,6 +326,7 @@ public class Board extends Tile {
             p.playerPower = false;
             p.discardDraw(deck);
         }
+        this.phase = 0;
     }
 
     /**
@@ -344,18 +342,12 @@ public class Board extends Tile {
      * @param phase which phase we're currently in
      * @return sorted list of cards of all the players in ascending priority
      */
-    //This caused a crash (Remove before hand-in)
-    private ArrayList<Card> sortPhase(int phase) {
+    public ArrayList<Card> sortPhase(int phase) {
         ArrayList<Card> cardList = new ArrayList<>();
         for (Player p : players) {
-            if (p.getHealth() <= 0 || !p.isAlive()) {
+            if (p.getHealth() <= 0 || !p.isAlive() || p.playerPower) {
                 continue;
-            }
-            if (p.playerPower) {
-                cardList.add(new Card(0,0,0));
-                continue;
-            }
-            else if (p.getSelected().size() <= phase) {
+            } else if (p.getSelected().size() <= phase) {
                 int lastLocked = p.getLocked().size() - 1,
                         difference = phase - p.getSelected().size(),
                         reverseOrder = lastLocked - difference;
@@ -373,12 +365,11 @@ public class Board extends Tile {
 
     /**
      * Makes all the players interact with the board objects
-     *
-     * @param phase to do
      */
-    private void afterPhase(int phase) {
+    public void afterPhase() {
+        this.phase++;
         for (Player p : players) {
-            afterPhase(p, phase);
+            afterPhase(p, this.phase);
         }
         setPlayersOnBoard();
         fireLasers();
@@ -399,7 +390,6 @@ public class Board extends Tile {
 
         if (hasTile(conveyorLayer, x, y)) {
             moveDoubleConveyor(player, x, y);
-            roboRally.render(Gdx.graphics.getDeltaTime());
             //TODO render between each part of the phases, but only if player moved.
         }
         x = player.getxPos(); y = player.getyPos();
@@ -415,7 +405,6 @@ public class Board extends Tile {
         if (hasTile(gearLayer, x, y)){
             player.turn(gearDirection(gearLayer, x, y));
         }
-        roboRally.render(Gdx.graphics.getDeltaTime());
     }
 
     /**
@@ -487,7 +476,6 @@ public class Board extends Tile {
         if (hasTile(flagLayer, x, y)) {
             player.checkObjective(flagValue(flagLayer, x, y));
         }
-        player.setReady(false);
     }
 
 
