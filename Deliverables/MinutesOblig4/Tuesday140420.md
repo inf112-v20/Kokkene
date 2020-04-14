@@ -3,10 +3,10 @@
 13:00 to 15:00 Discord
 
 **Present:**
-    Markus, Arthur, Jan Kåre,  Martin
+    Markus, Arthur, Jan Kåre,  Martin and Kristoffer
 
 **Absent:**
-    Kristoffer
+    none
 
 **Business from previous meetings:**\
      Prepare for the oblig tasks. 
