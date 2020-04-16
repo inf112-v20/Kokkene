@@ -1,6 +1,11 @@
 package inf112.skeleton.app.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import inf112.skeleton.app.actor.Player;
+import org.lwjgl.opengl.Display;
 
 public class Card implements Comparable<Card>{
     private final int priority,
@@ -11,11 +16,14 @@ public class Card implements Comparable<Card>{
 
     private Player owner;
 
+    private Sprite sprite;
+
     public Card(int priority, int type, int move) {
         this.type = type;
         this.move = move;
         this.priority = priority;
         this.setOwner(null);
+        makeSprite();
     }
 
     //Method for testing/checking
@@ -53,5 +61,35 @@ public class Card implements Comparable<Card>{
 
     public void setOwner(Player owner) {
         this.owner = owner;
+    }
+
+    private void makeSprite() {
+        Pixmap card;
+        Pixmap resizedCard;
+        Texture texture;
+
+        switch (getType()) {
+            case (0):
+                card = new Pixmap(Gdx.files.internal("pictures/Move" + getMove() + ".png"));
+                break;
+            case (1):
+                card = new Pixmap(Gdx.files.internal("pictures/BackUp.png"));
+                break;
+            case (2):
+                card = new Pixmap(Gdx.files.internal("pictures/Turn" + getMove() + ".png"));
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + toString());
+        }
+        resizedCard = new Pixmap(Display.getWidth() / 10, 350, card.getFormat());
+        resizedCard.drawPixmap(card,
+                0, 0, card.getWidth(), card.getHeight(),
+                0, 0, resizedCard.getWidth(), resizedCard.getHeight());
+        texture = new Texture(resizedCard);
+        sprite = new Sprite(texture);
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }

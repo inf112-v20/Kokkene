@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.objects.Board;
@@ -22,6 +24,7 @@ public class RoboRally extends InputAdapter implements Screen {
     private final HUD hud;
 
     private final OrthogonalTiledMapRenderer mapRenderer;
+    private SpriteBatch batch;
 
     public static Player player;
 
@@ -60,6 +63,8 @@ public class RoboRally extends InputAdapter implements Screen {
         float unitScale = 1/300f;
         mapRenderer = new OrthogonalTiledMapRenderer(board.map, unitScale);
         mapRenderer.setView(camera);
+
+        batch = new SpriteBatch();
 
         //Selects the player to show the hand of visually
         selectPlayer(thisPlayer);
@@ -130,9 +135,15 @@ public class RoboRally extends InputAdapter implements Screen {
                 buildPhases();
                 nextPhase = phases.remove(0);
             }
+
+            if (nextPhase.size()>0) { //will print the current card.
+                printCard(nextPhase.get(0));
+            }
+
             try {
                 long wait = (long) Math.min(200, Math.abs(200 - Gdx.graphics.getDeltaTime() * 1000));
                 Thread.sleep(wait);
+                //TODO Make sure there is enough time to actually see the card.
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -142,6 +153,19 @@ public class RoboRally extends InputAdapter implements Screen {
         board.nullPlayerBoard();
 
         checkFinished();
+    }
+
+    private void printCard(Card c) {
+        Sprite sprite = c.getSprite();
+        int x = (Display.getWidth()/4)*3,
+                y = Display.getHeight()/2;
+
+        batch.begin();
+
+        sprite.setPosition(x, y);
+        sprite.draw(batch);
+
+        batch.end();
     }
 
     /**

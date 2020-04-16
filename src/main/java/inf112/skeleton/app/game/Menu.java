@@ -108,6 +108,27 @@ public class Menu implements Screen {
 
         stage.act(delta);
         stage.draw();
+
+        placeTextOnButtons();
+
+        drawTextBySelectBoxes();
+
+        showPlayer();
+
+        if(gameButton.isPressed()){
+            //When starting the game, create the board with the selected amount of computer opponents.
+            this.nrPlayers = selectOpponents.getSelectedIndex()+2;
+            loadGame();
+        }
+        if(exitButton.isPressed()) {
+            Gdx.app.exit();
+        }
+    }
+
+    /**
+     * Fancy text in png format is placed on buttons.
+     */
+    private void placeTextOnButtons() {
         batch.begin();
 
         batch.draw(roboRally, width/2f-roboRally.getWidth()/2f,
@@ -120,7 +141,12 @@ public class Menu implements Screen {
                 exitButton.getHeight()*(exitButton.getWidth()/exitButton.getHeight()/4));
 
         batch.end();
+    }
 
+    /**
+     * Show fitting text besides Select Boxes
+     */
+    private void drawTextBySelectBoxes() {
         BitmapFont font;
         font = new BitmapFont(Gdx.files.internal("assets/skins/default.fnt"));
         batch.begin();
@@ -133,17 +159,22 @@ public class Menu implements Screen {
                 selectOpponents.getY()+selectOpponents.getHeight()-10);
         font.draw(batch, "Deck select:", selectDeck.getX() - selectDeck.getWidth()/3,
                 selectDeck.getY()+selectDeck.getHeight()-10);
-
         batch.end();
+    }
 
-        if(gameButton.isPressed()){
-            //When starting the game, create the board with the selected amount of computer opponents.
-            this.nrPlayers = selectOpponents.getSelectedIndex()+2;
-            loadGame();
-        }
-        if(exitButton.isPressed()) {
-            Gdx.app.exit();
-        }
+    /**
+     * Show what the player looks like
+     */
+    private void showPlayer() {
+        Texture player = new Texture(Gdx.files.internal("assets/pictures/" + selectPlayer.getSelected() + " Player.png"));
+        TextureRegion standardPlayer = new TextureRegion(player,0,0,300,300);
+        float scale = 0.5f;
+
+        batch.begin();
+        batch.draw(standardPlayer,selectPlayer.getX()+selectPlayer.getWidth(),
+                selectPlayer.getY()+selectPlayer.getHeight()/2-(standardPlayer.getRegionHeight()/2f)*scale,
+                300*scale, 300*scale);
+        batch.end();
     }
 
     @Override
