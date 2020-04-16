@@ -151,6 +151,7 @@ public class RoboRally extends InputAdapter implements Screen {
      */
     private boolean checkReady() {
         for (Player p : board.getPlayers()) {
+            if(p.playerPower) {p.setReady(true);}
             if (!p.getReady()) {
                 return false;
             }

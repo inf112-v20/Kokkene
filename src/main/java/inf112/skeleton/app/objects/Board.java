@@ -282,23 +282,6 @@ public class Board extends Tile {
         return (layer.getCell(x, y) != null);
     }
 
-    /**
-     * Does the entire turn in the correct order
-     */
-    //Where do we use this
-    public void doTurn() {
-        for (int i = 0; i < 5; i++) {
-            for (Card c : sortPhase(i)) {
-                if (c == null || c.getOwner() == null || c.getOwner().getHealth() <= 0) {
-                    continue;
-                }
-                cardMove(c, c.getOwner());
-            }
-            afterPhase();
-        }
-        afterRound();
-    }
-
     public void afterArrowMove(Player player) {
         afterPhase(player,1);
         player.respawn();
@@ -318,13 +301,28 @@ public class Board extends Tile {
             p.respawn();
             playerLayer.setCell(p.getxPos(), p.getyPos(), p.getPlayerState().getPlayerStatus());
             healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealth());
-            if(p.playerPower) {
-                p.addHealth(1);
+
+            if(p.announcepowerdown) {
+                if(p.playerPower) {
+                    p.addHealth(1);
+                    p.announcepowerdown = false;
+                    //Since no card is picked, in case damage is taken
+                    p.lockRegister();
+
+                    p.playerPower = false;
+                }
+                else {
+                    p.lockRegister();
+                    p.playerPower = true;
+                }
             }
-            p.lockRegister();
-            p.playerPower = false;
+            else {
+                p.lockRegister();
+            }
+
             p.discardDraw(deck);
         }
+
         this.phase = 0;
     }
 
@@ -381,7 +379,6 @@ public class Board extends Tile {
 
         if (hasTile(conveyorLayer, x, y)) {
             moveDoubleConveyor(player, x, y);
-            //TODO render between each part of the phases, but only if player moved.
         }
         x = player.getxPos(); y = player.getyPos();
         //Must update x and y because player may change position.

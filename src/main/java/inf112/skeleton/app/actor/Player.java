@@ -58,6 +58,7 @@ public class Player implements IActor {
     //Ready to play selected cards
     private boolean ready;
 
+    public boolean announcepowerdown = false;
     public boolean playerPower = false;
 
     //Used to lock cards, if damaged while powered down
@@ -218,6 +219,11 @@ public class Player implements IActor {
         assert locked.size() == lockedRegisters() : "Unexpected value: " + locked.size();
     }
 
+    public boolean setAnnouncepowerdown() {
+        this.announcepowerdown = !this.announcepowerdown;
+        return this.announcepowerdown;
+    }
+
     public void setHand(Deck deck) {
         //The hand of the player.
         Card[] playerHand = new Card[getHealth() - 1];
@@ -264,7 +270,9 @@ public class Player implements IActor {
             deck.Discard.add(c);
             locked.remove(c);
         }
-        setHand(deck);
+        if (!playerPower) {
+            setHand(deck);
+        }
     }
 
     public void respawn() {

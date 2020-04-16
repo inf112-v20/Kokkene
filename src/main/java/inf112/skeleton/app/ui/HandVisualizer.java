@@ -167,9 +167,15 @@ public class HandVisualizer extends InputAdapter implements Screen {
             tryLockIn();
         }
         else if (powerButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
-            player.playerPower = true;
-            player.toggleReady();
-            powerSound.play();
+            player.setAnnouncepowerdown();
+            //Will add a better visual way to identify power down.
+            if(player.announcepowerdown) {
+                System.out.println("You will power down next round");
+                powerSound.play();
+            }
+            else {
+                System.out.println("You will not power down next round");
+            }
         }
         return false;
     }
@@ -293,22 +299,23 @@ public class HandVisualizer extends InputAdapter implements Screen {
     @Override
     public void render(float v) {
         Gdx.input.setInputProcessor(this);
-        batch.begin();
 
+        batch.begin();
         drawCardSprites();
         drawRegisterNumbers();
         drawPriorityNumbers();
         drawButtons();
 
         float scale = 1.5f;
-        batch.draw(confirm, lockInButton.getX()+lockInButton.getWidth()/2f-confirm.getWidth()/(scale*2f),
-                lockInButton.getY()+lockInButton.getHeight()/2f-confirm.getHeight()/(scale*2f),
-                confirm.getWidth()/scale, confirm.getHeight()/scale);
+        batch.draw(confirm, lockInButton.getX() + lockInButton.getWidth() / 2f - confirm.getWidth() / (scale * 2f),
+                lockInButton.getY() + lockInButton.getHeight() / 2f - confirm.getHeight() / (scale * 2f),
+                confirm.getWidth() / scale, confirm.getHeight() / scale);
         scale = 1.75f;
-        batch.draw(powerDown, powerButton.getX()+powerButton.getWidth()/2f-powerDown.getWidth()/(scale*2f),
-                powerButton.getY()+powerButton.getHeight()/2f-powerDown.getHeight()/(scale*2f),
-                powerDown.getWidth()/scale, powerDown.getHeight()/scale);
+        batch.draw(powerDown, powerButton.getX() + powerButton.getWidth() / 2f - powerDown.getWidth() / (scale * 2f),
+                powerButton.getY() + powerButton.getHeight() / 2f - powerDown.getHeight() / (scale * 2f),
+                powerDown.getWidth() / scale, powerDown.getHeight() / scale);
         batch.end();
+
     }
 
     private void drawPriorityNumbers() {
