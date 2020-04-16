@@ -7,6 +7,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.actor.AI;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.actor.PlayerState;
+import inf112.skeleton.app.game.Menu;
 import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;
@@ -45,19 +46,17 @@ public class Board extends Tile {
     public int phase = 0;
 
     /**
-     * @param mapFile      the file containing the map.
-     * @param playerFile   location of the file of the player texture
-     * @param humanPlayers # of human players
+     * The Board Constructor creates all the objects on the board based on the Options selected at the menu
      */
-    public Board(String mapFile, String playerFile, String deckFile, int nrPlayers, int humanPlayers) {
-        map = new TmxMapLoader().load(mapFile);
+    public Board() {
+        map = new TmxMapLoader().load(Menu.Options.mapFile);
         buildMap();
 
         findLasers();
 
-        createDeck(deckFile);
+        createDeck();
 
-        generatePlayers(nrPlayers, playerFile, humanPlayers);
+        generatePlayers();
 
         generateObjectives();
 
@@ -105,12 +104,10 @@ public class Board extends Tile {
 
     /**
      * Creates a deck and stores it in the deck field, then shuffles the deck
-     *
-     * @param deckFile Location of the contents of the deck
      */
-    private void createDeck(String deckFile) {
+    private void createDeck() {
         try {
-            this.deck = new Deck(deckFile);
+            this.deck = new Deck(Menu.Options.deckFile);
             deck.shuffle();
         } catch (IOException e) {
             e.printStackTrace();
@@ -118,20 +115,17 @@ public class Board extends Tile {
     }
 
     /**
-     * Create a certain amount of players and store them in the players field
-     *
-     * @param nr           # of players to create
-     * @param humanPlayers # of human players
+     * Create a certain amount of players based on options selected at the menu and store them in the players field
      */
-    private void generatePlayers(int nr, String playerFile, int humanPlayers) {
-        players = new Player[nr];
-        for (int i = 0; i < nr; i++) {
-            if (i < humanPlayers) {
+    private void generatePlayers() {
+        players = new Player[Menu.Options.nrPlayers];
+        for (int i = 0; i < players.length; i++) {
+            if (i < Menu.Options.humanPlayers) {
                 players[i] = new Player("Player " + (i + 1), i, 0, 0, i + 1);
             } else {
                 players[i] = new AI("AI " + (i + 1), i, 0, 0, i + 1);
             }
-            TextureRegion[][] tr = players[i].setPlayerTextures(playerFile);
+            TextureRegion[][] tr = players[i].setPlayerTextures(Menu.Options.playerModelFile);
             players[i].setPlayerState(new PlayerState(players[i], this, tr));
             TextureRegion[][] hb = players[i].setPlayerTextures("assets/pictures/healthbars2.png");
             players[i].setHealthBars(new PlayerState(players[i], this, hb));

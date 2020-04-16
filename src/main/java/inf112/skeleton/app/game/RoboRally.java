@@ -24,7 +24,7 @@ public class RoboRally extends InputAdapter implements Screen {
     private final HUD hud;
 
     private final OrthogonalTiledMapRenderer mapRenderer;
-    private SpriteBatch batch;
+    private final SpriteBatch batch;
 
     public static Player player;
 
@@ -42,10 +42,12 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private boolean builtPhases = false;
 
-    RoboRally(Game game, String mapFile, String playerFile, String deckFile, int nrPlayers, int thisPlayer, int humanPlayers) {
+    private float waited = 0;
+
+    RoboRally(Game game) {
         //Initializes the board and HUD
         this.game = game;
-        setBoard(mapFile, playerFile, deckFile, nrPlayers, humanPlayers);
+        setBoard();
 
         int extraSpace = 8;
         int widthHeightDifference = board.boardWidth - board.boardHeight;
@@ -67,7 +69,7 @@ public class RoboRally extends InputAdapter implements Screen {
         batch = new SpriteBatch();
 
         //Selects the player to show the hand of visually
-        selectPlayer(thisPlayer);
+        selectPlayer();
 
 
         //sets up the hud to display information about the player in real time.
@@ -82,15 +84,15 @@ public class RoboRally extends InputAdapter implements Screen {
     /**
      * Selects the given player and updates the player field
      */
-    public static void selectPlayer(int multiplayerPosition) {
-        player = board.getPlayers()[multiplayerPosition - 1];
+    public static void selectPlayer() {
+        player = board.getPlayers()[Menu.Options.thisPlayer - 1];
     }
 
     /**
      * Selects the given board and updates the board field
      */
-    private void setBoard(String mapFile, String playerFile, String deckFile, int nrPlayers, int humanPlayers) {
-        board = new Board(mapFile, playerFile, deckFile, nrPlayers, humanPlayers);
+    private void setBoard() {
+        board = new Board();
     }
 
     /**
@@ -136,23 +138,19 @@ public class RoboRally extends InputAdapter implements Screen {
                 nextPhase = phases.remove(0);
             }
 
-            if (nextPhase.size()>0) { //will print the current card.
-                printCard(nextPhase.get(0));
+            if (waited > 1) {
+                nextPhase = doTurn(nextPhase);
+                waited = 0;
             }
-
-            try {
-                long wait = (long) Math.min(200, Math.abs(200 - Gdx.graphics.getDeltaTime() * 1000));
-                Thread.sleep(wait);
-                //TODO Make sure there is enough time to actually see the card.
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            nextPhase = doTurn(nextPhase);
+        }
+        if (nextPhase != null && nextPhase.size() > 0) { //will print the current card.
+            printCard(nextPhase.get(0));
         }
 
         board.nullPlayerBoard();
 
         checkFinished();
+        waited += Gdx.graphics.getDeltaTime();
     }
 
     private void printCard(Card c) {

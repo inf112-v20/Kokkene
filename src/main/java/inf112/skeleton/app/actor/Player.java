@@ -24,8 +24,8 @@ import java.util.List;
 public class Player implements IActor {
 
     //ID of the robot
-    private String name;
-    private int id;
+    private final String name;
+    private final int id;
 
     private PlayerState ps;
     private PlayerState hb;
@@ -53,7 +53,7 @@ public class Player implements IActor {
     private List<Card> selected;
 
     //Locked registers
-    private ArrayList<Card> locked = new ArrayList<>();
+    private final ArrayList<Card> locked = new ArrayList<>();
 
     //Ready to play selected cards
     private boolean ready;
@@ -62,7 +62,7 @@ public class Player implements IActor {
     public boolean playerPower = false;
 
     //Used to lock cards, if damaged while powered down
-    private ArrayList<Card> backupHand = new ArrayList<>();
+    private final ArrayList<Card> backupHand = new ArrayList<>();
 
     /**
      * @param name  the name for this robot.
@@ -214,7 +214,7 @@ public class Player implements IActor {
             locked.remove(locked.size() - 1);
         }
         if (locked.size() != lockedRegisters()) {
-            lockRegister(); //TODO get rid of infinite loop?
+            lockRegister();
         }
         assert locked.size() == lockedRegisters() : "Unexpected value: " + locked.size();
     }
