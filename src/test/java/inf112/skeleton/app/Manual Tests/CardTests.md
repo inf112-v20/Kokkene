@@ -13,12 +13,12 @@ Taking damage when you only have 5 cards on hand, leads to cards starting to be 
 
 ## Moving with cards test
 
-1. Expected behaviour: 1. same position 2. orientation is south.
-    1. in the menu choose the testDeck.
-    2. choose the five leftmost cards.
-    3. Press confirm.
+1.  Expected behaviour: 1. same position 2. orientation is south.
+    1.  in the menu choose the testDeck.
+    2.  choose the five leftmost cards.
+    3.  Press confirm.
 
-2. Expected behaviour: 1. postion 3rd from the top 2. orientation north
-    1. In the menu choose testDeck.
-    2. Choose the five rightmost cards.
-    3. Press confirm.
+2.  Expected behaviour: 1. postion 3rd from the top 2. orientation north
+    1.  In the menu choose testDeck.
+    2.  Choose the five rightmost cards.
+    3.  Press confirm.

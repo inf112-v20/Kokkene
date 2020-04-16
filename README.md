@@ -13,12 +13,12 @@
 
 ## Table of Contents
 
-- [Requirements](#requirements)
-- [Documentation](#documentation)
-- [Shortcuts](#shortcuts)
-- [Issues](#issues)
-- [License](#license)
-- [Bugs](#bugs)
+-   [Requirements](#requirements)
+-   [Documentation](#documentation)
+-   [Shortcuts](#shortcuts)
+-   [Issues](#issues)
+-   [License](#license)
+-   [Bugs](#bugs)
 
 ## Requirements
 
@@ -30,15 +30,15 @@ Java version 8+
 
 ### Setup
 
-1. Install Maven
-2. Clone Git repository https://github.com/inf112-v20/Kokkene.git
+1.  Install Maven
+2.  Clone Git repository <https://github.com/inf112-v20/Kokkene.git>
     
 ### Running
 
-1. Run Main from "src\main\java\inf112\skeleton\app\Main.java"
-2. You will then be prompted by a menu.
-3. Choose the settings you want.
-4. Start game
+1.  Run Main from "src\main\java\inf112\skeleton\app\Main.java"
+2.  You will then be prompted by a menu.
+3.  Choose the settings you want.
+4.  Start game
 
 ## Shortcuts
     
