@@ -8,7 +8,6 @@ import inf112.skeleton.app.objects.Deck;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -60,6 +59,9 @@ public class Player implements IActor {
     private boolean ready;
 
     public boolean playerPower = false;
+
+    //Used to lock cards, if damaged while powered down
+    private ArrayList<Card> backupHand = new ArrayList<>();
 
     /**
      * @param name  the name for this robot.
@@ -199,8 +201,8 @@ public class Player implements IActor {
     public void lockRegister(){
         if (locked.size() < lockedRegisters()) {
             if(playerPower) {
-                //Maybe add a copy of cards on hand so we can remove cards, that way we don't get dupes
-                locked.add(getCards()[new Random().nextInt(getCards().length-1)]);
+                locked.add(backupHand.get(backupHand.size() - 1));
+                backupHand.remove(backupHand.size() - 1);
             }
             else {
                 locked.add(selected.get(selected.size() - 1));
@@ -228,6 +230,7 @@ public class Player implements IActor {
             playerHand[i] = deck.Cards.poll();
             assert playerHand[i] != null;
             playerHand[i].setOwner(this);
+            backupHand.add(playerHand[i]);
         }
         Arrays.sort(playerHand);
         this.cards = playerHand;
