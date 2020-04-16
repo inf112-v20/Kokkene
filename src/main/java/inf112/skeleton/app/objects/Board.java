@@ -273,7 +273,7 @@ public class Board extends Tile {
     /**
      * @return true if the tile is not null
      */
-    private boolean hasTile(TiledMapTileLayer layer, int x, int y) {
+    public static boolean hasTile(TiledMapTileLayer layer, int x, int y) {
         return (layer.getCell(x, y) != null);
     }
 
@@ -457,12 +457,13 @@ public class Board extends Tile {
 
     /**
      * Gets neighbour in given direction from position given by x and y
+     *
      * @param direction to check neighbour
-     * @param x coordinate to check neighbour of
-     * @param y coordinate to check neighbour of
+     * @param x         coordinate to check neighbour of
+     * @param y         coordinate to check neighbour of
      * @return Array of x- and y-coordinate of the neighbour in the given direction
      */
-    public int[] getNeighbour(int x, int y, int direction){
+    public static int[] getNeighbour(int x, int y, int direction) {
         int[] neighbour = new int[]{x, y};
         switch (direction) {
             case (0):

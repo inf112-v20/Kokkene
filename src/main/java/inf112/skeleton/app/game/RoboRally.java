@@ -4,8 +4,10 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -136,15 +138,16 @@ public class RoboRally extends InputAdapter implements Screen {
             if (!builtPhases) {
                 buildPhases();
                 nextPhase = phases.remove(0);
+                waited = 0;
             }
-
-            if (waited > 1) {
+            if (nextPhase != null && nextPhase.size() > 0
+                    && nextPhase.get(0).getOwner().getHealth() > 0) { //will print the current card.
+                printCard(nextPhase.get(0));
+            }
+            if (waited > 1 || waitingForRespawn()) {
                 nextPhase = doTurn(nextPhase);
                 waited = 0;
             }
-        }
-        if (nextPhase != null && nextPhase.size() > 0) { //will print the current card.
-            printCard(nextPhase.get(0).allocateSprite());
         }
 
         board.nullPlayerBoard();
@@ -153,14 +156,20 @@ public class RoboRally extends InputAdapter implements Screen {
         waited += Gdx.graphics.getDeltaTime();
     }
 
-    private void printCard(Sprite sprite) {
-        int x = (Display.getWidth()/4)*3,
-                y = Display.getHeight()/2;
+    private void printCard(Card c) {
+        Sprite sprite = c.allocateSprite();
+        int x = (Display.getWidth() / 4) * 3,
+                y = Display.getHeight() / 2;
 
+        BitmapFont font = new BitmapFont();
+        font.setColor(Color.GREEN); //Number color
+        font.getData().setScale(2.5f);
         batch.begin();
 
         sprite.setPosition(x, y);
         sprite.draw(batch);
+        font.draw(batch, Integer.toString(c.getPriority()),
+                x + sprite.getWidth() / 3, y + sprite.getHeight() * 9 / 10);
 
         batch.end();
     }
@@ -189,6 +198,15 @@ public class RoboRally extends InputAdapter implements Screen {
         for (Player p : board.getPlayers()) {
             if (p.isAlive())
                 return false;
+        }
+        return true;
+    }
+
+    private boolean waitingForRespawn() {
+        for (Player p : board.getPlayers()) {
+            if (p.getHealth() > 0) {
+                return false;
+            }
         }
         return true;
     }
@@ -231,6 +249,9 @@ public class RoboRally extends InputAdapter implements Screen {
      * @return currentPhase after the first card has been used
      */
     private ArrayList<Card> doTurn(ArrayList<Card> currentPhase) {
+        if (currentPhase == null) {
+            return null;
+        }
         if (currentPhase.isEmpty()) {
             board.afterPhase();
             if (phases.isEmpty()) {

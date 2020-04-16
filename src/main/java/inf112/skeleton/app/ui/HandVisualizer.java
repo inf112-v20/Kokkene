@@ -11,10 +11,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
-import inf112.skeleton.app.game.RoboRally;
-import inf112.skeleton.app.objects.Board;
-import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.actor.Player;
+import inf112.skeleton.app.game.RoboRally;
+import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.sound.Sound;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -22,20 +21,20 @@ import org.lwjgl.opengl.Display;
 public class HandVisualizer extends InputAdapter implements Screen {
 
 
-    private int WIDTH = Main.cfg.width;
-    private int HEIGHT = Main.cfg.height;
+    private final int WIDTH = Main.cfg.width;
+    private final int HEIGHT = Main.cfg.height;
 
-    private Texture confirm = new Texture(Gdx.files.internal("pictures/Confirm.png"));
-    private Texture powerDown = new Texture(Gdx.files.internal("pictures/PowerDown.png"));
+    private final Texture confirm = new Texture(Gdx.files.internal("pictures/Confirm.png"));
+    private final Texture powerDown = new Texture(Gdx.files.internal("pictures/PowerDown.png"));
     private Sprite lockInButton;
     private Sprite powerButton;
 
-    private Sound powerSound;
+    private final Sound powerSound;
 
-    private SpriteBatch batch;
-    private BitmapFont font;
+    private final SpriteBatch batch;
+    private final BitmapFont font;
 
-    private Player player;
+    private final Player player;
 
     //array of all card sprites
     private Sprite[] allSprites;
@@ -321,7 +320,8 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private void drawPriorityNumbers() {
         for(int i = 0; i < player.getCards().length; i++) {
             font.getData().setScale(2.5f);
-            font.draw(batch, "" + player.getCards()[i].getPriority(), allSprites[i].getX()+ allSprites[i].getWidth()/3, 50);
+            font.draw(batch, Integer.toString(player.getCards()[i].getPriority()),
+                    allSprites[i].getX() + allSprites[i].getWidth() / 3, 50);
         }
     }
 

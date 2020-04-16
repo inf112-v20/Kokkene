@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -16,8 +18,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
+import inf112.skeleton.app.objects.Board;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class Menu implements Screen {
@@ -51,10 +56,11 @@ public class Menu implements Screen {
         gameButton = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("assets/pictures/button.png"))));
         gameButton.setPosition(width / 2f - gameButton.getWidth() / 2, height / 2f);
 
-        selectMap = createSelection(getMaps(), gameButton);
-        selectNrPlayers = createSelection(getPlayers(), selectMap);
-        selectPlayerModels = createSelection(getPlayerModels(), selectNrPlayers);
-        selectDeck = createSelection(getDecks(), selectPlayerModels);
+        selectMap = createSelectionBox(getMaps(), gameButton);
+        scanMap();
+        selectNrPlayers = createSelectionBox(getPlayers(), selectMap);
+        selectPlayerModels = createSelectionBox(getPlayerModels(), selectNrPlayers);
+        selectDeck = createSelectionBox(getDecks(), selectPlayerModels);
         exitButton = createButton(selectDeck);
 
         stage.addActor(gameButton);
@@ -86,7 +92,7 @@ public class Menu implements Screen {
      * @param previous Previous actor drawn, this new SelectBox will be placed underneath it
      * @return the newly created SelectBox
      */
-    private SelectBox<String> createSelection(Array<String> items, Actor previous) {
+    private SelectBox<String> createSelectionBox(Array<String> items, Actor previous) {
         SelectBox<String> selectBox = new SelectBox<>(Options.skin);
         selectBox.setItems(items);
         selectBox.setWidth(gameButton.getWidth() * .87f);
@@ -111,13 +117,15 @@ public class Menu implements Screen {
         stage.act(delta);
         stage.draw();
 
+        checkSelectors();
+
         drawBatchTextures();
 
         drawSelectorText();
 
         showPlayer();
 
-        if(gameButton.isPressed()){
+        if (gameButton.isPressed()) {
             loadGame();
         }
         if(exitButton.isPressed()) {
@@ -251,11 +259,11 @@ public class Menu implements Screen {
     /**
      * Creates an Array of numbers as string
      *
-     * @return Array containg str number from 1 to 8
+     * @return Array containg str number from 1 to number of spawnpoints on current map
      */
     public Array<String> getPlayers() {
         Array<String> nrPlayers = new Array<>();
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 1; i <= Math.max(Options.spawns.get(Options.mapFile).size(), 1); i++) {
             nrPlayers.add(i + " Players");
         }
         return nrPlayers;
@@ -292,11 +300,45 @@ public class Menu implements Screen {
         return deckArray;
     }
 
+    private void checkSelectors() {
+        if (!("assets/maps/" + selectMap.getSelected() + ".tmx").equals(Options.mapFile)) {
+            Options.mapFile = "assets/maps/" + selectMap.getSelected() + ".tmx";
+            selectNrPlayers.setItems(getPlayers());
+        }
+    }
+
+    /**
+     * Scans the map and saves the spawn coordinates to the Options Class
+     */
+    private void scanMap() {
+        int spawnTileID = 78;
+        TmxMapLoader loader = new TmxMapLoader();
+        for (String mapName : getMaps()) {
+            String map = "assets/maps/" + mapName + ".tmx";
+            TiledMapTileLayer boardLayer = (TiledMapTileLayer) loader.load(map).getLayers().get("Board");
+            ArrayList<int[]> spawnPoints = new ArrayList<>();
+            for (int x = 0; x < boardLayer.getWidth(); x++) {
+                for (int y = 0; y < boardLayer.getHeight(); y++) {
+                    if (Board.hasTile(boardLayer, x, y)
+                            && boardLayer.getCell(x, y).getTile().getId() == spawnTileID) {
+                        int[] coords = new int[2];
+                        coords[0] = x;
+                        coords[1] = y;
+                        spawnPoints.add(coords);
+                    }
+                }
+            }
+            Options.spawns.put(map, spawnPoints);
+        }
+    }
+
     public static class Options {
 
         public static Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
 
         public static String mapFile = "assets/maps/12by12DizzyDash.tmx";
+
+        public static HashMap<String, ArrayList<int[]>> spawns = new HashMap<>();
 
         public static String playerModelFile = "assets/pictures/Owl Player.png";
 
