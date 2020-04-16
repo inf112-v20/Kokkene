@@ -85,7 +85,7 @@ public class RoboRally extends InputAdapter implements Screen {
      * Selects the given board and updates the board field
      */
     private void setBoard(String mapFile, String playerFile, String deckFile, int nrPlayers, int humanPlayers) {
-        board = new Board(this, mapFile, playerFile, deckFile, nrPlayers, humanPlayers);
+        board = new Board(mapFile, playerFile, deckFile, nrPlayers, humanPlayers);
     }
 
     /**

@@ -7,7 +7,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.actor.AI;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.actor.PlayerState;
-import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;
@@ -15,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Board extends Tile {
-
-    private final RoboRally roboRally;
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer,
@@ -52,8 +49,7 @@ public class Board extends Tile {
      * @param playerFile   location of the file of the player texture
      * @param humanPlayers # of human players
      */
-    public Board(RoboRally game, String mapFile, String playerFile, String deckFile, int nrPlayers, int humanPlayers) {
-        roboRally = game;
+    public Board(String mapFile, String playerFile, String deckFile, int nrPlayers, int humanPlayers) {
         map = new TmxMapLoader().load(mapFile);
         buildMap();
 
@@ -289,6 +285,7 @@ public class Board extends Tile {
     /**
      * Does the entire turn in the correct order
      */
+    //Where do we use this
     public void doTurn() {
         for (int i = 0; i < 5; i++) {
             for (Card c : sortPhase(i)) {
@@ -356,7 +353,6 @@ public class Board extends Tile {
 
         return cardList;
     }
-
 
     /**
      * Makes all the players interact with the board objects

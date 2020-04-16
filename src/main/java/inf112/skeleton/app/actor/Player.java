@@ -17,7 +17,7 @@ import java.util.List;
  * The backup is at first the initial spawn.
  * When spawning at backup, keep the orientation.
  *
- * Martin Johnsen
+ * @author Martin Johnsen
  *
  */
 
