@@ -8,30 +8,30 @@ These are our user stories which are needed for completing the second obligatory
 As a player I expect the walls and holes on the board to behave appropriately.
     
 ##### Acceptance criteria 1
-1.    The player is not able to cross over walls.
-2.    Walking out of the board reboots(kills) the player.
-3.    Falling into holes also reboots the player.
+1.  The player is not able to cross over walls.
+2.  Walking out of the board reboots(kills) the player.
+3.  Falling into holes also reboots the player.
     
 #### User story 2
 As a player I want to be able to know my health and objective.
     
 ##### Acceptance criteria 2
-1.    Show the health of the robot as an overlay
-2.    Make the objective more obvious (display which flag to move to).
+1.  Show the health of the robot as an overlay
+2.  Make the objective more obvious (display which flag to move to).
 
 #### User story 3
 As a player I want to be able to get a hand of cards.
     
 ##### Acceptance criteria 3
-1.    Create a card element.
-2.    Give "cards" and give it to the player.
+1.  Create a card element.
+2.  Give "cards" and give it to the player.
 
 #### User story 4
 As a player I want to have sound in my game.
     
 ##### Acceptance criteria 4
-1.    Create some music and play it to the player.
-2.    Have the player make a sound when it gets hurt.
+1.  Create some music and play it to the player.
+2.  Have the player make a sound when it gets hurt.
 
 ### Project and Project-Structure
 

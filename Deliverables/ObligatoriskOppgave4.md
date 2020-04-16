@@ -81,7 +81,12 @@ This way of communicating works well with our group.
 2.  Make the team agree on/ or create a suitable template for git commits.
 
 3.  Features which have been remodeled/fixed
+
+##### Project Board
+
+![PNG](../assets/project_Board.png "Our github Project Board")
       
 ##### Meeting minutes
 [Meeting 1](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday310320.md)  
 [Meeting 2](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday140420.md)  
+[Meeting 3](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday160420.md)

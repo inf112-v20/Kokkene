@@ -56,50 +56,48 @@ We get along well and will see this project through.
 
 #### User Stories
 
-1.    As a player, I want to choose which cards I want to program in my desired order.
-2.    As a player, I want board objects to work as intended.
-3.    As a programmer on this project, I want the tests to be clear and concise.
+1.  As a player, I want to choose which cards I want to program in my desired order.
+2.  As a player, I want board objects to work as intended.
+3.  As a programmer on this project, I want the tests to be clear and concise.
 
 #### Acceptance Criterias
 
-1.    Program cards in the desired order
-      1.    Add a method to display cards
-      2.    Add a method to choose the order of cards
-      3.    Lock in the chosen cards.  
+1.  Program cards in the desired order
+    1.  Add a method to display cards
+    2.  Add a method to choose the order of cards
+    3.  Lock in the chosen cards.  
     
-2.    Board objects work as intended
-      1.    Conveyors should move players.
-      2.    Wrenches heal
-      3.    Walls stop the player
-      4.    Objectives are displayed and updates.
+2.  Board objects work as intended
+    1.  Conveyors should move players.
+    2.  Wrenches heal
+    3.  Walls stop the player
+    4.  Objectives are displayed and updates.
       
-3.    Test method's names are clear and concise
-      1.    The name of the method should give an idea of what it tests.
-      2.    The name of the method should be camel case
-      3.    If we are creating some object in several of the tests,\
-      the object creation should be done in "@before"
-      4.    No duplicate tests, or tests which checks the same thing.
+3.  Test method's names are clear and concise
+    1.  The name of the method should give an idea of what it tests.
+    2.  The name of the method should be camel case
+    3.  If we are creating some object in several of the tests,\
+    the object creation should be done in "@before"
+    4.  No duplicate tests, or tests which checks the same thing.
 
 ##### Implementation
 
-1.    Program cards in the desired order
-      1.    Cards can now be displayed through calling toggleDeck.render().
-      2.    You can click the cards in the order you want to program them.
-      3.    Confirm the order with the key "C" or the button on screen.
+1.  Program cards in the desired order
+    1.  Cards can now be displayed through calling toggleDeck.render().
+    2.  You can click the cards in the order you want to program them.
+    3.  Confirm the order with the key "C" or the button on screen.
 
-2.    Board objects work as intended
-      1.    Tile class added
-            1.    All important tiles registered as enums.
-            2.    Methods to get all values and directions.
-         
-      2.    Used Tile.java methods in Board.java.
-      
-      3.    Refactored Board.java
+2.  Board objects work as intended
+    1.  Tile class added
+        1.  All important tiles registered as enums.
+        2.  Methods to get all values and directions.     
+    2.  Used Tile.java methods in Board.java.
+    3.  Refactored Board.java
 
-3.    Test method's names are clear and concise
-      1.    Check all the current tests and make sure they follow our set criteria.
-      2.    When implementing new tests be sure to check the set criteria
-      3.    Remove any redundant/duplicate tests
+3.  Test method's names are clear and concise
+    1.  Check all the current tests and make sure they follow our set criteria.
+    2.  When implementing new tests be sure to check the set criteria
+    3.  Remove any redundant/duplicate tests
       
 ##### Meeting minutes
 [Meeting 1](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig3/Tuesday030320.md)  

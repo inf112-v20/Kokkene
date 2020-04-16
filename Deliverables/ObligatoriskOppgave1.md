@@ -55,34 +55,34 @@ in order to fulfill our goal of what we consider a working application.
 For our final product our version of the MVP will have these functionalities.
 
 -   Board
-     -   Board elements (Pits, Lasers, Conveyor belts)
+    -   Board elements (Pits, Lasers, Conveyor belts)
    
--    Maps / Courses
+-   Maps / Courses
 
--    Timer
+-   Timer
 
--    Program Registers
+-   Program Registers
 
--    Card decks
-     -   Amount of cards received based on damage
+-   Card decks
+    -   Amount of cards received based on damage
   
--    Program robots
+-   Program robots
 
--    Damage & Destruction
+-   Damage & Destruction
 
--    Phase sequences in multiple rounds
+-   Phase sequences in multiple rounds
 
--    Repairing
-     -   Wrench
+-   Repairing
+    -   Wrench
      
--    Robots
-     -   Events (Pushing, Laser, Powerdown)
-     -   Health
+-   Robots
+    -   Events (Pushing, Laser, Powerdown)
+    -   Health
     
--    Multiplayer (LAN)
+-   Multiplayer (LAN)
 
--    Win condition
-     -   Flags / Checkpoints
+-   Win condition
+    -   Flags / Checkpoints
 
 ### First iteration deliverables
 -   [x] Player
@@ -105,50 +105,62 @@ further with the code.
 Getting into specifics we are to meet twice a week for 2-3 hours, to discuss our current sprint or starting a sprint. When a sprint
 is started we will work through the todo when we are able to before our next meeting. At each meeting we will present any obstacles
 and get some feedback on how well along everything is going. And also if new customer requirements are needed from the backlog.
-We have some divided work tasks, in accordance to each persons role in the project.\
+We have some divided work tasks, in accordance to each persons role in the project.
+
 **Leader**: Kristoffer will focus on organizing meetings and making sure deadlines are met,\
-and that we work on the correct tasks.\
-**GameCoder**: Jan Kåre will be our lead developer, making sure all the code is modular and works together well.\
-**TestCoder**: Markus will do quality assurance, focusing on writing tests and keeping the code high quality.\
-**CustomerContact**: Martin will make sure the logic is correct, in accordance to the rules of the game.\
+and that we work on the correct tasks.
+
+**GameCoder**: Jan Kåre will be our lead developer, making sure all the code is modular and works together well.
+
+**TestCoder**: Markus will do quality assurance, focusing on writing tests and keeping the code high quality.
+
+**CustomerContact**: Martin will make sure the logic is correct, in accordance to the rules of the game.
+
 **Graphic Design**: Arthur will focus on graphics and how to visualize each scene in the game.\
-While each of us will try to keep to our specialties, we will of course offer each other help if ones workload is bigger.
+While each of us will try to keep to our specialties,\
+we will of course offer each other help if ones workload is bigger.
 
 ## Task 4 
 ### User Stories
 These are our user stories which are needed for completing the first obligatory task.
 
-**User stories for the board**\
-P1 - As a player, I want to see the board I am going to play on.\
-P2 - As a player, I want to be able to move around the board.
+**User stories for the board**
 
-**User stories for the pieces**\
-P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
-P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
+*   P1 - As a player, I want to see the board I am going to play on.
+*   P2 - As a player, I want to be able to move around the board.
 
-**How do we accomplish these user stories?**\
-**P1**\
-    - We need a way of visualizing the board\
-    - Paint on default tiles\
-**P2**\
-    - We need to be able to put down a piece somewhere on the board\
-    - Be able to move around according to instructions\
-**P3**\
-    - We need a visualized board\
-    - Paint on a player avatar\
-**P4**\
-    - We need to be able to put down a piece somewhere on the board\
-    - Have something that allows the player to choose the starting position.
+**User stories for the pieces**
+*   P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
+*   P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
+
+**How do we accomplish these user stories?**
+
+**P1**
+*   We need a way of visualizing the board
+*   Paint on default tiles
+
+**P2**
+*   We need to be able to put down a piece somewhere on the board
+*   Be able to move around according to instructions
+
+**P3**
+*   We need a visualized board
+*   Paint on a player avatar
+
+**P4**
+*   We need to be able to put down a piece somewhere on the board
+*   Have something that allows the player to choose the starting position.
 
 ##Summary of the 1st assignment.
- **What worked**\
-    - The team was well organized and everyone did their share\
-    - Effective meetings, where everyone that was available, took part.\
-    - A mix of Scrum and XP also worked very well as our project methodology of choice, as it helped organize us.
+**What worked**
+*   The team was well organized and everyone did their share.
+*   Effective meetings, where everyone that was available, took part.
+*   A mix of Scrum and XP also worked very well as our project methodology of choice, as it helped organize us.
 
- **What did not work**\
-    - We got a little ahead of ourselves sometimes, where we focused more on future goals.\
-    - Project board could also have been used more frequently
+**What did not work**
+*   We got a little ahead of ourselves sometimes, where we focused more on future goals.
+*   Project board could also have been used more frequently
     
- **Did we hit our goals?**\
-    Yes, Kokkene believes that we hit our goals and more.
+**Did we hit our goals?**
+
+Yes, Kokkene believes that we hit our goals and more.
