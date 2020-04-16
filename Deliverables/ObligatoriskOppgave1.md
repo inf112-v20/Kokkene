@@ -133,34 +133,33 @@ These are our user stories which are needed for completing the first obligatory 
 *   P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
 *   P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
 
-**How do we accomplish these user stories?**
+####How do we accomplish these user stories?
 
 **P1**
-*   We need a way of visualizing the board
-*   Paint on default tiles
+-   We need a way of visualizing the board
+-   Paint on default tiles
 
 **P2**
-*   We need to be able to put down a piece somewhere on the board
-*   Be able to move around according to instructions
+-   We need to be able to put down a piece somewhere on the board
+-   Be able to move around according to instructions
 
 **P3**
-*   We need a visualized board
-*   Paint on a player avatar
+-   We need a visualized board
+-   Paint on a player avatar
 
 **P4**
-*   We need to be able to put down a piece somewhere on the board
-*   Have something that allows the player to choose the starting position.
+-   We need to be able to put down a piece somewhere on the board
+-   Have something that allows the player to choose the starting position.
 
-##Summary of the 1st assignment.
+###Summary of the 1st assignment.
 **What worked**
-*   The team was well organized and everyone did their share.
-*   Effective meetings, where everyone that was available, took part.
-*   A mix of Scrum and XP also worked very well as our project methodology of choice, as it helped organize us.
+-   The team was well organized and everyone did their share.
+-   Effective meetings, where everyone that was available, took part.
+-   A mix of Scrum and XP also worked very well as our project methodology of choice, as it helped organize us.
 
 **What did not work**
-*   We got a little ahead of ourselves sometimes, where we focused more on future goals.
-*   Project board could also have been used more frequently
+-   We got a little ahead of ourselves sometimes, where we focused more on future goals.
+-   Project board could also have been used more frequently
     
-**Did we hit our goals?**
-
+**Did we hit our goals?**\
 Yes, Kokkene believes that we hit our goals and more.

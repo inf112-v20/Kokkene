@@ -43,7 +43,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private Pixmap cards;
     private Texture[] textures;
 
-    public HandVisualizer(Player player, Board board) {
+    public HandVisualizer(Player player) {
         this.player = player;
 
         batch = new SpriteBatch();

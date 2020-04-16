@@ -78,7 +78,7 @@ public class RoboRally extends InputAdapter implements Screen {
         //starts the background music.
         startMusic();
 
-        handVisualizer = new HandVisualizer(player, board);
+        handVisualizer = new HandVisualizer(player);
     }
 
     /**
@@ -144,7 +144,7 @@ public class RoboRally extends InputAdapter implements Screen {
             }
         }
         if (nextPhase != null && nextPhase.size() > 0) { //will print the current card.
-            printCard(nextPhase.get(0));
+            printCard(nextPhase.get(0).allocateSprite());
         }
 
         board.nullPlayerBoard();
@@ -153,8 +153,7 @@ public class RoboRally extends InputAdapter implements Screen {
         waited += Gdx.graphics.getDeltaTime();
     }
 
-    private void printCard(Card c) {
-        Sprite sprite = c.getSprite();
+    private void printCard(Sprite sprite) {
         int x = (Display.getWidth()/4)*3,
                 y = Display.getHeight()/2;
 

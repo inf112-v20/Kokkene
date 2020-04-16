@@ -65,19 +65,18 @@ We get along well and will see this project through.
 1.  Program cards in the desired order
     1.  Add a method to display cards
     2.  Add a method to choose the order of cards
-    3.  Lock in the chosen cards.  
+    3.  Lock in the chosen cards.    
     
 2.  Board objects work as intended
     1.  Conveyors should move players.
     2.  Wrenches heal
     3.  Walls stop the player
-    4.  Objectives are displayed and updates.
-      
+    4.  Objectives are displayed and updates. 
+        
 3.  Test method's names are clear and concise
     1.  The name of the method should give an idea of what it tests.
     2.  The name of the method should be camel case
-    3.  If we are creating some object in several of the tests,\
-    the object creation should be done in "@before"
+    3.  If we are creating some object in several of the tests, the object creation should be done in "@before"
     4.  No duplicate tests, or tests which checks the same thing.
 
 ##### Implementation

@@ -162,7 +162,8 @@ public class Board extends Tile {
      * @param direction to go
      */
     private boolean move(Player player, int direction) {
-        int x = player.getxPos(), y = player.getyPos();
+        int x = player.getxPos(),
+                y = player.getyPos();
         boolean isHole = hasTile(holeLayer, x, y);
 
         switch (direction) {

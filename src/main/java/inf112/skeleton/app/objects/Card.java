@@ -23,7 +23,6 @@ public class Card implements Comparable<Card>{
         this.move = move;
         this.priority = priority;
         this.setOwner(null);
-        makeSprite();
     }
 
     //Method for testing/checking
@@ -46,7 +45,6 @@ public class Card implements Comparable<Card>{
         return Integer.compare(this.priority, that.priority);
     }
 
-    //Getters might be redundant
     public int getPriority() { return priority; }
     public int getType() { return type; }
     public int getMove() { return move; }
@@ -63,7 +61,10 @@ public class Card implements Comparable<Card>{
         this.owner = owner;
     }
 
-    private void makeSprite() {
+    /**
+     * Gives the card its designated sprite
+     */
+    private void giveSprite() {
         Pixmap card;
         Pixmap resizedCard;
         Texture texture;
@@ -89,7 +90,8 @@ public class Card implements Comparable<Card>{
         sprite = new Sprite(texture);
     }
 
-    public Sprite getSprite() {
+    public Sprite allocateSprite() {
+        giveSprite();
         return sprite;
     }
 }

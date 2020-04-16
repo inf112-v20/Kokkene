@@ -14,13 +14,13 @@ public class PlayerTests {
     private int yPos = 1;
     private int upValue = 0;
     private int maxHealth = 10,
-            maxLifePoints = 3;
+            maxLifePoints = 3,
+            damage = -10;
 
     @Before
     public void makePlayer() {
         player = new Player("player", xPos, yPos, upValue, 1);
     }
-    int damage = -10;
 
     @Test
     public void playerHasTenHealthAfterInitiation() {

@@ -45,7 +45,7 @@ public class HUD {
         }
         font.getData().setScale(1f);
         for(int i = 1; i < player.length; i++) {
-            float nmX = (heartSize*player[i].getMaxHealth() + heartSize)/2f;
+            //float nmX = (heartSize*player[i].getMaxHealth() + heartSize)/2f;
             float nmY = (HEIGHT-30)-(heartSize*i);
             for(int j = 0; j < player[i].getHealth(); j++) {
                 font.draw(batch, player[i].getName(), (heartSize)/2f-10, nmY+heartSize/2f);
