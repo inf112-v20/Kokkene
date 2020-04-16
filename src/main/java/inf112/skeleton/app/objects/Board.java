@@ -560,8 +560,14 @@ public class Board extends Tile {
                     y = coords[1];
             damage = damage || laser(x, y, laserDirection(laserLayer, x, y));
         }
+        for (Player p : players) {
+            if (!p.playerPower && !isBlocked(p.getxPos(), p.getyPos(), p.getOrientation())) {
+                int[] nb = getNeighbour(p.getxPos(), p.getyPos(), p.getOrientation());
+                damage = damage || laser(nb[0], nb[1], p.getOrientation());
+            }
+        }
+        laserSound.play();
         if (damage) {
-            laserSound.play();
             damageSound.play();
         }
     }
@@ -575,14 +581,17 @@ public class Board extends Tile {
      * @return true when the laser has hit a player, false if it hit a wall
      */
     private boolean laser(int x, int y, int dir) {
-        if (hasTile(laserLayer, x, y)) { //If there is a laser there
-            if (hasTile(playerLayer, x, y)) { //If there is a player there
-                players[playerLayer.getCell(x, y).getTile().getId() - 1].addHealth(-laserValue(laserLayer, x, y));
-                return true;
-            } else if (!isBlocked(x, y, dir)) { //Continues if it isn't blocked
-                int[] nb = getNeighbour(x, y, dir);
-                return laser(nb[0], nb[1], dir);
+        if (hasTile(playerLayer, x, y)) { //If there is a player there
+            int damage = -1;
+            if (hasTile(laserLayer, x, y)) {
+                damage = -laserValue(laserLayer, x, y);
             }
+            players[playerLayer.getCell(x, y).getTile().getId() - 1].addHealth(damage);
+            return true;
+        } else if (!isBlocked(x, y, dir) && 0 <= x && x <= boardWidth
+                && 0 <= y && y <= boardHeight) { //Continues if it isn't blocked or outside map
+            int[] nb = getNeighbour(x, y, dir);
+            return laser(nb[0], nb[1], dir);
         }
         return false;
     }
@@ -620,5 +629,6 @@ public class Board extends Tile {
      */
     public void muteToggle() {
         damageSound.muteToggle();
+        laserSound.muteToggle();
     }
 }

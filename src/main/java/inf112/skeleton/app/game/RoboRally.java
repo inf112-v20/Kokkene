@@ -131,7 +131,8 @@ public class RoboRally extends InputAdapter implements Screen {
                 nextPhase = phases.remove(0);
             }
             try {
-                Thread.sleep(200);
+                long wait = (long) Math.min(200, Math.abs(200 - Gdx.graphics.getDeltaTime() * 1000));
+                Thread.sleep(wait);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
