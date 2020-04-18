@@ -58,13 +58,13 @@ public class RoboRally extends InputAdapter implements Screen {
         OrthographicCamera camera = new OrthographicCamera();
         camera.setToOrtho(
                 false,
-                (board.boardWidth+extraSpace-widthHeightDifference*2)*displayWidthHeightRatio,
-                board.boardHeight+extraSpace);
-        camera.position.x = board.boardWidth/2f;
-        camera.position.y = board.boardHeight/2f - 3;
+                (board.boardWidth + extraSpace - widthHeightDifference * 2) * displayWidthHeightRatio,
+                board.boardHeight + extraSpace);
+        camera.position.x = board.boardWidth / 2f;
+        camera.position.y = board.boardHeight / 2f - 3;
         camera.update();
 
-        float unitScale = 1/300f;
+        float unitScale = 1 / 300f;
         mapRenderer = new OrthogonalTiledMapRenderer(board.map, unitScale);
         mapRenderer.setView(camera);
 
@@ -118,7 +118,7 @@ public class RoboRally extends InputAdapter implements Screen {
     }
 
     @Override
-    public void dispose(){
+    public void dispose() {
         music.dispose();
     }
 
@@ -135,20 +135,9 @@ public class RoboRally extends InputAdapter implements Screen {
         handVisualizer.render(delta);
 
         if (checkReady()) {
-            if (!builtPhases) {
-                buildPhases();
-                nextPhase = phases.remove(0);
-                waited = 0;
-            }
-            if (nextPhase != null && nextPhase.size() > 0
-                    && nextPhase.get(0).getOwner().getHealth() > 0) { //will print the current card.
-                printCard(nextPhase.get(0));
-            }
-            if (waited > 1 || waitingForRespawn()) {
-                nextPhase = doTurn(nextPhase);
-                waited = 0;
-            }
+            timeLogic();
         }
+
 
         board.nullPlayerBoard();
 
@@ -156,7 +145,31 @@ public class RoboRally extends InputAdapter implements Screen {
         waited += Gdx.graphics.getDeltaTime();
     }
 
-    private void printCard(Card c) {
+    /**
+     * Activates the game logic based on elapsed time from previous event
+     */
+    private void timeLogic() {
+        if (!builtPhases) {
+            buildPhases();
+            nextPhase = phases.remove(0);
+            waited = 0;
+        }
+        if (nextPhase != null && nextPhase.size() > 0
+                && nextPhase.get(0).getOwner().getHealth() > 0) {
+            showCard(nextPhase.get(0)); // Will show the current card.
+        }
+        if (!(waited + Gdx.graphics.getDeltaTime() < 1) || waitingForRespawn()) {
+            nextPhase = doTurn(nextPhase);
+            waited = 0;
+        }
+    }
+
+    /**
+     * Shows the given card on the screen
+     *
+     * @param c Card to draw on the screen
+     */
+    private void showCard(Card c) {
         Sprite sprite = c.allocateSprite();
         int x = (Display.getWidth() / 4) * 3,
                 y = Display.getHeight() / 2;

@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import inf112.skeleton.app.objects.Board;
+import inf112.skeleton.app.objects.Tile;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class Menu implements Screen {
         gameButton.setPosition(width / 2f - gameButton.getWidth() / 2, height / 2f);
 
         selectMap = createSelectionBox(getMaps(), gameButton);
-        scanMap();
+        scanMaps();
         selectNrPlayers = createSelectionBox(getPlayers(), selectMap);
         selectPlayerModels = createSelectionBox(getPlayerModels(), selectNrPlayers);
         selectDeck = createSelectionBox(getDecks(), selectPlayerModels);
@@ -300,35 +300,27 @@ public class Menu implements Screen {
         return deckArray;
     }
 
+    /**
+     * Check selectors and update options based on the current selections
+     */
     private void checkSelectors() {
-        if (!("assets/maps/" + selectMap.getSelected() + ".tmx").equals(Options.mapFile)) {
-            Options.mapFile = "assets/maps/" + selectMap.getSelected() + ".tmx";
+        String selectedMap = "assets/maps/" + selectMap.getSelected() + ".tmx";
+        if (!selectedMap.equals(Options.mapFile)) {
+            Options.mapFile = selectedMap;
             selectNrPlayers.setItems(getPlayers());
         }
     }
 
     /**
-     * Scans the map and saves the spawn coordinates to the Options Class
+     * Scan the maps and save the spawn coordinates to the Options Class
      */
-    private void scanMap() {
-        int spawnTileID = 78;
+    private void scanMaps() {
         TmxMapLoader loader = new TmxMapLoader();
         for (String mapName : getMaps()) {
             String map = "assets/maps/" + mapName + ".tmx";
             TiledMapTileLayer boardLayer = (TiledMapTileLayer) loader.load(map).getLayers().get("Board");
-            ArrayList<int[]> spawnPoints = new ArrayList<>();
-            for (int x = 0; x < boardLayer.getWidth(); x++) {
-                for (int y = 0; y < boardLayer.getHeight(); y++) {
-                    if (Board.hasTile(boardLayer, x, y)
-                            && boardLayer.getCell(x, y).getTile().getId() == spawnTileID) {
-                        int[] coords = new int[2];
-                        coords[0] = x;
-                        coords[1] = y;
-                        spawnPoints.add(coords);
-                    }
-                }
-            }
-            Options.spawns.put(map, spawnPoints);
+
+            Options.spawns.put(map, Tile.findGroupMembers(boardLayer, Tile.Tiles.Group.SPAWNS));
         }
     }
 

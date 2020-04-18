@@ -12,6 +12,7 @@ import inf112.skeleton.app.sound.Sound;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class Board extends Tile {
@@ -49,7 +50,6 @@ public class Board extends Tile {
      * The Board Constructor creates all the objects on the board based on the Options selected at the menu
      */
     public Board() {
-        map = new TmxMapLoader().load(Menu.Options.mapFile);
         buildMap();
 
         findLasers();
@@ -69,6 +69,8 @@ public class Board extends Tile {
      * Separates the map into different layers and stores the layers as fields
      */
     private void buildMap() {
+        map = new TmxMapLoader().load(Menu.Options.mapFile);
+
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
@@ -90,14 +92,9 @@ public class Board extends Tile {
      */
     private void findLasers() {
         lasers = new ArrayList<>();
-        for (int x = 0; x < boardWidth; x++) {
-            for (int y = 0; y < boardHeight; y++) {
-                if (hasTile(laserLayer, x, y) && isLaserShooter(laserLayer, x, y)) {
-                    int[] coords = new int[2];
-                    coords[0] = x;
-                    coords[1] = y;
-                    lasers.add(coords);
-                }
+        for (int[] xy : Tile.findGroupMembers(laserLayer, Tile.Tiles.Group.LASERS)) {
+            if (isLaserShooter(laserLayer, xy[0], xy[1])) {
+                lasers.add(xy);
             }
         }
     }
@@ -119,18 +116,53 @@ public class Board extends Tile {
      */
     private void generatePlayers() {
         players = new Player[Menu.Options.nrPlayers];
+        ArrayList<int[]> spawns = Menu.Options.spawns.get(Menu.Options.mapFile);
         for (int i = 0; i < players.length; i++) {
+            int[] xy = spawns.get(i); // x- and y-coordinate to spawn
             if (i < Menu.Options.humanPlayers) {
-                players[i] = new Player("Player " + (i + 1), i, 0, 0, i + 1);
+                players[i] = new Player("Player " + (i + 1), xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
             } else {
-                players[i] = new AI("AI " + (i + 1), i, 0, 0, i + 1);
+                players[i] = new AI("AI " + (i + 1), xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
             }
-            TextureRegion[][] tr = players[i].setPlayerTextures(Menu.Options.playerModelFile);
-            players[i].setPlayerState(new PlayerState(players[i], this, tr));
-            TextureRegion[][] hb = players[i].setPlayerTextures("assets/pictures/healthbars2.png");
-            players[i].setHealthBars(new PlayerState(players[i], this, hb));
-            players[i].setHand(deck);
+            createPlayerTextures(players[i]);
+            players[i].setHand(deck); //Deals the hand to the players
         }
+    }
+
+    /**
+     * Creates and sets textures to the given player
+     *
+     * @param p player to set the textures of
+     */
+    private void createPlayerTextures(Player p) {
+        TextureRegion[][] tr = p.setPlayerTextures(Menu.Options.playerModelFile);
+        p.setPlayerState(new PlayerState(p, this, tr));
+        TextureRegion[][] hb = p.setPlayerTextures("assets/pictures/healthbars2.png");
+        p.setHealthBars(new PlayerState(p, this, hb));
+    }
+
+    /**
+     * Returns the direction it is furthest to the center of the map on that axis
+     *
+     * @param x x-coordinate to check distance to the center of the map from
+     * @param y y-coordinate to check distance to the center of the map from
+     * @return Direction pointing inwards, away from the edges of the map
+     */
+    private int towardCenter(int x, int y) { //TODO unnecessary when we add direction value to the spawn tiles
+        ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(1, 3, 0, 2));
+        int centerX = boardWidth / 2,
+                centerY = boardHeight / 2;
+        if (y < centerY) {
+            dirs.remove(3); // indices are guaranteed as we're working forwards from the back of the list
+        } else {
+            dirs.remove(2);
+        }
+        if (x >= centerX) {
+            dirs.remove(1);
+        } else {
+            dirs.remove(0);
+        }
+        return Math.abs(y - centerY) < Math.abs(x - centerX) ? dirs.get(0) : dirs.get(1); // returns left/right if true
     }
 
     /**
@@ -146,13 +178,7 @@ public class Board extends Tile {
      * Generates objectives from the map
      */
     private void generateObjectives() {
-        for (int i = 0; i < flagLayer.getWidth(); i++) {
-            for (int j = 0; j < flagLayer.getHeight(); j++) {
-                if (hasTile(flagLayer, i, j)) {
-                    objectives++;
-                }
-            }
-        }
+        objectives = Tile.findGroupMembers(flagLayer, Tiles.Group.OBJECTIVES).size();
     }
 
     /**
@@ -224,7 +250,6 @@ public class Board extends Tile {
         doMove(player, move, true); }
 
     public void doMove(Player player, int move, boolean legalMove) {
-        //This is easier to modify, in order to make it work with cards
 
         //Gets the orientation from the player, in order to check which direction they should move
         int orientation = player.getOrientation();
@@ -391,8 +416,8 @@ public class Board extends Tile {
      * @param y position
      */
     private void doPush(Player player, int phase, int x, int y) {
-        if (phase%2 == pushRound(pushLayer, x, y)){
-            int direction = pushDirection(pushLayer,x,y);
+        if (phase % 2 == pushPhases(pushLayer, x, y)) {
+            int direction = pushDirection(pushLayer, x, y);
             move(player, direction);
         }
     }
@@ -544,12 +569,12 @@ public class Board extends Tile {
         for (int[] coords : lasers) {
             int x = coords[0],
                     y = coords[1];
-            damage = damage || laser(x, y, laserDirection(laserLayer, x, y));
+            damage = laser(x, y, laserDirection(laserLayer, x, y)) || damage;
         }
         for (Player p : players) {
-            if (!p.playerPower && !isBlocked(p.getxPos(), p.getyPos(), p.getOrientation())) {
+            if (!(p.getHealth() <= 0) && !p.playerPower && !isBlocked(p.getxPos(), p.getyPos(), p.getOrientation())) {
                 int[] nb = getNeighbour(p.getxPos(), p.getyPos(), p.getOrientation());
-                damage = damage || laser(nb[0], nb[1], p.getOrientation());
+                damage = laser(nb[0], nb[1], p.getOrientation()) || damage;
             }
         }
         laserSound.play();

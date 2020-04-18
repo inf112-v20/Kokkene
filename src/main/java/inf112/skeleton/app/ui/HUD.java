@@ -6,23 +6,23 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
-import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.actor.Player;
+import inf112.skeleton.app.game.RoboRally;
 import org.lwjgl.opengl.Display;
 
 public class HUD {
 
-    private Player[] player;
-    private int HEIGHT = Main.cfg.height;
+    private final Player[] player;
+    private final int HEIGHT = Main.cfg.height;
 
-    private SpriteBatch batch = new SpriteBatch();
-    private BitmapFont font = new BitmapFont();
-    private Texture heart = new Texture(Gdx.files.internal("pictures/heart.png"));
+    private final SpriteBatch batch = new SpriteBatch();
+    private final BitmapFont font = new BitmapFont();
+    private final Texture heart = new Texture(Gdx.files.internal("pictures/heart.png"));
 
     public HUD(Player[] player) {
         this.player = player;
         font.setColor(Color.RED);
-        font.getData().setScale(2,2);
+        font.getData().setScale(2, 2);
     }
 
     /**
@@ -38,10 +38,10 @@ public class HUD {
         float obY = HEIGHT - heartSize/4f;
         if(RoboRally.getBoard().objectives == player[0].getObjective()-1) {
             font.getData().setScale(2f);
-            font.draw(batch, "Objective: " + "Won!", obX, obY);
+            font.draw(batch, "Target Objective: You Won!", obX, obY);
         }
         else {
-            font.draw(batch, "Objective: " + player[0].getObjective(), obX, obY);
+            font.draw(batch, "Target Objective: " + player[0].getObjective(), obX, obY);
         }
         font.getData().setScale(1f);
         for(int i = 1; i < player.length; i++) {
