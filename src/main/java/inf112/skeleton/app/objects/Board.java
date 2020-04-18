@@ -243,29 +243,46 @@ public class Board extends Tile {
 
     /**
      * Recursive function that moves player forward.
+     *
      * @param player to move
-     * @param move how many spaces to move from current position
+     * @param move   how many spaces to move from current position
      */
     public void doMove(Player player, int move) {
-        doMove(player, move, true); }
+        doMove(player, move, true);
+    }
 
-    public void doMove(Player player, int move, boolean legalMove) {
-
-        //Gets the orientation from the player, in order to check which direction they should move
-        int orientation = player.getOrientation();
-
-        if(move > 0 || move == -1) {
-            if (move == -1) {
-                backwardMove(player);
-            } else if (legalMove) {
-                legalMove = move(player, orientation);
-            }
-            doMove(player, move - 1, legalMove);
+    /**
+     * Gets neighbour in given direction from position given by x and y
+     *
+     * @param direction to check neighbour
+     * @param x         coordinate to check neighbour of
+     * @param y         coordinate to check neighbour of
+     * @return Array of x- and y-coordinate of the neighbour in the given direction
+     */
+    public static int[] getNeighbour(int x, int y, int direction) {
+        int[] neighbour = new int[]{x, y};
+        switch (direction) {
+            case (0):
+                neighbour[1]++;
+                break;
+            case (1):
+                neighbour[0]--;
+                break;
+            case (2):
+                neighbour[1]--;
+                break;
+            case (3):
+                neighbour[0]++;
+                break;
+            default:
+                throw new IllegalArgumentException("Direction is not 0-3, but: " + direction);
         }
+        return neighbour;
     }
 
     /**
      * Moves the player backwards without changing orientation
+     *
      * @param player to move backwards
      */
     public void backwardMove(Player player) {
@@ -479,32 +496,18 @@ public class Board extends Tile {
         }
     }
 
+    public void doMove(Player player, int move, boolean legalMove) {
 
-    /**
-     * Gets neighbour in given direction from position given by x and y
-     *
-     * @param direction to check neighbour
-     * @param x         coordinate to check neighbour of
-     * @param y         coordinate to check neighbour of
-     * @return Array of x- and y-coordinate of the neighbour in the given direction
-     */
-    public static int[] getNeighbour(int x, int y, int direction) {
-        int[] neighbour = new int[]{x, y};
-        switch (direction) {
-            case (0):
-                neighbour[1]++;
-                break;
-            case (1):
-                neighbour[0]--;
-                break;
-            case (2):
-                neighbour[1]--;
-                break;
-            case (3):
-                neighbour[0]++;
-                break;
+        //Gets the orientation from the player, in order to check which direction they should move
+        int orientation = player.getOrientation();
+
+        if (move > 0 || move == -1) {
+            if (move == -1) {
+                backwardMove(player);
+            } else if (legalMove) {
+                doMove(player, move - 1, move(player, orientation));
+            }
         }
-        return neighbour;
     }
 
     /**
@@ -533,8 +536,9 @@ public class Board extends Tile {
                 return wallThis == 2 || wallNext == 0;
             case 3:
                 return wallThis == 3 || wallNext == 1;
+            default:
+                throw new IllegalArgumentException("Direction should be 0-3, actually: " + dir);
         }
-        return false;
     }
 
     /**
@@ -572,7 +576,7 @@ public class Board extends Tile {
             damage = laser(x, y, laserDirection(laserLayer, x, y)) || damage;
         }
         for (Player p : players) {
-            if (!(p.getHealth() <= 0) && !p.playerPower && !isBlocked(p.getxPos(), p.getyPos(), p.getOrientation())) {
+            if (p.getHealth() > 0 && !p.playerPower && !isBlocked(p.getxPos(), p.getyPos(), p.getOrientation())) {
                 int[] nb = getNeighbour(p.getxPos(), p.getyPos(), p.getOrientation());
                 damage = laser(nb[0], nb[1], p.getOrientation()) || damage;
             }

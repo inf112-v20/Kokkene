@@ -30,7 +30,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     public static Player player;
 
-    int num = 0;
+    private int num = 0;
 
     private static Music music;
 
@@ -158,7 +158,7 @@ public class RoboRally extends InputAdapter implements Screen {
                 && nextPhase.get(0).getOwner().getHealth() > 0) {
             showCard(nextPhase.get(0)); // Will show the current card.
         }
-        if (!(waited + Gdx.graphics.getDeltaTime() < 1) || waitingForRespawn()) {
+        if (waited + Gdx.graphics.getDeltaTime() > 1 || waitingForRespawn()) {
             nextPhase = doTurn(nextPhase);
             waited = 0;
         }
