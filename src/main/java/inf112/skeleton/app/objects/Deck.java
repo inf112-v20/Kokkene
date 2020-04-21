@@ -35,9 +35,11 @@ public class Deck {
         }
     }
 
-    //Shuffles the Current deck
+    /**
+     * Shuffles the Current deck
+     */
     public void shuffle() {
-        while (Cards.peek().getOwner() != null){
+        while (Cards.peek().getOwner() != null) {
             Card c = Cards.poll();
             c.setOwner(null);
             Cards.add(c);
@@ -45,8 +47,11 @@ public class Deck {
         Collections.shuffle((List<?>) Cards);
     }
 
-    public void empty(){
-        while (!Discard.isEmpty()){
+    /**
+     * Called if the deck is empty; refills the deck from the discard pile
+     */
+    public void empty() {
+        while (!Discard.isEmpty()) {
             Cards.add(Discard.poll());
         }
         shuffle();

@@ -32,9 +32,10 @@ public class Menu implements Screen {
     private final Button gameButton;
     private final Button exitButton;
     private final SelectBox<String> selectMap;
+    private final SelectBox<String> selectNrPlayers;
+    private final SelectBox<String> selectAIDifficulty;
     private final SelectBox<String> selectPlayerModels;
     private final SelectBox<String> selectDeck;
-    private final SelectBox<String> selectNrPlayers;
 
     private final SpriteBatch batch;
 
@@ -59,13 +60,15 @@ public class Menu implements Screen {
         selectMap = createSelectionBox(getMaps(), gameButton);
         scanMaps();
         selectNrPlayers = createSelectionBox(getPlayers(), selectMap);
-        selectPlayerModels = createSelectionBox(getPlayerModels(), selectNrPlayers);
+        selectAIDifficulty = createSelectionBox(new Array<>(new String[]{"Easy", "medium", "Hard"}), selectNrPlayers);
+        selectPlayerModels = createSelectionBox(getPlayerModels(), selectAIDifficulty);
         selectDeck = createSelectionBox(getDecks(), selectPlayerModels);
         exitButton = createButton(selectDeck);
 
         stage.addActor(gameButton);
         stage.addActor(selectMap);
         stage.addActor(selectNrPlayers);
+        stage.addActor(selectAIDifficulty);
         stage.addActor(selectPlayerModels);
         stage.addActor(selectDeck);
         stage.addActor(exitButton);
@@ -168,6 +171,8 @@ public class Menu implements Screen {
         fontDraw(font, gl, selectMap);
         gl.setText(font, "Player Select:  ");
         fontDraw(font, gl, selectNrPlayers);
+        gl.setText(font, "AI Difficulty:  ");
+        fontDraw(font, gl, selectAIDifficulty);
         gl.setText(font, "Model Select:  ");
         fontDraw(font, gl, selectPlayerModels);
         gl.setText(font, "Deck Select:  ");
@@ -235,7 +240,8 @@ public class Menu implements Screen {
         Options.deckFile = "assets/decks/" + selectDeck.getSelected() + ".txt";
         Options.humanPlayers = 1;
         Options.thisPlayer = 1;
-        Options.nrPlayers = Integer.parseInt(selectNrPlayers.getSelected().substring(0, 1));
+        Options.nrPlayers = selectNrPlayers.getSelectedIndex() + 1;
+        Options.aiDifficulty = selectAIDifficulty.getSelectedIndex();
 
         game.setScreen(new RoboRally(game));
     }
@@ -338,10 +344,11 @@ public class Menu implements Screen {
 
         public static int nrPlayers = 2;
 
+        public static int aiDifficulty = 0;
+
         public static int thisPlayer = 1;
 
         public static int humanPlayers = 1;
     }
-
 
 }

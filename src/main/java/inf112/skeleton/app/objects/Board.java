@@ -122,7 +122,8 @@ public class Board extends Tile {
             if (i < Menu.Options.humanPlayers) {
                 players[i] = new Player("Player " + (i + 1), xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
             } else {
-                players[i] = new AI("AI " + (i + 1), xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
+                players[i] = new AI("AI " + (1 + i - Menu.Options.humanPlayers), // always i >= humanPlayers here
+                        xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
             }
             createPlayerTextures(players[i]);
             players[i].setHand(deck); //Deals the hand to the players
