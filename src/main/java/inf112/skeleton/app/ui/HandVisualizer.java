@@ -168,13 +168,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         else if (powerButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
             player.setAnnouncepowerdown();
             //Will add a better visual way to identify power down.
-            if(player.announcepowerdown) {
-                System.out.println("You will power down next round");
-                powerSound.play();
-            }
-            else {
-                System.out.println("You will not power down next round");
-            }
+            setPowerDown();
         }
         return false;
     }
@@ -194,6 +188,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
             lockInButton.setColor(Color.GREEN);
         } else {
             lockInButton.setColor(Color.WHITE);
+            if(!player.playerPower) {
+                powerButton.setColor(Color.WHITE);
+            }
         }
         this.dispose();
     }
@@ -261,6 +258,16 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
     }
 
+    private void setPowerDown() {
+        if(player.announcepowerdown) {
+            powerButton.setColor(Color.GREEN);
+            powerSound.play();
+        }
+        else {
+            powerButton.setColor(Color.WHITE);
+        }
+    }
+
     private void fullscreenToggle() {
         try {
             if (Display.isFullscreen()) {
@@ -300,9 +307,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(this);
 
         batch.begin();
-        drawCardSprites();
-        drawRegisterNumbers();
-        drawPriorityNumbers();
+
+        if(!player.getReady()) {
+            drawCardSprites();
+            drawRegisterNumbers();
+            drawPriorityNumbers();
+        }
         drawButtons();
 
         float scale = 1.5f;
