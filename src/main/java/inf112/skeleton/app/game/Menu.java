@@ -96,7 +96,7 @@ public class Menu implements Screen {
      * @return the newly created SelectBox
      */
     private SelectBox<String> createSelectionBox(Array<String> items, Actor previous) {
-        SelectBox<String> selectBox = new SelectBox<>(Options.skin);
+        SelectBox<String> selectBox = new SelectBox<>(OptionsUtil.skin);
         selectBox.setItems(items);
         selectBox.setWidth(gameButton.getWidth() * .87f);
         selectBox.setPosition(width / 2f - selectBox.getWidth() / 2,
@@ -235,13 +235,13 @@ public class Menu implements Screen {
      * Starts the game and saves the settings to the Options static class
      */
     public void loadGame() {
-        Options.mapFile = "assets/maps/" + selectMap.getSelected() + ".tmx";
-        Options.playerModelFile = "assets/pictures/" + selectPlayerModels.getSelected() + " Player.png";
-        Options.deckFile = "assets/decks/" + selectDeck.getSelected() + ".txt";
-        Options.humanPlayers = 1;
-        Options.thisPlayer = 1;
-        Options.nrPlayers = selectNrPlayers.getSelectedIndex() + 1;
-        Options.aiDifficulty = selectAIDifficulty.getSelectedIndex();
+        OptionsUtil.mapFile = "assets/maps/" + selectMap.getSelected() + ".tmx";
+        OptionsUtil.playerModelFile = "assets/pictures/" + selectPlayerModels.getSelected() + " Player.png";
+        OptionsUtil.deckFile = "assets/decks/" + selectDeck.getSelected() + ".txt";
+        OptionsUtil.humanPlayers = 1;
+        OptionsUtil.thisPlayer = 1;
+        OptionsUtil.nrPlayers = selectNrPlayers.getSelectedIndex() + 1;
+        OptionsUtil.aiDifficulty = selectAIDifficulty.getSelectedIndex();
 
         game.setScreen(new RoboRally(game));
     }
@@ -269,7 +269,7 @@ public class Menu implements Screen {
      */
     public Array<String> getPlayers() {
         Array<String> nrPlayers = new Array<>();
-        for (int i = 1; i <= Math.max(Options.spawns.get(Options.mapFile).size(), 1); i++) {
+        for (int i = 1; i <= Math.max(OptionsUtil.spawns.get(OptionsUtil.mapFile).size(), 1); i++) {
             nrPlayers.add(i + " Players");
         }
         return nrPlayers;
@@ -311,8 +311,8 @@ public class Menu implements Screen {
      */
     private void checkSelectors() {
         String selectedMap = "assets/maps/" + selectMap.getSelected() + ".tmx";
-        if (!selectedMap.equals(Options.mapFile)) {
-            Options.mapFile = selectedMap;
+        if (!selectedMap.equals(OptionsUtil.mapFile)) {
+            OptionsUtil.mapFile = selectedMap;
             selectNrPlayers.setItems(getPlayers());
         }
     }
@@ -326,11 +326,11 @@ public class Menu implements Screen {
             String map = "assets/maps/" + mapName + ".tmx";
             TiledMapTileLayer boardLayer = (TiledMapTileLayer) loader.load(map).getLayers().get("Board");
 
-            Options.spawns.put(map, Tile.findGroupMembers(boardLayer, Tile.Tiles.Group.SPAWNS));
+            OptionsUtil.spawns.put(map, Tile.findGroupMembers(boardLayer, Tile.Tiles.Group.SPAWNS));
         }
     }
 
-    public static class Options {
+    public static class OptionsUtil {
 
         public static Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
 

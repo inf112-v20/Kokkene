@@ -5,14 +5,14 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import inf112.skeleton.app.objects.Board;
 
-public class PlayerState  {
+public class PlayerState {
 
-    private Board board;
-    private Player player;
+    private final Board board;
+    private final Player player;
 
-    private Cell playerNorm;
-    private Cell playerDead;
-    private Cell playerWon;
+    private final Cell playerNorm;
+    private final Cell playerDead;
+    private final Cell playerWon;
 
     public PlayerState(Player player, Board board, TextureRegion[][] tr) {
         this.player = player;
@@ -54,7 +54,8 @@ public class PlayerState  {
                 return playerDead; //2 health
             case (1):
                 return playerNorm; //1 health
+            default:
+                return null; // no health bar
         }
-        return null; //no healthbar
     }
 }

@@ -300,7 +300,7 @@ public class Player implements IActor {
     }
 
     /**
-     * Subtracts one life point from the player
+     * Subtracts one life point from the player and sets the position to the backup
      */
     private void removeLifePoint() {
         this.lifePoints -= 1;

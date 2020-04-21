@@ -87,7 +87,7 @@ public class RoboRally extends InputAdapter implements Screen {
      * Selects the given player and updates the player field
      */
     public static void selectPlayer() {
-        player = board.getPlayers()[Menu.Options.thisPlayer - 1];
+        player = board.getPlayers()[Menu.OptionsUtil.thisPlayer - 1];
     }
 
     /**

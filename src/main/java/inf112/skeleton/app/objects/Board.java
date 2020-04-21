@@ -69,7 +69,7 @@ public class Board extends Tile {
      * Separates the map into different layers and stores the layers as fields
      */
     private void buildMap() {
-        map = new TmxMapLoader().load(Menu.Options.mapFile);
+        map = new TmxMapLoader().load(Menu.OptionsUtil.mapFile);
 
         boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
@@ -104,7 +104,7 @@ public class Board extends Tile {
      */
     private void createDeck() {
         try {
-            this.deck = new Deck(Menu.Options.deckFile);
+            this.deck = new Deck(Menu.OptionsUtil.deckFile);
             deck.shuffle();
         } catch (IOException e) {
             e.printStackTrace();
@@ -115,14 +115,14 @@ public class Board extends Tile {
      * Create a certain amount of players based on options selected at the menu and store them in the players field
      */
     private void generatePlayers() {
-        players = new Player[Menu.Options.nrPlayers];
-        ArrayList<int[]> spawns = Menu.Options.spawns.get(Menu.Options.mapFile);
+        players = new Player[Menu.OptionsUtil.nrPlayers];
+        ArrayList<int[]> spawns = Menu.OptionsUtil.spawns.get(Menu.OptionsUtil.mapFile);
         for (int i = 0; i < players.length; i++) {
             int[] xy = spawns.get(i); // x- and y-coordinate to spawn
-            if (i < Menu.Options.humanPlayers) {
+            if (i < Menu.OptionsUtil.humanPlayers) {
                 players[i] = new Player("Player " + (i + 1), xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
             } else {
-                players[i] = new AI("AI " + (1 + i - Menu.Options.humanPlayers), // always i >= humanPlayers here
+                players[i] = new AI("AI " + (1 + i - Menu.OptionsUtil.humanPlayers), // always i >= humanPlayers here
                         xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
             }
             createPlayerTextures(players[i]);
@@ -136,7 +136,7 @@ public class Board extends Tile {
      * @param p player to set the textures of
      */
     private void createPlayerTextures(Player p) {
-        TextureRegion[][] tr = p.setPlayerTextures(Menu.Options.playerModelFile);
+        TextureRegion[][] tr = p.setPlayerTextures(Menu.OptionsUtil.playerModelFile);
         p.setPlayerState(new PlayerState(p, this, tr));
         TextureRegion[][] hb = p.setPlayerTextures("assets/pictures/healthbars2.png");
         p.setHealthBars(new PlayerState(p, this, hb));
@@ -231,13 +231,15 @@ public class Board extends Tile {
             case (3):
                 if (isBlocked(player, 3)) {
                     return false;
-                } else if (x >= boardWidth-1 || isHole) {
+                } else if (x >= boardWidth - 1 || isHole) {
                     player.addHealth(-player.getMaxHealth());
                     return false;
                 } else {
                     player.setxPos(x + 1);
                 }
                 break;
+            default:
+                throw new IllegalArgumentException("Direction: " + direction + ", is not a valid direction. ");
         }
         return true;
     }

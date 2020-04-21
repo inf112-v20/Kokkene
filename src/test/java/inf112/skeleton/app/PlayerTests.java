@@ -6,16 +6,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+
 public class PlayerTests {
 
     private Player player;
 
-    private int xPos = 1;
-    private int yPos = 1;
-    private int upValue = 0;
-    private int maxHealth = 10,
-            maxLifePoints = 3,
-            damage = -10;
+    private final int xPos = 1;
+    private final int yPos = 1;
+    private final int upValue = 0;
+    private final int maxHealth = 10;
+    private final int maxLifePoints = 3;
+    private int damage = -10;
 
     @Before
     public void makePlayer() {
