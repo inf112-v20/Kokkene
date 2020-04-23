@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.game.RoboRally;
-import inf112.skeleton.app.objects.Card;
+import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.sound.Sound;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;

@@ -3,7 +3,7 @@ package inf112.skeleton.app.actor;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import inf112.skeleton.app.objects.Board;
+import inf112.skeleton.app.gameelements.Board;
 
 public class PlayerState {
 

@@ -1,6 +1,6 @@
 package inf112.skeleton.app;
 
-import inf112.skeleton.app.objects.Deck;
+import inf112.skeleton.app.gameelements.Deck;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package inf112.skeleton.app.objects;
+package inf112.skeleton.app.gameelements;
 
 import java.io.File;
 import java.io.IOException;

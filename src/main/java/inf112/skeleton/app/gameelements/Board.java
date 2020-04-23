@@ -1,4 +1,4 @@
-package inf112.skeleton.app.objects;
+package inf112.skeleton.app.gameelements;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;

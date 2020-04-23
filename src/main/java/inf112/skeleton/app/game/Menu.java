@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import inf112.skeleton.app.objects.Tile;
+import inf112.skeleton.app.gameelements.Tile;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class Menu implements Screen {
         selectMap = createSelectionBox(getMaps(), gameButton);
         scanMaps();
         selectNrPlayers = createSelectionBox(getPlayers(), selectMap);
-        selectAIDifficulty = createSelectionBox(new Array<>(new String[]{"Easy", "medium", "Hard"}), selectNrPlayers);
+        selectAIDifficulty = createSelectionBox(new Array<>(new String[]{"Easy", "Medium", "Hard"}), selectNrPlayers);
         selectPlayerModels = createSelectionBox(getPlayerModels(), selectAIDifficulty);
         selectDeck = createSelectionBox(getDecks(), selectPlayerModels);
         exitButton = createButton(selectDeck);

@@ -1,7 +1,7 @@
 package inf112.skeleton.app.actor;
 
 import com.badlogic.gdx.graphics.Color;
-import inf112.skeleton.app.objects.Deck;
+import inf112.skeleton.app.gameelements.Deck;
 
 
 public class AI extends Player {

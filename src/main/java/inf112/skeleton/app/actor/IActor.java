@@ -2,8 +2,8 @@ package inf112.skeleton.app.actor;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import inf112.skeleton.app.objects.Card;
-import inf112.skeleton.app.objects.Deck;
+import inf112.skeleton.app.gameelements.Card;
+import inf112.skeleton.app.gameelements.Deck;
 
 import java.util.ArrayList;
 import java.util.List;
