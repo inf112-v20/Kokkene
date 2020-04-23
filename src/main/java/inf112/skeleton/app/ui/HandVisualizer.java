@@ -166,7 +166,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
             tryLockIn();
         }
         else if (powerButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
-            player.setAnnouncepowerdown();
+            player.setAnnouncer();
             //Will add a better visual way to identify power down.
             setPowerDown();
         }

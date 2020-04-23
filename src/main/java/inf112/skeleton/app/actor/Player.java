@@ -219,9 +219,8 @@ public class Player implements IActor {
         assert locked.size() == lockedRegisters() : "Unexpected value: " + locked.size();
     }
 
-    public boolean setAnnouncepowerdown() {
+    public void setAnnouncer() {
         this.announcepowerdown = !this.announcepowerdown;
-        return this.announcepowerdown;
     }
 
     public void setHand(Deck deck) {
