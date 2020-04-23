@@ -177,7 +177,9 @@ public class Player implements IActor {
     }
 
     public void turn(int change){
-        int turn = change + getOrientation();
+        int turn = change;
+        while (turn < 0) turn += 4;
+        turn += getOrientation();
         setOrientation(turn % 4);
     }
 
