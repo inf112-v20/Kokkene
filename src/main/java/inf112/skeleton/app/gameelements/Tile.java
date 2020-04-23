@@ -15,9 +15,10 @@ public class Tile {
         return null;
     }
 
+    /*
     public static boolean isStart(TiledMapTileLayer boardLayer, int x, int y) {
         return (getTile(boardLayer.getCell(x, y).getTile().getId()) == Tiles.START);
-    }
+    }*/
 
     /**
      * Gets list of all ids in given group

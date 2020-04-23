@@ -10,10 +10,9 @@ public class Music {
     //store current position
     private com.badlogic.gdx.audio.Music music;
 
-    //May be in unpacked file format.
-    private static String musicFilePath = "assets/sound/S31-CrackedOutRobot.wav";
-
     public Music() {
+        //May be in unpacked file format.
+        String musicFilePath = "assets/sound/S31-CrackedOutRobot.wav";
         music = Gdx.audio.newMusic(Gdx.files.internal(musicFilePath));
         music.setVolume(0.1f);
     }
@@ -23,18 +22,9 @@ public class Music {
         music.setLooping(true);
     }
 
-    public void pause() {
-        music.pause();
-    }
-
     public void muteToggle() {
         if (music.getVolume()==0f) music.setVolume(0.1f);
         else music.setVolume(0f);
-    }
-
-    public void pauseToggle() {
-        if(music.isPlaying()) pause();
-        else play();
     }
 
     public void dispose() {

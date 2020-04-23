@@ -39,8 +39,11 @@ public class Deck {
      * Shuffles the Current deck
      */
     public void shuffle() {
-        while (Cards.peek().getOwner() != null) {
+        while (true) {
+            assert Cards.peek() != null;
+            if (Cards.peek().getOwner() == null) break;
             Card c = Cards.poll();
+            assert c != null;
             c.setOwner(null);
             Cards.add(c);
         }

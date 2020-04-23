@@ -23,7 +23,8 @@ import java.util.List;
 
 public class Player implements IActor {
 
-    private Hand playerHand;
+    //The cards the player holds
+    public Hand hand;
 
     //ID of the robot
     private final String name;
@@ -48,18 +49,14 @@ public class Player implements IActor {
     //The next objective the Player has to go to to score points.
     private int objective = 1;
 
-    //the cards the player holds
-    private Card[] cards;
-
     //Selected cards
-    private List<Card> selected;
+    private List<Card> selected = new ArrayList<>();
 
     //Locked registers
     private final ArrayList<Card> locked = new ArrayList<>();
 
     //Ready to play selected cards
     private boolean ready;
-
     public boolean announcePowerDown = false;
     public boolean playerPower = false;
 
@@ -153,6 +150,22 @@ public class Player implements IActor {
         return Color.RED;
     }
 
+    public void setAnnouncer() {
+        this.announcePowerDown = !this.announcePowerDown;
+    }
+
+    public void setHand(Deck deck) {
+        hand = new Hand(this, deck);
+    }
+
+    public List<Card> getSelected(){
+        return selected;
+    }
+
+    public ArrayList<Card> getLocked(){
+        return locked;
+    }
+
     public boolean toggleReady() {
         this.ready = !this.ready;
         return this.ready;
@@ -164,11 +177,8 @@ public class Player implements IActor {
     }
 
     public void turn(int change){
-        change += getOrientation();
-
-        while (change<0) change +=4;
-        //change will never be less than 0;
-        setOrientation(change % 4);
+        int turn = change + getOrientation();
+        setOrientation(turn % 4);
     }
 
     public void addHealth(int health) {
@@ -193,51 +203,32 @@ public class Player implements IActor {
         Texture playerTexture = new Texture(texture);
         return TextureRegion.split(playerTexture, 300, 300);
     }
-    //all these hand methods could maybe be moved to a seperate "hand" class
-
-    public int cardsToSelect(){
-        return Math.min(5, getHealth() - 1);
-    }
 
     public int lockedRegisters(){
         return Math.max(0, 6-getHealth());
     }
 
     public void lockRegister(){
+        int backupSize = hand.backupHand.size(),
+        selectedSize = selected.size(),
+        lockedSize = locked.size();
         if (locked.size() < lockedRegisters()) {
             if(playerPower) {
-                locked.add(playerHand.backupHand.get(playerHand.backupHand.size() - 1));
-                playerHand.backupHand.remove(playerHand.backupHand.size() - 1);
+                locked.add(hand.backupHand.get(backupSize - 1));
+                hand.backupHand.remove(backupSize - 1);
             }
             else {
-                locked.add(selected.get(selected.size() - 1));
-                selected.remove(selected.size() - 1);
+                locked.add(selected.get(selectedSize - 1));
+                selected.remove(selectedSize - 1);
             }
         } else if (locked.size() > lockedRegisters()) {
-            selected.add(locked.get(locked.size() - 1));
-            locked.remove(locked.size() - 1);
+            selected.add(locked.get(lockedSize - 1));
+            locked.remove(lockedSize - 1);
         }
-        if (locked.size() != lockedRegisters()) {
+        if (lockedSize != lockedRegisters()) {
             lockRegister();
         }
-        assert locked.size() == lockedRegisters() : "Unexpected value: " + locked.size();
-    }
-
-    public void setAnnouncer() {
-        this.announcePowerDown = !this.announcePowerDown;
-    }
-
-    public void setHand(Deck deck) {
-        //The hand of the player.
-        playerHand = new Hand(this, deck);
-
-        selected = new ArrayList<>();
-
-        this.cards = playerHand.plHand;
-    }
-
-    public Card[] getCards() {
-        return this.cards;
+        assert lockedSize == lockedRegisters() : "Unexpected value: " + lockedSize;
     }
 
     public void toggleCard(Card c) {
@@ -248,16 +239,8 @@ public class Player implements IActor {
         selected.add(c);
     }
 
-    public List<Card> getSelected(){
-        return selected;
-    }
-
-    public ArrayList<Card> getLocked(){
-        return locked;
-    }
-
     public void discardDraw(Deck deck){
-        for (Card c : cards) {
+        for (Card c : hand.plHand) {
             if (locked.contains(c) && locked.indexOf(c) < lockedRegisters()) {
                 continue;
             }
@@ -294,7 +277,7 @@ public class Player implements IActor {
     }
 
     /**
-     * Subtracts one life point from the player and sets the position to the backup
+     * Subtracts one life point from the player and sets the position to the backup.
      */
     private void removeLifePoint() {
         this.lifePoints -= 1;

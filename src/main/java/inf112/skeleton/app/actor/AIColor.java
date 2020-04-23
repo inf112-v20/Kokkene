@@ -9,6 +9,6 @@ import com.badlogic.gdx.graphics.Color;
 
 public class AIColor {
 
-    public final com.badlogic.gdx.graphics.Color[] Colors = {Color.BLUE, Color.GREEN, Color.BROWN,
+    public final Color[] Colors = {Color.BLUE, Color.GREEN, Color.BROWN,
             Color.CORAL, Color.MAGENTA, Color.GOLD, Color.PINK};
 }

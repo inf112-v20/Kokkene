@@ -177,12 +177,6 @@ interface IActor {
     TextureRegion[][] setPlayerTextures (String texture);
 
     /**
-     * How many cards you may select in this round
-     * @return # of cards to select
-     */
-    int cardsToSelect();
-
-    /**
      * How many registers are locked such that one cannot change the cards
      * @return # of locked registers
      */
@@ -198,12 +192,6 @@ interface IActor {
      * @param deck used to get cards from
      */
     void setHand(Deck deck);
-
-    /**
-     *
-     * @return returns the cards the current actor is holding
-     */
-    Card[] getCards();
 
     /**
      * Toggles whether a card is selected or not

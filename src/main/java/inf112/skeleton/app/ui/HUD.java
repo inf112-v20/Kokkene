@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
-import inf112.skeleton.app.actor.AIColor;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.game.RoboRally;
 import org.lwjgl.opengl.Display;
@@ -55,8 +54,6 @@ public class HUD {
                 font.setColor(color);
                 font.draw(batch, player[i].getName(), (heartSize)/2f-10, nmY+heartSize/2f);
                 batch.setColor(color);
-                float light = 1f;
-                //batch.setColor(light, light, light, 1f);
                 batch.draw(heartAI, (j*(heartSize)/3f)+50, nmY, heartSize/1.5f, heartSize/1.5f);
 
                 font.setColor(Color.RED);

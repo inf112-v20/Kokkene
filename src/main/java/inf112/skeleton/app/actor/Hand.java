@@ -25,4 +25,12 @@ public class Hand {
         }
         Arrays.sort(plHand);
     }
+
+    /**
+     * How many cards you may select in this round
+     * @return # of cards to select
+     */
+    public int cardsToSelect(Player actor){
+        return Math.min(5, actor.getHealth() - 1);
+    }
 }

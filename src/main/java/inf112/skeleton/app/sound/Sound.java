@@ -26,6 +26,4 @@ public class Sound {
             mute = true;
         }
     }
-
-    //public void dispose() { sound.dispose(); }
 }

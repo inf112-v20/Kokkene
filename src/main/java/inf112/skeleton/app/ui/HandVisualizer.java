@@ -64,10 +64,10 @@ public class HandVisualizer extends InputAdapter implements Screen {
         int lastLocked = player.getLocked().size() - 1;
 
         for (int i = 0; i < textures.length; i++) { //Create textures for the selectable hand
-            if (i < player.getCards().length) {
-                cardPictureFactory(player.getCards()[i]); //Sets .png file for the card
+            if (i < player.hand.plHand.length) {
+                cardPictureFactory(player.hand.plHand[i]); //Sets .png file for the card
             } else { //Create textures for the locked cards
-                int difference = i - player.getCards().length,
+                int difference = i - player.hand.plHand.length,
                         reverseLocked = lastLocked - difference;
                 cardPictureFactory(player.getLocked().get(reverseLocked));
             }
@@ -149,15 +149,16 @@ public class HandVisualizer extends InputAdapter implements Screen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         //toggle to display number of order above card.
+        int cardsToSelect = player.hand.cardsToSelect(player);
         for (int i = 0; i < allSprites.length - player.getLocked().size(); i++) {
             if (allSprites[i].getBoundingRectangle().contains(screenX, HEIGHT - screenY)
-                    && player.getSelected().size() <= player.cardsToSelect()) {
+                    && player.getSelected().size() <= cardsToSelect) {
 
-                if (player.getSelected().size() == player.cardsToSelect()
-                        && !player.getSelected().contains(player.getCards()[i])) { //If trying to select more than max
+                if (player.getSelected().size() == cardsToSelect
+                        && !player.getSelected().contains(player.hand.plHand[i])) { //If trying to select more than max
                     return true;
                 }
-                player.toggleCard(player.getCards()[i]);
+                player.toggleCard(player.hand.plHand[i]);
                 return true;
             }
         }
@@ -178,7 +179,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
      */
     private void resetColors() {
         for (int i = 0; i < allSprites.length; i++) {
-            if (i < player.getCards().length) {
+            if (i < player.hand.plHand.length) {
                 allSprites[i].setColor(Color.WHITE);
             } else {
                 allSprites[i].setColor(Color.RED); //Locked cards are red
@@ -249,7 +250,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
      * Toggles the ready signal if all the cards are selected
      */
     private void tryLockIn() {
-        if (player.getSelected().size() == player.cardsToSelect()) {
+        if (player.getSelected().size() == player.hand.cardsToSelect(player)) {
             if (player.toggleReady()) {
                 lockInButton.setColor(Color.GREEN);
             } else {
@@ -290,7 +291,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         RoboRally.getBoard().afterArrowMove(player);
 
         if (player.getHealth() != playerHealth) {
-            textures = new Texture[player.getCards().length + player.getLocked().size()];
+            textures = new Texture[player.hand.plHand.length + player.getLocked().size()];
             createCardTexture();
             createAllSprites(textures);
             resetColors();
@@ -328,9 +329,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
     }
 
     private void drawPriorityNumbers() {
-        for(int i = 0; i < player.getCards().length; i++) {
+        for(int i = 0; i < player.hand.plHand.length; i++) {
             font.getData().setScale(2.5f);
-            font.draw(batch, Integer.toString(player.getCards()[i].getPriority()),
+            font.draw(batch, Integer.toString(player.hand.plHand[i].getPriority()),
                     allSprites[i].getX() + allSprites[i].getWidth() / 3, 50);
         }
     }
@@ -362,9 +363,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
     public void drawRegisterNumbers() {
         font.getData().setScale(4, 3);
         float spriteWidth = allSprites[0].getWidth();
-        for (int i = 0; i < player.getCards().length; i++) { //Draws register nr. on top of card
+        for (int i = 0; i < player.hand.plHand.length; i++) { //Draws register nr. on top of card
             allSprites[i].setColor(Color.WHITE);
-            Card c = player.getCards()[i];
+            Card c = player.hand.plHand[i];
             if (player.getSelected().contains(c)) { //Whether current card is selected
                 int nr = player.getSelected().indexOf(c) + 1; //Which register the card is in
                 allSprites[i].setColor(Color.GREEN);
@@ -384,7 +385,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
      * Creates all the textures, will be called after every round
      */
     public void createTextures() {
-        textures = new Texture[player.getCards().length + player.getLocked().size()];
+        textures = new Texture[player.hand.plHand.length + player.getLocked().size()];
         createCardTexture();
         createAllSprites(textures);
         resetColors();
