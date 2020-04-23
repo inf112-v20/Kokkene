@@ -13,7 +13,7 @@ roles as these have been working great for us.
 
 ####Team roles:
 ##### Kristoffer Kraft Johansen
-Role: Team leader   
+Role: Team leader  
 Main tasks: Ensure that the task is completed in the given time frames. Making sure communication between\
 the group members is good. Updating the project board and arranging group meetings.
 
@@ -28,12 +28,12 @@ Main tasks: Creating useful tests that helps the developers understand, and futu
 General upkeep of the code and adding helpful comments in the code.
 
 ##### Jan Kåre Sandblåst
-Role: Coding director 
+Role: Coding director  
 Main tasks: Focus on creating useful and easy to implement code. Creating the mainframe/skeleton of our code,\
 while also having the ability to help other team-members understand it. 
 
 ##### Arthur Andersen 
-Role: Lead designer 
+Role: Lead designer  
 Main tasks: Learning how to use Tiled and implementing maps from tiled into the game. Creating the different\
 textures we need. In general thinking about improving the experience for a real player.
 

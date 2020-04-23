@@ -342,10 +342,10 @@ public class Board extends Tile {
             playerLayer.setCell(p.getxPos(), p.getyPos(), p.getPlayerState().getPlayerStatus());
             healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealth());
 
-            if (p.announcepowerdown) {
+            if (p.announcePowerDown) {
                 if (p.playerPower) {
                     p.addHealth(1);
-                    p.announcepowerdown = false;
+                    p.announcePowerDown = false;
                 }
                 p.lockRegister(); //In case damage is taken
                 p.playerPower = !p.playerPower;

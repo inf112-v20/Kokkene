@@ -126,12 +126,12 @@ These are our user stories which are needed for completing the first obligatory 
 
 **User stories for the board**
 
-*   P1 - As a player, I want to see the board I am going to play on.
-*   P2 - As a player, I want to be able to move around the board.
+-   P1 - As a player, I want to see the board I am going to play on.
+-   P2 - As a player, I want to be able to move around the board.
 
 **User stories for the pieces**
-*   P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
-*   P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
+-   P3 - As a player, I want to see my piece/s on the board so i can plan my move.\
+-   P4 - As a player, I want to be able to select were to place my pieces at the start of the game.
 
 ####How do we accomplish these user stories?
 

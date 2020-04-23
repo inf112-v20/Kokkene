@@ -25,6 +25,7 @@ public class AI extends Player {
 
     public void setHand(Deck deck) {
         super.setHand(deck);
+
         while (getSelected().size() < cardsToSelect()) {
             int rand = (int) (Math.random() * getCards().length);
             if (getSelected().contains(getCards()[rand])) {

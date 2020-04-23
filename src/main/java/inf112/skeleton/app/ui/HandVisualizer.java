@@ -259,7 +259,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
     }
 
     private void setPowerDown() {
-        if(player.announcepowerdown) {
+        if(player.announcePowerDown) {
             powerButton.setColor(Color.GREEN);
             powerSound.play();
         }

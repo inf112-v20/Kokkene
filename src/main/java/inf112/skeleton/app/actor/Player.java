@@ -7,7 +7,6 @@ import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,6 +22,8 @@ import java.util.List;
  */
 
 public class Player implements IActor {
+
+    private Hand playerHand;
 
     //ID of the robot
     private final String name;
@@ -59,11 +60,8 @@ public class Player implements IActor {
     //Ready to play selected cards
     private boolean ready;
 
-    public boolean announcepowerdown = false;
+    public boolean announcePowerDown = false;
     public boolean playerPower = false;
-
-    //Used to lock cards, if damaged while powered down
-    private final ArrayList<Card> backupHand = new ArrayList<>();
 
     /**
      * @param name  the name for this robot.
@@ -150,6 +148,11 @@ public class Player implements IActor {
         return this.objective;
     }
 
+    @Override
+    public Color getColor() {
+        return Color.RED;
+    }
+
     public boolean toggleReady() {
         this.ready = !this.ready;
         return this.ready;
@@ -203,8 +206,8 @@ public class Player implements IActor {
     public void lockRegister(){
         if (locked.size() < lockedRegisters()) {
             if(playerPower) {
-                locked.add(backupHand.get(backupHand.size() - 1));
-                backupHand.remove(backupHand.size() - 1);
+                locked.add(playerHand.backupHand.get(playerHand.backupHand.size() - 1));
+                playerHand.backupHand.remove(playerHand.backupHand.size() - 1);
             }
             else {
                 locked.add(selected.get(selected.size() - 1));
@@ -221,25 +224,16 @@ public class Player implements IActor {
     }
 
     public void setAnnouncer() {
-        this.announcepowerdown = !this.announcepowerdown;
+        this.announcePowerDown = !this.announcePowerDown;
     }
 
     public void setHand(Deck deck) {
         //The hand of the player.
-        Card[] playerHand = new Card[getHealth() - 1];
+        playerHand = new Hand(this, deck);
+
         selected = new ArrayList<>();
 
-        for(int i = 0; i < playerHand.length; i++) {
-            if (deck.Cards.isEmpty()){ // shuffles when empty
-                deck.empty();
-            }
-            playerHand[i] = deck.Cards.poll();
-            assert playerHand[i] != null;
-            playerHand[i].setOwner(this);
-            backupHand.add(playerHand[i]);
-        }
-        Arrays.sort(playerHand);
-        this.cards = playerHand;
+        this.cards = playerHand.plHand;
     }
 
     public Card[] getCards() {
@@ -305,14 +299,5 @@ public class Player implements IActor {
     private void removeLifePoint() {
         this.lifePoints -= 1;
         if (isAlive()) resetPos();
-    }
-
-    /**
-     * returns null if its the human player. (id = 1)
-     * @return a Color
-     */
-    @Override
-    public Color getColor() {
-        return Color.RED;
     }
 }
