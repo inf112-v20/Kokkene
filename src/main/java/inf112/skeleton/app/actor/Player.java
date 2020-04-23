@@ -1,5 +1,6 @@
 package inf112.skeleton.app.actor;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.objects.Card;
@@ -304,5 +305,14 @@ public class Player implements IActor {
     private void removeLifePoint() {
         this.lifePoints -= 1;
         if (isAlive()) resetPos();
+    }
+
+    /**
+     * returns null if its the human player. (id = 1)
+     * @return a Color
+     */
+    @Override
+    public Color getColor() {
+        return Color.RED;
     }
 }

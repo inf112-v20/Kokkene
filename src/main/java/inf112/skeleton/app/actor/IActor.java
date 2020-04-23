@@ -1,5 +1,6 @@
 package inf112.skeleton.app.actor;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.objects.Card;
 import inf112.skeleton.app.objects.Deck;
@@ -233,4 +234,10 @@ interface IActor {
      * Respawn function to be called after each round, will set position to backup coords and remove 1 life
      */
     void respawn();
+
+    /**
+     * Gets the color of the AI.
+     * @return a color of type badlogic.gdx.graphics.color
+     */
+    Color getColor();
 }

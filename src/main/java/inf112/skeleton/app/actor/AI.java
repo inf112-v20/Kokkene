@@ -1,6 +1,8 @@
 package inf112.skeleton.app.actor;
 
+import com.badlogic.gdx.graphics.Color;
 import inf112.skeleton.app.objects.Deck;
+
 
 public class AI extends Player {
 
@@ -11,8 +13,14 @@ public class AI extends Player {
      * @param orientation orientation (direction) in a 0-3 scale.
      * @param id          numeric ID of the player
      */
+
+    // Color to this specific AI gets taken from a global constant of AI colors.
+    private Color color;
+
     public AI(String name, int xPos, int yPos, int orientation, int id) {
         super(name, xPos, yPos, orientation, id);
+        this.color = new AIColor().Colors[id-2];
+
     }
 
     public void setHand(Deck deck) {
@@ -26,5 +34,13 @@ public class AI extends Player {
         }
         assert getSelected().size() == cardsToSelect() : "Should be " + cardsToSelect() + ", not " + getSelected().size();
         setReady(true);
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Color getColor() {
+        return this.color;
     }
 }
