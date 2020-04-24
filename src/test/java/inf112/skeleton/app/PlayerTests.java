@@ -14,7 +14,6 @@ public class PlayerTests {
     private final int xPos = 1;
     private final int yPos = 1;
     private final int upValue = 0;
-    private final int maxHealth = 10;
     private final int maxLifePoints = 3;
     private int damage = -10;
 
@@ -64,7 +63,7 @@ public class PlayerTests {
     public void playerTakesOneDamageOnCall() {
         damage = -1;
         player.addHealth(damage);
-        assertEquals(maxHealth + damage, player.getHealth());
+        assertEquals(player.MAXHEALTH + damage, player.getHealth());
     }
 
     @Test

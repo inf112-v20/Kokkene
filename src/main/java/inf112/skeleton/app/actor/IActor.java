@@ -177,28 +177,10 @@ interface IActor {
     TextureRegion[][] setPlayerTextures (String texture);
 
     /**
-     * How many registers are locked such that one cannot change the cards
-     * @return # of locked registers
-     */
-    int lockedRegisters();
-
-    /**
-     * Lock the last selected card if damaged such that the register must lock
-     */
-    void lockRegister();
-
-    /**
-     * gives cards to actor based on how much health is left
+     * Creates a hand for the actor from the given deck
      * @param deck used to get cards from
      */
     void setHand(Deck deck);
-
-    /**
-     * Toggles whether a card is selected or not
-     *
-     * @param c is the card we toggle
-     */
-    void toggleCard(Card c);
 
     /**
      * Get the list of currently selected cards
@@ -211,12 +193,6 @@ interface IActor {
      * @return list of locked cards
      */
     ArrayList<Card> getLocked();
-
-    /**
-     * Discards all current cards except the ones locked, and draw a new hand
-     * @param deck deck to draw from and return the cards to
-     */
-    void discardDraw(Deck deck);
 
     /**
      * Respawn function to be called after each round, will set position to backup coords and remove 1 life

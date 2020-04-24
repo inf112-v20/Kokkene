@@ -38,6 +38,7 @@ public class Board extends Tile {
     public int objectives;
 
     private Player[] players;
+    private AI[] computers;
 
     private Deck deck;
 
@@ -347,13 +348,13 @@ public class Board extends Tile {
                     p.addHealth(1);
                     p.announcePowerDown = false;
                 }
-                p.lockRegister(); //In case damage is taken
+                p.hand.lockRegister(); //In case damage is taken
                 p.playerPower = !p.playerPower;
             } else {
-                p.lockRegister();
+                p.hand.lockRegister();
             }
 
-            p.discardDraw(deck);
+            p.hand.discardDraw(deck);
         }
 
         this.phase = 0;

@@ -23,18 +23,23 @@ public class AI extends Player {
     }
 
     public void setHand(Deck deck) {
-        super.setHand(deck);
+        hand = new Hand( this, deck);
+        aiMoveEasy();
+    }
 
-        int cardsToSelect = hand.cardsToSelect(this);
+    public void aiMoveEasy() {
+        int cardsToSelect = hand.cardsToSelect();
+
         while (getSelected().size() < cardsToSelect) {
             int rand = (int) (Math.random() * hand.plHand.length);
             if (getSelected().contains(hand.plHand[rand])) {
                 continue;
             }
-            toggleCard(hand.plHand[rand]);
+            hand.toggleCard(hand.plHand[rand]);
+            setReady(true);
         }
+
         assert getSelected().size() == cardsToSelect : "Should be " + cardsToSelect + ", not " + getSelected().size();
-        setReady(true);
     }
 
     /**
@@ -43,5 +48,10 @@ public class AI extends Player {
      */
     public Color getColor() {
         return this.color;
+    }
+
+    //We can use this when selecting difficulty
+    public Integer getDifficulty() {
+        return 0;
     }
 }

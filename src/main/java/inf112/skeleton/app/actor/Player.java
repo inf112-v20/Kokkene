@@ -49,12 +49,6 @@ public class Player implements IActor {
     //The next objective the Player has to go to to score points.
     private int objective = 1;
 
-    //Selected cards
-    private List<Card> selected = new ArrayList<>();
-
-    //Locked registers
-    private final ArrayList<Card> locked = new ArrayList<>();
-
     //Ready to play selected cards
     private boolean ready;
     public boolean announcePowerDown = false;
@@ -159,11 +153,11 @@ public class Player implements IActor {
     }
 
     public List<Card> getSelected(){
-        return selected;
+        return hand.getSelected();
     }
 
     public ArrayList<Card> getLocked(){
-        return locked;
+        return hand.getLocked();
     }
 
     public boolean toggleReady() {
@@ -204,54 +198,6 @@ public class Player implements IActor {
     public TextureRegion[][] setPlayerTextures (String texture) {
         Texture playerTexture = new Texture(texture);
         return TextureRegion.split(playerTexture, 300, 300);
-    }
-
-    public int lockedRegisters(){
-        return Math.max(0, 6-getHealth());
-    }
-
-    public void lockRegister(){
-        int backupSize = hand.backupHand.size(),
-        selectedSize = selected.size(),
-        lockedSize = locked.size();
-        if (locked.size() < lockedRegisters()) {
-            if(playerPower) {
-                locked.add(hand.backupHand.get(backupSize - 1));
-                hand.backupHand.remove(backupSize - 1);
-            }
-            else {
-                locked.add(selected.get(selectedSize - 1));
-                selected.remove(selectedSize - 1);
-            }
-        } else if (locked.size() > lockedRegisters()) {
-            selected.add(locked.get(lockedSize - 1));
-            locked.remove(lockedSize - 1);
-        }
-        if (lockedSize != lockedRegisters()) {
-            lockRegister();
-        }
-        assert lockedSize == lockedRegisters() : "Unexpected value: " + lockedSize;
-    }
-
-    public void toggleCard(Card c) {
-        if (selected.contains(c)) {
-            selected.remove(c);
-            return;
-        }
-        selected.add(c);
-    }
-
-    public void discardDraw(Deck deck){
-        for (Card c : hand.plHand) {
-            if (locked.contains(c) && locked.indexOf(c) < lockedRegisters()) {
-                continue;
-            }
-            deck.Discard.add(c);
-            locked.remove(c);
-        }
-        if (!playerPower) {
-            setHand(deck);
-        }
     }
 
     public void respawn() {
