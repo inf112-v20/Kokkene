@@ -10,7 +10,7 @@ import inf112.skeleton.app.gameelements.Deck;
 import java.util.ArrayList;
 
 
-public class AI extends Player implements Cloneable {
+public class AI extends Player {
 
     // Color to this specific AI gets taken from a global constant of AI colors.
     private final Color color;
@@ -107,16 +107,11 @@ public class AI extends Player implements Cloneable {
 
     }
 
-    public ArrayList<Card> recursiveMove() {
-        //TODO
-        ArrayList<Card> best = new ArrayList<>();
-        return best;
-    }
 
     /**
      * TODO
      */
-    public void aiMovePerfectV2() {
+    public int[] aiMovePerfectV2() throws CloneNotSupportedException {
 
         // initialize the virtual board
         Board board = createVirtualBoard();
@@ -125,20 +120,21 @@ public class AI extends Player implements Cloneable {
         int cardsToSelect = hand.cardsToSelect();
 
         // create an array of N length unique sequences of cards to play
-        int[] sequences = createSequences(cardsToSelect, hand);
+        ArrayList<int[]> sequences = createSequences(cardsToSelect, hand);
+
+        double distance = 9000.1;
+        int sequence = 0;
 
         // play each sequence of cards and check which sequence gets the closest to the objective.
-        for(int i = 0; i < sequences.length; i++) {
-            AI temp = this.clone();
-            int obX = RoboRally.getBoard().objectives.get(this.getObjective() - 1)[0],
-                    obY = RoboRally.getBoard().objectives.get(this.getObjective() - 1)[1];
+        for (int i = 0; i < sequences.size(); i++) {
+            AI temp = (AI) this.clone();
+            int obX = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[0],
+                    obY = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[1];
 
-            double distance = 9000.1;
-            int sequence;
             for (int j = 0; j < cardsToSelect; j++) {
-
                 // do the move with the unique sequence
-                board.doMove(temp, hand.plHand[j].getMove());
+                int card = sequences.get(i)[j];
+                board.doMove(temp, hand.plHand[card].getMove());
             }
 
             int aiX = temp.getxPos(),
@@ -154,20 +150,23 @@ public class AI extends Player implements Cloneable {
                 sequence = i;
             }
         }
+        return sequences.get(sequence);
     }
 
-    /** TODO
+    /**
+     * TODO
      * create an array of every unique sequence one could play n cards.
-     *
+     * <p>
      * on the format int[0] = {0,1,2,3}, int[1] = {1,2,3,4}, int[2] = {4,3,2,1}... etc
      *
      * @param length of each sequence
-     * @param deck the deck to choose from
+     * @param deck   the deck to choose from
      * @return an array of unique sequences of n length
      */
-    private int[] createSequences(int length, Hand deck) {
+    private ArrayList<int[]> createSequences(int length, Hand deck) {
         //TODO
-        return new int[1];
+        ArrayList<int[]> sequences = new ArrayList<>();
+        return sequences;
     }
 
     // initializes a a copy of the current board, to do calculations on.
@@ -183,8 +182,4 @@ public class AI extends Player implements Cloneable {
         return this.color;
     }
 
-    @Override
-    public AI clone() {
-        return this.clone();
-    }
 }

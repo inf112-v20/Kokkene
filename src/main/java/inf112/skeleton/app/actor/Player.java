@@ -21,7 +21,7 @@ import java.util.List;
  *
  */
 
-public class Player implements IActor {
+public class Player implements IActor, Cloneable {
 
     //The cards the player holds
     public Hand hand;
@@ -229,4 +229,9 @@ public class Player implements IActor {
         this.lifePoints -= 1;
         if (isAlive()) resetPos();
     }
+
+    public Player clone() throws CloneNotSupportedException {
+        return (Player) super.clone();
+    }
+
 }

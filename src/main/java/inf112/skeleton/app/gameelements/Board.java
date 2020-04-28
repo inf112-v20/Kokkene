@@ -643,8 +643,8 @@ public class Board extends Tile implements Cloneable{
     }
 
     @Override
-    public Board clone() {
-        return this.clone();
+    public Board clone() throws CloneNotSupportedException {
+        return (Board) super.clone();
     }
 
     /**
