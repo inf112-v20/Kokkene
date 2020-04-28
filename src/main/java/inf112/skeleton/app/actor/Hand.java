@@ -1,6 +1,5 @@
 package inf112.skeleton.app.actor;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 

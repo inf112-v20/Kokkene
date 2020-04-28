@@ -38,7 +38,6 @@ public class Board extends Tile {
     public int objectives;
 
     private Player[] players;
-    private AI[] computers;
 
     private Deck deck;
 
