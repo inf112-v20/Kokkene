@@ -1,6 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.actor.Player;
+import inf112.skeleton.app.actor.Pos;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,15 +12,14 @@ public class PlayerTests {
 
     private Player player;
 
-    private final int xPos = 1;
-    private final int yPos = 1;
+    private final Pos pos = new Pos(1,1);
     private final int upValue = 0;
     private final int maxLifePoints = 3;
     private int damage = -10;
 
     @Before
     public void makePlayer() {
-        player = new Player("player", xPos, yPos, upValue, 1);
+        player = new Player("player", pos.x, pos.y, upValue, 1);
     }
 
     @Test
@@ -39,24 +39,24 @@ public class PlayerTests {
 
     @Test
     public void playerXPositionIsOneAfterInitiation() {
-        assertEquals(player.getxPos(),xPos);
+        assertEquals(player.getxPos(),pos.x);
     }
 
     @Test
     public void playerYPositionIsOneAfterInitiation() {
-        assertEquals(player.getyPos(),yPos);
+        assertEquals(player.getyPos(),pos.y);
     }
 
     @Test
     public void playerXBackupIsOneAfterMoving() {
         player.setxPos(7);
-        assertEquals(xPos, player.getxBackup());
+        assertEquals(pos.x, player.getBackupPos().x);
     }
 
     @Test
     public void playerYBackupIsOneAfterMoving() {
         player.setyPos(7);
-        assertEquals(yPos, player.getyBackup());
+        assertEquals(pos.y, player.getBackupPos().y);
     }
 
     @Test
@@ -80,14 +80,12 @@ public class PlayerTests {
 
     @Test
     public void playerWillRespawnAtBackupLocation(){
-        player.setxPos(player.getxBackup()+1); //Moves away from backup location
-        player.setyPos(player.getyBackup()+1);
+        player.setPos(new Pos(2,2)); //Moves away from backup location
 
         player.addHealth(damage);
         player.respawn();
 
-        assertEquals(player.getxBackup(), player.getxPos());
-        assertEquals(player.getyBackup(), player.getyPos());
+        assertEquals(player.getBackupPos(), player.getStartPos());
     }
 
     @Test

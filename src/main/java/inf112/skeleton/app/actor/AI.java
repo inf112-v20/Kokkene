@@ -83,8 +83,8 @@ public class AI extends Player {
             Card cardToChoose = null;
             for (int j = 0; j < hand.plHand.length; j++) {
                 //TODO these 4 parameters
-                int aiX; // x coordinate when hand[j] has happened
-                int aiY; // y coordinate when hand[j] has happened
+                int aiX = 0; // x coordinate when hand[j] has happened
+                int aiY = 0; // y coordinate when hand[j] has happened
 
                 // sqrt((aiX - obX)^2 + (aiY - obY)^2) == distance between the objective the AI when hand[j] has happened
                 double calculate = Math.sqrt((aiX - obX)^2 + (aiY - obY)^2);
@@ -103,6 +103,7 @@ public class AI extends Player {
         }
 
     }
+
 
     /**
      *

@@ -70,16 +70,6 @@ interface IActor {
     void newBackup();
 
     /**
-     * @return respawn x-position
-     */
-    int getxBackup();
-
-    /**
-     * @return respawn y-position
-     */
-    int getyBackup();
-
-    /**
      * @return name of the specific actor.
      */
     String getName();

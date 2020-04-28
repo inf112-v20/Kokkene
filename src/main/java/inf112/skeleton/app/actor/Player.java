@@ -34,10 +34,8 @@ public class Player implements IActor {
     private PlayerState hb;
 
     //Main position and Backup Position on the board
-    private int xPos,
-            yPos,
-            xBackup,
-            yBackup;
+    private Pos startPos,
+            backupPos;
 
     //Direction the robot is facing (north=0, west=1, south=2, east=3)
     private int orientation;
@@ -64,11 +62,9 @@ public class Player implements IActor {
     public Player(String name, int xPos, int yPos, int orientation, int id) {
         this.name = name;
         this.id = id;
-        this.xPos = xPos;
-        this.yPos = yPos;
+        this.startPos = new Pos(xPos, yPos);
+        this.backupPos = new Pos(xPos, yPos);
         this.orientation = orientation;
-        this.xBackup = xPos;
-        this.yBackup = yPos;
         this.ready = false;
     }
 
@@ -97,12 +93,6 @@ public class Player implements IActor {
         this.ready = b;
     }
 
-    public int getxBackup() { return xBackup; }
-
-    public int getyBackup() {
-        return yBackup;
-    }
-
     public String getName() {
         return name;
     }
@@ -112,14 +102,17 @@ public class Player implements IActor {
     }
 
     public int getxPos() {
-        return xPos;
+        return startPos.x;
     }
+    public int getyPos() { return startPos.y; }
 
-    public void setxPos(int xPos) { this.xPos = xPos; }
+    public void setxPos(int xPos) { this.startPos.x = xPos; }
 
-    public int getyPos() { return yPos; }
+    public void setyPos(int yPos) { this.startPos.y = yPos; }
 
-    public void setyPos(int yPos) { this.yPos = yPos; }
+    public void setPos(Pos pos) {
+        this.startPos = pos;
+    }
 
     public int getOrientation() {
         return orientation % 4;
@@ -137,6 +130,13 @@ public class Player implements IActor {
 
     public int getObjective() {
         return this.objective;
+    }
+
+    public Pos getBackupPos() {
+        return backupPos;
+    }
+    public Pos getStartPos() {
+        return startPos;
     }
 
     @Override
@@ -166,8 +166,7 @@ public class Player implements IActor {
     }
 
     public void newBackup() {
-        this.xBackup = this.xPos;
-        this.yBackup = this.yPos;
+        this.backupPos = this.startPos;
     }
 
     public void turn(int change){
@@ -184,8 +183,7 @@ public class Player implements IActor {
     public boolean isAlive() { return getLifePoints()>0; }
 
     public void resetPos() {
-        setxPos(getxBackup());
-        setyPos(getyBackup());
+        startPos = backupPos;
     }
 
     public void checkObjective(int ob) {
