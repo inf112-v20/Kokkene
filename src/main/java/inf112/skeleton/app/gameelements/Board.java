@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-public class Board extends Tile {
+public class Board extends Tile implements Cloneable{
 
     public TiledMap map;
     public TiledMapTileLayer boardLayer,
@@ -640,6 +640,11 @@ public class Board extends Tile {
                 healthLayer.getCell(x, y).setRotation(p.getOrientation());
             }
         }
+    }
+
+    @Override
+    public Board clone() {
+        return this.clone();
     }
 
     /**

@@ -104,6 +104,10 @@ public class RoboRally extends InputAdapter implements Screen {
         return board;
     }
 
+    public static Board getCopyOfBoard() {
+        return board.clone();
+    }
+
     @Override
     public void show() {
         render(Gdx.graphics.getDeltaTime());

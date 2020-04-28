@@ -3,6 +3,7 @@ package inf112.skeleton.app.actor;
 import com.badlogic.gdx.graphics.Color;
 import inf112.skeleton.app.game.Menu;
 import inf112.skeleton.app.game.RoboRally;
+import inf112.skeleton.app.gameelements.Board;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 
@@ -103,6 +104,62 @@ public class AI extends Player {
 
     }
 
+
+    /**
+     * TODO
+     */
+    public void aiMovePerfectV2() {
+
+        // initialize the virtual board
+        Board board = createVirtualBoard();
+
+        // how many cards to calculate from.
+        int cardsToSelect = hand.cardsToSelect();
+
+        // create an array of N length unique sequences of cards to play
+        int[] sequences = createSequences(cardsToSelect, hand);
+
+        // play each sequence of cards and check which sequence gets the closest to the objective.
+        for(int i = 0; i < sequences.length; i++) {
+
+            double distance = 9000.1;
+            int sequence;
+            for(int j = 0; j < cardsToSelect; j++) {
+
+                // do the move with the unique sequence
+                board.doMove(this, hand.plHand[j].getMove());
+            }
+
+            //calculate the new position AI is in, then find the distance between AIXY and objectiveXY
+            double calculate = Math.sqrt((aiX - obX)^2 + (aiY - obY)^2);
+
+            if(calculate < distance) {
+                distance = calculate;
+
+                //save this sequence
+                sequence = i;
+            }
+        }
+    }
+
+    /** TODO
+     * create an array of every unique sequence one could play n cards.
+     *
+     * on the format int[0] = {0,1,2,3}, int[1] = {1,2,3,4}, int[2] = {4,3,2,1}... etc
+     *
+     * @param length of each sequence
+     * @param deck the deck to choose from
+     * @return an array of unique sequences of n length
+     */
+    private int[] createSequences(int length, Hand deck) {
+
+    }
+
+    // initializes a a copy of the current board, to do calculations on.
+    private Board createVirtualBoard() {
+        return RoboRally.getCopyOfBoard();
+
+    }
 
     /**
      *
