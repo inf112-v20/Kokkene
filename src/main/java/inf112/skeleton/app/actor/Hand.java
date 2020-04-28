@@ -12,11 +12,10 @@ public class Hand {
     public Card[] plHand;
     public ArrayList<Card> backupHand = new ArrayList<>();
 
-    private Player owner;
-    private AI comp = null;
+    private final Player owner;
 
     //Selected cards
-    private List<Card> selected = new ArrayList<>();
+    private final List<Card> selected = new ArrayList<>();
 
     //Locked registers
     private final ArrayList<Card> locked = new ArrayList<>();
@@ -28,7 +27,6 @@ public class Hand {
 
     //Constructor for AI's
     public Hand(AI actor, Deck deck) {
-        comp = actor;
         owner = actor;
         drawCards(deck);
     }
@@ -95,8 +93,8 @@ public class Hand {
         if (!owner.playerPower) {
             selected.clear();
             drawCards(deck);
-            if (comp != null && comp.getDifficulty() == 0) {
-                comp.aiMoveEasy();
+            if (owner instanceof AI) {
+                ((AI) owner).aiMove();
             }
         }
     }

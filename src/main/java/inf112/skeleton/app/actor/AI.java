@@ -67,6 +67,7 @@ public class AI extends Player {
         assert getSelected().size() == cardsToSelect : "Should be " + cardsToSelect + ", not " + getSelected().size();
     }
 
+
     /**
      * This method calculates the cards which makes the AI get the furthest towards the goal.
      */
