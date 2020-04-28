@@ -104,7 +104,7 @@ public class RoboRally extends InputAdapter implements Screen {
         return board;
     }
 
-    public static Board getCopyOfBoard() {
+    public static Board getCopyOfBoard() throws CloneNotSupportedException {
         return board.clone();
     }
 
