@@ -10,10 +10,10 @@ The players backup position is either the starting position, or a checkpoint.\
 The checkpoint is only updated as the new backup position, if the checkpoint is visited in the correct order.
 
 ## Taking damage
-For now, only damage from lasers are implemented.\
+You take damage from both the visible lasers on the map and the other players.\
 Lasers should only damage the player, if the robot stops on top of the laser for the turn.\
-Meaning, if the player moves by 1 and ends up on top of the laser, damage is taken.\
-If the player moves by 2 or 3, it doesn't end its turn on top of the laser, so no damage is taken.\
+Meaning, if the player moves by 1 and ends up on top of the laser or in front of another player, damage is taken.\
+If the player moves by 2 or 3, it doesn't end its turn on top of the laser, so no damage is taken.
 
 ## Movement stops on walls
 When the player is moving by either 1, 2 or 3 tiles, \

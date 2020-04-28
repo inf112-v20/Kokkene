@@ -74,7 +74,7 @@ public class Card implements Comparable<Card>{
                 card = new Pixmap(Gdx.files.internal("pictures/Move" + getMove() + ".png"));
                 break;
             case (1):
-                card = new Pixmap(Gdx.files.internal("pictures/BackUp.png"));
+                card = new Pixmap(Gdx.files.internal("pictures/Cards/BackUp.png"));
                 break;
             case (2):
                 card = new Pixmap(Gdx.files.internal("pictures/Turn" + getMove() + ".png"));

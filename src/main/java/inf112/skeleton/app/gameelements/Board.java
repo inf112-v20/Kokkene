@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.actor.AI;
+import inf112.skeleton.app.actor.AIColor;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.actor.PlayerState;
 import inf112.skeleton.app.game.Menu;
@@ -125,7 +126,7 @@ public class Board extends Tile implements Cloneable{
                 players[i] = new AI("AI " + (1 + i - Menu.OptionsUtil.humanPlayers), // always i >= humanPlayers here
                         xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
             }
-            createPlayerTextures(players[i]);
+            createPlayerTextures(players[i], i);
             players[i].setHand(deck); //Deals the hand to the players
         }
     }
@@ -135,8 +136,14 @@ public class Board extends Tile implements Cloneable{
      *
      * @param p player to set the textures of
      */
-    private void createPlayerTextures(Player p) {
-        TextureRegion[][] tr = p.setPlayerTextures(Menu.OptionsUtil.playerModelFile);
+    private void createPlayerTextures(Player p, int num) {
+        TextureRegion[][] tr;
+        if(num == 0) {
+            tr = p.setPlayerTextures(Menu.OptionsUtil.playerModelFile);
+        }
+        else {
+            tr = p.setPlayerTextures(new AIColor().ModelColors[num-1]);
+        }
         p.setPlayerState(new PlayerState(p, this, tr));
         TextureRegion[][] hb = p.setPlayerTextures("assets/pictures/healthbars2.png");
         p.setHealthBars(new PlayerState(p, this, hb));

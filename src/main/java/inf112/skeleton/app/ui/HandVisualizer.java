@@ -93,13 +93,13 @@ public class HandVisualizer extends InputAdapter implements Screen {
     public void cardPictureFactory(Card c) {
         switch (c.getType()) {
             case (0):
-                cards = new Pixmap(Gdx.files.internal("pictures/Move" + c.getMove() + ".png"));
+                cards = new Pixmap(Gdx.files.internal("pictures/Cards/Move" + c.getMove() + ".png"));
                 break;
             case (1):
-                cards = new Pixmap(Gdx.files.internal("pictures/BackUp.png"));
+                cards = new Pixmap(Gdx.files.internal("pictures/Cards/BackUp.png"));
                 break;
             case (2):
-                cards = new Pixmap(Gdx.files.internal("pictures/Turn" + c.getMove() + ".png"));
+                cards = new Pixmap(Gdx.files.internal("pictures/Cards/Turn" + c.getMove() + ".png"));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + c.toString());

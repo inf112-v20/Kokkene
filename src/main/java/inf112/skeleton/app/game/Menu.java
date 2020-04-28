@@ -195,7 +195,7 @@ public class Menu implements Screen {
      * Show what the player looks like
      */
     private void showPlayer() {
-        Texture player = new Texture(Gdx.files.internal("assets/pictures/" + selectPlayerModels.getSelected() + " Player.png"));
+        Texture player = new Texture(Gdx.files.internal("assets/pictures/PlayerModels/" + selectPlayerModels.getSelected() + " Player.png"));
         TextureRegion standardPlayer = new TextureRegion(player, 0, 0, 300, 300);
         float scale = 0.5f;
 
@@ -236,7 +236,7 @@ public class Menu implements Screen {
      */
     public void loadGame() {
         OptionsUtil.mapFile = "assets/maps/" + selectMap.getSelected() + ".tmx";
-        OptionsUtil.playerModelFile = "assets/pictures/" + selectPlayerModels.getSelected() + " Player.png";
+        OptionsUtil.playerModelFile = "assets/pictures/PlayerModels/" + selectPlayerModels.getSelected() + " Player.png";
         OptionsUtil.deckFile = "assets/decks/" + selectDeck.getSelected() + ".txt";
         OptionsUtil.humanPlayers = 1;
         OptionsUtil.thisPlayer = 1;
@@ -282,7 +282,7 @@ public class Menu implements Screen {
      */
     public Array<String> getPlayerModels() {
         Array<String> playerArray = new Array<>();
-        File players = new File("assets/pictures");
+        File players = new File("assets/pictures/PlayerModels");
         for (String p : Objects.requireNonNull(players.list())) {
             if (p.contains("Player")) {
                 playerArray.add(p.substring(0, p.lastIndexOf(" ")));
@@ -338,7 +338,7 @@ public class Menu implements Screen {
 
         public static HashMap<String, ArrayList<int[]>> spawns = new HashMap<>();
 
-        public static String playerModelFile = "assets/pictures/Owl Player.png";
+        public static String playerModelFile = "assets/pictures/PlayerModels/Owl Player.png";
 
         public static String deckFile;
 
