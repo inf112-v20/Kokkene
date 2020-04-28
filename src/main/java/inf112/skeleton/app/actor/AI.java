@@ -7,8 +7,10 @@ import inf112.skeleton.app.gameelements.Board;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 
+import java.util.ArrayList;
 
-public class AI extends Player {
+
+public class AI extends Player implements Cloneable {
 
     // Color to this specific AI gets taken from a global constant of AI colors.
     private final Color color;
@@ -105,6 +107,11 @@ public class AI extends Player {
 
     }
 
+    public ArrayList<Card> recursiveMove() {
+        //TODO
+        ArrayList<Card> best = new ArrayList<>();
+        return best;
+    }
 
     /**
      * TODO
@@ -122,19 +129,25 @@ public class AI extends Player {
 
         // play each sequence of cards and check which sequence gets the closest to the objective.
         for(int i = 0; i < sequences.length; i++) {
+            AI temp = this.clone();
+            int obX = RoboRally.getBoard().objectives.get(this.getObjective() - 1)[0],
+                    obY = RoboRally.getBoard().objectives.get(this.getObjective() - 1)[1];
 
             double distance = 9000.1;
             int sequence;
-            for(int j = 0; j < cardsToSelect; j++) {
+            for (int j = 0; j < cardsToSelect; j++) {
 
                 // do the move with the unique sequence
-                board.doMove(this, hand.plHand[j].getMove());
+                board.doMove(temp, hand.plHand[j].getMove());
             }
 
-            //calculate the new position AI is in, then find the distance between AIXY and objectiveXY
-            double calculate = Math.sqrt((aiX - obX)^2 + (aiY - obY)^2);
+            int aiX = temp.getxPos(),
+                    aiY = temp.getyPos();
 
-            if(calculate < distance) {
+            //calculate the new position AI is in, then find the distance between AIXY and objectiveXY
+            double calculate = Math.sqrt((aiX - obX) ^ 2 + (aiY - obY) ^ 2);
+
+            if (calculate < distance) {
                 distance = calculate;
 
                 //save this sequence
@@ -153,7 +166,8 @@ public class AI extends Player {
      * @return an array of unique sequences of n length
      */
     private int[] createSequences(int length, Hand deck) {
-
+        //TODO
+        return new int[1];
     }
 
     // initializes a a copy of the current board, to do calculations on.
@@ -163,10 +177,14 @@ public class AI extends Player {
     }
 
     /**
-     *
      * @return The color of the actor.
      */
     public Color getColor() {
         return this.color;
+    }
+
+    @Override
+    public AI clone() {
+        return this.clone();
     }
 }
