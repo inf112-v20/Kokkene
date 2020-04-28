@@ -71,13 +71,13 @@ public class Card implements Comparable<Card>{
 
         switch (getType()) {
             case (0):
-                card = new Pixmap(Gdx.files.internal("pictures/Move" + getMove() + ".png"));
+                card = new Pixmap(Gdx.files.internal("pictures/Cards/Move" + getMove() + ".png"));
                 break;
             case (1):
                 card = new Pixmap(Gdx.files.internal("pictures/Cards/BackUp.png"));
                 break;
             case (2):
-                card = new Pixmap(Gdx.files.internal("pictures/Turn" + getMove() + ".png"));
+                card = new Pixmap(Gdx.files.internal("pictures/Cards/Turn" + getMove() + ".png"));
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + toString());
