@@ -82,7 +82,7 @@ public class AI extends Player {
             double distance = 9000.1;
             Card cardToChoose = null;
             for (int j = 0; j < hand.plHand.length; j++) {
-                //TODO these 4 parameters
+                //TODO these 2 parameters
                 int aiX = 0; // x coordinate when hand[j] has happened
                 int aiY = 0; // y coordinate when hand[j] has happened
 
@@ -93,7 +93,6 @@ public class AI extends Player {
                     distance = calculate;
                     cardToChoose = hand.plHand[j];
                 }
-
             }
 
             // all cards are now checked, for the one card which makes the AI get the furthest towards the goal.
@@ -111,10 +110,5 @@ public class AI extends Player {
      */
     public Color getColor() {
         return this.color;
-    }
-
-    //We can use this when selecting difficulty
-    public Integer getDifficulty() {
-        return 0;
     }
 }

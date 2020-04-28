@@ -42,7 +42,7 @@ public class Card implements Comparable<Card>{
 
     @Override
     public int compareTo(Card that) {
-        return Integer.compare(this.priority, that.priority);
+        return Integer.compare(that.priority, this.priority);
     }
 
     public int getPriority() { return priority; }
