@@ -2,6 +2,7 @@ package inf112.skeleton.app.actor;
 
 import com.badlogic.gdx.graphics.Color;
 import inf112.skeleton.app.game.Menu;
+import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 
 
@@ -65,6 +66,43 @@ public class AI extends Player {
         }
 
         assert getSelected().size() == cardsToSelect : "Should be " + cardsToSelect + ", not " + getSelected().size();
+    }
+
+    /**
+     * This method calculates the cards which makes the AI get the furthest towards the goal.
+     */
+    public void aiMovePerfect() {
+        int cardsToSelect = hand.cardsToSelect();
+
+        // this many cards should be toggled.
+        for(int i = 0; i < cardsToSelect; i++) {
+
+            // check every card in the hand for the card which makes the distance to "objective" the lowest.
+            double distance = 9000.1;
+            Card cardToChoose = null;
+            for(int j = 0; j < hand.plHand.length; j++) {
+                //TODO these 4 parameters
+                int aiX; // x coordinate when hand[j] has happened
+                int aiY; // y coordinate when hand[j] has happened
+                int obX; // ai.getObjective.X
+                int obY; // ai.getObjective.Y
+
+                // sqrt((aiX - obX)^2 + (aiY - obY)^2) == distance between the objective the AI when hand[j] has happened
+                double calculate = Math.sqrt((aiX - obX)^2 + (aiY - obY)^2);
+
+                if(calculate < distance) {
+                    distance = calculate;
+                    cardToChoose = hand.plHand[j];
+                }
+
+            }
+
+            // all cards are now checked, for the one card which makes the AI get the furthest towards the goal.
+            // check for cardsToSelect more cards.
+            hand.toggleCard(cardToChoose);
+            setReady(true);
+        }
+
     }
 
     /**
