@@ -37,10 +37,9 @@ public class PlayerState {
      * @return the player status
      */
     public Cell getPlayerStatus() {
-        if(!player.isAlive()) {
+        if (!player.isAlive()) {
             return playerDead;
-        }
-        else if (board.objectives == player.getObjective()-1) {
+        } else if (board.objectives.size() == player.getObjective() - 1) {
             return playerWon;
         }
         return playerNorm;

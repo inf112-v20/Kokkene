@@ -2,6 +2,7 @@ package inf112.skeleton.app.actor;
 
 import com.badlogic.gdx.graphics.Color;
 import inf112.skeleton.app.game.Menu;
+import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 
@@ -31,9 +32,6 @@ public class AI extends Player {
 
     public void aiMove() {
         switch (Menu.OptionsUtil.aiDifficulty) {
-            case (0):
-                aiMoveEasy();
-                break;
             case (1):
                 aiMoveMedium();
                 break;
@@ -74,18 +72,19 @@ public class AI extends Player {
     public void aiMovePerfect() {
         int cardsToSelect = hand.cardsToSelect();
 
+        int obX = RoboRally.getBoard().objectives.get(this.getObjective() - 1)[0],
+                obY = RoboRally.getBoard().objectives.get(this.getObjective() - 1)[1];
+
         // this many cards should be toggled.
-        for(int i = 0; i < cardsToSelect; i++) {
+        for (int i = 0; i < cardsToSelect; i++) {
 
             // check every card in the hand for the card which makes the distance to "objective" the lowest.
             double distance = 9000.1;
             Card cardToChoose = null;
-            for(int j = 0; j < hand.plHand.length; j++) {
+            for (int j = 0; j < hand.plHand.length; j++) {
                 //TODO these 4 parameters
                 int aiX; // x coordinate when hand[j] has happened
                 int aiY; // y coordinate when hand[j] has happened
-                int obX; // ai.getObjective.X
-                int obY; // ai.getObjective.Y
 
                 // sqrt((aiX - obX)^2 + (aiY - obY)^2) == distance between the objective the AI when hand[j] has happened
                 double calculate = Math.sqrt((aiX - obX)^2 + (aiY - obY)^2);

@@ -37,11 +37,10 @@ public class HUD {
         }
         float obX = (heartSize*player[0].getMaxHealth() + heartSize)/2f;
         float obY = HEIGHT - heartSize/4f;
-        if(RoboRally.getBoard().objectives == player[0].getObjective()-1) {
+        if (RoboRally.getBoard().objectives.size() == player[0].getObjective() - 1) {
             font.getData().setScale(2f);
             font.draw(batch, "Target Objective: You Won!", obX, obY);
-        }
-        else {
+        } else {
             font.draw(batch, "Target Objective: " + player[0].getObjective(), obX, obY);
         }
         font.getData().setScale(1f);

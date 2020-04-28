@@ -35,7 +35,7 @@ public class Board extends Tile {
     public int boardHeight,
             boardWidth;
 
-    public int objectives;
+    public ArrayList<int[]> objectives;
 
     private Player[] players;
 
@@ -179,7 +179,7 @@ public class Board extends Tile {
      * Generates objectives from the map
      */
     private void generateObjectives() {
-        objectives = Tile.findGroupMembers(flagLayer, Tiles.Group.OBJECTIVES).size();
+        objectives = Tile.findGroupMembers(flagLayer, Tiles.Group.OBJECTIVES);
     }
 
     /**
