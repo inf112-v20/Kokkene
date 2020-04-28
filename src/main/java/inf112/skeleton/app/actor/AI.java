@@ -1,13 +1,14 @@
 package inf112.skeleton.app.actor;
 
 import com.badlogic.gdx.graphics.Color;
+import inf112.skeleton.app.game.Menu;
 import inf112.skeleton.app.gameelements.Deck;
 
 
 public class AI extends Player {
 
     // Color to this specific AI gets taken from a global constant of AI colors.
-    private Color color;
+    private final Color color;
 
     /**
      * @param name        the name for this robot.
@@ -18,13 +19,37 @@ public class AI extends Player {
      */
     public AI(String name, int xPos, int yPos, int orientation, int id) {
         super(name, xPos, yPos, orientation, id);
-        this.color = new AIColor().Colors[id-2];
+        this.color = new AIColor().Colors[id - 2];
 
     }
 
     public void setHand(Deck deck) {
-        hand = new Hand( this, deck);
-        aiMoveEasy();
+        hand = new Hand(this, deck);
+        aiMove();
+    }
+
+    public void aiMove() {
+        switch (Menu.OptionsUtil.aiDifficulty) {
+            case (0):
+                aiMoveEasy();
+                break;
+            case (1):
+                aiMoveMedium();
+                break;
+            case (2):
+                aiMoveHard();
+                break;
+            default:
+                aiMoveEasy();
+        }
+    }
+
+    private void aiMoveHard() {
+        //TODO
+    }
+
+    private void aiMoveMedium() {
+        //TODO
     }
 
     public void aiMoveEasy() {
