@@ -7,13 +7,19 @@ import inf112.skeleton.app.gameelements.Board;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Queue;
 
 
 public class AI extends Player {
 
     // Color to this specific AI gets taken from a global constant of AI colors.
     private final Color color;
+
+    private Queue<ArrayList<Integer>> subSequences;
+    private ArrayList<Integer> moveSet;
 
     /**
      * @param name        the name for this robot.
@@ -47,7 +53,26 @@ public class AI extends Player {
     }
 
     private void aiMoveHard() {
-        //TODO
+        int cardsToSelect = hand.cardsToSelect();
+
+        // initialize the moveSet if it's empty, else play the next card.
+        if(moveSet == null) {
+            try {
+                this.moveSet = getMoveClosestToObject(cardsToSelect);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        while (getSelected().size() < cardsToSelect) {
+            int nextCard = moveSet.get(0);
+            if (getSelected().contains(hand.plHand[nextCard])) {
+                continue;
+            }
+            hand.toggleCard(hand.plHand[nextCard]);
+            moveSet.remove(0);
+            setReady(true);
+        }
     }
 
     private void aiMoveMedium() {
@@ -109,9 +134,14 @@ public class AI extends Player {
 
 
     /**
-     * TODO
+     *
+     * Calculates the sequence of cards which makes the AI get the closest to the current objective
+     *
+     * @param cardsToselect
+     * @return a list of the best sequence of cards to play
+     * @throws CloneNotSupportedException
      */
-    public int[] aiMovePerfectV2() throws CloneNotSupportedException {
+    public ArrayList<Integer> getMoveClosestToObject(int cardsToselect) throws CloneNotSupportedException {
 
         // initialize the virtual board
         Board board = createVirtualBoard();
@@ -120,20 +150,23 @@ public class AI extends Player {
         int cardsToSelect = hand.cardsToSelect();
 
         // create an array of N length unique sequences of cards to play
-        ArrayList<int[]> sequences = createSequences(cardsToSelect, hand);
+        ArrayList<Integer> sequences = new ArrayList<Integer>();
+
+        createSequences(cardsToSelect, hand.plHand.length, sequences);
 
         double distance = 9000.1;
         int sequence = 0;
-
+        ArrayList<Integer> bestSequence = new ArrayList<>();
         // play each sequence of cards and check which sequence gets the closest to the objective.
-        for (int i = 0; i < sequences.size(); i++) {
+        while(!subSequences.isEmpty()) {
+            int i = 0;
             AI temp = (AI) this.clone();
             int obX = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[0],
                     obY = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[1];
 
             for (int j = 0; j < cardsToSelect; j++) {
                 // do the move with the unique sequence
-                int card = sequences.get(i)[j];
+                int card = subSequences.peek().get(j);
                 board.doMove(temp, hand.plHand[card].getMove());
             }
 
@@ -147,10 +180,14 @@ public class AI extends Player {
                 distance = calculate;
 
                 //save this sequence
-                sequence = i;
+                bestSequence = subSequences.poll();
+            }
+            else {
+                subSequences.poll();
             }
         }
-        return sequences.get(sequence);
+        System.out.println(bestSequence);
+        return bestSequence;
     }
 
     /**
@@ -159,14 +196,18 @@ public class AI extends Player {
      * <p>
      * on the format int[0] = {0,1,2,3}, int[1] = {1,2,3,4}, int[2] = {4,3,2,1}... etc
      *
-     * @param length of each sequence
-     * @param deck   the deck to choose from
+     * @param n
      * @return an array of unique sequences of n length
      */
-    private ArrayList<int[]> createSequences(int length, Hand deck) {
-        //TODO
-        ArrayList<int[]> sequences = new ArrayList<>();
-        return sequences;
+    private void createSequences(int n, int k, ArrayList<Integer> A) {
+        if (n <= 0) {
+            subSequences.add(A);
+        } else {
+            for (int i = 1; i <= k; i++) {
+                A.add(n - 1, i);
+                createSequences(n - 1, k, A);
+            }
+        }
     }
 
     // initializes a a copy of the current board, to do calculations on.
