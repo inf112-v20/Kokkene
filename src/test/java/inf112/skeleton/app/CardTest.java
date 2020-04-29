@@ -20,13 +20,13 @@ public class CardTest {
     @Test
     public void cardHasHigherPriorityThanOtherCard() {
         Card otherCard = new Card(100, 0, 1);
-        assertEquals(card.compareTo(otherCard), 1);
+        assertEquals(card.compareTo(otherCard), -1);
     }
 
     @Test
     public void cardHasLessPriorityThanOtherCard() {
         Card otherCard = new Card(200, 0, 1);
-        assertEquals(card.compareTo(otherCard), -1);
+        assertEquals(card.compareTo(otherCard), 1);
     }
 
     @Test

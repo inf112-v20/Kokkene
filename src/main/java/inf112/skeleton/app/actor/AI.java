@@ -8,9 +8,7 @@ import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Queue;
+import java.util.*;
 
 
 public class AI extends Player {
@@ -18,8 +16,8 @@ public class AI extends Player {
     // Color to this specific AI gets taken from a global constant of AI colors.
     private final Color color;
 
-    private Queue<ArrayList<Integer>> subSequences;
     private ArrayList<Integer> moveSet;
+    private Set<ArrayList<Integer>> allPermutations = new HashSet<>();
 
     /**
      * @param name        the name for this robot.
@@ -53,18 +51,16 @@ public class AI extends Player {
     }
 
     private void aiMoveHard() {
-        int cardsToSelect = hand.cardsToSelect();
-
         // initialize the moveSet if it's empty, else play the next card.
         if(moveSet == null) {
             try {
-                this.moveSet = getMoveClosestToObject(cardsToSelect);
+                this.moveSet = getMoveClosestToObject();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
-        while (getSelected().size() < cardsToSelect) {
+        while (getSelected().size() < hand.cardsToSelect()) {
             int nextCard = moveSet.get(0);
             if (getSelected().contains(hand.plHand[nextCard])) {
                 continue;
@@ -77,9 +73,11 @@ public class AI extends Player {
 
     private void aiMoveMedium() {
         //TODO
+        aiMovePerfect();
     }
 
     public void aiMoveEasy() {
+
         int cardsToSelect = hand.cardsToSelect();
 
         while (getSelected().size() < cardsToSelect) {
@@ -90,6 +88,8 @@ public class AI extends Player {
             hand.toggleCard(hand.plHand[rand]);
             setReady(true);
         }
+
+        createSequences();
 
         assert getSelected().size() == cardsToSelect : "Should be " + cardsToSelect + ", not " + getSelected().size();
     }
@@ -137,36 +137,31 @@ public class AI extends Player {
      *
      * Calculates the sequence of cards which makes the AI get the closest to the current objective
      *
-     * @param cardsToselect
      * @return a list of the best sequence of cards to play
-     * @throws CloneNotSupportedException
+     * @throws CloneNotSupportedException throws CloneNotSupportedException
      */
-    public ArrayList<Integer> getMoveClosestToObject(int cardsToselect) throws CloneNotSupportedException {
+    public ArrayList<Integer> getMoveClosestToObject() throws CloneNotSupportedException {
 
         // initialize the virtual board
         Board board = createVirtualBoard();
 
-        // how many cards to calculate from.
-        int cardsToSelect = hand.cardsToSelect();
-
-        // create an array of N length unique sequences of cards to play
-        ArrayList<Integer> sequences = new ArrayList<Integer>();
-
-        createSequences(cardsToSelect, hand.plHand.length, sequences);
+        createSequences();
 
         double distance = 9000.1;
-        int sequence = 0;
         ArrayList<Integer> bestSequence = new ArrayList<>();
-        // play each sequence of cards and check which sequence gets the closest to the objective.
-        while(!subSequences.isEmpty()) {
-            int i = 0;
+        ArrayList<Integer> currentPermutation;
+        //Creating a Iterator that iterates through all the hand permutations
+        Iterator<ArrayList<Integer>> iterator= allPermutations.iterator();
+        // play each hand and check which hand gets the closest to the objective.
+        while (iterator.hasNext()) {
+            currentPermutation = iterator.next();
             AI temp = (AI) this.clone();
             int obX = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[0],
                     obY = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[1];
 
-            for (int j = 0; j < cardsToSelect; j++) {
+            for (int j = 0; j < hand.cardsToSelect(); j++) {
                 // do the move with the unique sequence
-                int card = subSequences.peek().get(j);
+                int card = currentPermutation.get(j);
                 board.doMove(temp, hand.plHand[card].getMove());
             }
 
@@ -180,34 +175,12 @@ public class AI extends Player {
                 distance = calculate;
 
                 //save this sequence
-                bestSequence = subSequences.poll();
-            }
-            else {
-                subSequences.poll();
+                bestSequence = currentPermutation;
             }
         }
+
         System.out.println(bestSequence);
         return bestSequence;
-    }
-
-    /**
-     * TODO
-     * create an array of every unique sequence one could play n cards.
-     * <p>
-     * on the format int[0] = {0,1,2,3}, int[1] = {1,2,3,4}, int[2] = {4,3,2,1}... etc
-     *
-     * @param n
-     * @return an array of unique sequences of n length
-     */
-    private void createSequences(int n, int k, ArrayList<Integer> A) {
-        if (n <= 0) {
-            subSequences.add(A);
-        } else {
-            for (int i = 1; i <= k; i++) {
-                A.add(n - 1, i);
-                createSequences(n - 1, k, A);
-            }
-        }
     }
 
     // initializes a a copy of the current board, to do calculations on.
@@ -223,4 +196,79 @@ public class AI extends Player {
         return this.color;
     }
 
+    /**
+     * Creates a HashSet that contains all possible permutations of the hand
+     * size = P(n,r) = n!/((n−r)!)
+     */
+    private void createSequences() {
+        allPermutations.clear();
+        ArrayList<Integer> handArray = getHandArray();
+        heapPermutation(handArray, handArray.size(), hand.cardsToSelect());
+        //Should be 15120 if AI is at max HP
+        System.out.println(allPermutations.size());
+    }
+
+    //Inspiration and more information: https://www.geeksforgeeks.org/heaps-algorithm-for-generating-permutations/
+    /**
+     * Generating permutation using Heap Algorithm
+     * @param a objects to choose from (ArrayList of the hand)
+     * @param size size of the actor's hand
+     * @param choiceOfCards Sample of the permutation
+     */
+    private void heapPermutation(ArrayList<Integer> a, int size, int choiceOfCards)
+    //Runtime is pretty bad, but should be manageable since the largest number of permutations = 362880,
+    //and the allPermutations HashSet will never reach a size higher than P(9,5) = 15120
+    {
+        // if size becomes 1 add the permutation to the set. (duplicates will be removed)
+        if (size == 1)
+            addPermutation(a,choiceOfCards);
+
+        for (int i = 0; i <size; i++)
+        {
+            heapPermutation(a, size - 1, choiceOfCards);
+
+            // if size is odd, swap first and last element
+            if (size % 2 == 1)
+            {
+                int temp = a.get(0);
+                a.set(0, a.get(size - 1));
+                a.set(size - 1, temp);
+            }
+
+            // If size is even, swap ith and last
+            // element
+            else
+            {
+                int temp = a.get(i);
+                a.set(i, a.get(size - 1));
+                a.set(size - 1, temp);
+            }
+        }
+    }
+
+    /**
+     * Creates an array containing all the different cards the actor can choose from
+     * @return ArrayList<Integer> of form [0, 1, 2, 3...((cards in hand) - 1)]
+     */
+    public ArrayList<Integer> getHandArray() {
+        ArrayList<Integer> handArray = new ArrayList<>();
+        for (int i = 0; i <= hand.plHand.length - 1; i++) {
+            handArray.add(i);
+        }
+        return handArray;
+    }
+
+    /**
+     * Adds the given permutation from the ArrayList's position: 0 to n
+     * @param a The permutation of the hand (length = objects)
+     * @param r sample size of the permutation
+     */
+    void addPermutation(ArrayList<Integer> a, int r)
+    {
+        ArrayList<Integer> permutation = new ArrayList<>();
+        for (int i = 0; i < r; i++) {
+            permutation.add(a.get(i));
+        }
+        allPermutations.add(permutation);
+    }
 }
