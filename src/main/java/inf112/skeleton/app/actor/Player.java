@@ -210,16 +210,11 @@ public class Player implements IActor, Cloneable {
      * @param health  The value that health will be set to.
      */
     private void setHealth(int health) {
-
         if (health <= 0) {
             this.health = 0;
         }
         else {
             this.health = Math.min(health, MAXHEALTH);
-        }
-
-        if (this.health <= 0) {
-            setyPos(200 + id);
         }
     }
 
