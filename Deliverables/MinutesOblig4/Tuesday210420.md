@@ -11,7 +11,7 @@
 **Business from previous meetings:**\
      Prepare for the oblig tasks. 
 	
-**Todays agenda:**\
+**Today's agenda:**\
     Going through project board.\
     Make a UML\
     Finish implementing power down\

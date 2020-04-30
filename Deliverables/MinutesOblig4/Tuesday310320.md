@@ -11,7 +11,7 @@
 **Business from previous meetings:**\
      Prepare for oblig 4
 	
-**Todays agenda:**\
+**Today's agenda:**\
     Start work on oblig 4.\
     Add tasks to project board.\
     Discussions.

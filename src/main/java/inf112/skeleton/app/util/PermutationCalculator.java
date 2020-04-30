@@ -41,8 +41,6 @@ public class PermutationCalculator {
      * @param choiceOfCards Sample of the permutation
      */
     private void heapPermutation(ArrayList<Integer> a, int size, int choiceOfCards)
-    //Runtime is pretty bad, but should be manageable since the largest number of permutations = 362880,
-    //and the allPermutations HashSet will never reach a size higher than P(9,5) = 15120
     {
         // if size becomes 1 add the permutation to the set. (duplicates will be removed)
         if (size == 1)
@@ -76,7 +74,7 @@ public class PermutationCalculator {
      * @param a The permutation of the hand (length = objects)
      * @param r sample size of the permutation
      */
-    void addPermutation(ArrayList<Integer> a, int r)
+    private void addPermutation(ArrayList<Integer> a, int r)
     {
         ArrayList<Integer> permutation = new ArrayList<>();
         for (int i = 0; i < r; i++) {
@@ -110,6 +108,8 @@ public class PermutationCalculator {
                 break;
             case 2:
                 permutationsAt2HP.add(permutation);
+                break;
+            default:
                 break;
         }
     }
