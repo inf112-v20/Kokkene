@@ -16,6 +16,7 @@ public class AI extends Player {
     // Color to this specific AI gets taken from a global constant of AI colors.
     private final Color color;
 
+    private boolean initializeMove;
     private ArrayList<Integer> moveSet;
     private Set<ArrayList<Integer>> allPermutations = new HashSet<>();
 
@@ -34,6 +35,8 @@ public class AI extends Player {
 
     public void setHand(Deck deck) {
         hand = new Hand(this, deck);
+        initializeMove = true;
+        this.invinicible();
         aiMove();
     }
 
@@ -52,24 +55,20 @@ public class AI extends Player {
     }
 
     private void aiMoveHard() {
+
         // initialize the moveSet if it's empty, else play the next card.
-        if(moveSet == null) {
+        if(initializeMove) {
             try {
                 this.moveSet = getMoveClosestToObject();
+                initializeMove = false;
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-
-        while (getSelected().size() < hand.cardsToSelect()) {
-            int nextCard = moveSet.get(0);
-            if (getSelected().contains(hand.plHand[nextCard])) {
-                continue;
-            }
-            hand.toggleCard(hand.plHand[nextCard]);
-            moveSet.remove(0);
-            setReady(true);
+        for(int i = 0; i < moveSet.size(); i++) {
+            hand.toggleCard(hand.plHand[moveSet.get(i)]);
         }
+        setReady(true);
     }
 
     private void aiMoveMedium() {
@@ -90,7 +89,6 @@ public class AI extends Player {
             setReady(true);
         }
 
-        createSequences();
 
         assert getSelected().size() == cardsToSelect : "Should be " + cardsToSelect + ", not " + getSelected().size();
     }
@@ -147,6 +145,8 @@ public class AI extends Player {
         Board board = createVirtualBoard();
 
         createSequences();
+        int originX = this.getxPos();
+        int originY = this.getyPos();
 
         double distance = 9000.1;
         ArrayList<Integer> bestSequence = new ArrayList<>();
@@ -178,6 +178,11 @@ public class AI extends Player {
                 //save this sequence
                 bestSequence = currentPermutation;
             }
+
+            // set the AI back to its original position and render it invinicible
+            board.playerLayer.getCell(aiX,aiY).setTile(null);
+            board.playerLayer.setCell(originX, originY, temp.getPlayerState().getPlayerStatus());
+            board.getPlayers()[1].invinicible();
         }
 
         System.out.println(bestSequence);
@@ -216,7 +221,7 @@ public class AI extends Player {
      * @param size size of the actor's hand
      * @param choiceOfCards Sample of the permutation
      */
-    private void heapPermutation(ArrayList<Integer> a, int size, int choiceOfCards)
+    public void heapPermutation(ArrayList<Integer> a, int size, int choiceOfCards)
     //Runtime is pretty bad, but should be manageable since the largest number of permutations = 362880,
     //and the allPermutations HashSet will never reach a size higher than P(9,5) = 15120
     {

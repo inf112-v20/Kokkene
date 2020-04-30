@@ -142,7 +142,6 @@ public class RoboRally extends InputAdapter implements Screen {
             timeLogic();
         }
 
-
         board.nullPlayerBoard();
 
         checkFinished();

@@ -69,6 +69,11 @@ public class Player implements IActor, Cloneable {
         this.ready = false;
     }
 
+    public void invinicible() {
+        this.lifePoints = 3;
+        this.setHealth(6);
+    }
+
     //Getters and setters
     public PlayerState getPlayerState() {
         return ps;
