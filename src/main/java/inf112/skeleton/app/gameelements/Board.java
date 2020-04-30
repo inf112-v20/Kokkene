@@ -191,6 +191,62 @@ public class Board extends Tile implements Cloneable{
     }
 
     /**
+     * Modify given player as the cards instructs
+     * @param card instructions for the player
+     * @param pl player to move
+     */
+    public void cardMove(Card card, Player pl) {
+        int type = card.getType();
+        switch(type){
+            //Forward
+            case (0):
+            case (1):
+                doMove(pl, card.getMove());
+                break;
+            //Turn
+            case (2):
+                pl.turn(card.getMove());
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type);
+        }
+    }
+
+    /**
+     * Recursive function that moves player forward.
+     *
+     * @param player to move
+     * @param move   how many spaces to move from current position
+     */
+    public void doMove(Player player, int move) {
+        doMove(player, move, true);
+    }
+
+    public void doMove(Player player, int move, boolean legalMove) {
+
+        //Gets the orientation from the player, in order to check which direction they should move
+        int orientation = player.getOrientation();
+
+        if (move > 0 || move == -1) {
+            if (move == -1) {
+                backwardMove(player);
+            } else if (legalMove) {
+                doMove(player, move - 1, move(player, orientation));
+            }
+        }
+    }
+
+    /**
+     * Moves the player backwards without changing orientation
+     *
+     * @param player to move backwards
+     */
+    public void backwardMove(Player player) {
+        int orientation = (player.getOrientation() + 2) % 4;
+        move(player, orientation);
+    }
+
+    /**
      * Tries to move a player in a direction, without changing orientation
      *
      * @param player    to move
@@ -252,14 +308,9 @@ public class Board extends Tile implements Cloneable{
         return true;
     }
 
-    /**
-     * Recursive function that moves player forward.
-     *
-     * @param player to move
-     * @param move   how many spaces to move from current position
-     */
-    public void doMove(Player player, int move) {
-        doMove(player, move, true);
+    public void afterArrowMove(Player player) {
+        afterPhase(player,1);
+        player.respawn();
     }
 
     /**
@@ -292,47 +343,10 @@ public class Board extends Tile implements Cloneable{
     }
 
     /**
-     * Moves the player backwards without changing orientation
-     *
-     * @param player to move backwards
-     */
-    public void backwardMove(Player player) {
-        int orientation = (player.getOrientation() + 2) % 4;
-        move(player, orientation);
-    }
-
-    /**
-     * Modify given player as the cards instructs
-     * @param card instructions for the player
-     * @param pl player to move
-     */
-    public void cardMove(Card card, Player pl) {
-        int type = card.getType();
-        switch(type){
-            //Forward
-            case (0):
-            case (1):
-                doMove(pl, card.getMove());
-                break;
-            //Turn
-            case (2):
-                pl.turn(card.getMove());
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + type);
-        }
-    }
-
-    /**
      * @return true if the tile is not null
      */
     public static boolean hasTile(TiledMapTileLayer layer, int x, int y) {
         return (layer.getCell(x, y) != null);
-    }
-
-    public void afterArrowMove(Player player) {
-        afterPhase(player,1);
-        player.respawn();
     }
 
     /**
@@ -504,20 +518,6 @@ public class Board extends Tile implements Cloneable{
         }
         if (hasTile(flagLayer, x, y)) {
             player.checkObjective(flagValue(flagLayer, x, y));
-        }
-    }
-
-    public void doMove(Player player, int move, boolean legalMove) {
-
-        //Gets the orientation from the player, in order to check which direction they should move
-        int orientation = player.getOrientation();
-
-        if (move > 0 || move == -1) {
-            if (move == -1) {
-                backwardMove(player);
-            } else if (legalMove) {
-                doMove(player, move - 1, move(player, orientation));
-            }
         }
     }
 
