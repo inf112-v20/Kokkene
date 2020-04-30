@@ -85,7 +85,7 @@ public class PlayerTests {
         player.addHealth(damage);
         player.respawn();
 
-        assertEquals(player.getBackupPos(), player.getStartPos());
+        assertEquals(player.getBackupPos(), player.getCurrentPos());
     }
 
     @Test

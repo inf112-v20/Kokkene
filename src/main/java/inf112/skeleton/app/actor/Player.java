@@ -35,7 +35,7 @@ public class Player implements IActor, Cloneable {
     private PlayerState hb;
 
     //Main position and Backup Position on the board
-    private Pos startPos,
+    private Pos currentPos,
             backupPos;
 
     //Direction the robot is facing (north=0, west=1, south=2, east=3)
@@ -63,7 +63,7 @@ public class Player implements IActor, Cloneable {
     public Player(String name, int xPos, int yPos, int orientation, int id) {
         this.name = name;
         this.id = id;
-        this.startPos = new Pos(xPos, yPos);
+        this.currentPos = new Pos(xPos, yPos);
         this.backupPos = new Pos(xPos, yPos);
         this.orientation = orientation;
         this.ready = false;
@@ -108,16 +108,23 @@ public class Player implements IActor, Cloneable {
     }
 
     public int getxPos() {
-        return startPos.x;
+        return currentPos.x;
     }
-    public int getyPos() { return startPos.y; }
 
-    public void setxPos(int xPos) { this.startPos.x = xPos; }
+    public void setxPos(int xPos) {
+        this.currentPos.x = xPos;
+    }
 
-    public void setyPos(int yPos) { this.startPos.y = yPos; }
+    public int getyPos() {
+        return currentPos.y;
+    }
+
+    public void setyPos(int yPos) {
+        this.currentPos.y = yPos;
+    }
 
     public void setPos(Pos pos) {
-        this.startPos = pos;
+        this.currentPos = pos;
     }
 
     public int getOrientation() {
@@ -132,7 +139,9 @@ public class Player implements IActor, Cloneable {
 
     public int getHealth() { return health; }
 
-    public int getLifePoints() { return this.lifePoints; }
+    public int getLifePoints() {
+        return this.lifePoints;
+    }
 
     public int getObjective() {
         return this.objective;
@@ -141,8 +150,9 @@ public class Player implements IActor, Cloneable {
     public Pos getBackupPos() {
         return backupPos;
     }
-    public Pos getStartPos() {
-        return startPos;
+
+    public Pos getCurrentPos() {
+        return currentPos;
     }
 
     @Override
@@ -172,7 +182,7 @@ public class Player implements IActor, Cloneable {
     }
 
     public void newBackup() {
-        this.backupPos = this.startPos;
+        this.backupPos = this.currentPos;
     }
 
     public void turn(int change){
@@ -189,7 +199,7 @@ public class Player implements IActor, Cloneable {
     public boolean isAlive() { return getLifePoints()>0; }
 
     public void resetPos() {
-        startPos = backupPos;
+        currentPos = backupPos;
     }
 
     public void checkObjective(int ob) {
