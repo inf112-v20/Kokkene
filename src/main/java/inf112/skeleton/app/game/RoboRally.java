@@ -174,7 +174,7 @@ public class RoboRally extends InputAdapter implements Screen {
      */
     private void showCard(Card c) {
         Sprite sprite = c.allocateSprite();
-        int x = (Display.getWidth() / 4) * 3,
+        int x = (Display.getWidth() / 6) * 5,
                 y = Display.getHeight() / 2;
 
         BitmapFont font = new BitmapFont();

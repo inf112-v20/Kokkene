@@ -212,17 +212,7 @@ public class Board extends Tile implements Cloneable{
         }
     }
 
-    /**
-     * Recursive function that moves player forward.
-     *
-     * @param player to move
-     * @param move   how many spaces to move from current position
-     */
     public void doMove(Player player, int move) {
-        doMove(player, move, true);
-    }
-
-    public void doMove(Player player, int move, boolean legalMove) {
 
         //Gets the orientation from the player, in order to check which direction they should move
         int orientation = player.getOrientation();
@@ -230,8 +220,9 @@ public class Board extends Tile implements Cloneable{
         if (move > 0 || move == -1) {
             if (move == -1) {
                 backwardMove(player);
-            } else if (legalMove) {
-                doMove(player, move - 1, move(player, orientation));
+            } else if (player.getHealth()>0) {
+                move(player, orientation);
+                doMove(player, move - 1);
             }
         }
     }
@@ -252,7 +243,7 @@ public class Board extends Tile implements Cloneable{
      * @param player    to move
      * @param direction to go
      */
-    private boolean move(Player player, int direction) {
+    private void move(Player player, int direction) {
         int x = player.getxPos(),
                 y = player.getyPos();
         boolean isHole = hasTile(holeLayer, x, y);
@@ -261,51 +252,43 @@ public class Board extends Tile implements Cloneable{
             //North
             case (0):
                 if (isBlocked(player, 0)) {
-                    return false;
+                    return;
                 } else if (y >= boardHeight-1 || isHole ) {
                     player.addHealth(-player.getMaxHealth());
-                    return true;
-                } else {
-                    player.setyPos(y + 1);
                 }
+                player.setyPos(y + 1);
                 break;
             //West
             case (1):
                 if (isBlocked(player, 1)) {
-                    return false;
+                    return;
                 } else if (x <= 0 || isHole) {
                     player.addHealth(-player.getMaxHealth());
-                    return true;
-                } else {
-                    player.setxPos(x - 1);
                 }
+                player.setxPos(x - 1);
                 break;
             //South
             case (2):
                 if (isBlocked(player, 2)) {
-                    return false;
+                    return;
                 } else if (y <= 0 || isHole) {
                     player.addHealth(-player.getMaxHealth());
-                    return true;
-                } else {
-                    player.setyPos(y - 1);
                 }
+                player.setyPos(y - 1);
                 break;
             //East
             case (3):
                 if (isBlocked(player, 3)) {
-                    return false;
+                    return;
                 } else if (x >= boardWidth - 1 || isHole) {
                     player.addHealth(-player.getMaxHealth());
-                    return true;
-                } else {
-                    player.setxPos(x + 1);
                 }
+                player.setxPos(x + 1);
                 break;
             default:
                 throw new IllegalArgumentException("Direction: " + direction + ", is not a valid direction. ");
         }
-        return true;
+        return;
     }
 
     public void afterArrowMove(Player player) {
@@ -567,13 +550,19 @@ public class Board extends Tile implements Cloneable{
             int[] nb = getNeighbour(player.getxPos(), player.getyPos(), direction);
             setPlayersOnBoard();
             if (hasTile(playerLayer, nb[0], nb[1])) {
-                Player otherPlayer = players[playerLayer.getCell(nb[0],nb[1]).getTile().getId()-1];
+                Player otherPlayer = players[playerLayer.getCell(nb[0], nb[1]).getTile().getId() - 1];
                 nullPlayerBoard();
-                return !move(otherPlayer, direction); //tries to move next player.
+                move(otherPlayer, direction); //tries to move next player.
+
+                setPlayersOnBoard();
+                if (hasTile(playerLayer, nb[0], nb[1])) { //checks if there is still a player there
+                    nullPlayerBoard();
+                    return true;
+                }
             }
+        }
             nullPlayerBoard();
             return false;
-        }
     }
 
     /**
