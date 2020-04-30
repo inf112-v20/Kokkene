@@ -1,7 +1,6 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.actor.Player;
-import inf112.skeleton.app.util.Pos;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,14 +11,14 @@ public class PlayerTests {
 
     private Player player;
 
-    private final Pos pos = new Pos(1,1);
+    private final int x = 0;
+    private final int y = 0;
     private final int upValue = 0;
-    private final int maxLifePoints = 3;
     private int damage = -10;
 
     @Before
     public void makePlayer() {
-        player = new Player("player", pos.x, pos.y, upValue, 1);
+        player = new Player("player", x, y, upValue, 1);
     }
 
     @Test
@@ -39,24 +38,24 @@ public class PlayerTests {
 
     @Test
     public void playerXPositionIsOneAfterInitiation() {
-        assertEquals(player.getxPos(),pos.x);
+        assertEquals(player.getxPos(),x);
     }
 
     @Test
     public void playerYPositionIsOneAfterInitiation() {
-        assertEquals(player.getyPos(),pos.y);
+        assertEquals(player.getyPos(),y);
     }
 
     @Test
     public void playerXBackupIsOneAfterMoving() {
         player.setxPos(7);
-        assertEquals(pos.x, player.getBackupPos().x);
+        assertEquals(x, player.getxBackup());
     }
 
     @Test
     public void playerYBackupIsOneAfterMoving() {
         player.setyPos(7);
-        assertEquals(pos.y, player.getBackupPos().y);
+        assertEquals(y, player.getyBackup());
     }
 
     @Test
@@ -75,17 +74,20 @@ public class PlayerTests {
     @Test
     public void playerLoseOneLifePointWhenRespawningWithNegativeHealth() {
         player.addHealth(damage); player.respawn();
-        assertEquals(maxLifePoints-1, player.getLifePoints());
+        int maxLifePoints = 3;
+        assertEquals(maxLifePoints -1, player.getLifePoints());
     }
 
     @Test
     public void playerWillRespawnAtBackupLocation(){
-        player.setPos(new Pos(2,2)); //Moves away from backup location
+        player.setxPos(player.getxBackup()+1);
+        player.setyPos(player.getyBackup()+1);
 
         player.addHealth(damage);
         player.respawn();
 
-        assertEquals(player.getBackupPos(), player.getCurrentPos());
+        assertEquals(player.getxBackup(), player.getxPos());
+        assertEquals(player.getyBackup(), player.getyPos());
     }
 
     @Test

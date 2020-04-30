@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
-import inf112.skeleton.app.util.Pos;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.List;
  *
  */
 
-public class Player implements IActor, Cloneable {
+public class Player implements IActor {
 
     //The cards the player holds
     public Hand hand;
@@ -35,8 +34,10 @@ public class Player implements IActor, Cloneable {
     private PlayerState hb;
 
     //Main position and Backup Position on the board
-    private Pos currentPos,
-            backupPos;
+    private int xPos,
+            yPos,
+            xBackup,
+            yBackup;
 
     //Direction the robot is facing (north=0, west=1, south=2, east=3)
     private int orientation;
@@ -63,15 +64,12 @@ public class Player implements IActor, Cloneable {
     public Player(String name, int xPos, int yPos, int orientation, int id) {
         this.name = name;
         this.id = id;
-        this.currentPos = new Pos(xPos, yPos);
-        this.backupPos = new Pos(xPos, yPos);
+        this.xPos = xPos;
+        this.yPos = yPos;
         this.orientation = orientation;
+        this.xBackup = xPos;
+        this.yBackup = yPos;
         this.ready = false;
-    }
-
-    public void invinicible() {
-        this.lifePoints = 3;
-        this.setHealth(6);
     }
 
     //Getters and setters
@@ -99,6 +97,12 @@ public class Player implements IActor, Cloneable {
         this.ready = b;
     }
 
+    public int getxBackup() { return xBackup; }
+
+    public int getyBackup() {
+        return yBackup;
+    }
+
     public String getName() {
         return name;
     }
@@ -108,24 +112,14 @@ public class Player implements IActor, Cloneable {
     }
 
     public int getxPos() {
-        return currentPos.x;
+        return xPos;
     }
 
-    public void setxPos(int xPos) {
-        this.currentPos.x = xPos;
-    }
+    public void setxPos(int xPos) { this.xPos = xPos; }
 
-    public int getyPos() {
-        return currentPos.y;
-    }
+    public int getyPos() { return yPos; }
 
-    public void setyPos(int yPos) {
-        this.currentPos.y = yPos;
-    }
-
-    public void setPos(Pos pos) {
-        this.currentPos = pos;
-    }
+    public void setyPos(int yPos) { this.yPos = yPos; }
 
     public int getOrientation() {
         return orientation % 4;
@@ -139,20 +133,10 @@ public class Player implements IActor, Cloneable {
 
     public int getHealth() { return health; }
 
-    public int getLifePoints() {
-        return this.lifePoints;
-    }
+    public int getLifePoints() { return this.lifePoints; }
 
     public int getObjective() {
         return this.objective;
-    }
-
-    public Pos getBackupPos() {
-        return backupPos;
-    }
-
-    public Pos getCurrentPos() {
-        return currentPos;
     }
 
     @Override
@@ -182,7 +166,8 @@ public class Player implements IActor, Cloneable {
     }
 
     public void newBackup() {
-        this.backupPos = this.currentPos;
+        this.xBackup = this.xPos;
+        this.yBackup = this.yPos;
     }
 
     public void turn(int change){
@@ -199,7 +184,8 @@ public class Player implements IActor, Cloneable {
     public boolean isAlive() { return getLifePoints()>0; }
 
     public void resetPos() {
-        currentPos = backupPos;
+        setxPos(getxBackup());
+        setyPos(getyBackup());
     }
 
     public void checkObjective(int ob) {
@@ -225,6 +211,7 @@ public class Player implements IActor, Cloneable {
      * @param health  The value that health will be set to.
      */
     private void setHealth(int health) {
+
         if (health <= 0) {
             this.health = 0;
         }
@@ -240,9 +227,4 @@ public class Player implements IActor, Cloneable {
         this.lifePoints -= 1;
         if (isAlive()) resetPos();
     }
-
-    public Player clone() throws CloneNotSupportedException {
-        return (Player) super.clone();
-    }
-
 }
