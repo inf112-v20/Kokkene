@@ -75,7 +75,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
 
         //sets up the hud to display information about the player in real time.
-        hud = new HUD(board.getPlayers());
+        hud = new HUD(board);
 
         //starts the background music.
         startMusic();

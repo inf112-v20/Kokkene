@@ -8,7 +8,9 @@ import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 import inf112.skeleton.app.util.AIColor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class AI extends Player {
@@ -16,9 +18,11 @@ public class AI extends Player {
     // Color to this specific AI gets taken from a global constant of AI colors.
     private final Color color;
 
+    private final Board board;
+
     private boolean initializeMove;
     private ArrayList<Integer> moveSet;
-    private Set<ArrayList<Integer>> allPermutations = new HashSet<>();
+    private final Set<ArrayList<Integer>> allPermutations = new HashSet<>();
 
     /**
      * @param name        the name for this robot.
@@ -27,8 +31,9 @@ public class AI extends Player {
      * @param orientation orientation (direction) in a 0-3 scale.
      * @param id          numeric ID of the player
      */
-    public AI(String name, int xPos, int yPos, int orientation, int id) {
+    public AI(Board board, String name, int xPos, int yPos, int orientation, int id) {
         super(name, xPos, yPos, orientation, id);
+        this.board = board;
         this.color = new AIColor().Colors[id - 2];
 
     }
@@ -36,7 +41,7 @@ public class AI extends Player {
     public void setHand(Deck deck) {
         hand = new Hand(this, deck);
         initializeMove = true;
-        this.invinicible();
+        //this.invinicible();
         aiMove();
     }
 
@@ -57,7 +62,7 @@ public class AI extends Player {
     private void aiMoveHard() {
 
         // initialize the moveSet if it's empty, else play the next card.
-        if(initializeMove) {
+        if (initializeMove) {
             try {
                 this.moveSet = getMoveClosestToObject();
                 initializeMove = false;
@@ -65,19 +70,56 @@ public class AI extends Player {
                 e.printStackTrace();
             }
         }
-        for(int i = 0; i < moveSet.size(); i++) {
-            hand.toggleCard(hand.plHand[moveSet.get(i)]);
+        for (Integer integer : moveSet) {
+            hand.toggleCard(hand.plHand[integer]);
         }
         setReady(true);
     }
 
     private void aiMoveMedium() {
         //TODO
-        aiMovePerfect();
+        int[] aiXY = {getxPos(), getyPos()},
+                obXY = board.objectives.get(getObjective() - 1);
+        int dir = getOrientation();
+
+        int tries = 0;
+        while (getSelected().size() < hand.cardsToSelect()) {
+            tries++;
+            if (tries > 15) {
+                aiMoveEasy();
+            }
+            Card current = hand.plHand[0];
+            for (int i = 0; (i < hand.plHand.length) && (!(current.getType() == 0) || getSelected().contains(current)); i++) {
+                current = hand.plHand[i];
+            }
+            for (Card c : hand.plHand) {
+                if (getSelected().contains(c)) {
+                    continue;
+                }
+                if (c.getType() == 2 && !board.isBlocked(aiXY[0], aiXY[1], dir + c.getMove())
+                        && (dir + c.getMove()) % 4 == Board.towardTarget(aiXY[0], aiXY[1], obXY[0], obXY[1])) {
+                    hand.toggleCard(c);
+                    dir = (dir + c.getMove()) % 4;
+                    break;
+                } else if (c.getType() == 0) {
+                    if (current.getMove() < c.getMove()) {
+                        current = c;
+                    }
+                    if (current.getMove() == 3) {
+                        break;
+                    }
+                }
+            }
+            for (int m = current.getMove(); 0 < m && !board.isBlocked(aiXY[0], aiXY[1], dir); m--) {
+                aiXY = Board.getNeighbour(aiXY[0], aiXY[1], dir);
+            }
+            hand.toggleCard(current);
+        }
+        setReady(true);
     }
 
-    public void aiMoveEasy() {
 
+    public void aiMoveEasy() {
         int cardsToSelect = hand.cardsToSelect();
 
         while (getSelected().size() < cardsToSelect) {
@@ -86,11 +128,9 @@ public class AI extends Player {
                 continue;
             }
             hand.toggleCard(hand.plHand[rand]);
-            setReady(true);
         }
-
-
         assert getSelected().size() == cardsToSelect : "Should be " + cardsToSelect + ", not " + getSelected().size();
+        setReady(true);
     }
 
 
@@ -100,8 +140,8 @@ public class AI extends Player {
     public void aiMovePerfect() {
         int cardsToSelect = hand.cardsToSelect();
 
-        int obX = RoboRally.getBoard().objectives.get(this.getObjective() - 1)[0],
-                obY = RoboRally.getBoard().objectives.get(this.getObjective() - 1)[1];
+        int obX = board.objectives.get(this.getObjective() - 1)[0],
+                obY = board.objectives.get(this.getObjective() - 1)[1];
 
         // this many cards should be toggled.
         for (int i = 0; i < cardsToSelect; i++) {
@@ -152,10 +192,9 @@ public class AI extends Player {
         ArrayList<Integer> bestSequence = new ArrayList<>();
         ArrayList<Integer> currentPermutation;
         //Creating a Iterator that iterates through all the hand permutations
-        Iterator<ArrayList<Integer>> iterator= allPermutations.iterator();
         // play each hand and check which hand gets the closest to the objective.
-        while (iterator.hasNext()) {
-            currentPermutation = iterator.next();
+        for (ArrayList<Integer> allPermutation : allPermutations) {
+            currentPermutation = allPermutation;
             AI temp = (AI) this.clone();
             int obX = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[0],
                     obY = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[1];
@@ -180,7 +219,7 @@ public class AI extends Player {
             }
 
             // set the AI back to its original position and render it invincible
-            board.playerLayer.getCell(aiX,aiY).setTile(null);
+            board.playerLayer.getCell(aiX, aiY).setTile(null);
             board.playerLayer.setCell(originX, originY, temp.getPlayerState().getPlayerStatus());
             board.getPlayers()[1].invinicible();
         }

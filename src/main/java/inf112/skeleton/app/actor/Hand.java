@@ -25,12 +25,6 @@ public class Hand {
         drawCards(deck);
     }
 
-    //Constructor for AI's
-    public Hand(AI actor, Deck deck) {
-        owner = actor;
-        drawCards(deck);
-    }
-
     /**
      * How many cards you may select in this round
      * @return # of cards to select

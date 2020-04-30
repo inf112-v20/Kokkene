@@ -36,7 +36,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private final BitmapFont font;
 
     private final Player player;
-    private Hand hand;
+    private final Hand hand;
 
     //array of all card sprites
     private Sprite[] allSprites;
@@ -288,6 +288,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
     }
 
+    //TODO To be removed?
     private void arrowMove(Player player, int move) {
         int playerHealth = player.getHealth();
         RoboRally.getBoard().doMove(player, move);

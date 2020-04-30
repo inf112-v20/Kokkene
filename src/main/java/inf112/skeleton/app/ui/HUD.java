@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
 import inf112.skeleton.app.actor.Player;
-import inf112.skeleton.app.game.RoboRally;
+import inf112.skeleton.app.gameelements.Board;
 import org.lwjgl.opengl.Display;
 
 public class HUD {
 
-    private final Player[] player;
+    private final Player[] players;
+    private final Board board;
     private final int HEIGHT = Main.cfg.height;
 
     private final SpriteBatch batch = new SpriteBatch();
@@ -20,8 +21,9 @@ public class HUD {
     private final Texture heart = new Texture(Gdx.files.internal("pictures/heart.png"));
     private final Texture heartAI = new Texture(Gdx.files.internal("pictures/heart2.png"));
 
-    public HUD(Player[] player) {
-        this.player = player;
+    public HUD(Board board) {
+        this.board = board;
+        this.players = board.getPlayers();
         font.setColor(Color.RED);
         font.getData().setScale(2, 2);
     }
@@ -31,28 +33,28 @@ public class HUD {
      */
     public void render() {
         batch.begin();
-        int heartSize = Display.getWidth()/40;
-        for(int i = 0; i < player[0].getHealth(); i++) {
-            batch.draw(heart, i*(heartSize/2f), HEIGHT-heartSize, heartSize, heartSize);
+        int heartSize = Display.getWidth() / 40;
+        for (int i = 0; i < players[0].getHealth(); i++) {
+            batch.draw(heart, i * (heartSize / 2f), HEIGHT - heartSize, heartSize, heartSize);
         }
-        float obX = (heartSize*player[0].getMaxHealth() + heartSize)/2f;
-        float obY = HEIGHT - heartSize/4f;
-        if (RoboRally.getBoard().objectives.size() == player[0].getObjective() - 1) {
+        float obX = (heartSize * players[0].getMaxHealth() + heartSize) / 2f;
+        float obY = HEIGHT - heartSize / 4f;
+        if (board.objectives.size() == players[0].getObjective() - 1) {
             font.getData().setScale(2f);
             font.draw(batch, "Target Objective: You Won!", obX, obY);
         } else {
-            font.draw(batch, "Target Objective: " + player[0].getObjective(), obX, obY);
+            font.draw(batch, "Target Objective: " + players[0].getObjective(), obX, obY);
         }
         font.getData().setScale(1f);
-        for(int i = 1; i < player.length; i++) {
+        for (int i = 1; i < players.length; i++) {
             //float nmX = (heartSize*player[i].getMaxHealth() + heartSize)/2f;
-            float nmY = (HEIGHT-30)-(heartSize*i);
-            Color color = player[i].getColor();
+            float nmY = (HEIGHT - 30) - (heartSize * i);
+            Color color = players[i].getColor();
 
-            if(player[i].isAlive()) {
-                for (int j = 0; j < player[i].getHealth(); j++) {
+            if (players[i].isAlive()) {
+                for (int j = 0; j < players[i].getHealth(); j++) {
                     font.setColor(color);
-                    font.draw(batch, player[i].getName(), (heartSize) / 2f - 10, nmY + heartSize / 2f);
+                    font.draw(batch, players[i].getName(), (heartSize) / 2f - 10, nmY + heartSize / 2f);
                     batch.setColor(color);
                     batch.draw(heartAI, (j * (heartSize) / 3f) + 50, nmY, heartSize / 1.5f, heartSize / 1.5f);
 

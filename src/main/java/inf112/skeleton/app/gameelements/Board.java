@@ -5,11 +5,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.actor.AI;
-import inf112.skeleton.app.util.AIColor;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.actor.PlayerState;
 import inf112.skeleton.app.game.Menu;
 import inf112.skeleton.app.sound.Sound;
+import inf112.skeleton.app.util.AIColor;
 import inf112.skeleton.app.util.Tile;
 
 import java.io.IOException;
@@ -58,9 +58,9 @@ public class Board extends Tile implements Cloneable{
 
         createDeck();
 
-        generatePlayers();
-
         generateObjectives();
+
+        generatePlayers();
 
         damageSound = new Sound("assets/sound/oof_sound.mp3");
         laserSound = new Sound("assets/sound/laserfire01.ogg");
@@ -114,22 +114,25 @@ public class Board extends Tile implements Cloneable{
     }
 
     /**
-     * Create a certain amount of players based on options selected at the menu and store them in the players field
+     * Returns the direction it is furthest to the center of the map on that axis
+     *
+     * @param x x-coordinate to check distance to the center of the map from
+     * @param y y-coordinate to check distance to the center of the map from
+     * @return Direction pointing inwards, away from the edges of the map
      */
-    private void generatePlayers() {
-        players = new Player[Menu.OptionsUtil.nrPlayers];
-        ArrayList<int[]> spawns = Menu.OptionsUtil.spawns.get(Menu.OptionsUtil.mapFile);
-        for (int i = 0; i < players.length; i++) {
-            int[] xy = spawns.get(i); // x- and y-coordinate to spawn
-            if (i < Menu.OptionsUtil.humanPlayers) {
-                players[i] = new Player("Player " + (i + 1), xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
-            } else {
-                players[i] = new AI("AI " + (1 + i - Menu.OptionsUtil.humanPlayers), // always i >= humanPlayers here
-                        xy[0], xy[1], towardCenter(xy[0], xy[1]), i + 1);
-            }
-            createPlayerTextures(players[i], i);
-            players[i].setHand(deck); //Deals the hand to the players
+    public static int towardTarget(int x, int y, int targetX, int targetY) {
+        ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(1, 3, 0, 2));
+        if (y < targetY) {
+            dirs.remove(3); // indices are guaranteed as we're working from the back of the list to the front
+        } else {
+            dirs.remove(2);
         }
+        if (x >= targetX) {
+            dirs.remove(1);
+        } else {
+            dirs.remove(0);
+        }
+        return Math.abs(y - targetY) < Math.abs(x - targetX) ? dirs.get(0) : dirs.get(1); // returns left/right if true
     }
 
     /**
@@ -139,11 +142,10 @@ public class Board extends Tile implements Cloneable{
      */
     private void createPlayerTextures(Player p, int num) {
         TextureRegion[][] tr;
-        if(num == 0) {
+        if (num == 0) {
             tr = p.setPlayerTextures(Menu.OptionsUtil.playerModelFile);
-        }
-        else {
-            tr = p.setPlayerTextures(new AIColor().ModelColors[num-1]);
+        } else {
+            tr = p.setPlayerTextures(new AIColor().ModelColors[num - 1]);
         }
         p.setPlayerState(new PlayerState(p, this, tr));
         TextureRegion[][] hb = p.setPlayerTextures("assets/pictures/healthbars2.png");
@@ -151,27 +153,23 @@ public class Board extends Tile implements Cloneable{
     }
 
     /**
-     * Returns the direction it is furthest to the center of the map on that axis
-     *
-     * @param x x-coordinate to check distance to the center of the map from
-     * @param y y-coordinate to check distance to the center of the map from
-     * @return Direction pointing inwards, away from the edges of the map
+     * Create a certain amount of players based on options selected at the menu and store them in the players field
      */
-    private int towardCenter(int x, int y) { //TODO unnecessary when we add direction value to the spawn tiles
-        ArrayList<Integer> dirs = new ArrayList<>(Arrays.asList(1, 3, 0, 2));
-        int centerX = boardWidth / 2,
-                centerY = boardHeight / 2;
-        if (y < centerY) {
-            dirs.remove(3); // indices are guaranteed as we're working forwards from the back of the list
-        } else {
-            dirs.remove(2);
+    private void generatePlayers() {
+        players = new Player[Menu.OptionsUtil.nrPlayers];
+        ArrayList<int[]> spawns = Menu.OptionsUtil.spawns.get(Menu.OptionsUtil.mapFile);
+        for (int i = 0; i < players.length; i++) {
+            int[] xy = spawns.get(i); // x- and y-coordinate to spawn
+            if (i < Menu.OptionsUtil.humanPlayers) {
+                players[i] = new Player("Player " + (i + 1),
+                        xy[0], xy[1], towardTarget(xy[0], xy[1], boardWidth / 2, boardHeight / 2), i + 1);
+            } else {
+                players[i] = new AI(this, "AI " + (1 + i - Menu.OptionsUtil.humanPlayers), // always i >= humanPlayers here
+                        xy[0], xy[1], towardTarget(xy[0], xy[1], boardWidth / 2, boardHeight / 2), i + 1);
+            }
+            createPlayerTextures(players[i], i);
+            players[i].setHand(deck); //Deals the hand to the players
         }
-        if (x >= centerX) {
-            dirs.remove(1);
-        } else {
-            dirs.remove(0);
-        }
-        return Math.abs(y - centerY) < Math.abs(x - centerX) ? dirs.get(0) : dirs.get(1); // returns left/right if true
     }
 
     /**
@@ -286,7 +284,7 @@ public class Board extends Tile implements Cloneable{
                 player.setxPos(x + 1);
                 break;
             default:
-                throw new IllegalArgumentException("Direction: " + direction + ", is not a valid direction. ");
+                throw new IllegalArgumentException("Direction: " + direction + " is not a valid direction. ");
         }
     }
 
@@ -505,12 +503,13 @@ public class Board extends Tile implements Cloneable{
 
     /**
      * Checks if path is blocked in given direction
-     * @param x coordinate to check from
-     * @param y coordinate to check in given direction of
+     *
+     * @param x   coordinate to check from
+     * @param y   coordinate to check in given direction of
      * @param dir direction to check if it's blocked
      * @return true if given direction is blocked
      */
-    private boolean isBlocked(int x, int y, int dir){
+    public boolean isBlocked(int x, int y, int dir) {
         int[] nb = getNeighbour(x, y, dir);
         int wallThis = 9,
                 wallNext = 9;
@@ -530,7 +529,7 @@ public class Board extends Tile implements Cloneable{
             case 3:
                 return wallThis == 3 || wallNext == 1;
             default:
-                throw new IllegalArgumentException("Direction should be 0-3, actually: " + dir);
+                throw new IllegalArgumentException("Direction should be 0-3, is actually: " + dir);
         }
     }
 
