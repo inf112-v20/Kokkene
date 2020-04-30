@@ -49,14 +49,16 @@ public class HUD {
             float nmY = (HEIGHT-30)-(heartSize*i);
             Color color = player[i].getColor();
 
-            for(int j = 0; j < player[i].getHealth(); j++) {
-                font.setColor(color);
-                font.draw(batch, player[i].getName(), (heartSize)/2f-10, nmY+heartSize/2f);
-                batch.setColor(color);
-                batch.draw(heartAI, (j*(heartSize)/3f)+50, nmY, heartSize/1.5f, heartSize/1.5f);
+            if(player[i].isAlive()) {
+                for (int j = 0; j < player[i].getHealth(); j++) {
+                    font.setColor(color);
+                    font.draw(batch, player[i].getName(), (heartSize) / 2f - 10, nmY + heartSize / 2f);
+                    batch.setColor(color);
+                    batch.draw(heartAI, (j * (heartSize) / 3f) + 50, nmY, heartSize / 1.5f, heartSize / 1.5f);
 
-                font.setColor(Color.RED);
-                batch.setColor(Color.RED);
+                    font.setColor(Color.RED);
+                    batch.setColor(Color.RED);
+                }
             }
         }
         font.getData().setScale(2f);
