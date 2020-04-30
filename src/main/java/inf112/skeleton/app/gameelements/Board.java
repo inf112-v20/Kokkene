@@ -348,7 +348,7 @@ public class Board extends Tile implements Cloneable{
 
             if (p.announcePowerDown) {
                 if (p.playerPower) {
-                    p.addHealth(1);
+                    p.addHealth(p.getMaxHealth() - p.getHealth());
                     p.announcePowerDown = false;
                 }
                 p.hand.lockRegister(); //In case damage is taken
