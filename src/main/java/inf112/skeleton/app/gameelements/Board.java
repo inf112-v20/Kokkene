@@ -288,7 +288,6 @@ public class Board extends Tile implements Cloneable{
             default:
                 throw new IllegalArgumentException("Direction: " + direction + ", is not a valid direction. ");
         }
-        return;
     }
 
     public void afterArrowMove(Player player) {
