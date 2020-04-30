@@ -1,7 +1,8 @@
-package inf112.skeleton.app.actor;
+package inf112.skeleton.app.util;
 
 public class Pos implements Comparable<Pos>{
-	public int x, y;
+	public int x,
+			y;
 
 	public Pos(int x, int y){
 		this.x = x;

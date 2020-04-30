@@ -1,7 +1,7 @@
 package inf112.skeleton.app;
 
 import inf112.skeleton.app.actor.Player;
-import inf112.skeleton.app.actor.Pos;
+import inf112.skeleton.app.util.Pos;
 import org.junit.Before;
 import org.junit.Test;
 

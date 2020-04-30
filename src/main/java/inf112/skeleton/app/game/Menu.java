@@ -18,7 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
-import inf112.skeleton.app.gameelements.Tile;
+import inf112.skeleton.app.util.Tile;
 
 import java.io.File;
 import java.util.ArrayList;

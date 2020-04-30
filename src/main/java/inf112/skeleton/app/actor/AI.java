@@ -6,8 +6,8 @@ import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.gameelements.Board;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
+import inf112.skeleton.app.util.AIColor;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 
@@ -47,6 +47,7 @@ public class AI extends Player {
                 break;
             default:
                 aiMoveEasy();
+                break;
         }
     }
 
@@ -263,7 +264,7 @@ public class AI extends Player {
      * @param a The permutation of the hand (length = objects)
      * @param r sample size of the permutation
      */
-    void addPermutation(ArrayList<Integer> a, int r)
+    private void addPermutation(ArrayList<Integer> a, int r)
     {
         ArrayList<Integer> permutation = new ArrayList<>();
         for (int i = 0; i < r; i++) {

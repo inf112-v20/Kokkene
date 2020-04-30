@@ -5,11 +5,12 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import inf112.skeleton.app.actor.AI;
-import inf112.skeleton.app.actor.AIColor;
+import inf112.skeleton.app.util.AIColor;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.actor.PlayerState;
 import inf112.skeleton.app.game.Menu;
 import inf112.skeleton.app.sound.Sound;
+import inf112.skeleton.app.util.Tile;
 
 import java.io.IOException;
 import java.util.ArrayList;

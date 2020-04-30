@@ -1,6 +1,7 @@
-package inf112.skeleton.app.gameelements;
+package inf112.skeleton.app.util;
 
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import inf112.skeleton.app.gameelements.Board;
 
 import java.util.ArrayList;
 import java.util.Objects;

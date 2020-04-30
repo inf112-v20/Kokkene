@@ -1,4 +1,4 @@
-package inf112.skeleton.app.actor;
+package inf112.skeleton.app.util;
 
 import com.badlogic.gdx.graphics.Color;
 
