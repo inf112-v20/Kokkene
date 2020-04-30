@@ -179,7 +179,7 @@ public class AI extends Player {
                 bestSequence = currentPermutation;
             }
 
-            // set the AI back to its original position and render it invinicible
+            // set the AI back to its original position and render it invincible
             board.playerLayer.getCell(aiX,aiY).setTile(null);
             board.playerLayer.setCell(originX, originY, temp.getPlayerState().getPlayerStatus());
             board.getPlayers()[1].invinicible();
