@@ -15,6 +15,34 @@ public class PermutationCalculator {
     private Set<ArrayList<Integer>> permutationsAt3HP = new HashSet<>();
     private Set<ArrayList<Integer>> permutationsAt2HP = new HashSet<>();
 
+    public PermutationCalculator() {
+        createSequences();
+    }
+
+    public Set<ArrayList<Integer>> getPermutation(int hp) {
+        switch (hp) {
+            case 9:
+                return permutationsAt9HP;
+            case 8:
+                return permutationsAt8HP;
+            case 7:
+                return permutationsAt7HP;
+            case 6:
+                return permutationsAt6HP;
+            case 5:
+                return permutationsAt5HP;
+            case 4:
+                return permutationsAt4HP;
+            case 3:
+                return permutationsAt3HP;
+            case 2:
+                return permutationsAt2HP;
+            default:
+                break;
+        }
+        return null;
+    }
+
     /**
      * Creates a HashSet that contains all possible permutations of the hand,
      * and adds them to the corresponding HashSet
@@ -127,17 +155,4 @@ public class PermutationCalculator {
         return handArray;
     }
 
-    public static void main(String[] args) {
-        PermutationCalculator calc = new PermutationCalculator();
-        calc.createSequences();
-
-        System.out.println(calc.permutationsAt9HP.size() + "    |Should be P(9,5) = 15120");
-        System.out.println(calc.permutationsAt8HP.size()+ "     |Should be P(8,5) = 6720");
-        System.out.println(calc.permutationsAt7HP.size()+ "     |Should be P(7,5) = 2520");
-        System.out.println(calc.permutationsAt6HP.size()+ "      |Should be P(6,5) = 720");
-        System.out.println(calc.permutationsAt5HP.size()+ "      |Should be P(5,5) = 120");
-        System.out.println(calc.permutationsAt4HP.size()+ "       |Should be P(4,4) = 24");
-        System.out.println(calc.permutationsAt3HP.size()+ "        |Should be P(3,3) = 6");
-        System.out.println(calc.permutationsAt2HP.size()+ "        |Should be P(2,2) = 2");
-    }
 }
