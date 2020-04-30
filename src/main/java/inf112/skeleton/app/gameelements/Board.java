@@ -651,8 +651,8 @@ public class Board extends Tile implements Cloneable{
     }
 
     @Override
-    public Board clone() throws CloneNotSupportedException {
-        return (Board) super.clone();
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
     /**

@@ -186,7 +186,7 @@ public class AI extends Player {
 
     // initializes a a copy of the current board, to do calculations on.
     private Board createVirtualBoard() throws CloneNotSupportedException {
-        return RoboRally.getCopyOfBoard();
+        return (Board)new Board().clone();
 
     }
 
