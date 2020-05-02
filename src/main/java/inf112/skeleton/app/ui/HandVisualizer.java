@@ -1,9 +1,6 @@
 package inf112.skeleton.app.ui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import inf112.skeleton.app.Main;
 import inf112.skeleton.app.actor.Hand;
 import inf112.skeleton.app.actor.Player;
+import inf112.skeleton.app.game.Menu;
 import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.sound.Sound;
@@ -44,8 +42,11 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private Pixmap cards;
     private Texture[] textures;
 
-    public HandVisualizer(Player player) {
+    Game game;
+
+    public HandVisualizer(Player player, Game game) {
         this.player = player;
+        this.game = game;
         this.hand = player.hand;
 
         batch = new SpriteBatch();
@@ -240,6 +241,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 fullscreenToggle();
                 break;
             case (Input.Keys.ESCAPE):
+                RoboRally.music.dispose();
+                game.setScreen(new Menu(game));
+                break;
             case (Input.Keys.Q):
                 Gdx.app.exit();
                 break;
@@ -417,6 +421,5 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
-        //Must have this method because we implement Screen
     }
 }

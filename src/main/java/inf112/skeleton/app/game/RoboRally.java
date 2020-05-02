@@ -32,7 +32,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private int num = 0;
 
-    private static Music music;
+    public static Music music;
 
     private final Game game;
 
@@ -80,7 +80,7 @@ public class RoboRally extends InputAdapter implements Screen {
         //starts the background music.
         startMusic();
 
-        handVisualizer = new HandVisualizer(player);
+        handVisualizer = new HandVisualizer(player, game);
     }
 
     /**
