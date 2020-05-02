@@ -182,7 +182,7 @@ public class AI extends Player {
     public ArrayList<Integer> getMoveClosestToObject() throws CloneNotSupportedException {
 
         // initialize the virtual board
-        Board board = createVirtualBoard();
+        Board board;
 
         createSequences();
         int originX = this.getxPos();
@@ -194,6 +194,7 @@ public class AI extends Player {
         //Creating a Iterator that iterates through all the hand permutations
         // play each hand and check which hand gets the closest to the objective.
         for (ArrayList<Integer> allPermutation : allPermutations) {
+            board = createVirtualBoard();
             currentPermutation = allPermutation;
             AI temp = (AI) this.clone();
             int obX = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[0],
@@ -218,10 +219,13 @@ public class AI extends Player {
                 bestSequence = currentPermutation;
             }
 
+
+            /**
             // set the AI back to its original position and render it invincible
             board.playerLayer.getCell(aiX, aiY).setTile(null);
             board.playerLayer.setCell(originX, originY, temp.getPlayerState().getPlayerStatus());
             board.getPlayers()[1].invinicible();
+             */
         }
 
         System.out.println(bestSequence);
