@@ -45,6 +45,9 @@ public class AI extends Player {
         aiMove();
     }
 
+    /**
+     * Calls the correct aiMove function depending on selected difficulty
+     */
     public void aiMove() {
         switch (Menu.OptionsUtil.aiDifficulty) {
             case (1):
@@ -77,6 +80,9 @@ public class AI extends Player {
         setReady(true);
     }
 
+    /**
+     * Always tries to move in the direction most towards the next objective without taking into account board elements
+     */
     private void aiMoveMedium() {
         int[] aiXY = {getxPos(), getyPos()},
                 obXY = board.objectives.get(getObjective() - 1);
@@ -87,7 +93,7 @@ public class AI extends Player {
             tries++;
             if (tries > 15) { // In case of locking it will choose random cards
                 aiMoveEasy();
-                break;
+                continue;
             }
             Card current = hand.plHand[0];
             for (int i = 0; (i < hand.plHand.length) &&
@@ -100,7 +106,6 @@ public class AI extends Player {
                 }
                 if (c.getType() == 2 && // Check if turn card
                         (board.isBlocked(aiXY[0], aiXY[1], dir) || bestTurn(aiXY, obXY, dir, c))) { //check dirs blocked
-                    hand.toggleCard(c);
                     current = c;
                     dir = (dir + c.getMove()) % 4;
                     break;
@@ -113,11 +118,10 @@ public class AI extends Player {
                     }
                 }
             }
-            if (current.getType() != 0) {
-                continue;
-            }
-            for (int m = 0; m < current.getMove() && !board.isBlocked(aiXY[0], aiXY[1], dir); m++) {
-                aiXY = Board.getNeighbour(aiXY[0], aiXY[1], dir);
+            if (current.getType() == 0) {
+                for (int m = 0; m < current.getMove() && !board.isBlocked(aiXY[0], aiXY[1], dir); m++) {
+                    aiXY = Board.getNeighbour(aiXY[0], aiXY[1], dir);
+                }
             }
             hand.toggleCard(current);
         }
@@ -138,6 +142,9 @@ public class AI extends Player {
         return !board.isBlocked(xy[0], xy[1], newDir) && newDir == Board.towardTarget(xy[0], xy[1], ob[0], ob[1]);
     }
 
+    /**
+     * Selects random cards from the hand
+     */
     public void aiMoveEasy() {
         int cardsToSelect = hand.cardsToSelect();
 
@@ -239,7 +246,7 @@ public class AI extends Player {
             }
 
 
-            /**
+            /*
             // set the AI back to its original position and render it invincible
             board.playerLayer.getCell(aiX, aiY).setTile(null);
             board.playerLayer.setCell(originX, originY, temp.getPlayerState().getPlayerStatus());
