@@ -89,14 +89,14 @@ public class AI extends Player {
                 aiMoveEasy();
             }
             Card current = hand.plHand[0];
-            for (int i = 0; (i < hand.plHand.length) && (!(current.getType() == 0) || getSelected().contains(current)); i++) {
+            for (int i = 0; (i < hand.plHand.length) && ((current.getType() != 0) || getSelected().contains(current)); i++) {
                 current = hand.plHand[i];
             }
             for (Card c : hand.plHand) {
                 if (getSelected().contains(c)) {
                     continue;
                 }
-                if (c.getType() == 2 && !board.isBlocked(aiXY[0], aiXY[1], dir + c.getMove())
+                if (c.getType() == 2 && !board.isBlocked(aiXY[0], aiXY[1], (dir + c.getMove()) % 4)
                         && (dir + c.getMove()) % 4 == Board.towardTarget(aiXY[0], aiXY[1], obXY[0], obXY[1])) {
                     hand.toggleCard(c);
                     dir = (dir + c.getMove()) % 4;
