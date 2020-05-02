@@ -42,7 +42,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private Pixmap cards;
     private Texture[] textures;
 
-    Game game;
+    private final Game game;
 
     public HandVisualizer(Player player, Game game) {
         this.player = player;
@@ -421,5 +421,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public void dispose() {
+        //Must have this method because we implement Screen
     }
 }

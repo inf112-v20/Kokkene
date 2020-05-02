@@ -288,18 +288,22 @@ public class RoboRally extends InputAdapter implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void pause() {
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void resume() {
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void hide() {
+        //Must have this method because we implement Screen
     }
 
     /**

@@ -208,16 +208,17 @@ public class Menu implements Screen {
 
     @Override
     public void resize(int i, int i1) {
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void pause() {
-
+        //Must have this method because we implement Screen
     }
 
     @Override
     public void resume() {
-
+        //Must have this method because we implement Screen
     }
 
     @Override
