@@ -114,13 +114,8 @@ public class AI extends Player {
                     current = c;
                     dir = (dir + c.getMove()) % 4;
                     break;
-                } else if (c.getType() == 0) { // Check if move card
-                    if (current.getMove() < c.getMove()) {
-                        current = c;
-                    }
-                    if (current.getMove() == 3 && !board.isBlocked(aiXY[0], aiXY[1], dir)) {
-                        break;
-                    }
+                } else if (c.getType() == 0 && current.getMove() < c.getMove()) { // Check if move card moves further
+                    current = c;
                 }
             }
 

@@ -295,7 +295,7 @@ public class Tile {
 
         //Rotating gears
         //Val = which direction to rotate
-        GEARLEFT(47, 1, 0, Group.GEARS), GEARRIGHT(48, -1, 0, Group.GEARS),
+        GEARLEFT(47, 1, 0, Group.GEARS), GEARRIGHT(48, 3, 0, Group.GEARS),
 
         //Objectives
         //Val = flag number

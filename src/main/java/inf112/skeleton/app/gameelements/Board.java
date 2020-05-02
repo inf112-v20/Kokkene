@@ -481,7 +481,7 @@ public class Board extends Tile implements Cloneable{
                 y = player.getyPos();
         if (hasTile(conveyorLayer, x, y)
                 && (conveyorWillTurn(conveyorLayer, x, y, lastDirection))) {
-            player.turn(conveyorDirection(conveyorLayer, x, y)-lastDirection);
+            player.turn(4 + (conveyorDirection(conveyorLayer, x, y) - lastDirection));
         }
     }
 
