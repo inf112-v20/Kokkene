@@ -74,9 +74,11 @@ public class AI extends Player {
                 e.printStackTrace();
             }
         }
+
         for (Integer integer : moveSet) {
             hand.toggleCard(hand.plHand[integer]);
         }
+
         setReady(true);
     }
 
@@ -95,11 +97,14 @@ public class AI extends Player {
                 aiMoveEasy();
                 continue;
             }
+
             Card current = hand.plHand[0];
+
             for (int i = 0; (i < hand.plHand.length) &&
                     ((current.getType() != 0) || getSelected().contains(current)); i++) {
                 current = hand.plHand[i];
             }
+
             for (Card c : hand.plHand) {
                 if (getSelected().contains(c)) {
                     continue;
@@ -118,6 +123,7 @@ public class AI extends Player {
                     }
                 }
             }
+
             if (current.getType() == 0) {
                 for (int m = 0; m < current.getMove() && !board.isBlocked(aiXY[0], aiXY[1], dir); m++) {
                     aiXY = Board.getNeighbour(aiXY[0], aiXY[1], dir);
@@ -245,7 +251,6 @@ public class AI extends Player {
                 bestSequence = currentPermutation;
             }
 
-
             /*
             // set the AI back to its original position and render it invincible
             board.playerLayer.getCell(aiX, aiY).setTile(null);
@@ -298,8 +303,8 @@ public class AI extends Player {
         if (size == 1)
             addPermutation(a,choiceOfCards);
 
-        for (int i = 0; i <size; i++)
-        {
+        for (int i = 0; i <size; i++) {
+
             heapPermutation(a, size - 1, choiceOfCards);
 
             // if size is odd, swap first and last element
@@ -312,8 +317,7 @@ public class AI extends Player {
 
             // If size is even, swap ith and last
             // element
-            else
-            {
+            else {
                 int temp = a.get(i);
                 a.set(i, a.get(size - 1));
                 a.set(size - 1, temp);

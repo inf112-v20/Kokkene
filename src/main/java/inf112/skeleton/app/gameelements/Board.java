@@ -39,6 +39,7 @@ public class Board extends Tile implements Cloneable{
 
     public ArrayList<int[]> objectives;
 
+    //Change to ArrayList, such that we can remove players that are dead.
     private Player[] players;
 
     private Deck deck;
