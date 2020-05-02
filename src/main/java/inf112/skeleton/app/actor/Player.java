@@ -225,8 +225,11 @@ public class Player implements IActor {
         if (isAlive()) resetPos();
     }
 
-    public void invinicible() {
+    /**
+     * Makes the player invincible
+     */
+    public void invincible() {
         this.lifePoints = 3;
-        this.setHealth(6);
+        this.setHealth(10);
     }
 }
