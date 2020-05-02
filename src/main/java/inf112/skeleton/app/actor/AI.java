@@ -87,6 +87,7 @@ public class AI extends Player {
             tries++;
             if (tries > 15) { // In case of locking it will choose random cards
                 aiMoveEasy();
+                break;
             }
             Card current = hand.plHand[0];
             for (int i = 0; (i < hand.plHand.length) &&
@@ -98,7 +99,7 @@ public class AI extends Player {
                     continue;
                 }
                 if (c.getType() == 2 && // Check if turn card
-                        (board.isBlocked(aiXY[0], aiXY[1], dir) || bestTurn(aiXY, obXY, dir, c))) { //check dir blocked
+                        (board.isBlocked(aiXY[0], aiXY[1], dir) || bestTurn(aiXY, obXY, dir, c))) { //check dirs blocked
                     hand.toggleCard(c);
                     current = c;
                     dir = (dir + c.getMove()) % 4;
@@ -107,7 +108,7 @@ public class AI extends Player {
                     if (current.getMove() < c.getMove()) {
                         current = c;
                     }
-                    if (current.getMove() == 3) {
+                    if (current.getMove() == 3 && !board.isBlocked(aiXY[0], aiXY[1], dir)) {
                         break;
                     }
                 }
