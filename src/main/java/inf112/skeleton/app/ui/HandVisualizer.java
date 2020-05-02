@@ -266,28 +266,27 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
     }
 
+    /**
+     * Is called when powerDown button is pressed, changes the color of the button. Plays sound if it's activating.
+     */
     private void setPowerDown() {
-        if(player.announcePowerDown) {
+        if (player.announcePowerDown) {
             powerButton.setColor(Color.GREEN);
             powerSound.play();
-        }
-        else {
+        } else {
             powerButton.setColor(Color.WHITE);
         }
     }
 
+    /**
+     * Toggles whether fullscreen or not
+     */
     private void fullscreenToggle() {
         try {
-            if (Display.isFullscreen()) {
-                Display.setFullscreen(false);
-                Display.setResizable(true);
-            }
-            else {
-                Display.setFullscreen(true);
-                Display.setResizable(false);
-            }
-        }
-        catch (LWJGLException e) {
+            boolean full = Display.isFullscreen();
+            Display.setFullscreen(!full);
+            Display.setResizable(full);
+        } catch (LWJGLException e) {
             e.printStackTrace();
         }
     }
@@ -336,14 +335,20 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     }
 
+    /**
+     * Draws the priority numbers on the cards
+     */
     private void drawPriorityNumbers() {
-        for(int i = 0; i < hand.plHand.length; i++) {
+        for (int i = 0; i < hand.plHand.length; i++) {
             font.getData().setScale(2.5f);
             font.draw(batch, Integer.toString(hand.plHand[i].getPriority()),
                     allSprites[i].getX() + allSprites[i].getWidth() / 3, 50);
         }
     }
 
+    /**
+     * Draws the buttons on the screen in the correct positions
+     */
     private void drawButtons() {
         lockInButton.draw(batch);
         lockInButton.setPosition(10, 360);
