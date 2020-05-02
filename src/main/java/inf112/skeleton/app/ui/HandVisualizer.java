@@ -5,8 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import inf112.skeleton.app.Main;
 import inf112.skeleton.app.actor.Hand;
 import inf112.skeleton.app.actor.Player;
@@ -28,8 +31,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private Sprite lockInButton;
     private Sprite powerButton;
 
+    private Sprite controlsButton;
+    private Table controls;
+
     private final Sound powerSound;
 
+    private final Stage stage;
     private final SpriteBatch batch;
     private final BitmapFont font;
 
@@ -49,10 +56,16 @@ public class HandVisualizer extends InputAdapter implements Screen {
         this.game = game;
         this.hand = player.hand;
 
+        stage = new Stage();
         batch = new SpriteBatch();
         font = new BitmapFont();
         font.setColor(Color.GREEN); //Number color
         font.getData().setScale(4, 3);
+
+        ControlsTable ct = new ControlsTable();
+        controls = ct.getTable();
+        stage.addActor(controls);
+        controls.setVisible(false);
 
         createButtons();
 
@@ -113,6 +126,25 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private void createButtons(){
         Pixmap buttons = new Pixmap(Gdx.files.internal("assets/pictures/button.png"));
         int width = WIDTH / 7;
+        Texture button = makeButtonTexture(buttons, width);
+
+        lockInButton = new Sprite(button);
+        lockInButton.setPosition(10, 360);
+
+        powerButton = new Sprite(button);
+        powerButton.setPosition(Display.getWidth() - powerButton.getWidth() - 10, 360);
+
+        buttons = new Pixmap(Gdx.files.internal("assets/pictures/greybutton.png"));
+
+        button = makeButtonTexture(buttons,width/3);
+        controlsButton = new Sprite(button);
+        controlsButton.setPosition(Gdx.graphics.getWidth()-button.getWidth()-button.getHeight(),
+                Gdx.graphics.getHeight()-button.getHeight()*2);
+
+        buttons.dispose();
+    }
+
+    private Texture makeButtonTexture(Pixmap buttons, int width) {
         int height = (int) (width * (((float) buttons.getHeight())/(float) buttons.getWidth()));
 
         Pixmap resizedButton = new Pixmap(width, height, buttons.getFormat());
@@ -121,16 +153,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 0, 0, resizedButton.getWidth(), resizedButton.getHeight());
         Texture button = new Texture(resizedButton);
 
-        lockInButton = new Sprite(button);
-        lockInButton.setPosition(10, 360);
-
-        powerButton = new Sprite(button);
-        powerButton.setPosition(Display.getWidth() - powerButton.getWidth() - 10, 360);
-
-        buttons.dispose();
         resizedButton.dispose();
+        return button;
     }
-
 
     /**
      * Create all the sprites on the board
@@ -174,6 +199,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
             player.setAnnouncer();
             //Will add a better visual way to identify power down.
             setPowerDown();
+        }
+        else if (controlsButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)){
+            if (controls.isVisible()) {
+                controls.setVisible(false);
+            }
+            else controls.setVisible(true);
         }
         return false;
     }
@@ -314,6 +345,8 @@ public class HandVisualizer extends InputAdapter implements Screen {
     public void render(float v) {
         Gdx.input.setInputProcessor(this);
 
+        stage.act(v);
+        stage.draw();
         batch.begin();
 
         if(!player.getReady()) {
@@ -351,9 +384,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
      */
     private void drawButtons() {
         lockInButton.draw(batch);
-        lockInButton.setPosition(10, 360);
         powerButton.draw(batch);
-        powerButton.setPosition(Display.getWidth() - powerButton.getWidth() - 10, 360);
+        controlsButton.draw(batch);
+        BitmapFont font = new BitmapFont(Gdx.files.internal("assets/skins/default.fnt"));
+        GlyphLayout gl = new GlyphLayout(font, "Controls");
+        font.draw(batch, gl, controlsButton.getX()+controlsButton.getWidth()/2-gl.width/2,
+                controlsButton.getY()+controlsButton.getHeight()-gl.height/2);
     }
 
     /**
