@@ -66,12 +66,6 @@ public class PlayerTests {
     }
 
     @Test
-    public void playerIsOffTheBoardWhileDead(){
-        player.addHealth(damage);
-        assertTrue(player.getyPos() > 200);
-    }
-
-    @Test
     public void playerLoseOneLifePointWhenRespawningWithNegativeHealth() {
         player.addHealth(damage); player.respawn();
         int maxLifePoints = 3;
