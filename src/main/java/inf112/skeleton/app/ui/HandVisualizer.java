@@ -202,7 +202,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public boolean keyUp(int keycode) {
-
+        //TODO: add keyboard-only capability; (choose cards with arrow keys and enter/space)
         Card c = new Card(0,0,1);
         int move = c.getMove();
 
