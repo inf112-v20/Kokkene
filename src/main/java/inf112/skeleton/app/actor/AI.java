@@ -60,6 +60,7 @@ public class AI extends Player {
     }
 
     private void aiMoveHard() {
+        //TODO
 
         // initialize the moveSet if it's empty, else play the next card.
         if (initializeMove) {
@@ -77,7 +78,6 @@ public class AI extends Player {
     }
 
     private void aiMoveMedium() {
-        //TODO
         int[] aiXY = {getxPos(), getyPos()},
                 obXY = board.objectives.get(getObjective() - 1);
         int dir = getOrientation();
@@ -85,23 +85,25 @@ public class AI extends Player {
         int tries = 0;
         while (getSelected().size() < hand.cardsToSelect()) {
             tries++;
-            if (tries > 15) {
+            if (tries > 15) { // In case of locking it will choose random cards
                 aiMoveEasy();
             }
             Card current = hand.plHand[0];
-            for (int i = 0; (i < hand.plHand.length) && ((current.getType() != 0) || getSelected().contains(current)); i++) {
+            for (int i = 0; (i < hand.plHand.length) &&
+                    ((current.getType() != 0) || getSelected().contains(current)); i++) {
                 current = hand.plHand[i];
             }
             for (Card c : hand.plHand) {
                 if (getSelected().contains(c)) {
                     continue;
                 }
-                if (c.getType() == 2 && !board.isBlocked(aiXY[0], aiXY[1], (dir + c.getMove()) % 4)
-                        && (dir + c.getMove()) % 4 == Board.towardTarget(aiXY[0], aiXY[1], obXY[0], obXY[1])) {
+                if (c.getType() == 2 && // Check if turn card
+                        (board.isBlocked(aiXY[0], aiXY[1], dir) || bestTurn(aiXY, obXY, dir, c))) { //check dir blocked
                     hand.toggleCard(c);
+                    current = c;
                     dir = (dir + c.getMove()) % 4;
                     break;
-                } else if (c.getType() == 0) {
+                } else if (c.getType() == 0) { // Check if move card
                     if (current.getMove() < c.getMove()) {
                         current = c;
                     }
@@ -110,7 +112,10 @@ public class AI extends Player {
                     }
                 }
             }
-            for (int m = current.getMove(); 0 < m && !board.isBlocked(aiXY[0], aiXY[1], dir); m--) {
+            if (current.getType() != 0) {
+                continue;
+            }
+            for (int m = 0; m < current.getMove() && !board.isBlocked(aiXY[0], aiXY[1], dir); m++) {
                 aiXY = Board.getNeighbour(aiXY[0], aiXY[1], dir);
             }
             hand.toggleCard(current);
@@ -118,6 +123,19 @@ public class AI extends Player {
         setReady(true);
     }
 
+    /**
+     * Check if given turn card will turn the actor in the optimal direction
+     *
+     * @param xy  coords of actor
+     * @param ob  coords of objective
+     * @param dir dir currently pointing
+     * @param c   Turn card
+     * @return True if the new dir is towards the objective and not blocked, false otherwise
+     */
+    private boolean bestTurn(int[] xy, int[] ob, int dir, Card c) {
+        int newDir = (dir + c.getMove()) % 4;
+        return !board.isBlocked(xy[0], xy[1], newDir) && newDir == Board.towardTarget(xy[0], xy[1], ob[0], ob[1]);
+    }
 
     public void aiMoveEasy() {
         int cardsToSelect = hand.cardsToSelect();
