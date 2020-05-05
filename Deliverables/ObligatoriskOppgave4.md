@@ -3,7 +3,7 @@
 ## RoboRally - a game made by Kokkene
 RoboRally is a multiplayer game in which robots move around the map attempting to get to all the flags. 
 
-## Team and Project
+### Team and Project
 As a team I think we hit the mark pretty good with our roles selection and philosophy.\
 We picked the roles we wanted ourselves and felt most comfortable with.\
 This is probably one of the reasons we do not feel the need to change up the different roles.\
@@ -77,7 +77,7 @@ this is where most of the work is done. We were not to reliant on things like pa
 switching over to Discord was not to difficult for us.
 This way of communicating works well with our group.
 
-## Requirements
+### Requirements
 
 #### User Stories
 

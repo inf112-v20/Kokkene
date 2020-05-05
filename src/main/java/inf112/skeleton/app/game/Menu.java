@@ -318,7 +318,7 @@ public class Menu implements Screen {
 
         public static Skin skin = new Skin(Gdx.files.internal("assets/skins/uiskin.json"));
 
-        public static String mapFile = "assets/maps/12by12DizzyDash.tmx";
+        public static String mapFile = "assets/maps/DizzyDash.tmx";
 
         public static HashMap<String, ArrayList<int[]>> spawns = new HashMap<>();
 
