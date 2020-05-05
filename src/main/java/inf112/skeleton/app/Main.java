@@ -4,7 +4,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import inf112.skeleton.app.game.MainApplication;
 
-
 public class Main {
 
     public static LwjglApplicationConfiguration cfg;

@@ -20,6 +20,11 @@ public class Hand {
     //Locked registers
     private final ArrayList<Card> locked = new ArrayList<>();
 
+    /**
+     * The constructor for the Hand
+     * @param actor The owner of this hand
+     * @param deck What deck to draw from
+     */
     public Hand(Player actor, Deck deck) {
         owner = actor;
         drawCards(deck);
@@ -33,6 +38,9 @@ public class Hand {
         return Math.min(5, owner.getHealth() - 1);
     }
 
+    /**
+     * Locks the registers for the given actor
+     */
     public void lockRegister(){
         int backupSize = backupHand.size(),
                 selectedSize = selected.size(),
@@ -56,18 +64,34 @@ public class Hand {
         assert lockedSize == lockedRegisters() : "Unexpected value: " + lockedSize;
     }
 
+    /**
+     * Checks how many cards in the hand, that are supposed to be locked
+     * @return # of cards to lock
+     */
     public int lockedRegisters(){
         return Math.max(0, 6-owner.getHealth());
     }
 
+    /**
+     * Gets the selected cards for this round
+     * @return List<Card> of cards to play
+     */
     public List<Card> getSelected(){
         return selected;
     }
 
+    /**
+     * Get the currently locked cards
+     * @return ArrayList of cards
+     */
     public ArrayList<Card> getLocked(){
         return locked;
     }
 
+    /**
+     * Toggles a card and adds it to your list of selected card, also removes the card if already selected
+     * @param c The card to be selected
+     */
     public void toggleCard(Card c) {
         if (selected.contains(c)) {
             selected.remove(c);
@@ -76,6 +100,10 @@ public class Hand {
         selected.add(c);
     }
 
+    /**
+     * Discards the current hand, and draws a new one from the given deck
+     * @param deck The deck in use
+     */
     public void discardDraw(Deck deck){
         for (Card c : plHand) {
             if (locked.contains(c) && locked.indexOf(c) < lockedRegisters()) {
@@ -84,6 +112,7 @@ public class Hand {
             deck.Discard.add(c);
             locked.remove(c);
         }
+
         if (!owner.playerPower) {
             selected.clear();
             drawCards(deck);
@@ -93,12 +122,17 @@ public class Hand {
         }
     }
 
+    /**
+     * Draws a fresh hand of cards to the player
+     * @param deck The deck in use
+     */
     public void drawCards(Deck deck) {
         plHand = new Card[owner.getHealth() - 1];
         for(int i = 0; i < plHand.length; i++) {
             if (deck.Cards.isEmpty()){ // shuffles when empty
                 deck.empty();
             }
+
             plHand[i] = deck.Cards.poll();
             assert plHand[i] != null;
             plHand[i].setOwner(owner);
