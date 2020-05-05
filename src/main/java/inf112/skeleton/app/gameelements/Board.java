@@ -436,8 +436,8 @@ public class Board extends Tile implements Cloneable{
             healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealth());
 
             if (p.announcePowerDown) {
+                p.addHealth(p.getMaxHealth() - p.getHealth());
                 if (p.playerPower) {
-                    p.addHealth(p.getMaxHealth() - p.getHealth());
                     p.announcePowerDown = false;
                 }
                 p.hand.lockRegister(); //In case damage is taken
