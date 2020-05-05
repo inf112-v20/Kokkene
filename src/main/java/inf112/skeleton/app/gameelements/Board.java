@@ -372,10 +372,11 @@ public class Board extends Tile implements Cloneable{
         return result;
     }
 
-    private int[] simulateConveyors(int[] result) {
+    private int[] simulateConveyors(int[] xy) {
         Card conveyorCard = new Card(0, 0, 1);
-        if (hasTile(conveyorLayer, result[0], result[1]) && conveyorValue(conveyorLayer, result[0], result[1]) == 2) {
-            result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
+        int[] result = xy;
+        if (hasTile(conveyorLayer, xy[0], xy[1]) && conveyorValue(conveyorLayer, xy[0], xy[1]) == 2) {
+            result = simulateMove(conveyorCard, xy, conveyorDirection(conveyorLayer, xy[0], xy[1]));
         }
         if (hasTile(conveyorLayer, result[0], result[1])) {
             result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
