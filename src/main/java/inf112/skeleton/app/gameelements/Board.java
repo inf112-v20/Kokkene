@@ -355,24 +355,30 @@ public class Board extends Tile implements Cloneable{
         if (result[2] == -1) {
             return result;
         }
-        Card conveyorCard = new Card(0, 0, 1);
-        if (hasTile(conveyorLayer, result[0], result[1]) && conveyorValue(conveyorLayer, result[0], result[1]) == 2) {
-            result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
-        }
-        if (hasTile(conveyorLayer, result[0], result[1])) {
-            result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
-        }
+        result = simulateConveyors(result);
+
         if (result[2] == -1) {
             return result;
         }
         if (hasTile(pushLayer, result[0], result[1]) && phase % 2 == pushPhases(pushLayer, result[0], result[1])) {
-            result = simulateMove(conveyorCard, result, pushDirection(pushLayer, result[0], result[1]));
+            result = simulateMove(new Card(0, 0, 1), result, pushDirection(pushLayer, result[0], result[1]));
         }
         if (result[2] == -1) {
             return result;
         }
         if (hasTile(gearLayer, result[0], result[1])) {
             result[2] = (result[2] + gearDirection(gearLayer, result[0], result[1])) % 4;
+        }
+        return result;
+    }
+
+    private int[] simulateConveyors(int[] result) {
+        Card conveyorCard = new Card(0, 0, 1);
+        if (hasTile(conveyorLayer, result[0], result[1]) && conveyorValue(conveyorLayer, result[0], result[1]) == 2) {
+            result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
+        }
+        if (hasTile(conveyorLayer, result[0], result[1])) {
+            result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
         }
         return result;
     }

@@ -21,8 +21,6 @@ public class AI extends Player {
 
     private final Board board;
 
-    private boolean initializeMove;
-    private ArrayList<Integer> moveSet;
     private final Set<ArrayList<Integer>> allPermutations = new HashSet<>();
 
     /**
@@ -41,8 +39,6 @@ public class AI extends Player {
 
     public void setHand(Deck deck) {
         hand = new Hand(this, deck);
-        initializeMove = true;
-        //this.invinicible();
         aiMove();
     }
 
@@ -349,9 +345,10 @@ public class AI extends Player {
         Board board;
 
         createSequences();
+        /*
         int originX = this.getxPos();
         int originY = this.getyPos();
-
+         */
         double distance = 9000.1;
         ArrayList<Integer> bestSequence = new ArrayList<>();
         ArrayList<Integer> currentPermutation;
