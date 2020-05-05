@@ -94,8 +94,17 @@ This way of communicating works well with our group.
 ##### Implementation
 
 1.  Create a non-player object that does some legal moves.
+    1. We chose to create an AI to play with.
+    2. 4 difficulties added ranging from easy to insane. Which has 4 different implementations of algorithms.
+    3. You can play with up to 8 AI's.
 2.  Make the team agree on/ or create a suitable template for git commits.
+    1. Well formatted and commented commits.
+    2. Not to big ones, and not to small ones.
+    3. Always merge when pushing, to not overwrite someone elses work in the same class.
 3.  Features which have been remodeled/fixed
+    1. Models for AI's have been given their appropriate color.
+    2. AI's are implemented and makes for good opponents.
+    3. All movement on the board should now have its appropriate effect
 
 ##### Project Board
 
@@ -105,3 +114,9 @@ This way of communicating works well with our group.
 [Meeting 1](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday310320.md)  
 [Meeting 2](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday140420.md)  
 [Meeting 3](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday160420.md)
+[Meeting 4](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday210420.md)
+[Meeting 5](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday230420.md)
+[Meeting 6](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday280420.md)
+[Meeting 7](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday300420.md)
+[Meeting 8](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday050520.md)
+[Meeting 9](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday070520.md)
