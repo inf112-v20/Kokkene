@@ -9,6 +9,7 @@ import inf112.skeleton.app.gameelements.Deck;
 import inf112.skeleton.app.util.AIColor;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,35 +51,147 @@ public class AI extends Player {
      */
     public void aiMove() {
         switch (Menu.OptionsUtil.aiDifficulty) {
+            case (0):
+                aiMoveEasy();
+                break;
             case (1):
                 aiMoveMedium();
                 break;
             case (2):
                 aiMoveHard();
                 break;
-            default:
-                aiMoveEasy();
+            case (3):
+                aiMoveInsane();
                 break;
+            default:
+                throw new IllegalArgumentException("Unsupported Difficulty: " + Menu.OptionsUtil.aiDifficulty);
         }
     }
 
-    private void aiMoveHard() {
-        //TODO
+    /**
+     * Currently chooses the best possible sequence of cards without considering other players or damage.
+     */
+    private void aiMoveInsane() {
+        //TODO implement BFS to lower computation
+        if (hand.cardsToSelect() == 0) {
+            return;
+        }
+        int currentObj = getObjective() - 1;
+        createSequences();
+        ArrayList<ArrayList<Integer>> successful = findSuccessful(currentObj, allPermutations);
 
-        // initialize the moveSet if it's empty, else play the next card.
-        if (initializeMove) {
-            try {
-                this.moveSet = getMoveClosestToObject();
-                initializeMove = false;
-            } catch (Exception e) {
-                e.printStackTrace();
+        while (1 < successful.size()) {
+            currentObj++;
+            successful = findSuccessful(currentObj, successful);
+        }
+        for (int i : successful.get(0)) {
+            hand.toggleCard(hand.plHand[i]);
+        }
+        if (getSelected().size() < hand.cardsToSelect()) {
+            System.out.println(getSelected());
+            aiMoveHard();
+        }
+        setReady(true);
+    }
+
+    /**
+     * Returns Arraylist with all sequences leading to the current objective, if none reach it will return the closest
+     *
+     * @param obj          index of the objective (Obj nr -1)
+     * @param permutations List of permutations to iterate over
+     * @return All sequences reaching the objective
+     */
+    private ArrayList<ArrayList<Integer>> findSuccessful(int obj, Collection<ArrayList<Integer>> permutations) {
+        int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
+                obXY = board.objectives.get(obj),
+                current = aiXYD;
+
+        int shortest = hand.cardsToSelect();
+        ArrayList<ArrayList<Integer>> successful = new ArrayList<>();
+        ArrayList<Integer> best = new ArrayList<>();
+
+        for (ArrayList<Integer> sequence : permutations) {
+            int[] newXY = aiXYD;
+            for (int i : sequence) {
+                int index = sequence.indexOf(i);
+                if (newXY[2] == -1 || index > shortest) {
+                    break;
+                }
+                newXY = board.simulatePhase(hand.plHand[i], newXY, newXY[2], index + 1);
+                if (newXY[0] == obXY[0] && newXY[1] == obXY[1] && index <= shortest) {
+                    if (index < shortest) {
+                        successful.clear();
+                    }
+                    successful.add(sequence);
+                    shortest = index;
+                    break;
+                }
+            }
+            if (successful.isEmpty() && distance(newXY, obXY) < distance(current, obXY)) {
+                current = newXY;
+                best = sequence;
             }
         }
-
-        for (Integer integer : moveSet) {
-            hand.toggleCard(hand.plHand[integer]);
+        if (successful.isEmpty()) {
+            successful.add(best);
         }
+        return successful;
+    }
 
+
+    /**
+     * Always move towards the current objective taking into account board elements, but not other robots or damage
+     */
+    private void aiMoveHard() {
+        //TODO
+        int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
+                obXY = board.objectives.get(getObjective() - 1);
+
+        int tries = 0;
+        while (getSelected().size() < hand.cardsToSelect()) {
+            tries++;
+            if (tries > 15) { // In case of locking it will choose random cards
+                aiMoveMedium();
+                continue;
+            }
+
+            Card current = hand.plHand[0];
+
+            for (int i = 0; (i < hand.plHand.length) && getSelected().contains(current); i++) {
+                current = hand.plHand[i];
+            }
+            int[] currentXYD = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
+
+            for (Card c : hand.plHand) {
+                if (getSelected().contains(c)) { // Skips used cards
+                    continue;
+                }
+                int[] sim = board.simulatePhase(c, aiXYD, aiXYD[2], getSelected().size()); // Simulates phase
+                if (sim[2] == -1) { // If it kills the player (Outside board or in a hole), skip
+                    continue;
+                }
+                if (distance(sim, obXY) <= distance(currentXYD, obXY)) { // Checks if it brings you closer to the obj
+                    current = c;
+                    currentXYD = sim;
+                }
+                if (current.getType() == 2) { // If current selected card is a turn; check if better turns are available
+                    if (bestTurn(aiXYD, obXY, aiXYD[2], c, true)
+                            && distance(sim, obXY) <= distance(currentXYD, obXY)) { // Turn optimally
+                        current = c;
+                        currentXYD = sim;
+                        break;
+                    }
+                    if (!board.isBlocked(sim[0], sim[1], sim[2])
+                            && distance(sim, obXY) <= distance(currentXYD, obXY) // Not pointing directly away from obj
+                            && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {
+                        current = c;
+                        currentXYD = sim;
+                    }
+                }
+            }
+            hand.toggleCard(current);
+            aiXYD = currentXYD;
+        }
         setReady(true);
     }
 
@@ -86,9 +199,8 @@ public class AI extends Player {
      * Always tries to move in the direction most towards the next objective without taking into account board elements
      */
     private void aiMoveMedium() {
-        int[] aiXY = {getxPos(), getyPos()},
+        int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
                 obXY = board.objectives.get(getObjective() - 1);
-        int dir = getOrientation();
 
         int tries = 0;
         while (getSelected().size() < hand.cardsToSelect()) {
@@ -100,31 +212,40 @@ public class AI extends Player {
 
             Card current = hand.plHand[0];
 
-            for (int i = 0; (i < hand.plHand.length) &&
-                    ((current.getType() != 0) || getSelected().contains(current)); i++) {
+            for (int i = 0; (i < hand.plHand.length) && getSelected().contains(current); i++) {
                 current = hand.plHand[i];
             }
+            int[] currentXY = board.simulateMove(current, aiXYD, aiXYD[2]);
 
             for (Card c : hand.plHand) {
                 if (getSelected().contains(c)) {
                     continue;
                 }
-                if (c.getType() == 2 && // Check if turn card
-                        (board.isBlocked(aiXY[0], aiXY[1], dir) || bestTurn(aiXY, obXY, dir, c))) { //check dirs blocked
-                    current = c;
-                    dir = (dir + c.getMove()) % 4;
-                    break;
-                } else if (c.getType() == 0 && current.getMove() < c.getMove()) { // Check if move card moves further
-                    current = c;
+                int[] sim = board.simulateMove(c, aiXYD, aiXYD[2]);
+                if (sim[2] == -1) {
+                    continue;
                 }
-            }
-
-            if (current.getType() == 0) {
-                for (int m = 0; m < current.getMove() && !board.isBlocked(aiXY[0], aiXY[1], dir); m++) {
-                    aiXY = Board.getNeighbour(aiXY[0], aiXY[1], dir);
+                if (distance(sim, obXY) <= distance(currentXY, obXY)) {
+                    current = c;
+                    currentXY = sim;
+                }
+                if (current.getType() == 2) { // If current selected card is a turn; check if better turns are available
+                    if (bestTurn(aiXYD, obXY, aiXYD[2], c, false)
+                            && distance(sim, obXY) <= distance(currentXY, obXY)) { // Turn optimally
+                        current = c;
+                        currentXY = sim;
+                        break;
+                    }
+                    if (!board.isBlocked(sim[0], sim[1], sim[2])
+                            && distance(sim, obXY) <= distance(currentXY, obXY) // Not pointing directly away from obj
+                            && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {
+                        current = c;
+                        currentXY = sim;
+                    }
                 }
             }
             hand.toggleCard(current);
+            aiXYD = currentXY;
         }
         setReady(true);
     }
@@ -138,9 +259,25 @@ public class AI extends Player {
      * @param c   Turn card
      * @return True if the new dir is towards the objective and not blocked, false otherwise
      */
-    private boolean bestTurn(int[] xy, int[] ob, int dir, Card c) {
-        int newDir = (dir + c.getMove()) % 4;
+    private boolean bestTurn(int[] xy, int[] ob, int dir, Card c, boolean mapElem) {
+        int newDir;
+        if (mapElem) {
+            newDir = board.simulatePhase(c, xy, dir, getSelected().size())[2];
+        } else {
+            newDir = board.simulateMove(c, xy, dir)[2];
+        }
         return !board.isBlocked(xy[0], xy[1], newDir) && newDir == Board.towardTarget(xy[0], xy[1], ob[0], ob[1]);
+    }
+
+    /**
+     * Calculates the distance between aiXY and obXY
+     *
+     * @param aiXY coordinates of the AI
+     * @param obXY coordinates of the objective
+     * @return the distance between the two arguments
+     */
+    private double distance(int[] aiXY, int[] obXY) {
+        return Math.sqrt((obXY[0] - aiXY[0]) ^ 2 + (obXY[1] - aiXY[1]) ^ 2);
     }
 
     /**
@@ -280,7 +417,7 @@ public class AI extends Player {
         ArrayList<Integer> handArray = getHandArray();
         heapPermutation(handArray, handArray.size(), hand.cardsToSelect());
         //Should be 15120 if AI is at max HP
-        System.out.println(allPermutations.size());
+        //System.out.println(allPermutations.size());
     }
 
     //Inspiration and more information: https://www.geeksforgeeks.org/heaps-algorithm-for-generating-permutations/

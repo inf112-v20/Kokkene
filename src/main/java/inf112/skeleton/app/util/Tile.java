@@ -213,7 +213,7 @@ public class Tile {
     }
 
     /**
-     * @return -1 or 1
+     * @return 3 (right) or 1 (left)
      */
     public int gearDirection(TiledMapTileLayer gearLayer, int x, int y) {
         return Objects.requireNonNull(getTile(gearLayer.getCell(x, y).getTile().getId())).val;

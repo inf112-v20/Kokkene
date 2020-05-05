@@ -252,7 +252,7 @@ public class Board extends Tile implements Cloneable{
             case (0):
                 if (isBlocked(player, 0)) {
                     return;
-                } else if (y >= boardHeight-1 || isHole ) {
+                } else if (y >= boardHeight - 1 || isHole) {
                     player.addHealth(-player.getMaxHealth());
                 }
                 player.setyPos(y + 1);
@@ -290,8 +290,91 @@ public class Board extends Tile implements Cloneable{
     }
 
     public void afterArrowMove(Player player) {
-        afterPhase(player,1);
+        afterPhase(player, 1);
         player.respawn();
+    }
+
+    /**
+     * Checks if the player is on the board and not in a hole
+     *
+     * @param x X-Coordinate of the player
+     * @param y Y-Coordinate of the player
+     * @return True if this is a useful position (on the board, not on hole)
+     */
+    private boolean useablePos(int x, int y) {
+        return !hasTile(holeLayer, x, y) && !(y >= boardHeight && x < 0 && y < 0 && x >= boardWidth);
+    }
+
+    /**
+     * Returns the coordinates you would be at after one move without interacting with board elements
+     *
+     * @param c   Card to play
+     * @param xy  Coordinates the simulation starts at
+     * @param dir Direction the simulated player is facing
+     * @return Array containg x, y and direction when simulation is finished
+     */
+    public int[] simulateMove(Card c, int[] xy, int dir) {
+        int[] newXY = xy;
+        int newDir = dir;
+        switch (c.getType()) {
+            case 0:
+                for (int i = 0; i < c.getMove() && !isBlocked(xy[0], xy[1], dir); i++) {
+                    newXY = getNeighbour(newXY[0], newXY[1], dir);
+                    if (!useablePos(newXY[0], newXY[1])) {
+                        return new int[]{newXY[0], newXY[1], -1};
+                    }
+                }
+                break;
+            case 1:
+                if (!isBlocked(newXY[0], newXY[1], (dir + 2) % 4)) {
+                    newXY = getNeighbour(xy[0], xy[1], (dir + 2) % 4);
+                }
+                break;
+            case 2:
+                newDir = (dir + 2) % 4;
+                break;
+            default:
+                throw new IllegalStateException("Unexpected type value: " + c.getType());
+        }
+        return new int[]{newXY[0], newXY[1], newDir};
+
+    }
+
+    /**
+     * Simulates a phase and returns the coordinates you would end up on without interacting with another player
+     *
+     * @param c     Card to be played in this phase
+     * @param xy    Coordinates you start this phase at
+     * @param dir   Direction you're facing when starting this phase
+     * @param phase Which phase we're currently at (for pushers)
+     * @return int array with new x and y coord, with the 3rd value being direction. Dir == -1 means the player is dead
+     */
+    public int[] simulatePhase(Card c, int[] xy, int dir, int phase) {
+        //TODO add convyorturn
+        int[] result = simulateMove(c, xy, dir);
+        if (result[2] == -1) {
+            return result;
+        }
+        Card conveyorCard = new Card(0, 0, 1);
+        if (hasTile(conveyorLayer, result[0], result[1]) && conveyorValue(conveyorLayer, result[0], result[1]) == 2) {
+            result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
+        }
+        if (hasTile(conveyorLayer, result[0], result[1])) {
+            result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
+        }
+        if (result[2] == -1) {
+            return result;
+        }
+        if (hasTile(pushLayer, result[0], result[1]) && phase % 2 == pushPhases(pushLayer, result[0], result[1])) {
+            result = simulateMove(conveyorCard, result, pushDirection(pushLayer, result[0], result[1]));
+        }
+        if (result[2] == -1) {
+            return result;
+        }
+        if (hasTile(gearLayer, result[0], result[1])) {
+            result[2] = (result[2] + gearDirection(gearLayer, result[0], result[1])) % 4;
+        }
+        return result;
     }
 
     /**
