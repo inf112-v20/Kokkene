@@ -53,8 +53,8 @@ We agreed on roles quite early, since some of us were more comfortable writing c
 This gave each and everyone of us the opportunity to "specialize" in the given roles and helped us tremendously.\
 Working on this project, however, was not all sunshine and rainbows. There was a lot to learn when working as a team,\
 especially when most of us did not have experience with it before.\
-This did mean a lot of undocumented code, a project board which was nearly never updated, bad commit messages, and so on.\ 
-Another big issue was splitting functionality. This was not something we where too concerned with at first.\ 
+This did mean a lot of undocumented code, a project board which was nearly never updated, bad commit messages,\
+and so on. Another big issue was splitting functionality. This was not something we were too concerned with at first.\
 We did refactor most of the code at one point, as a lot of it was unnecessarily grouped together.\
 Over time, as the code grew larger, it became harder and harder to split functionality.   
 
