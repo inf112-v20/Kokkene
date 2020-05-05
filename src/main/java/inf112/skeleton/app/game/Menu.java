@@ -230,6 +230,7 @@ public class Menu implements Screen {
     public void dispose() {
         sb.dispose();
         stage.dispose();
+        batch.dispose();
     }
 
     /**
@@ -244,6 +245,7 @@ public class Menu implements Screen {
         OptionsUtil.nrPlayers = selectNrPlayers.getSelectedIndex() + 1;
         OptionsUtil.aiDifficulty = selectAIDifficulty.getSelectedIndex();
 
+        dispose();
         game.setScreen(new RoboRally(game));
     }
 

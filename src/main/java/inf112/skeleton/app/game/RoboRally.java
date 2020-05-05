@@ -124,6 +124,8 @@ public class RoboRally extends InputAdapter implements Screen {
     @Override
     public void dispose() {
         music.dispose();
+        mapRenderer.dispose();
+        board.map.dispose();
     }
 
     @Override
