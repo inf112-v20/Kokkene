@@ -396,8 +396,10 @@ public class HandVisualizer extends InputAdapter implements Screen {
      * Draw the cards on the screen in the correct positions
      */
     public void drawCardSprites() {
+        double oneHalf = allSprites[0].getWidth() / 2;
+
         for (int i = 0; i < allSprites.length; i++) {
-            int xPos = (int) (i * allSprites[i].getWidth() + (allSprites[0].getWidth() / 2));
+            int xPos = (int) (i * allSprites[i].getWidth() + (oneHalf * (10-allSprites.length)));
             int yPos = 0;
 
             allSprites[i].draw(batch);
