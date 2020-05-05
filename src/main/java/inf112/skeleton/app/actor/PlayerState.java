@@ -14,6 +14,10 @@ public class PlayerState {
     private final Cell playerDead;
     private final Cell playerWon;
 
+    private final Cell life1;
+    private final Cell life2;
+    private final Cell life3;
+
     public PlayerState(Player player, Board board, TextureRegion[][] tr) {
         this.player = player;
         this.board = board;
@@ -30,6 +34,10 @@ public class PlayerState {
         playerWon = new Cell();
         playerWon.setTile(new StaticTiledMapTile(tr[0][2]));
         playerWon.getTile().setId(id);
+
+        life1 = playerNorm; //setting readable names for health bars
+        life2 = playerDead;
+        life3 = playerWon;
     }
 
     /**
@@ -45,14 +53,17 @@ public class PlayerState {
         return playerNorm;
     }
 
-    public Cell getPlayerHealth() {
+    /**
+     * @return player health bar cell for board
+     */
+    public Cell getPlayerHealthBar() {
         switch (player.getLifePoints()) {
             case (3):
-                return playerWon; //3 health
+                return life3; //3 health
             case (2):
-                return playerDead; //2 health
+                return life2; //2 health
             case (1):
-                return playerNorm; //1 health
+                return life1; //1 health
             default:
                 return null; // no health bar
         }

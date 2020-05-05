@@ -434,7 +434,7 @@ public class Board extends Tile implements Cloneable{
             healthLayer.setCell(p.getxPos(), p.getyPos(), null);
             p.respawn();
             playerLayer.setCell(p.getxPos(), p.getyPos(), p.getPlayerState().getPlayerStatus());
-            healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealth());
+            healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealthBar());
 
             if (hasTile(wrenchLayer, p.getxPos(), p.getyPos())) {
                 p.newBackup();
@@ -727,7 +727,7 @@ public class Board extends Tile implements Cloneable{
                         y = p.getyPos();
                 playerLayer.setCell(x, y, p.getPlayerState().getPlayerStatus());
                 playerLayer.getCell(x, y).setRotation(p.getOrientation());
-                healthLayer.setCell(x, y, p.getHealthBars().getPlayerHealth());
+                healthLayer.setCell(x, y, p.getHealthBars().getPlayerHealthBar());
                 healthLayer.getCell(x, y).setRotation(p.getOrientation());
             }
         }
