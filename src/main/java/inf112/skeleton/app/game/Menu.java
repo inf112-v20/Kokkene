@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import inf112.skeleton.app.util.Tile;
+import inf112.skeleton.app.util.Tiles;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -35,7 +36,6 @@ public class Menu implements Screen {
     private final SelectBox<String> selectNrPlayers;
     private final SelectBox<String> selectAIDifficulty;
     private final SelectBox<String> selectPlayerModels;
-    private final SelectBox<String> selectDeck;
 
     private final SpriteBatch batch;
 
@@ -62,15 +62,13 @@ public class Menu implements Screen {
         selectNrPlayers = createSelectionBox(getPlayers(), selectMap);
         selectAIDifficulty = createSelectionBox(new Array<>(new String[]{"Easy", "Medium", "Hard", "Insane"}), selectNrPlayers);
         selectPlayerModels = createSelectionBox(getPlayerModels(), selectAIDifficulty);
-        selectDeck = createSelectionBox(getDecks(), selectPlayerModels);
-        exitButton = createButton(selectDeck);
+        exitButton = createButton(selectPlayerModels);
 
         stage.addActor(gameButton);
         stage.addActor(selectMap);
         stage.addActor(selectNrPlayers);
         stage.addActor(selectAIDifficulty);
         stage.addActor(selectPlayerModels);
-        stage.addActor(selectDeck);
         stage.addActor(exitButton);
     }
 
@@ -175,8 +173,6 @@ public class Menu implements Screen {
         fontDraw(font, gl, selectAIDifficulty);
         gl.setText(font, "Model Select:  ");
         fontDraw(font, gl, selectPlayerModels);
-        gl.setText(font, "Deck Select:  ");
-        fontDraw(font, gl, selectDeck);
         batch.end();
     }
 
@@ -239,7 +235,7 @@ public class Menu implements Screen {
     public void loadGame() {
         OptionsUtil.mapFile = "assets/maps/" + selectMap.getSelected() + ".tmx";
         OptionsUtil.playerModelFile = "assets/pictures/PlayerModels/" + selectPlayerModels.getSelected() + " Player.png";
-        OptionsUtil.deckFile = "assets/decks/" + selectDeck.getSelected() + ".txt";
+        OptionsUtil.deckFile = "assets/decks/deck1994.txt";
         OptionsUtil.humanPlayers = 1;
         OptionsUtil.thisPlayer = 1;
         OptionsUtil.nrPlayers = selectNrPlayers.getSelectedIndex() + 1;
@@ -295,21 +291,6 @@ public class Menu implements Screen {
     }
 
     /**
-     * Checks the assets and creates an array with all the decks
-     *
-     * @return An array containing all decks found in assets/decks
-     */
-    public Array<String> getDecks() {
-        Array<String> deckArray = new Array<>();
-
-        File deck = new File("assets/decks");
-        for (String d : Objects.requireNonNull(deck.list())) {
-            deckArray.add(d.substring(0, d.length() - 4));
-        }
-        return deckArray;
-    }
-
-    /**
      * Check selectors and update options based on the current selections
      */
     private void checkSelectors() {
@@ -329,7 +310,7 @@ public class Menu implements Screen {
             String map = "assets/maps/" + mapName + ".tmx";
             TiledMapTileLayer boardLayer = (TiledMapTileLayer) loader.load(map).getLayers().get("Board");
 
-            OptionsUtil.spawns.put(map, Tile.findGroupMembers(boardLayer, Tile.Tiles.Group.SPAWNS));
+            OptionsUtil.spawns.put(map, Tile.findGroupMembers(boardLayer, Tiles.Group.SPAWNS));
         }
     }
 

@@ -11,6 +11,7 @@ import inf112.skeleton.app.game.Menu;
 import inf112.skeleton.app.sound.Sound;
 import inf112.skeleton.app.util.AIColor;
 import inf112.skeleton.app.util.Tile;
+import inf112.skeleton.app.util.Tiles;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -95,7 +96,7 @@ public class Board extends Tile implements Cloneable{
      */
     private void findLasers() {
         lasers = new ArrayList<>();
-        for (int[] xy : Tile.findGroupMembers(laserLayer, Tile.Tiles.Group.LASERS)) {
+        for (int[] xy : Tile.findGroupMembers(laserLayer, Tiles.Group.LASERS)) {
             if (isLaserShooter(laserLayer, xy[0], xy[1])) {
                 lasers.add(xy);
             }
