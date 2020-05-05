@@ -31,11 +31,40 @@ public class Hand {
     }
 
     /**
+     * Gets the selected cards for this round
+     * @return List<Card> of cards to play
+     */
+    public List<Card> getSelected(){
+        return selected;
+    }
+
+    /**
+     * Get the currently locked cards
+     * @return ArrayList of cards
+     */
+    public ArrayList<Card> getLocked(){
+        return locked;
+    }
+
+    /**
      * How many cards you may select in this round
      * @return # of cards to select
      */
     public int cardsToSelect(){
         return Math.min(5, owner.getHealth() - 1);
+    }
+
+
+    /**
+     * Toggles a card and adds it to your list of selected card, also removes the card if already selected
+     * @param c The card to be selected
+     */
+    public void toggleCard(Card c) {
+        if (selected.contains(c)) {
+            selected.remove(c);
+            return;
+        }
+        selected.add(c);
     }
 
     /**
@@ -70,34 +99,6 @@ public class Hand {
      */
     public int lockedRegisters(){
         return Math.max(0, 6-owner.getHealth());
-    }
-
-    /**
-     * Gets the selected cards for this round
-     * @return List<Card> of cards to play
-     */
-    public List<Card> getSelected(){
-        return selected;
-    }
-
-    /**
-     * Get the currently locked cards
-     * @return ArrayList of cards
-     */
-    public ArrayList<Card> getLocked(){
-        return locked;
-    }
-
-    /**
-     * Toggles a card and adds it to your list of selected card, also removes the card if already selected
-     * @param c The card to be selected
-     */
-    public void toggleCard(Card c) {
-        if (selected.contains(c)) {
-            selected.remove(c);
-            return;
-        }
-        selected.add(c);
     }
 
     /**

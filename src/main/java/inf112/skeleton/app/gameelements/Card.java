@@ -25,7 +25,10 @@ public class Card implements Comparable<Card>{
         this.setOwner(null);
     }
 
-    //Method for testing/checking
+    /**
+     * Gives you a string version of the card.
+     * @return String of the form: "Priority: | Type:  |  Move: "
+     */
     public String toString() {
         return "Priority: " + this.priority + " | Type:  " + types[this.type] + " | Move: " + this.move;
     }
@@ -57,6 +60,10 @@ public class Card implements Comparable<Card>{
         return owner;
     }
 
+    /**
+     * Sets the given actor as the cards owner
+     * @param owner actor to become this cards owner
+     */
     public void setOwner(Player owner) {
         this.owner = owner;
     }
@@ -90,6 +97,10 @@ public class Card implements Comparable<Card>{
         sprite = new Sprite(texture);
     }
 
+    /**
+     * Allocates a sprite to the card, and returns the sprite it was given
+     * @return Sprite of the card
+     */
     public Sprite allocateSprite() {
         giveSprite();
         return sprite;

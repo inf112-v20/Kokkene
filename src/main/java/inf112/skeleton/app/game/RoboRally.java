@@ -220,6 +220,10 @@ public class RoboRally extends InputAdapter implements Screen {
         return true;
     }
 
+    /**
+     * Checks if the player is waiting to be respawned
+     * @return true if a player is waiting to be respawned
+     */
     private boolean waitingForRespawn() {
         for (Player p : board.getPlayers()) {
             if (p.getHealth() > 0) {

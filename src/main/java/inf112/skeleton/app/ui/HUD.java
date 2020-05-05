@@ -37,6 +37,7 @@ public class HUD {
         for (int i = 0; i < players[0].getHealth(); i++) {
             batch.draw(heart, i * (heartSize / 2f), HEIGHT - heartSize, heartSize, heartSize);
         }
+
         float obX = (heartSize * players[0].getMaxHealth() + heartSize) / 2f;
         float obY = HEIGHT - heartSize / 4f;
         if (board.objectives.size() == players[0].getObjective() - 1) {
@@ -45,6 +46,7 @@ public class HUD {
         } else {
             font.draw(batch, "Target Objective: " + players[0].getObjective(), obX, obY);
         }
+
         font.getData().setScale(1f);
         for (int i = 1; i < players.length; i++) {
             //float nmX = (heartSize*player[i].getMaxHealth() + heartSize)/2f;

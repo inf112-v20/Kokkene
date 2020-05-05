@@ -37,6 +37,13 @@ public class AI extends Player {
 
     }
 
+    /**
+     * @return The color of the actor.
+     */
+    public Color getColor() {
+        return this.color;
+    }
+
     public void setHand(Deck deck) {
         hand = new Hand(this, deck);
         aiMove();
@@ -62,50 +69,6 @@ public class AI extends Player {
             default:
                 throw new IllegalArgumentException("Unsupported Difficulty: " + Menu.OptionsUtil.aiDifficulty);
         }
-    }
-
-    /**
-     * Returns Arraylist with all sequences leading to the current objective, if none reach it will return the closest
-     *
-     * @param obj          index of the objective (Obj nr -1)
-     * @param permutations List of permutations to iterate over
-     * @return All sequences reaching the objective
-     */
-    private ArrayList<ArrayList<Integer>> findSuccessful(int obj, Collection<ArrayList<Integer>> permutations) {
-        int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
-                obXY = board.objectives.get(obj),
-                current = aiXYD;
-
-        int shortest = hand.cardsToSelect();
-        ArrayList<ArrayList<Integer>> successful = new ArrayList<>();
-        ArrayList<Integer> best = new ArrayList<>();
-
-        for (ArrayList<Integer> sequence : permutations) {
-            int[] newXY = aiXYD;
-            for (int i : sequence) {
-                int index = sequence.indexOf(i);
-                if (newXY[2] == -1 || index > shortest) {
-                    break;
-                }
-                newXY = board.simulatePhase(hand.plHand[i], newXY, newXY[2], index + 1);
-                if (newXY[0] == obXY[0] && newXY[1] == obXY[1] && index <= shortest) {
-                    if (index < shortest) {
-                        successful.clear();
-                    }
-                    successful.add(sequence);
-                    shortest = index;
-                    break;
-                }
-            }
-            if (successful.isEmpty() && distance(newXY, obXY) < distance(current, obXY)) {
-                current = newXY;
-                best = sequence;
-            }
-        }
-        if (successful.isEmpty()) {
-            successful.add(best);
-        }
-        return successful;
     }
 
     /**
@@ -194,6 +157,9 @@ public class AI extends Player {
      * Always tries to move in the direction most towards the next objective without taking into account board elements
      */
     private void aiMoveMedium() {
+        int[] currentXY,
+                sim;
+        Card current;
         int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
                 obXY = board.objectives.get(getObjective() - 1);
 
@@ -205,18 +171,18 @@ public class AI extends Player {
                 continue;
             }
 
-            Card current = hand.plHand[0];
+            current = hand.plHand[0];
 
             for (int i = 0; (i < hand.plHand.length) && getSelected().contains(current); i++) {
                 current = hand.plHand[i];
             }
-            int[] currentXY = board.simulateMove(current, aiXYD, aiXYD[2]);
+            currentXY = board.simulateMove(current, aiXYD, aiXYD[2]);
 
             for (Card c : hand.plHand) {
                 if (getSelected().contains(c)) {
                     continue;
                 }
-                int[] sim = board.simulateMove(c, aiXYD, aiXYD[2]);
+                sim = board.simulateMove(c, aiXYD, aiXYD[2]);
                 if (sim[2] == -1) {
                     continue;
                 }
@@ -330,6 +296,50 @@ public class AI extends Player {
     }
 
     /**
+     * Returns Arraylist with all sequences leading to the current objective, if none reach it will return the closest
+     *
+     * @param obj          index of the objective (Obj nr -1)
+     * @param permutations List of permutations to iterate over
+     * @return All sequences reaching the objective
+     */
+    private ArrayList<ArrayList<Integer>> findSuccessful(int obj, Collection<ArrayList<Integer>> permutations) {
+        int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
+                obXY = board.objectives.get(obj),
+                current = aiXYD;
+
+        int shortest = hand.cardsToSelect();
+        ArrayList<ArrayList<Integer>> successful = new ArrayList<>();
+        ArrayList<Integer> best = new ArrayList<>();
+
+        for (ArrayList<Integer> sequence : permutations) {
+            int[] newXY = aiXYD;
+            for (int i : sequence) {
+                int index = sequence.indexOf(i);
+                if (newXY[2] == -1 || index > shortest) {
+                    break;
+                }
+                newXY = board.simulatePhase(hand.plHand[i], newXY, newXY[2], index + 1);
+                if (newXY[0] == obXY[0] && newXY[1] == obXY[1] && index <= shortest) {
+                    if (index < shortest) {
+                        successful.clear();
+                    }
+                    successful.add(sequence);
+                    shortest = index;
+                    break;
+                }
+            }
+            if (successful.isEmpty() && distance(newXY, obXY) < distance(current, obXY)) {
+                current = newXY;
+                best = sequence;
+            }
+        }
+        if (successful.isEmpty()) {
+            successful.add(best);
+        }
+        return successful;
+    }
+
+    /**
      *
      * Calculates the sequence of cards which makes the AI get the closest to the current objective
      *
@@ -393,13 +403,6 @@ public class AI extends Player {
     private Board createVirtualBoard() throws CloneNotSupportedException {
         return (Board)new Board().clone();
 
-    }
-
-    /**
-     * @return The color of the actor.
-     */
-    public Color getColor() {
-        return this.color;
     }
 
     /**
