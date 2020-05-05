@@ -50,32 +50,31 @@ This corresponded well with the meetings we set up, and we personally feel that 
 When we first started with this project, everyone in the group was taken back at first.\
 This was the first time any of us had worked on a project of this scale before and it was kinda scary.\
 We agreed on roles quite early, since some of us were more comfortable writing code and others drawing.\
-This gave each and everyone of us the opportunity to "specialize" in the given roles and helped us tremendous.\
-But this project weren't all sunshine and rainbows, we of course had some struggles along the way.\
-The biggest one being not properly using the tools GitHub provided to us, as well as not splitting functionality\
-of our code at the start of the project. After some time we managed to get a better hold of Git and GitHub and\
-everything started to fall in place.
-
-Then came the corona virus and ruined our fun. The university shut down, and our group meetings were suddenly cancelled.\
-Luckily it is the year 2020 and we have other means of communicating, we settled for the application "Discord".\
-The meetings continued at the same time as before, and work continued at a steady pace. One thing we learned after\
-having remote meetings is how easy it is to explain the same thing very different for eachother. 
-
+This gave each and everyone of us the opportunity to "specialize" in the given roles and helped us tremendously.\
+Working on this project, however, was not all sunshine and rainbows. There was a lot to learn when working as a team,\
+especially when most of us did not have experience with it before.\
+This did mean a lot of undocumented code, a project board which was nearly never updated, bad commit messages, and so on.\ 
+Another big issue was splitting functionality. This was not something we where too concerned with at first.\ 
+We did refactor most of the code at one point, as a lot of it was unnecessarily grouped together.\
+Over time, as the code grew larger, it became harder and harder to split functionality.   
 
 #### Improvement in retrospection
 We realized as we were starting to program in the AI/computer that we should have had more focus on this from the start.\
 The game works perfectly when playing in singleplayer mode, but we struggled when trying to implement multiplayer.\
-We also feel like we didn't proporly use the tools GitHub offered, such as the project board and different branches\
+We also feel like we didn't properly use the tools GitHub offered, such as the project board and different branches\
 one could commit to. The way we decided to go was to just commit everything to the master branch, and not a development\
 branch that someone reviewed before merging. Maybe we also could have split the program into more threads, this way it\
-would have been easier to handle everything that happenes on the board.
+would have been easier to handle everything that happens on the board.
 
 #### Communication
-The communication in the group works really well, we use slack and github project board\
-to inform each other of updates we have made. We also meet twice a week for 2 hours on Discord,\
-this is where most of the work is done. We were not to reliant on things like pair programming, so\
-switching over to Discord was not to difficult for us.
-This way of communicating works well with our group.
+The communication was good from the start, as we had our biweekly meetings every Tuesday and Thursday.\
+Over time, the communication got even better as we continued working on the project.\
+This was especially evident when we started actively using the project board more often.\
+The team worked well together, even through the quarantine, as we never did much pair programming from the start.\
+Therefore, switching over to digital meetings never was difficult for us.\
+It also seemed like everyone where motivated to work with the project,\
+so meetings did not really feel less efficient than before the quarantine either.
+
 
 ### Requirements
 
@@ -96,7 +95,7 @@ This way of communicating works well with our group.
 1.  Create a non-player object that does some legal moves.
     1. We chose to create an AI to play with.
     2. 4 difficulties added ranging from easy to insane. Which has 4 different implementations of algorithms.
-    3. You can play with up to 8 AI's.
+    3. You can play with up to 7 AI's.
 2.  Make the team agree on/ or create a suitable template for git commits.
     1. Well formatted and commented commits.
     2. Not to big ones, and not to small ones.
@@ -113,10 +112,10 @@ This way of communicating works well with our group.
 ##### Meeting minutes
 [Meeting 1](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday310320.md)  
 [Meeting 2](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday140420.md)  
-[Meeting 3](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday160420.md)
-[Meeting 4](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday210420.md)
-[Meeting 5](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday230420.md)
-[Meeting 6](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday280420.md)
-[Meeting 7](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday300420.md)
-[Meeting 8](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday050520.md)
-[Meeting 9](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday070520.md)
+[Meeting 3](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday160420.md)  
+[Meeting 4](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday210420.md)  
+[Meeting 5](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday230420.md)  
+[Meeting 6](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday280420.md)  
+[Meeting 7](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday300420.md)  
+[Meeting 8](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Tuesday050520.md)  
+[Meeting 9](https://github.com/inf112-v20/Kokkene/blob/master/Deliverables/MinutesOblig4/Thursday070520.md)  
