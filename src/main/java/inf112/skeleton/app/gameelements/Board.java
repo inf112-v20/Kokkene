@@ -436,6 +436,14 @@ public class Board extends Tile implements Cloneable{
             playerLayer.setCell(p.getxPos(), p.getyPos(), p.getPlayerState().getPlayerStatus());
             healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealth());
 
+            if (hasTile(wrenchLayer, p.getxPos(), p.getyPos())) {
+                p.newBackup();
+                p.addHealth(wrenchValue(wrenchLayer, p.getxPos(), p.getyPos()));
+            }
+            else if (hasTile(flagLayer, p.getxPos(), p.getyPos())) {
+                p.addHealth(1);
+            }
+
             if (p.announcePowerDown) {
                 p.addHealth(p.getMaxHealth() - p.getHealth());
                 if (p.playerPower) {
@@ -577,17 +585,13 @@ public class Board extends Tile implements Cloneable{
     }
 
     /**
-     * Checks if the player is on a wrench or flag, and updates the damage, backup and current objective.
+     * Checks if the player is on a flag, and updates the backup and current objective.
      *
      * @param player to be checked.
      */
     private void finishPhase(Player player) {
         int x = player.getxPos(),
                 y = player.getyPos();
-        if (hasTile(wrenchLayer, x, y)) {
-            player.newBackup();
-            player.addHealth(wrenchValue(wrenchLayer, x, y));
-        }
         if (hasTile(flagLayer, x, y)) {
             player.checkObjective(flagValue(flagLayer, x, y));
         }
