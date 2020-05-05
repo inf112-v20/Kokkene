@@ -65,6 +65,7 @@ public class AI extends Player {
                 break;
             case (3):
                 aiMoveInsane();
+                //aiMovePerfect();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported Difficulty: " + Menu.OptionsUtil.aiDifficulty);
@@ -232,37 +233,52 @@ public class AI extends Player {
      * This method calculates the cards which makes the AI get the furthest towards the goal.
      */
     public void aiMovePerfect() {
-        int cardsToSelect = hand.cardsToSelect();
 
-        int obX = board.objectives.get(this.getObjective() - 1)[0],
-                obY = board.objectives.get(this.getObjective() - 1)[1];
+        // create all the permutations from hand.size()
+        createSequences();
 
-        // this many cards should be toggled.
-        for (int i = 0; i < cardsToSelect; i++) {
 
-            // check every card in the hand for the card which makes the distance to "objective" the lowest.
-            double distance = 9000.1;
-            Card cardToChoose = null;
-            for (int j = 0; j < hand.plHand.length; j++) {
-                //TODO these 2 parameters
-                int aiX = 0; // x coordinate when hand[j] has happened
-                int aiY = 0; // y coordinate when hand[j] has happened
+        int originX = this.getxPos();
+        int originY = this.getyPos();
+        int originOrient = this.getOrientation();
 
-                // sqrt((aiX - obX)^2 + (aiY - obY)^2) == distance between the objective the AI when hand[j] has happened
-                double calculate = Math.sqrt((aiX - obX)^2 + (aiY - obY)^2);
+        int obX = this.board.objectives.get(this.getObjective() - 1)[0],
+                obY = this.board.objectives.get(this.getObjective() - 1)[1];
 
-                if(calculate < distance) {
-                    distance = calculate;
-                    cardToChoose = hand.plHand[j];
-                }
+        double distance = 999999999;
+        ArrayList<Integer> bestSequence = new ArrayList<>();
+        ArrayList<Integer> currentPermutation;
+        //Creating a Iterator that iterates through all the hand permutations
+        // play each hand and check which hand gets the closest to the objective.
+        for (ArrayList<Integer> allPermutation : allPermutations) {
+            currentPermutation = allPermutation;
+
+            int[] simulate = null;
+            for (int j = 0; j < hand.cardsToSelect(); j++) {
+
+                // do the move with the unique sequence
+                Card card = hand.plHand[currentPermutation.get(j)];
+                int[] xyPos = {originX, originY};
+                 simulate = board.simulateMove(card, xyPos, getOrientation());
             }
 
-            // all cards are now checked, for the one card which makes the AI get the furthest towards the goal.
-            // check for cardsToSelect more cards.
-            hand.toggleCard(cardToChoose);
-            setReady(true);
+            //calculate the new position AI is in, then find the distance between AIXY and objectiveXY
+            double calculate = Math.sqrt((simulate[0] - obX) ^ 2 + (simulate[1] - obY) ^ 2);
+
+            if (calculate < distance) {
+                distance = calculate;
+
+                //save this sequence
+                bestSequence = currentPermutation;
+            }
         }
 
+        for(int i = 0; i < bestSequence.size(); i++) {
+            hand.toggleCard(hand.plHand[bestSequence.get(i)]);
+        }
+        System.out.println(bestSequence);
+
+        setReady(true);
     }
 
     /**
