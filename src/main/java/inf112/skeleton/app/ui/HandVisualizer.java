@@ -397,7 +397,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
      */
     public void drawCardSprites() {
         for (int i = 0; i < allSprites.length; i++) {
-            int xPos = (int) (i * allSprites[i].getWidth());
+            int xPos = (int) (i * allSprites[i].getWidth() + (allSprites[0].getWidth() / 2));
             int yPos = 0;
 
             allSprites[i].draw(batch);
