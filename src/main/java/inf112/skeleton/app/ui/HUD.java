@@ -59,13 +59,11 @@ public class HUD {
                     batch.draw(heartAI, (j * (heartSize) / 3f) + 50, nmY, heartSize / 1.5f, heartSize / 1.5f);
 
                     batch.setColor(Color.RED);
-                    font.setColor(Color.RED);
                 }
             }
-            batch.setColor(color);
-            font.draw(batch, "Objective: " + players[i].getObjective(), (players[i].getHealth() * (heartSize) / 3f) + 50, nmY);
-            batch.setColor(Color.RED);
 
+            font.draw(batch, "Objective: " + players[i].getObjective(), (players[i].getHealth() * (heartSize) / 3f) + 50, nmY);
+            font.setColor(Color.RED);
 
         }
         font.getData().setScale(2f);
