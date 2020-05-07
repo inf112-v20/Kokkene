@@ -173,10 +173,10 @@ public class Board extends Tile implements Cloneable{
             int[] xy = spawns.get(i); // x- and y-coordinate to spawn
             if (i < Menu.OptionsUtil.humanPlayers) {
                 players[i] = new Player("Player " + (i + 1),
-                        xy[0], xy[1], towardTarget(xy[0], xy[1], boardWidth / 2, boardHeight / 2), i + 1);
-            } else {
-                players[i] = new AI(this, "AI " + (1 + i - Menu.OptionsUtil.humanPlayers), // always i >= humanPlayers here
-                        xy[0], xy[1], towardTarget(xy[0], xy[1], boardWidth / 2, boardHeight / 2), i + 1);
+                        xy[0], xy[1], towardTarget(xy[0], xy[1], objectives.get(0)[0], objectives.get(0)[1]), i + 1);
+            } else {  // always i >= humanPlayers at this point, meaning ID is always >= 1
+                players[i] = new AI(this, "AI " + (1 + i - Menu.OptionsUtil.humanPlayers),
+                        xy[0], xy[1], towardTarget(xy[0], xy[1], objectives.get(0)[0], objectives.get(0)[1]), i + 1);
             }
             createPlayerTextures(players[i], i);
             players[i].setHand(deck); //Deals the hand to the players
@@ -303,7 +303,7 @@ public class Board extends Tile implements Cloneable{
      * @return True if this is a useful position (on the board, not on hole)
      */
     private boolean useablePos(int x, int y) {
-        return !hasTile(holeLayer, x, y) && !(y >= boardHeight && x < 0 && y < 0 && x >= boardWidth);
+        return !hasTile(holeLayer, x, y) && !(x >= boardWidth || y >= boardHeight || x < 0 || y < 0);
     }
 
     /**
@@ -374,6 +374,7 @@ public class Board extends Tile implements Cloneable{
     }
 
     private int[] simulateConveyors(int[] xy) {
+        //TODO add conveyor turning direction
         Card conveyorCard = new Card(0, 0, 1);
         int[] result = xy;
         if (hasTile(conveyorLayer, xy[0], xy[1]) && conveyorValue(conveyorLayer, xy[0], xy[1]) == 2) {

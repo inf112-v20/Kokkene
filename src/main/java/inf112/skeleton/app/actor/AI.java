@@ -102,7 +102,7 @@ public class AI extends Player {
      * Always move towards the current objective taking into account board elements, but not other robots or damage
      */
     private void aiMoveHard() {
-        //TODO
+        //TODO Optimize if-else to reduce NPath complexity
         int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
                 obXY = board.objectives.get(getObjective() - 1);
 
@@ -129,9 +129,10 @@ public class AI extends Player {
                 if (sim[2] == -1) { // If it kills the player (Outside board or in a hole), skip
                     continue;
                 }
-                if (distance(sim, obXY) <= distance(currentXYD, obXY)) { // Checks if it brings you closer to the obj
+                if (distance(sim, obXY) < distance(currentXYD, obXY)) { // Checks if it brings you closer to the obj
                     current = c;
                     currentXYD = sim;
+                    continue;
                 }
                 if (current.getType() == 2) { // If current selected card is a turn; check if better turns are available
                     if (bestTurn(aiXYD, obXY, aiXYD[2], c, true)
@@ -158,6 +159,7 @@ public class AI extends Player {
      * Always tries to move in the direction most towards the next objective without taking into account board elements
      */
     private void aiMoveMedium() {
+        //TODO Optimize if-else to reduce NPath complexity
         int[] currentXY,
                 sim;
         Card current;
@@ -273,8 +275,8 @@ public class AI extends Player {
             }
         }
 
-        for(int i = 0; i < bestSequence.size(); i++) {
-            hand.toggleCard(hand.plHand[bestSequence.get(i)]);
+        for (Integer integer : bestSequence) {
+            hand.toggleCard(hand.plHand[integer]);
         }
         System.out.println(bestSequence);
 
