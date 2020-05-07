@@ -202,11 +202,15 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
 
         if (lockInButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
-            tryLockIn();
+            if (!player.getReady()){
+                tryLockIn();
+            }
         }
         else if (powerButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
-            player.setAnnouncer();
-            setPowerDown();
+            if (!player.getReady()) {
+                player.setAnnouncer();
+                setPowerDown();
+            }
         }
         else if (controlsButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)){
             if (controls.isVisible()) {
