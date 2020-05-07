@@ -11,7 +11,7 @@ We discussed the possibility of reassigning Kristoffer, as we felt like the team
 was not the most necessary for our team-methodology. Ultimately we choose to stick with the current\
 roles as these have been working great for us.
 
-#### Team roles:
+#### Team roles
 ##### Kristoffer Kraft Johansen
 Role: Team leader  
 Main tasks: Ensure that the task is completed in the given time frames. Making sure communication between\
@@ -100,7 +100,7 @@ so meetings did not really feel less efficient than before the quarantine either
     1.  Well formatted and commented commits.
     2.  Not to big ones, and not to small ones.
     3.  Always merge when pushing, to not overwrite someone elses work in the same class.
-    
+
 3.  Features which have been remodeled/fixed
     1.  Models for AI's have been given their appropriate color.
     2.  AI's are implemented and makes for good opponents.
