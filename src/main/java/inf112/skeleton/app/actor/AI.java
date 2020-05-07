@@ -46,6 +46,7 @@ public class AI extends Player {
 
     public void setHand(Deck deck) {
         hand = new Hand(this, deck);
+        createSequences();
         aiMove();
     }
 
@@ -64,8 +65,8 @@ public class AI extends Player {
                 aiMoveHard();
                 break;
             case (3):
-                aiMoveInsane();
-                //aiMovePerfect();
+                //aiMoveInsane();
+                aiMovePerfect();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported Difficulty: " + Menu.OptionsUtil.aiDifficulty);
@@ -236,49 +237,75 @@ public class AI extends Player {
      */
     public void aiMovePerfect() {
 
-        // create all the permutations from hand.size()
-        createSequences();
-
-
         int originX = this.getxPos();
         int originY = this.getyPos();
         int originOrient = this.getOrientation();
 
-        int obX = this.board.objectives.get(this.getObjective() - 1)[0],
-                obY = this.board.objectives.get(this.getObjective() - 1)[1];
-
-        double distance = 999999999;
+        int obX = this.board.objectives.get(this.getObjective() - 1)[0]; //System.out.println(obX);
+        int obY = this.board.objectives.get(this.getObjective() - 1)[1]; //System.out.println(obY);
+        double distance = 9999999;
         ArrayList<Integer> bestSequence = new ArrayList<>();
-        ArrayList<Integer> currentPermutation;
+        ArrayList<Integer> currentPermutation = new ArrayList<>();
+
+        boolean alive;
+        int[] simulate = new int[3];
+
         //Creating a Iterator that iterates through all the hand permutations
         // play each hand and check which hand gets the closest to the objective.
         for (ArrayList<Integer> allPermutation : allPermutations) {
             currentPermutation = allPermutation;
+            alive = true;
 
-            int[] simulate = null;
-            for (int j = 0; j < hand.cardsToSelect(); j++) {
+            // initial position and card which gets updated
+            int[] xyPos = {originX, originY};
+            int orientation = originOrient;
+            Card card = this.hand.plHand[currentPermutation.get(0)];
+
+            for (int j = 1; j < hand.cardsToSelect(); j++) {
 
                 // do the move with the unique sequence
-                Card card = hand.plHand[currentPermutation.get(j)];
-                int[] xyPos = {originX, originY};
-                 simulate = board.simulateMove(card, xyPos, getOrientation());
+                simulate = board.simulateMove(card, xyPos, orientation);
+
+                if(simulate[2] == -1) {
+                    alive = false;
+                }
+
+                else {
+                    // then update the parameters with the new positions and cards
+                    xyPos[0] = simulate[0]; // x value
+                    xyPos[1] = simulate[1]; // y value
+                    orientation = simulate[2]; // orientation
+                    card = this.hand.plHand[currentPermutation.get(j)];
+                }
             }
 
             //calculate the new position AI is in, then find the distance between AIXY and objectiveXY
-            double calculate = Math.sqrt((simulate[0] - obX) ^ 2 + (simulate[1] - obY) ^ 2);
+            int[] newOBXY = {obX, obY};
+            double calculate = distance(xyPos, newOBXY);
 
-            if (calculate < distance) {
+            if (calculate < distance && alive) {
                 distance = calculate;
 
                 //save this sequence
                 bestSequence = currentPermutation;
+
             }
+
+
+            // otherwise try the next permutation
         }
 
-        for (Integer integer : bestSequence) {
-            hand.toggleCard(hand.plHand[integer]);
+        for (int k = 0; k < bestSequence.size(); k++) {
+            hand.toggleCard(hand.plHand[bestSequence.get(k)]);
         }
-        System.out.println(bestSequence);
+        int[] xy = {originX, originY};
+        int[] newXY = {simulate[0], simulate[1]};
+        double remainingDistance = distance(xy, newXY);
+
+        System.out.println("Best sequence found: " + bestSequence);
+        System.out.println("Original position: " + originX + ", " + originY);
+        System.out.println("New position: "  + simulate[0] + ", " + simulate[1]);
+        System.out.printf("Distance to goal: %.2f", remainingDistance);
 
         setReady(true);
     }
@@ -310,7 +337,7 @@ public class AI extends Player {
      * @return the distance between the two arguments
      */
     private double distance(int[] aiXY, int[] obXY) {
-        return Math.sqrt((obXY[0] - aiXY[0]) ^ 2 + (obXY[1] - aiXY[1]) ^ 2);
+        return Math.sqrt(((obXY[0] - aiXY[0]) ^ 2) + ((obXY[1] - aiXY[1]) ^ 2));
     }
 
     /**
@@ -355,72 +382,6 @@ public class AI extends Player {
             successful.add(best);
         }
         return successful;
-    }
-
-    /**
-     *
-     * Calculates the sequence of cards which makes the AI get the closest to the current objective
-     *
-     * @return a list of the best sequence of cards to play
-     * @throws CloneNotSupportedException throws CloneNotSupportedException
-     */
-    public ArrayList<Integer> getMoveClosestToObject() throws CloneNotSupportedException {
-
-        // initialize the virtual board
-        Board board;
-
-        createSequences();
-        /*
-        int originX = this.getxPos();
-        int originY = this.getyPos();
-         */
-        double distance = 9000.1;
-        ArrayList<Integer> bestSequence = new ArrayList<>();
-        ArrayList<Integer> currentPermutation;
-        //Creating a Iterator that iterates through all the hand permutations
-        // play each hand and check which hand gets the closest to the objective.
-        for (ArrayList<Integer> allPermutation : allPermutations) {
-            board = createVirtualBoard();
-            currentPermutation = allPermutation;
-            AI temp = (AI) this.clone();
-            int obX = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[0],
-                    obY = RoboRally.getBoard().objectives.get(temp.getObjective() - 1)[1];
-
-            for (int j = 0; j < hand.cardsToSelect(); j++) {
-                // do the move with the unique sequence
-                int card = currentPermutation.get(j);
-                board.doMove(temp, hand.plHand[card].getMove());
-            }
-
-            int aiX = temp.getxPos(),
-                    aiY = temp.getyPos();
-
-            //calculate the new position AI is in, then find the distance between AIXY and objectiveXY
-            double calculate = Math.sqrt((aiX - obX) ^ 2 + (aiY - obY) ^ 2);
-
-            if (calculate < distance) {
-                distance = calculate;
-
-                //save this sequence
-                bestSequence = currentPermutation;
-            }
-
-            /*
-            // set the AI back to its original position and render it invincible
-            board.playerLayer.getCell(aiX, aiY).setTile(null);
-            board.playerLayer.setCell(originX, originY, temp.getPlayerState().getPlayerStatus());
-            board.getPlayers()[1].invinicible();
-             */
-        }
-
-        System.out.println(bestSequence);
-        return bestSequence;
-    }
-
-    // initializes a a copy of the current board, to do calculations on.
-    private Board createVirtualBoard() throws CloneNotSupportedException {
-        return (Board)new Board().clone();
-
     }
 
     /**
