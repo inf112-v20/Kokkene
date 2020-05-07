@@ -199,7 +199,7 @@ public class Board extends Tile implements Cloneable{
      * Sort objectives by value
      */
     private void sortObjectives() {
-        ArrayList<int[]> copy = new ArrayList<int[]>(4);
+        ArrayList<int[]> copy = new ArrayList<>(4);
         for (int i = 0; i < objectives.size(); i++) {
             for (int[] ob : objectives) {
                 if (i == flagValue(flagLayer,ob[0],ob[1]) - 1) {
@@ -358,7 +358,6 @@ public class Board extends Tile implements Cloneable{
                 throw new IllegalStateException("Unexpected type value: " + c.getType());
         }
         return new int[]{newXY[0], newXY[1], newDir};
-
     }
 
     /**
@@ -371,7 +370,6 @@ public class Board extends Tile implements Cloneable{
      * @return int array with new x and y coord, with the 3rd value being direction. Dir == -1 means the player is dead
      */
     public int[] simulatePhase(Card c, int[] xy, int dir, int phase) {
-        //TODO add convyorturn
         int[] result = simulateMove(c, xy, dir);
         if (result[2] == -1) {
             return result;
@@ -393,30 +391,29 @@ public class Board extends Tile implements Cloneable{
         return result;
     }
 
+    /**
+     * Simulates they conveyors moving the player and turning it
+     *
+     * @param xy Coordinates and direction of simulated player
+     * @return new coordinates and direction after the simulation
+     */
     private int[] simulateConveyors(int[] xy) {
-        //TODO add conveyor turning direction
         Card conveyorCard = new Card(0, 0, 1);
         int[] result = xy;
         if (hasTile(conveyorLayer, xy[0], xy[1]) && conveyorValue(conveyorLayer, xy[0], xy[1]) == 2) {
-            int lastDirection = conveyorDirection(conveyorLayer, xy[0], xy[1]);
-            result = simulateMove(conveyorCard, xy, lastDirection);
-            int x = result[0],
-                    y = result[1];
-            if (hasTile(conveyorLayer, x, y)
-                    && (conveyorWillTurn(conveyorLayer, x, y, lastDirection))) {
-                result[2] += (4 + (conveyorDirection(conveyorLayer, x, y) - lastDirection));
-                result[2] = result[2] % 4;
+            int conveyorDir = conveyorDirection(conveyorLayer, xy[0], xy[1]);
+            result = simulateMove(conveyorCard, xy, conveyorDir);
+            if (hasTile(conveyorLayer, result[0], result[1])
+                    && conveyorWillTurn(conveyorLayer, result[0], result[1], conveyorDir)) {
+                result[2] = (result[2] + 4 + conveyorDirection(conveyorLayer, result[0], result[1]) - conveyorDir) % 4;
             }
         }
         if (hasTile(conveyorLayer, result[0], result[1])) {
-            int lastDirection = conveyorDirection(conveyorLayer, xy[0], xy[1]);
-            result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
-            int x = result[0],
-                    y = result[1];
-            if (hasTile(conveyorLayer, x, y)
-                    && (conveyorWillTurn(conveyorLayer, x, y, lastDirection))) {
-                result[2] += (4 + (conveyorDirection(conveyorLayer, x, y) - lastDirection));
-                result[2] = result[2] % 4;
+            int conveyorDir = conveyorDirection(conveyorLayer, result[0], result[1]);
+            result = simulateMove(conveyorCard, result, conveyorDir);
+            if (hasTile(conveyorLayer, result[0], result[1])
+                    && conveyorWillTurn(conveyorLayer, result[0], result[1], conveyorDir)) {
+                result[2] = (result[2] + 4 + conveyorDirection(conveyorLayer, result[0], result[1]) - conveyorDir) % 4;
             }
         }
         return result;

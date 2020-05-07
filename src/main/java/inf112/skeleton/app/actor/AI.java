@@ -2,7 +2,6 @@ package inf112.skeleton.app.actor;
 
 import com.badlogic.gdx.graphics.Color;
 import inf112.skeleton.app.game.Menu;
-import inf112.skeleton.app.game.RoboRally;
 import inf112.skeleton.app.gameelements.Board;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
@@ -91,7 +90,7 @@ public class AI extends Player {
             hand.toggleCard(hand.plHand[i]);
         }
         if (getSelected().size() < hand.cardsToSelect()) {
-            System.out.println(getSelected());
+            System.out.println("Insane didn't work, trying Hard");
             aiMoveHard();
         }
         setReady(true);
@@ -284,6 +283,9 @@ public class AI extends Player {
                     break;
                 }
                 newXY = board.simulatePhase(hand.plHand[i], newXY, newXY[2], index + 1);
+                if (newXY[2] == -1) {
+                    break;
+                }
                 if (newXY[0] == obXY[0] && newXY[1] == obXY[1] && index <= shortest) {
                     if (index < shortest) {
                         successful.clear();
