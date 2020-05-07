@@ -136,14 +136,14 @@ public class AI extends Player {
                     currentXYD = sim;
                     continue;
                 }
-                if (current.getType() == 2) { // If current selected card is a turn; check if better turns are available
+                // If current selected card is a turn, but not the best possible: check if better turns are available
+                if (current.getType() == 2 && !bestTurn(aiXYD, obXY, aiXYD[2], current, true)) {
                     if (bestTurn(aiXYD, obXY, aiXYD[2], c, true)
                             && distance(sim, obXY) <= distance(currentXYD, obXY)) { // Turn optimally
                         current = c;
                         currentXYD = sim;
                         break;
-                    }
-                    if (!board.isBlocked(sim[0], sim[1], sim[2])
+                    } else if (!board.isBlocked(sim[0], sim[1], sim[2])
                             && distance(sim, obXY) <= distance(currentXYD, obXY) // Not pointing directly away from obj
                             && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {
                         current = c;
@@ -186,7 +186,6 @@ public class AI extends Player {
                 }
             }
 
-
             for (Card c : hand.plHand) {
                 if (getSelected().contains(c)) {
                     continue;
@@ -195,7 +194,7 @@ public class AI extends Player {
                 if (sim[2] == -1) {
                     continue;
                 }
-                if (distance(sim, obXY) <= distance(currentXY, obXY)) {
+                if (distance(sim, obXY) < distance(currentXY, obXY)) {
                     current = c;
                     currentXY = sim;
                 }
@@ -205,8 +204,7 @@ public class AI extends Player {
                         current = c;
                         currentXY = sim;
                         break;
-                    }
-                    if (!board.isBlocked(sim[0], sim[1], sim[2])
+                    } else if (!board.isBlocked(sim[0], sim[1], sim[2])
                             && distance(sim, obXY) <= distance(currentXY, obXY) // Not pointing directly away from obj
                             && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {
                         current = c;
