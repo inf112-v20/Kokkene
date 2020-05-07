@@ -28,7 +28,6 @@ on the player. To test, walk into a laser path.
 ## Moving on conveyors
 Moving on top of the yellow conveyor belt should move the player by one, in the direction the conveyor belt displays.\
 Blue conveyor belt should move the player by two. \
-Both types of conveyor belts can be found on the testConveyors map
 
 ## Wrenches
 The tile with only the wrench should recover one healthpoint,\
