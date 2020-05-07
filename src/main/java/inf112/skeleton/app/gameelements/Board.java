@@ -330,6 +330,9 @@ public class Board extends Tile implements Cloneable{
      * @return Array containg x, y and direction when simulation is finished
      */
     public int[] simulateMove(Card c, int[] xy, int dir) {
+        if (dir == -1) {
+            return new int[]{xy[0], xy[1], dir};
+        }
         int[] newXY = xy;
         int newDir = dir;
         switch (c.getType()) {
