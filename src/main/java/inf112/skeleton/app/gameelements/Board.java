@@ -274,7 +274,7 @@ public class Board extends Tile implements Cloneable{
                 if (isBlocked(player, 0)) {
                     return;
                 } else if (y >= boardHeight - 1 || isHole) {
-                    player.addHealth(-player.getMaxHealth());
+                    player.addHealth(-player.MAXHEALTH);
                 }
                 player.setyPos(y + 1);
                 break;
@@ -283,7 +283,7 @@ public class Board extends Tile implements Cloneable{
                 if (isBlocked(player, 1)) {
                     return;
                 } else if (x <= 0 || isHole) {
-                    player.addHealth(-player.getMaxHealth());
+                    player.addHealth(-player.MAXHEALTH);
                 }
                 player.setxPos(x - 1);
                 break;
@@ -292,7 +292,7 @@ public class Board extends Tile implements Cloneable{
                 if (isBlocked(player, 2)) {
                     return;
                 } else if (y <= 0 || isHole) {
-                    player.addHealth(-player.getMaxHealth());
+                    player.addHealth(-player.MAXHEALTH);
                 }
                 player.setyPos(y - 1);
                 break;
@@ -301,7 +301,7 @@ public class Board extends Tile implements Cloneable{
                 if (isBlocked(player, 3)) {
                     return;
                 } else if (x >= boardWidth - 1 || isHole) {
-                    player.addHealth(-player.getMaxHealth());
+                    player.addHealth(-player.MAXHEALTH);
                 }
                 player.setxPos(x + 1);
                 break;

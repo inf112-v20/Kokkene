@@ -132,8 +132,6 @@ public class Player implements IActor {
         this.orientation = Math.abs(orientation)%4;
     }
 
-    public int getMaxHealth() { return MAXHEALTH; }
-
     public int getHealth() { return health; }
 
     public int getLifePoints() { return this.lifePoints; }

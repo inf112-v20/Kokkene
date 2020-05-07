@@ -120,12 +120,6 @@ interface IActor {
 
     /**
      *
-     * @return max health of the actor
-     */
-    int getMaxHealth();
-
-    /**
-     *
      * @return current health total.
      */
     int getHealth();

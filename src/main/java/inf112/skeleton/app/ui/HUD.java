@@ -39,7 +39,7 @@ public class HUD {
             batch.draw(heart, i * (heartSize / 2f), HEIGHT - heartSize, heartSize, heartSize);
         }
 
-        float obX = (heartSize * players[0].getMaxHealth() + heartSize) / 2f;
+        float obX = (heartSize * players[0].MAXHEALTH + heartSize) / 2f;
         float obY = HEIGHT - heartSize / 4f;
         if (board.objectives.size() == players[0].getObjective() - 1) {
             font.getData().setScale(2f);

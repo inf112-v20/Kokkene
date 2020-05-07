@@ -1,11 +1,16 @@
 package inf112.skeleton.app.util;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import inf112.skeleton.app.game.MainApplication;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class PermutationCalculator {
 
+    private Set<ArrayList<Integer>> permutationsAt10HP = new HashSet<>();
     private Set<ArrayList<Integer>> permutationsAt9HP = new HashSet<>();
     private Set<ArrayList<Integer>> permutationsAt8HP = new HashSet<>();
     private Set<ArrayList<Integer>> permutationsAt7HP = new HashSet<>();
@@ -21,6 +26,8 @@ public class PermutationCalculator {
 
     public Set<ArrayList<Integer>> getPermutation(int hp) {
         switch (hp) {
+            case 10:
+                return permutationsAt10HP;
             case 9:
                 return permutationsAt9HP;
             case 8:
@@ -49,7 +56,7 @@ public class PermutationCalculator {
      * size = P(n,r) = n!/((n−r)!)
      */
     private void createSequences() {
-        for (int i = 9; i >= 1; i--) {
+        for (int i = 9; i >= 0; i--) {
             ArrayList<Integer> handArray = getHandArray(i);
             int handSize = handArray.size();
             if (i <= 5) {
@@ -110,9 +117,12 @@ public class PermutationCalculator {
         }
 
         //Checks which HashSet to add the permutation
-        int HPcheck = a.size();
+        int HPcheck = a.size() + 1;
 
         switch (HPcheck) {
+            case 10:
+                permutationsAt10HP.add(permutation);
+                break;
             case 9:
                 permutationsAt9HP.add(permutation);
                 break;

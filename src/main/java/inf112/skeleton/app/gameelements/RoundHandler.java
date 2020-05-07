@@ -53,7 +53,7 @@ public class RoundHandler {
             }
 
             if (p.announcePowerDown) {
-                p.addHealth(p.getMaxHealth() - p.getHealth());
+                p.addHealth(p.MAXHEALTH - p.getHealth());
                 if (p.playerPower) {
                     p.announcePowerDown = false;
                     p.powerDownLastRound = true;
@@ -139,7 +139,7 @@ public class RoundHandler {
             player.turn(board.gearDirection(board.gearLayer, x, y));
         }
         if (Board.hasTile(board.holeLayer, x, y)) {
-            player.addHealth(-player.getMaxHealth());
+            player.addHealth(-player.MAXHEALTH);
         }
     }
 
