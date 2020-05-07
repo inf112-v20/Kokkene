@@ -398,10 +398,26 @@ public class Board extends Tile implements Cloneable{
         Card conveyorCard = new Card(0, 0, 1);
         int[] result = xy;
         if (hasTile(conveyorLayer, xy[0], xy[1]) && conveyorValue(conveyorLayer, xy[0], xy[1]) == 2) {
-            result = simulateMove(conveyorCard, xy, conveyorDirection(conveyorLayer, xy[0], xy[1]));
+            int lastDirection = conveyorDirection(conveyorLayer, xy[0], xy[1]);
+            result = simulateMove(conveyorCard, xy, lastDirection);
+            int x = result[0],
+                    y = result[1];
+            if (hasTile(conveyorLayer, x, y)
+                    && (conveyorWillTurn(conveyorLayer, x, y, lastDirection))) {
+                result[2] += (4 + (conveyorDirection(conveyorLayer, x, y) - lastDirection));
+                result[2] = result[2] % 4;
+            }
         }
         if (hasTile(conveyorLayer, result[0], result[1])) {
+            int lastDirection = conveyorDirection(conveyorLayer, xy[0], xy[1]);
             result = simulateMove(conveyorCard, result, conveyorDirection(conveyorLayer, result[0], result[1]));
+            int x = result[0],
+                    y = result[1];
+            if (hasTile(conveyorLayer, x, y)
+                    && (conveyorWillTurn(conveyorLayer, x, y, lastDirection))) {
+                result[2] += (4 + (conveyorDirection(conveyorLayer, x, y) - lastDirection));
+                result[2] = result[2] % 4;
+            }
         }
         return result;
     }
