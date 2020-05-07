@@ -28,7 +28,7 @@ public class RoundHandler {
     private void finishPhase(Player player) {
         int x = player.getxPos(),
                 y = player.getyPos();
-        if (board.hasTile(board.flagLayer, x, y)) {
+        if (Board.hasTile(board.flagLayer, x, y)) {
             player.checkObjective(board.flagValue(board.flagLayer, x, y));
         }
     }
@@ -44,11 +44,11 @@ public class RoundHandler {
             }
             p.respawn();
 
-            if (board.hasTile(board.wrenchLayer, p.getxPos(), p.getyPos())) {
+            if (Board.hasTile(board.wrenchLayer, p.getxPos(), p.getyPos())) {
                 p.newBackup();
                 p.addHealth(board.wrenchValue(board.wrenchLayer, p.getxPos(), p.getyPos()));
             }
-            else if (board.hasTile(board.flagLayer, p.getxPos(), p.getyPos())) {
+            else if (Board.hasTile(board.flagLayer, p.getxPos(), p.getyPos())) {
                 p.addHealth(1);
             }
 
@@ -122,23 +122,23 @@ public class RoundHandler {
         int x = player.getxPos(),
                 y = player.getyPos();
 
-        if (board.hasTile(board.conveyorLayer, x, y)) {
+        if (Board.hasTile(board.conveyorLayer, x, y)) {
             board.moveDoubleConveyor(player, x, y);
         }
         x = player.getxPos(); y = player.getyPos();
         //Must update x and y because player may change position.
-        if (board.hasTile(board.conveyorLayer, x, y)){
+        if (Board.hasTile(board.conveyorLayer, x, y)){
             board.moveConveyor(player, x, y);
         }
         x = player.getxPos(); y = player.getyPos();
-        if (board.hasTile(board.pushLayer, x, y)){
+        if (Board.hasTile(board.pushLayer, x, y)){
             board.doPush(player, phase, x, y);
         }
         x = player.getxPos(); y = player.getyPos();
-        if (board.hasTile(board.gearLayer, x, y)){
+        if (Board.hasTile(board.gearLayer, x, y)){
             player.turn(board.gearDirection(board.gearLayer, x, y));
         }
-        if (board.hasTile(board.holeLayer, x, y)) {
+        if (Board.hasTile(board.holeLayer, x, y)) {
             player.addHealth(-player.getMaxHealth());
         }
     }

@@ -256,35 +256,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
 
     @Override
     public boolean keyUp(int keycode) {
-        //TODO: add keyboard-only capability; (choose cards with arrow keys and enter/space)
-        Card c = new Card(0,0,1);
-        int move = c.getMove();
-
         switch (keycode) {
-            case (Input.Keys.W):
-            case (Input.Keys.UP):
-                player.setOrientation(0);
-                arrowMove(player,move);
-                break;
-            case (Input.Keys.A):
-            case (Input.Keys.LEFT):
-                player.setOrientation(1);
-                arrowMove(player,move);
-                break;
-            case (Input.Keys.S):
-            case (Input.Keys.DOWN):
-                player.setOrientation(2);
-                arrowMove(player,move);
-                break;
-            case (Input.Keys.D):
-            case (Input.Keys.RIGHT):
-                player.setOrientation(3);
-                arrowMove(player, move);
-                break;
-            case (Input.Keys.SPACE):
-                arrowMove(player, 0);
-                break;
-
             case (Input.Keys.C):
                 tryLockIn();
                 break;
@@ -342,20 +314,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
             Display.setResizable(full);
         } catch (LWJGLException e) {
             e.printStackTrace();
-        }
-    }
-
-    //TODO To be removed?
-    private void arrowMove(Player player, int move) {
-        int playerHealth = player.getHealth();
-        RoboRally.getBoard().doMove(player, move);
-        RoboRally.getBoard().afterArrowMove(player);
-
-        if (player.getHealth() != playerHealth) {
-            textures = new Texture[hand.plHand.length + player.getLocked().size()];
-            createCardTexture();
-            createAllSprites(textures);
-            resetColors();
         }
     }
 

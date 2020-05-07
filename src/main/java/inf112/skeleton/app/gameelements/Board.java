@@ -310,11 +310,6 @@ public class Board extends Tile implements Cloneable{
         }
     }
 
-    public void afterArrowMove(Player player) {
-        rh.afterPhase(player, 1);
-        player.respawn();
-    }
-
     /**
      * Checks if the player is on the board and not in a hole
      *
@@ -401,20 +396,21 @@ public class Board extends Tile implements Cloneable{
         Card conveyorCard = new Card(0, 0, 1);
         int[] result = xy;
         if (hasTile(conveyorLayer, xy[0], xy[1]) && conveyorValue(conveyorLayer, xy[0], xy[1]) == 2) {
-            int conveyorDir = conveyorDirection(conveyorLayer, xy[0], xy[1]);
-            result = simulateMove(conveyorCard, xy, conveyorDir);
-            if (hasTile(conveyorLayer, result[0], result[1])
-                    && conveyorWillTurn(conveyorLayer, result[0], result[1], conveyorDir)) {
-                result[2] = (result[2] + 4 + conveyorDirection(conveyorLayer, result[0], result[1]) - conveyorDir) % 4;
-            }
+            result = simulateConveyorTurn(xy, conveyorCard);
         }
         if (hasTile(conveyorLayer, result[0], result[1])) {
-            int conveyorDir = conveyorDirection(conveyorLayer, result[0], result[1]);
-            result = simulateMove(conveyorCard, result, conveyorDir);
-            if (hasTile(conveyorLayer, result[0], result[1])
-                    && conveyorWillTurn(conveyorLayer, result[0], result[1], conveyorDir)) {
-                result[2] = (result[2] + 4 + conveyorDirection(conveyorLayer, result[0], result[1]) - conveyorDir) % 4;
-            }
+            result = simulateConveyorTurn(result, conveyorCard);
+        }
+        return result;
+    }
+
+    private int[] simulateConveyorTurn(int[] coords, Card conveyorCard) {
+        int[] result;
+        int conveyorDir = conveyorDirection(conveyorLayer, coords[0], coords[1]);
+        result = simulateMove(conveyorCard, coords, conveyorDir);
+        if (hasTile(conveyorLayer, result[0], result[1])
+                && conveyorWillTurn(conveyorLayer, result[0], result[1], conveyorDir)) {
+            result[2] = (result[2] + 4 + conveyorDirection(conveyorLayer, result[0], result[1]) - conveyorDir) % 4;
         }
         return result;
     }

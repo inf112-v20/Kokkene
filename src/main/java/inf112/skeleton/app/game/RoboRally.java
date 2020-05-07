@@ -108,10 +108,6 @@ public class RoboRally extends InputAdapter implements Screen {
         return board;
     }
 
-    public static Board getCopyOfBoard() throws CloneNotSupportedException {
-        return (Board)board.clone();
-    }
-
     @Override
     public void show() {
         render(Gdx.graphics.getDeltaTime());
