@@ -105,4 +105,5 @@ public class Card implements Comparable<Card>{
         giveSprite();
         return sprite;
     }
+
 }
