@@ -38,15 +38,11 @@ public class RoundHandler {
      */
     public void afterRound() {
         for (Player p : players) {
+            p.setReady(false);
             if (!p.isAlive()) {
                 continue;
             }
-            p.setReady(false);
-            board.playerLayer.setCell(p.getxPos(), p.getyPos(), null);
-            board.healthLayer.setCell(p.getxPos(), p.getyPos(), null);
             p.respawn();
-            board.playerLayer.setCell(p.getxPos(), p.getyPos(), p.getPlayerState().getPlayerStatus());
-            board.healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealthBar());
 
             if (board.hasTile(board.wrenchLayer, p.getxPos(), p.getyPos())) {
                 p.newBackup();
@@ -141,6 +137,9 @@ public class RoundHandler {
         x = player.getxPos(); y = player.getyPos();
         if (board.hasTile(board.gearLayer, x, y)){
             player.turn(board.gearDirection(board.gearLayer, x, y));
+        }
+        if (board.hasTile(board.holeLayer, x, y)) {
+            player.addHealth(-player.getMaxHealth());
         }
     }
 
