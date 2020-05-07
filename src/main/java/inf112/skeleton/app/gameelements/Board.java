@@ -192,6 +192,18 @@ public class Board extends Tile implements Cloneable{
      */
     private void generateObjectives() {
         objectives = Tile.findGroupMembers(flagLayer, Tiles.Group.OBJECTIVES);
+        sortObjectives();
+    }
+
+    /**
+     * Sort objectives by value
+     */
+    private void sortObjectives() {
+        ArrayList<int[]> copy = null;
+        for (int[] ob : objectives) {
+            copy.set( flagValue(flagLayer,ob[0],ob[1]) - 1 , ob);
+        }
+        objectives = (ArrayList<int[]>) copy.clone();
     }
 
     /**
