@@ -33,6 +33,7 @@ public class HUD {
      */
     public void render() {
         batch.begin();
+        //The player's hearts and objective is drawn
         int heartSize = Display.getWidth() / 40;
         for (int i = 0; i < players[0].getHealth(); i++) {
             batch.draw(heart, i * (heartSize / 2f), HEIGHT - heartSize, heartSize, heartSize);
@@ -47,12 +48,13 @@ public class HUD {
             font.draw(batch, "Target Objective: " + players[0].getObjective(), obX, obY);
         }
 
+        //The hearts and objectives for the computer players are drawn
         font.getData().setScale(1f);
         for (int i = 1; i < players.length; i++) {
             //float nmX = (heartSize*player[i].getMaxHealth() + heartSize)/2f;
             float nmY = (HEIGHT - 30) - (heartSize * i);
             Color color = players[i].getColor();
-
+            //Only draws if the player is alive
             if (players[i].isAlive()) {
                 for (int j = 0; j < players[i].getHealth(); j++) {
                     font.setColor(color);
@@ -62,11 +64,9 @@ public class HUD {
 
                     batch.setColor(Color.RED);
                 }
+                font.draw(batch, "Objective: " + players[i].getObjective(), (players[i].getHealth() * (heartSize) / 3f) + 50, nmY);
+                font.setColor(Color.RED);
             }
-
-            font.draw(batch, "Objective: " + players[i].getObjective(), (players[i].getHealth() * (heartSize) / 3f) + 50, nmY);
-            font.setColor(Color.RED);
-
         }
         font.getData().setScale(2f);
 
