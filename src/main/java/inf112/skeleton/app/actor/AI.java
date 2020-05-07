@@ -46,7 +46,6 @@ public class AI extends Player {
 
     public void setHand(Deck deck) {
         hand = new Hand(this, deck);
-        createSequences();
         aiMove();
     }
 
@@ -65,8 +64,7 @@ public class AI extends Player {
                 aiMoveHard();
                 break;
             case (3):
-                //aiMoveInsane();
-                aiMovePerfect();
+                aiMoveInsane();
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported Difficulty: " + Menu.OptionsUtil.aiDifficulty);
@@ -229,84 +227,6 @@ public class AI extends Player {
             hand.toggleCard(hand.plHand[rand]);
         }
         assert getSelected().size() == cardsToSelect : "Should be " + cardsToSelect + ", not " + getSelected().size();
-        setReady(true);
-    }
-
-    /**
-     * This method calculates the cards which makes the AI get the furthest towards the goal.
-     */
-    public void aiMovePerfect() {
-
-        int originX = this.getxPos();
-        int originY = this.getyPos();
-        int originOrient = this.getOrientation();
-
-        int obX = this.board.objectives.get(this.getObjective() - 1)[0]; //System.out.println(obX);
-        int obY = this.board.objectives.get(this.getObjective() - 1)[1]; //System.out.println(obY);
-        double distance = 9999999;
-        ArrayList<Integer> bestSequence = new ArrayList<>();
-        ArrayList<Integer> currentPermutation = new ArrayList<>();
-
-        boolean alive;
-        int[] simulate = new int[3];
-
-        //Creating a Iterator that iterates through all the hand permutations
-        // play each hand and check which hand gets the closest to the objective.
-        for (ArrayList<Integer> allPermutation : allPermutations) {
-            currentPermutation = allPermutation;
-            alive = true;
-
-            // initial position and card which gets updated
-            int[] xyPos = {originX, originY};
-            int orientation = originOrient;
-            Card card = this.hand.plHand[currentPermutation.get(0)];
-
-            for (int j = 1; j < hand.cardsToSelect(); j++) {
-
-                // do the move with the unique sequence
-                simulate = board.simulateMove(card, xyPos, orientation);
-
-                if(simulate[2] == -1) {
-                    alive = false;
-                }
-
-                else {
-                    // then update the parameters with the new positions and cards
-                    xyPos[0] = simulate[0]; // x value
-                    xyPos[1] = simulate[1]; // y value
-                    orientation = simulate[2]; // orientation
-                    card = this.hand.plHand[currentPermutation.get(j)];
-                }
-            }
-
-            //calculate the new position AI is in, then find the distance between AIXY and objectiveXY
-            int[] newOBXY = {obX, obY};
-            double calculate = distance(xyPos, newOBXY);
-
-            if (calculate < distance && alive) {
-                distance = calculate;
-
-                //save this sequence
-                bestSequence = currentPermutation;
-
-            }
-
-
-            // otherwise try the next permutation
-        }
-
-        for (int k = 0; k < bestSequence.size(); k++) {
-            hand.toggleCard(hand.plHand[bestSequence.get(k)]);
-        }
-        int[] xy = {originX, originY};
-        int[] newXY = {simulate[0], simulate[1]};
-        double remainingDistance = distance(xy, newXY);
-
-        System.out.println("Best sequence found: " + bestSequence);
-        System.out.println("Original position: " + originX + ", " + originY);
-        System.out.println("New position: "  + simulate[0] + ", " + simulate[1]);
-        System.out.printf("Distance to goal: %.2f", remainingDistance);
-
         setReady(true);
     }
 
