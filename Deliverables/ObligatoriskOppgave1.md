@@ -56,7 +56,7 @@ For our final product our version of the MVP will have these functionalities.
 
 -   Board
     -   Board elements (Pits, Lasers, Conveyor belts)
-   
+
 -   Maps / Courses
 
 -   Timer
@@ -65,7 +65,7 @@ For our final product our version of the MVP will have these functionalities.
 
 -   Card decks
     -   Amount of cards received based on damage
-  
+
 -   Program robots
 
 -   Damage & Destruction

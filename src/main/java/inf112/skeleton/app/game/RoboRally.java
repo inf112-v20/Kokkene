@@ -11,10 +11,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import inf112.skeleton.app.gameelements.RoundHandler;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.gameelements.Board;
 import inf112.skeleton.app.gameelements.Card;
+import inf112.skeleton.app.gameelements.RoundHandler;
 import inf112.skeleton.app.sound.Music;
 import inf112.skeleton.app.ui.HUD;
 import inf112.skeleton.app.ui.HandVisualizer;
@@ -160,9 +160,9 @@ public class RoboRally extends InputAdapter implements Screen {
             waited = 0;
         }
         if (nextPhase != null && nextPhase.size() > 0
-                && nextPhase.get(0).getOwner() != null) {
-            if (nextPhase.get(0).getOwner().getHealth() > 0)
-                showCard(nextPhase.get(0)); // Will show the current card.
+                && nextPhase.get(0).getOwner() != null
+                && nextPhase.get(0).getOwner().getHealth() > 0) {
+            showCard(nextPhase.get(0)); // Will show the current card.
         }
         if (waited + Gdx.graphics.getDeltaTime() > 1 || waitingForRespawn()) {
             nextPhase = doTurn(nextPhase);
