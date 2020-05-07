@@ -124,11 +124,9 @@ public class AI extends Player {
             }
 
             for (Card c : hand.plHand) {
-                if (getSelected().contains(c)) { // Skips used cards
-                    continue;
-                }
                 int[] sim = board.simulatePhase(c, aiXYD, aiXYD[2], getSelected().size()); // Simulates phase
-                if (sim[2] == -1) { // If it kills the player (Outside board or in a hole), skip
+                if (sim[2] == -1 || getSelected().contains(c)) {
+                    // If current card is lethal (Outside board or in a hole), or is already used; skip current card
                     continue;
                 }
                 if (distance(sim, obXY) < distance(currentXYD, obXY)) { // Checks if it brings you closer to the obj
@@ -137,18 +135,14 @@ public class AI extends Player {
                     continue;
                 }
                 // If current selected card is a turn, but not the best possible: check if better turns are available
-                if (current.getType() == 2 && !bestTurn(aiXYD, obXY, aiXYD[2], current, true)) {
-                    if (bestTurn(aiXYD, obXY, aiXYD[2], c, true)
-                            && distance(sim, obXY) <= distance(currentXYD, obXY)) { // Turn optimally
-                        current = c;
-                        currentXYD = sim;
-                        break;
-                    } else if (!board.isBlocked(sim[0], sim[1], sim[2])
-                            && distance(sim, obXY) <= distance(currentXYD, obXY) // Not pointing directly away from obj
-                            && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {
-                        current = c;
-                        currentXYD = sim;
-                    }
+                if (current.getType() == 2
+                        && c.getType() == 2
+                        && !bestTurn(aiXYD, obXY, aiXYD[2], current, true) // already best, no point in changing
+                        && !board.isBlocked(sim[0], sim[1], sim[2])
+                        && distance(sim, obXY) <= distance(currentXYD, obXY)
+                        && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {  // Not away
+                    current = c;
+                    currentXYD = sim;
                 }
             }
             hand.toggleCard(current);
@@ -162,9 +156,6 @@ public class AI extends Player {
      */
     private void aiMoveMedium() {
         //TODO Optimize if-else to reduce NPath complexity
-        int[] currentXY,
-                sim;
-        Card current;
         int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
                 obXY = board.objectives.get(getObjective() - 1);
 
@@ -176,8 +167,9 @@ public class AI extends Player {
                 continue;
             }
 
-            current = hand.plHand[0];
-            currentXY = board.simulateMove(current, aiXYD, aiXYD[2]);
+            Card current = hand.plHand[0];
+            int[] currentXY = board.simulateMove(current, aiXYD, aiXYD[2]);
+
             for (Card curr : hand.plHand) {
                 current = curr;
                 currentXY = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
@@ -187,29 +179,23 @@ public class AI extends Player {
             }
 
             for (Card c : hand.plHand) {
-                if (getSelected().contains(c)) {
-                    continue;
-                }
-                sim = board.simulateMove(c, aiXYD, aiXYD[2]);
-                if (sim[2] == -1) {
+                int[] sim = board.simulateMove(c, aiXYD, aiXYD[2]);
+                if (sim[2] == -1 || getSelected().contains(c)) {
                     continue;
                 }
                 if (distance(sim, obXY) < distance(currentXY, obXY)) {
                     current = c;
                     currentXY = sim;
+                    continue; // We know it isn't a turn, thus next if-statement will never be true
                 }
-                if (current.getType() == 2) { // If current selected card is a turn; check if better turns are available
-                    if (bestTurn(aiXYD, obXY, aiXYD[2], c, false)
-                            && distance(sim, obXY) <= distance(currentXY, obXY)) { // Turn optimally
-                        current = c;
-                        currentXY = sim;
-                        break;
-                    } else if (!board.isBlocked(sim[0], sim[1], sim[2])
-                            && distance(sim, obXY) <= distance(currentXY, obXY) // Not pointing directly away from obj
-                            && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {
-                        current = c;
-                        currentXY = sim;
-                    }
+                // If current selected card is a turn, but not the best possible; check if there is a better turn
+                if (current.getType() == 2
+                        && c.getType() == 2
+                        && !bestTurn(aiXYD, obXY, aiXYD[2], current, false) // Current=best, no point to change
+                        && !board.isBlocked(sim[0], sim[1], sim[2])
+                        && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {
+                    current = c;
+                    currentXY = sim;
                 }
             }
             hand.toggleCard(current);
@@ -284,17 +270,8 @@ public class AI extends Player {
         for (ArrayList<Integer> sequence : permutations) {
             int[] newXY = aiXYD;
             for (int index = 0; index < sequence.size() + hand.getLocked().size(); index++) {
-                if (index > shortest) {
-                    break;
-                }
-                if (index < sequence.size()) {
-                    newXY = board.simulatePhase(hand.plHand[sequence.get(index)], newXY, newXY[2], index + 1);
-                } else {
-                    int lastLocked = hand.getLocked().size() - 1;
-                    newXY = board.simulatePhase(hand.getLocked().get(lastLocked - (index - sequence.size())),
-                            newXY, newXY[2], index + 1);
-                }
-                if (newXY[2] == -1) {
+                newXY = simulateLocked(newXY, index, sequence);
+                if (newXY[2] == -1 || index > shortest) {
                     break;
                 }
                 if (newXY[0] == obXY[0] && newXY[1] == obXY[1] && index <= shortest) {
@@ -315,6 +292,23 @@ public class AI extends Player {
             successful.add(best);
         }
         return successful;
+    }
+
+    /**
+     * Simulates phase and return coordinates, takes into account locked registers
+     *
+     * @param xyd      coordinates you start at
+     * @param index    index of the sequence to simulate, if larger than sequence size will return sim of locked card
+     * @param sequence sequence of cards to simulate
+     * @return coordinates after simulating the card indicated by the index
+     */
+    private int[] simulateLocked(int[] xyd, int index, ArrayList<Integer> sequence) {
+        if (index < sequence.size()) {
+            return board.simulatePhase(hand.plHand[sequence.get(index)], xyd, xyd[2], index + 1);
+        }
+        int lastLocked = hand.getLocked().size() - 1;
+        return board.simulatePhase(hand.getLocked().get(lastLocked - (index - sequence.size())),
+                xyd, xyd[2], index + 1);
     }
 
     /**
