@@ -109,7 +109,7 @@ public class AI extends Player {
         int tries = 0;
         while (getSelected().size() < hand.cardsToSelect()) {
             tries++;
-            if (tries > 15) { // In case of locking it will choose random cards
+            if (tries > 15 || aiXYD[2]<0) { // In case of locking it will choose random cards
                 aiMoveMedium();
                 continue;
             }
