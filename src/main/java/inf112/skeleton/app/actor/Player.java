@@ -51,8 +51,11 @@ public class Player implements IActor {
 
     //Ready to play selected cards
     private boolean ready;
+
+    //Booleans for powering down
     public boolean announcePowerDown = false;
     public boolean playerPower = false;
+    public boolean wasPlayerPoweredLast = false;
 
     /**
      * @param name  the name for this robot.

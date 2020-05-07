@@ -31,6 +31,9 @@ public class HandVisualizer extends InputAdapter implements Screen {
     private Sprite lockInButton;
     private Sprite powerButton;
 
+    public Sprite yesButton;
+    public Sprite noButton;
+
     private Sprite controlsButton;
     private Table controls;
 
@@ -134,6 +137,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
         powerButton = new Sprite(button);
         powerButton.setPosition(Display.getWidth() - powerButton.getWidth() - 10, 360);
 
+        yesButton = new Sprite(button);
+        yesButton.setPosition(Display.getWidth() / 2f - powerButton.getWidth(), 0);
+
+        noButton = new Sprite(button);
+        noButton.setPosition(Display.getWidth() / 2f, 0);
+
         buttons = new Pixmap(Gdx.files.internal("assets/pictures/greybutton.png"));
 
         button = makeButtonTexture(buttons,width/3);
@@ -205,6 +214,17 @@ public class HandVisualizer extends InputAdapter implements Screen {
             }
             else controls.setVisible(true);
         }
+
+        if (yesButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
+            player.setAnnouncer();
+            player.playerPower = true;
+            player.wasPlayerPoweredLast = false;
+        }
+        else if (noButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
+            player.playerPower = false;
+            player.wasPlayerPoweredLast = false;
+        }
+
         return false;
     }
 
@@ -349,10 +369,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
         batch.begin();
 
         //Only draws the cards if player hasn't locked in the cards yet.
-        if(!player.getReady()) {
-            drawCardSprites();
-            drawRegisterNumbers();
-            drawPriorityNumbers();
+        if(!player.wasPlayerPoweredLast) {
+            if (!player.getReady()) {
+                drawCardSprites();
+                drawRegisterNumbers();
+                drawPriorityNumbers();
+            }
         }
         drawButtons();
 
@@ -390,6 +412,12 @@ public class HandVisualizer extends InputAdapter implements Screen {
         GlyphLayout gl = new GlyphLayout(font, "Controls");
         font.draw(batch, gl, controlsButton.getX()+controlsButton.getWidth()/2-gl.width/2,
                 controlsButton.getY()+controlsButton.getHeight()-gl.height/2);
+
+        if(player.wasPlayerPoweredLast) {
+            yesButton.draw(batch);
+            noButton.draw(batch);
+        }
+
     }
 
     /**

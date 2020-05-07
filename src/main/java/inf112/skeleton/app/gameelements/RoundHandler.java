@@ -60,10 +60,12 @@ public class RoundHandler {
                 p.addHealth(p.getMaxHealth() - p.getHealth());
                 if (p.playerPower) {
                     p.announcePowerDown = false;
+                    p.wasPlayerPoweredLast = true;
                 }
                 p.hand.lockRegister(); //In case damage is taken
                 p.playerPower = !p.playerPower;
             } else {
+                p.wasPlayerPoweredLast = false;
                 p.hand.lockRegister();
             }
 
