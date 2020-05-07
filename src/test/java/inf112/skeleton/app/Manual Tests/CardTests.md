@@ -10,3 +10,8 @@ clicking the confirm button on the screen, or use the keyboard shortcuts 'c'.\
 If damage is taken, then a card will be removed from the hand.\
 However, no matter how much damage has been taken, you will always have 5 cards on hand.\
 Taking damage when you only have 5 cards on hand, leads to cards starting to be locked in place.
+
+## Powering down
+You can power down by clicking the power down button.\
+If you choose to announce a power down the current turn, then you will power down the next turn.\
+After being powered down for one turn, a prompt asks if you want to keep staying powered down or not.
