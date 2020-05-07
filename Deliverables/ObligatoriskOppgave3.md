@@ -66,13 +66,13 @@ We get along well and will see this project through.
     1.  Add a method to display cards
     2.  Add a method to choose the order of cards
     3.  Lock in the chosen cards.    
-    
+
 2.  Board objects work as intended
     1.  Conveyors should move players.
     2.  Wrenches heal
     3.  Walls stop the player
     4.  Objectives are displayed and updates. 
-        
+
 3.  Test method's names are clear and concise
     1.  The name of the method should give an idea of what it tests.
     2.  The name of the method should be camel case

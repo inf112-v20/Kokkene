@@ -74,7 +74,7 @@ For our final product our version of the MVP will have these functionalities.
 
 -   Repairing
     -   Wrench
-    
+
 -   Robots
     -   Events (Pushing, Laser, Powerdown)
     -   Health

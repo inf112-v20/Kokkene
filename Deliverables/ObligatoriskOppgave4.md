@@ -95,7 +95,7 @@ so meetings did not really feel less efficient than before the quarantine either
     1.  We chose to create an AI to play with.
     2.  4 difficulties added ranging from easy to insane. Which has 4 different implementations of algorithms.
     3.  You can play with up to 7 AI's.
-    
+
 2.  Make the team agree on/ or create a suitable template for git commits.
     1.  Well formatted and commented commits.
     2.  Not to big ones, and not to small ones.
