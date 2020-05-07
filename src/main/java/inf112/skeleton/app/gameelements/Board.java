@@ -16,7 +16,6 @@ import inf112.skeleton.app.util.Tiles;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 
 public class Board extends Tile implements Cloneable{
 
@@ -48,7 +47,7 @@ public class Board extends Tile implements Cloneable{
     private final Sound damageSound;
     private final Sound laserSound;
 
-    public int phase = 0;
+    RoundHandler rh;
 
     /**
      * The Board Constructor creates all the objects on the board based on the Options selected at the menu
@@ -64,6 +63,8 @@ public class Board extends Tile implements Cloneable{
 
         generatePlayers();
 
+        this.rh = new RoundHandler(this);
+
         damageSound = new Sound("assets/sound/oof_sound.mp3");
         laserSound = new Sound("assets/sound/laserfire01.ogg");
     }
@@ -76,7 +77,6 @@ public class Board extends Tile implements Cloneable{
     public Player[] getPlayers() {
         return players;
     }
-
 
     /**
      * Separates the map into different layers and stores the layers as fields
@@ -122,6 +122,10 @@ public class Board extends Tile implements Cloneable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Deck getDeck() {
+        return deck;
     }
 
     /**
@@ -291,7 +295,7 @@ public class Board extends Tile implements Cloneable{
     }
 
     public void afterArrowMove(Player player) {
-        afterPhase(player, 1);
+        rh.afterPhase(player, 1);
         player.respawn();
     }
 
@@ -429,7 +433,7 @@ public class Board extends Tile implements Cloneable{
      * @param x position
      * @param y position
      */
-    private void doPush(Player player, int phase, int x, int y) {
+    public void doPush(Player player, int phase, int x, int y) {
         if (phase % 2 == pushPhases(pushLayer, x, y)) {
             int direction = pushDirection(pushLayer, x, y);
             move(player, direction);
@@ -442,7 +446,7 @@ public class Board extends Tile implements Cloneable{
      * @param x position of player
      * @param y position of player
      */
-    private void moveDoubleConveyor(Player player, int x, int y){
+    public void moveDoubleConveyor(Player player, int x, int y){
         if (conveyorValue(conveyorLayer, x, y) == 2) {
             int direction = conveyorDirection(conveyorLayer, x, y);
             move(player, direction);
@@ -456,7 +460,7 @@ public class Board extends Tile implements Cloneable{
      * @param x position of player
      * @param y position of player
      */
-    private void moveConveyor(Player player, int x, int y){
+    public void moveConveyor(Player player, int x, int y){
         int direction = conveyorDirection(conveyorLayer, x, y);
         move(player, direction);
         doConveyorTurn(player, direction);
@@ -541,7 +545,7 @@ public class Board extends Tile implements Cloneable{
     /**
      * Iterate through all lasers on the map and fire them. Plays the damage sound if anyone takes damage.
      */
-    private void fireLasers() {
+    public void fireLasers() {
         boolean damage = false;
         for (int[] coords : lasers) {
             int x = coords[0],
@@ -623,127 +627,5 @@ public class Board extends Tile implements Cloneable{
     public void muteToggle() {
         damageSound.muteToggle();
         laserSound.muteToggle();
-    }
-
-    /**
-     * Checks if the player is on a flag, and updates the backup and current objective.
-     *
-     * @param player to be checked.
-     */
-    private void finishPhase(Player player) {
-        int x = player.getxPos(),
-                y = player.getyPos();
-        if (hasTile(flagLayer, x, y)) {
-            player.checkObjective(flagValue(flagLayer, x, y));
-        }
-    }
-
-    /**
-     * Checks the position of every player at the end of turn for interaction with the board objects
-     */
-    public void afterRound() {
-        for (Player p : players) {
-            if (!p.isAlive()) {
-                continue;
-            }
-            p.setReady(false);
-            playerLayer.setCell(p.getxPos(), p.getyPos(), null);
-            healthLayer.setCell(p.getxPos(), p.getyPos(), null);
-            p.respawn();
-            playerLayer.setCell(p.getxPos(), p.getyPos(), p.getPlayerState().getPlayerStatus());
-            healthLayer.setCell(p.getxPos(), p.getyPos(), p.getHealthBars().getPlayerHealthBar());
-
-            if (hasTile(wrenchLayer, p.getxPos(), p.getyPos())) {
-                p.newBackup();
-                p.addHealth(wrenchValue(wrenchLayer, p.getxPos(), p.getyPos()));
-            }
-            else if (hasTile(flagLayer, p.getxPos(), p.getyPos())) {
-                p.addHealth(1);
-            }
-
-            if (p.announcePowerDown) {
-                p.addHealth(p.getMaxHealth() - p.getHealth());
-                if (p.playerPower) {
-                    p.announcePowerDown = false;
-                }
-                p.hand.lockRegister(); //In case damage is taken
-                p.playerPower = !p.playerPower;
-            } else {
-                p.hand.lockRegister();
-            }
-
-            p.hand.discardDraw(deck);
-        }
-
-        this.phase = 0;
-    }
-
-    /**
-     * Sorts the cards of all the players in the given phase
-     *
-     * @param phase which phase we're currently in
-     * @return sorted list of cards of all the players in ascending priority
-     */
-    public ArrayList<Card> sortPhase(int phase) {
-        ArrayList<Card> cardList = new ArrayList<>();
-        for (Player p : players) {
-            if (p.getHealth() <= 0 || !p.isAlive() || p.playerPower) {
-                continue;
-            } else if (p.getSelected().size() <= phase) {
-                int lastLocked = p.getLocked().size() - 1,
-                        difference = phase - p.getSelected().size(),
-                        reverseOrder = lastLocked - difference;
-
-                cardList.add(p.getLocked().get(reverseOrder));
-                continue;
-            }
-            cardList.add(p.getSelected().get(phase));
-        }
-        Collections.sort(cardList);
-
-        return cardList;
-    }
-
-    /**
-     * Makes all the players interact with the board objects
-     */
-    public void afterPhase() {
-        this.phase++;
-        for (Player p : players) {
-            afterPhase(p, this.phase);
-        }
-        setPlayersOnBoard();
-        fireLasers();
-        nullPlayerBoard();
-        for (Player finish : players) {
-            finishPhase(finish);
-        }
-    }
-
-    /**
-     * Makes the given player interact with all board objects
-     * @param player to interact
-     * @param phase to do
-     */
-    private void afterPhase(Player player, int phase){
-        int x = player.getxPos(),
-                y = player.getyPos();
-
-        if (hasTile(conveyorLayer, x, y)) {
-            moveDoubleConveyor(player, x, y);
-        }
-        x = player.getxPos(); y = player.getyPos();
-        //Must update x and y because player may change position.
-        if (hasTile(conveyorLayer, x, y)){
-            moveConveyor(player, x, y);
-        }
-        x = player.getxPos(); y = player.getyPos();
-        if (hasTile(pushLayer, x, y)){
-            doPush(player, phase, x, y);
-        }
-        x = player.getxPos(); y = player.getyPos();
-        if (hasTile(gearLayer, x, y)){
-            player.turn(gearDirection(gearLayer, x, y));
-        }
     }
 }

@@ -197,7 +197,6 @@ public class HandVisualizer extends InputAdapter implements Screen {
         }
         else if (powerButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
             player.setAnnouncer();
-            //Will add a better visual way to identify power down.
             setPowerDown();
         }
         else if (controlsButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)){
@@ -349,6 +348,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         stage.draw();
         batch.begin();
 
+        //Only draws the cards if player hasn't locked in the cards yet.
         if(!player.getReady()) {
             drawCardSprites();
             drawRegisterNumbers();

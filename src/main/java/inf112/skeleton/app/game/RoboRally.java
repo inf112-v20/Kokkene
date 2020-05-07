@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import inf112.skeleton.app.gameelements.RoundHandler;
 import inf112.skeleton.app.actor.Player;
 import inf112.skeleton.app.gameelements.Board;
 import inf112.skeleton.app.gameelements.Card;
@@ -24,6 +25,8 @@ import java.util.ArrayList;
 public class RoboRally extends InputAdapter implements Screen {
     private static Board board;
     private final HUD hud;
+
+    private RoundHandler rh;
 
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final SpriteBatch batch;
@@ -95,6 +98,7 @@ public class RoboRally extends InputAdapter implements Screen {
      */
     private void setBoard() {
         board = new Board();
+        rh = new RoundHandler(board);
     }
 
     /**
@@ -259,7 +263,7 @@ public class RoboRally extends InputAdapter implements Screen {
      */
     private void buildPhases() {
         for (int i = 0; i < 5; i++) {
-            phases.add(board.sortPhase(i));
+            phases.add(rh.sortPhase(i));
         }
         this.builtPhases = true;
     }
@@ -275,9 +279,9 @@ public class RoboRally extends InputAdapter implements Screen {
             return null;
         }
         if (currentPhase.isEmpty()) {
-            board.afterPhase();
+            rh.afterPhase();
             if (phases.isEmpty()) {
-                board.afterRound();
+                rh.afterRound();
                 this.builtPhases = false;
                 handVisualizer.createTextures();
                 return currentPhase;
