@@ -222,11 +222,11 @@ public class HandVisualizer extends InputAdapter implements Screen {
         if (yesButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
             player.setAnnouncer();
             player.playerPower = true;
-            player.wasPlayerPoweredLast = false;
+            player.powerDownLastRound = false;
         }
         else if (noButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
             player.playerPower = false;
-            player.wasPlayerPoweredLast = false;
+            player.powerDownLastRound = false;
         }
 
         return false;
@@ -373,7 +373,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         batch.begin();
 
         //Only draws the cards if player hasn't locked in the cards yet.
-        if(!player.wasPlayerPoweredLast) {
+        if(!player.powerDownLastRound) {
             if (!player.getReady()) {
                 drawCardSprites();
                 drawRegisterNumbers();
@@ -417,7 +417,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
         font.draw(batch, gl, controlsButton.getX()+controlsButton.getWidth()/2-gl.width/2,
                 controlsButton.getY()+controlsButton.getHeight()-gl.height/2);
 
-        if(player.wasPlayerPoweredLast) {
+        if(player.powerDownLastRound) {
             yesButton.draw(batch);
             noButton.draw(batch);
         }

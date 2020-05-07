@@ -55,7 +55,7 @@ public class Player implements IActor {
     //Booleans for powering down
     public boolean announcePowerDown = false;
     public boolean playerPower = false;
-    public boolean wasPlayerPoweredLast = false;
+    public boolean powerDownLastRound = false;
 
     /**
      * @param name  the name for this robot.
