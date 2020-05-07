@@ -220,8 +220,8 @@ public class AI extends Player {
 
         while (getSelected().size() < cardsToSelect) {
             int rand = (int) (Math.random() * hand.plHand.length);
-            if (getSelected().contains(hand.plHand[rand])) {
-                continue;
+            while (getSelected().contains(hand.plHand[rand])) {
+                rand = (rand + 1) % hand.plHand.length;
             }
             hand.toggleCard(hand.plHand[rand]);
         }
