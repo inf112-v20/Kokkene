@@ -47,7 +47,7 @@ public class Board extends Tile implements Cloneable{
     private final Sound damageSound;
     private final Sound laserSound;
 
-    RoundHandler rh;
+    public RoundHandler rh;
 
     /**
      * The Board Constructor creates all the objects on the board based on the Options selected at the menu

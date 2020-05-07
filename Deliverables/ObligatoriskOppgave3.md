@@ -90,8 +90,9 @@ We get along well and will see this project through.
     1.  Tile class added
         1.  All important tiles registered as enums.
         2.  Methods to get all values and directions. 
-            
+        
     2.  Used Tile.java methods in Board.java.
+    
     3.  Refactored Board.java
 
 3.  Test method's names are clear and concise

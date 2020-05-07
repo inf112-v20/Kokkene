@@ -78,7 +78,7 @@ For our final product our version of the MVP will have these functionalities.
 -   Robots
     -   Events (Pushing, Laser, Powerdown)
     -   Health
-    
+
 -   Multiplayer (LAN)
 
 -   Win condition

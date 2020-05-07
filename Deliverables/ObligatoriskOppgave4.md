@@ -11,7 +11,7 @@ We discussed the possibility of reassigning Kristoffer, as we felt like the team
 was not the most necessary for our team-methodology. Ultimately we choose to stick with the current\
 roles as these have been working great for us.
 
-####Team roles:
+#### Team roles:
 ##### Kristoffer Kraft Johansen
 Role: Team leader  
 Main tasks: Ensure that the task is completed in the given time frames. Making sure communication between\
