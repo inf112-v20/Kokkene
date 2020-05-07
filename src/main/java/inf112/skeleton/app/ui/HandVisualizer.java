@@ -35,7 +35,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
     public Sprite noButton;
 
     private Sprite controlsButton;
-    private Table controls;
+    private final Table controls;
 
     private final Sound powerSound;
 
@@ -213,10 +213,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
             }
         }
         else if (controlsButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)){
-            if (controls.isVisible()) {
-                controls.setVisible(false);
-            }
-            else controls.setVisible(true);
+            controls.setVisible(!controls.isVisible());
         }
 
         if (yesButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {

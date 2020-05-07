@@ -105,9 +105,9 @@ public class AI extends Player {
                 obXY = board.objectives.get(getObjective() - 1);
 
         int tries = 0;
-        while (getSelected().size() < hand.cardsToSelect()) {
+        while (getSelected().size() < hand.cardsToSelect()) { // While not enough cards are selected
             tries++;
-            if (tries > 15) { // In case of locking it will choose random cards
+            if (tries > 15) { // In case of locking it will go down a difficulty level
                 aiMoveMedium();
                 continue;
             }
@@ -115,7 +115,7 @@ public class AI extends Player {
             Card current = hand.plHand[0];
             int[] currentXYD = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
 
-            for (int i = 0; i < hand.plHand.length; i++) {
+            for (int i = 0; i < hand.plHand.length; i++) { // Sets current card to valid unselected card
                 current = hand.plHand[i];
                 currentXYD = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
                 if (!(getSelected().contains(current) || currentXYD[2] == -1)) {
@@ -137,10 +137,10 @@ public class AI extends Player {
                 // If current selected card is a turn, but not the best possible: check if better turns are available
                 if (current.getType() == 2
                         && c.getType() == 2
-                        && !bestTurn(aiXYD, obXY, aiXYD[2], current, true) // already best, no point in changing
+                        && !bestTurn(aiXYD, obXY, aiXYD[2], current, true) // current=best, no point in changing
                         && !board.isBlocked(sim[0], sim[1], sim[2])
                         && distance(sim, obXY) <= distance(currentXYD, obXY)
-                        && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {  // Not away
+                        && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {  // Not opposite
                     current = c;
                     currentXYD = sim;
                 }
@@ -160,7 +160,7 @@ public class AI extends Player {
                 obXY = board.objectives.get(getObjective() - 1);
 
         int tries = 0;
-        while (getSelected().size() < hand.cardsToSelect()) {
+        while (getSelected().size() < hand.cardsToSelect()) { // While not enough cards are selected
             tries++;
             if (tries > 15) { // In case of locking it will choose random cards
                 aiMoveEasy();
@@ -170,7 +170,7 @@ public class AI extends Player {
             Card current = hand.plHand[0];
             int[] currentXY = board.simulateMove(current, aiXYD, aiXYD[2]);
 
-            for (Card curr : hand.plHand) {
+            for (Card curr : hand.plHand) { // Sets the current card to a valid unselected card
                 current = curr;
                 currentXY = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
                 if (!(getSelected().contains(current) || currentXY[2] == -1)) {
@@ -178,12 +178,12 @@ public class AI extends Player {
                 }
             }
 
-            for (Card c : hand.plHand) {
+            for (Card c : hand.plHand) { // Checks all the cards in hand for which is best
                 int[] sim = board.simulateMove(c, aiXYD, aiXYD[2]);
-                if (sim[2] == -1 || getSelected().contains(c)) {
+                if (sim[2] == -1 || getSelected().contains(c)) { // Skip if already selected or it kills you
                     continue;
                 }
-                if (distance(sim, obXY) < distance(currentXY, obXY)) {
+                if (distance(sim, obXY) < distance(currentXY, obXY)) { // If the card brings us closer to the objective
                     current = c;
                     currentXY = sim;
                     continue; // We know it isn't a turn, thus next if-statement will never be true
@@ -193,7 +193,7 @@ public class AI extends Player {
                         && c.getType() == 2
                         && !bestTurn(aiXYD, obXY, aiXYD[2], current, false) // Current=best, no point to change
                         && !board.isBlocked(sim[0], sim[1], sim[2])
-                        && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {
+                        && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) { // not opposite
                     current = c;
                     currentXY = sim;
                 }
@@ -205,14 +205,14 @@ public class AI extends Player {
     }
 
     /**
-     * Selects random cards from the hand
+     * Selects random cards from the hand until enough are selected
      */
     public void aiMoveEasy() {
         int cardsToSelect = hand.cardsToSelect();
 
         while (getSelected().size() < cardsToSelect) {
             int rand = (int) (Math.random() * hand.plHand.length);
-            while (getSelected().contains(hand.plHand[rand])) {
+            while (getSelected().contains(hand.plHand[rand])) { // Walks the hand while the card is already selected
                 rand = (rand + 1) % hand.plHand.length;
             }
             hand.toggleCard(hand.plHand[rand]);
