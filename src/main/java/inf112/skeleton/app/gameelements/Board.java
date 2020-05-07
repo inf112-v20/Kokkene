@@ -199,11 +199,15 @@ public class Board extends Tile implements Cloneable{
      * Sort objectives by value
      */
     private void sortObjectives() {
-        ArrayList<int[]> copy = null;
-        for (int[] ob : objectives) {
-            copy.set( flagValue(flagLayer,ob[0],ob[1]) - 1 , ob);
+        ArrayList<int[]> copy = new ArrayList<int[]>(4);
+        for (int i = 0; i < objectives.size(); i++) {
+            for (int[] ob : objectives) {
+                if (i == flagValue(flagLayer,ob[0],ob[1]) - 1) {
+                    copy.add(ob);
+                }
+            }
         }
-        objectives = (ArrayList<int[]>) copy.clone();
+        objectives = copy;
     }
 
     /**
