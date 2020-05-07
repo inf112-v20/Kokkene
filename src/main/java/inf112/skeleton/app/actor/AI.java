@@ -76,6 +76,7 @@ public class AI extends Player {
     private void aiMoveInsane() {
         //TODO implement BFS to lower computation
         if (hand.cardsToSelect() == 0) {
+            setReady(true);
             return;
         }
         int currentObj = getObjective() - 1;
@@ -256,7 +257,8 @@ public class AI extends Player {
      * @return the distance between the two arguments
      */
     private double distance(int[] aiXY, int[] obXY) {
-        return Math.sqrt(((obXY[0] - aiXY[0]) ^ 2) + ((obXY[1] - aiXY[1]) ^ 2));
+        return Math.abs(obXY[0] - aiXY[0]) + Math.abs(obXY[1] - aiXY[1]);
+        //return Math.sqrt(((obXY[0] - aiXY[0]) ^ 2) + ((obXY[1] - aiXY[1]) ^ 2));
     }
 
     /**
@@ -277,12 +279,17 @@ public class AI extends Player {
 
         for (ArrayList<Integer> sequence : permutations) {
             int[] newXY = aiXYD;
-            for (int i : sequence) {
-                int index = sequence.indexOf(i);
-                if (newXY[2] == -1 || index > shortest) {
+            for (int index = 0; index < sequence.size() + hand.getLocked().size(); index++) {
+                if (index > shortest) {
                     break;
                 }
-                newXY = board.simulatePhase(hand.plHand[i], newXY, newXY[2], index + 1);
+                if (index < sequence.size()) {
+                    newXY = board.simulatePhase(hand.plHand[sequence.get(index)], newXY, newXY[2], index + 1);
+                } else {
+                    int lastLocked = hand.getLocked().size() - 1;
+                    newXY = board.simulatePhase(hand.getLocked().get(lastLocked - (index - sequence.size())),
+                            newXY, newXY[2], index + 1);
+                }
                 if (newXY[2] == -1) {
                     break;
                 }
@@ -295,7 +302,7 @@ public class AI extends Player {
                     break;
                 }
             }
-            if (successful.isEmpty() && distance(newXY, obXY) < distance(current, obXY)) {
+            if (newXY[2] != -1 && successful.isEmpty() && distance(newXY, obXY) < distance(current, obXY)) {
                 current = newXY;
                 best = sequence;
             }
@@ -314,8 +321,6 @@ public class AI extends Player {
         allPermutations.clear();
         ArrayList<Integer> handArray = getHandArray();
         heapPermutation(handArray, handArray.size(), hand.cardsToSelect());
-        //Should be 15120 if AI is at max HP
-        //System.out.println(allPermutations.size());
     }
 
     //Inspiration and more information: https://www.geeksforgeeks.org/heaps-algorithm-for-generating-permutations/
@@ -333,13 +338,12 @@ public class AI extends Player {
         if (size == 1)
             addPermutation(a,choiceOfCards);
 
-        for (int i = 0; i <size; i++) {
+        for (int i = 0; i < size; i++) {
 
             heapPermutation(a, size - 1, choiceOfCards);
 
             // if size is odd, swap first and last element
-            if (size % 2 == 1)
-            {
+            if (size % 2 == 1) {
                 int temp = a.get(0);
                 a.set(0, a.get(size - 1));
                 a.set(size - 1, temp);
