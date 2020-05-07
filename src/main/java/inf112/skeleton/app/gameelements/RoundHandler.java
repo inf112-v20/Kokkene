@@ -8,8 +8,8 @@ import java.util.Collections;
 public class RoundHandler {
 
     private Board board;
-    Player[] players;
-    Deck deck;
+    private Player[] players;
+    private Deck deck;
 
     public int phase = 0;
 

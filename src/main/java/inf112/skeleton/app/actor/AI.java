@@ -117,6 +117,7 @@ public class AI extends Player {
             for (int i = 0; (i < hand.plHand.length) && getSelected().contains(current); i++) {
                 current = hand.plHand[i];
             }
+
             int[] currentXYD = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
 
             for (Card c : hand.plHand) {

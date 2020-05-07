@@ -331,12 +331,10 @@ public class HandVisualizer extends InputAdapter implements Screen {
         batch.begin();
 
         //Only draws the cards if player hasn't locked in the cards yet.
-        if(!player.powerDownLastRound) {
-            if (!player.getReady()) {
+        if(!player.powerDownLastRound && !player.getReady()) {
                 drawCardSprites();
                 drawRegisterNumbers();
                 drawPriorityNumbers();
-            }
         }
         drawButtons();
 

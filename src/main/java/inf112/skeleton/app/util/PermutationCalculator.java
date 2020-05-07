@@ -1,9 +1,5 @@
 package inf112.skeleton.app.util;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import inf112.skeleton.app.game.MainApplication;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
