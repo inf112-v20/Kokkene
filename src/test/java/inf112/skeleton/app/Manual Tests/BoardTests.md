@@ -31,7 +31,8 @@ Blue conveyor belt should move the player by two. \
 
 ## Wrenches
 The tile with only the wrench should recover one healthpoint,\
-while the one with a wrench and hammer should recover two healthpoints.
+while the one with a wrench and hammer should recover two healthpoints.\
+health should only be recovered if the player is standing on the tile at the end of the round.
 
 ## Gears
 Moving on a gear should change the players direction according to the arrows on it.\
