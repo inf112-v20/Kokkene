@@ -118,10 +118,9 @@ public class AI extends Player {
             for (int i = 0; i < hand.plHand.length; i++) {
                 current = hand.plHand[i];
                 currentXYD = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
-                if (getSelected().contains(current) || currentXYD[2] == -1) {
-                    continue;
+                if (!(getSelected().contains(current) || currentXYD[2] == -1)) {
+                    break;
                 }
-                break;
             }
 
             for (Card c : hand.plHand) {
@@ -182,10 +181,9 @@ public class AI extends Player {
             for (Card curr : hand.plHand) {
                 current = curr;
                 currentXY = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
-                if (getSelected().contains(current) || currentXY[2] == -1) {
-                    continue;
+                if (!(getSelected().contains(current) || currentXY[2] == -1)) {
+                    break;
                 }
-                break;
             }
 
 
