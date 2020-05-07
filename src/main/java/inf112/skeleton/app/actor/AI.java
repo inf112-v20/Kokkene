@@ -113,12 +113,16 @@ public class AI extends Player {
             }
 
             Card current = hand.plHand[0];
-
-            for (int i = 0; (i < hand.plHand.length) && getSelected().contains(current); i++) {
-                current = hand.plHand[i];
-            }
-
             int[] currentXYD = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
+
+            for (int i = 0; i < hand.plHand.length; i++) {
+                current = hand.plHand[i];
+                currentXYD = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
+                if (getSelected().contains(current) || currentXYD[2] == -1) {
+                    continue;
+                }
+                break;
+            }
 
             for (Card c : hand.plHand) {
                 if (getSelected().contains(c)) { // Skips used cards
@@ -174,11 +178,16 @@ public class AI extends Player {
             }
 
             current = hand.plHand[0];
-
-            for (int i = 0; (i < hand.plHand.length) && getSelected().contains(current); i++) {
-                current = hand.plHand[i];
-            }
             currentXY = board.simulateMove(current, aiXYD, aiXYD[2]);
+            for (Card curr : hand.plHand) {
+                current = curr;
+                currentXY = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
+                if (getSelected().contains(current) || currentXY[2] == -1) {
+                    continue;
+                }
+                break;
+            }
+
 
             for (Card c : hand.plHand) {
                 if (getSelected().contains(c)) {
@@ -257,8 +266,7 @@ public class AI extends Player {
      * @return the distance between the two arguments
      */
     private double distance(int[] aiXY, int[] obXY) {
-        return Math.abs(obXY[0] - aiXY[0]) + Math.abs(obXY[1] - aiXY[1]);
-        //return Math.sqrt(((obXY[0] - aiXY[0]) ^ 2) + ((obXY[1] - aiXY[1]) ^ 2));
+        return Math.sqrt(((obXY[0] - aiXY[0]) ^ 2) + ((obXY[1] - aiXY[1]) ^ 2));
     }
 
     /**
