@@ -389,14 +389,14 @@ public class Board extends Tile implements Cloneable{
     /**
      * Simulates they conveyors moving the player and turning it
      *
-     * @param xy Coordinates and direction of simulated player
+     * @param xyd Coordinates and direction of simulated player
      * @return new coordinates and direction after the simulation
      */
-    private int[] simulateConveyors(int[] xy) {
+    private int[] simulateConveyors(int[] xyd) {
         Card conveyorCard = new Card(0, 0, 1);
-        int[] result = xy;
-        if (hasTile(conveyorLayer, xy[0], xy[1]) && conveyorValue(conveyorLayer, xy[0], xy[1]) == 2) {
-            result = simulateConveyorTurn(xy, conveyorCard);
+        int[] result = xyd;
+        if (hasTile(conveyorLayer, xyd[0], xyd[1]) && conveyorValue(conveyorLayer, xyd[0], xyd[1]) == 2) {
+            result = simulateConveyorTurn(xyd, conveyorCard);
         }
         if (hasTile(conveyorLayer, result[0], result[1])) {
             result = simulateConveyorTurn(result, conveyorCard);
