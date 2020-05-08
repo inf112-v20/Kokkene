@@ -69,7 +69,6 @@ to something like a development branch that someone was in charge of reviewing, 
 It might also have been possible to split the program into more threads, this way it\
 would have been easier to handle everything that happens on the board.
 
-
 #### Communication
 The communication was good from the start, as we had our biweekly meetings every Tuesday and Thursday.\
 Over time, the communication got even better as we continued working on the project.\
@@ -96,7 +95,7 @@ so meetings did not really feel less efficient than before the quarantine either
 2.  The message contains all noteworthy changes, and documents them properly.
     1.  Each commit should be concise and straight to the point about the changes made to a class.
     2.  Commit often. Changes to different classes that are not linked, should not share commit messages.
-    
+
 3.  All implemented features the player can interact with, should work accordingly, and without game-breaking bugs.
     1.  Test the code often.
     2.  Have others test the same code as well. They might find bugs and crashes you could not find.
