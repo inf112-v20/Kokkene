@@ -166,7 +166,7 @@ public class AI extends Player {
 
             for (Card curr : hand.plHand) { // Sets the current card to a valid unselected card
                 current = curr;
-                currentXY = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
+                currentXY = board.simulateMove(current, aiXYD, aiXYD[2]);
                 if (!(getSelected().contains(current) || currentXY[2] == -1)) { // Exits when valid card is selected
                     break;
                 }
@@ -260,17 +260,17 @@ public class AI extends Player {
 
         for (ArrayList<Integer> sequence : permutations) { // Check all permutations
             int[] newXY = aiXYD.clone(); // Always start the simulations at the current position of the AI
-            for (int phase = 0; phase < sequence.size() + hand.getLocked().size(); phase++) { // Walk through sequence
-                newXY = simulateLocked(newXY, phase, sequence); // Simulates the card of current phase, hand and locked
-                if (newXY[2] == -1 || phase > shortest) { // discard sequence if it kills or is longer than current
+            for (int index = 0; index < sequence.size() + hand.getLocked().size(); index++) { // Walk through sequence
+                newXY = simulateLocked(newXY, index, sequence); // Simulates card of current phase, both hand & locked
+                if (newXY[2] == -1 || index > shortest) { // discard sequence if it kills or is longer than current
                     break;
                 }
                 if (newXY[0] == obXY[0] && newXY[1] == obXY[1]) { // If it hits the obj; save sequence as successful
-                    if (phase < shortest) { // Remove all paths that are longer than this path to the objective
+                    if (index < shortest) { // Remove all paths that are longer than this path to the objective
                         successful.clear();
                     }
                     successful.add(sequence); // Add sequence to list of successful sequences that reach the objective
-                    shortest = phase; // Update lenth of shortest path to objective
+                    shortest = index; // Update lenth of shortest path to objective
                     break;
                 }
             }
