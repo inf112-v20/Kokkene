@@ -301,6 +301,4 @@ public class AI extends Player {
                 xyd, xyd[2], index + 1);
     }
 
-    //Inspiration and more information: https://www.geeksforgeeks.org/heaps-algorithm-for-generating-permutations/
-
 }
