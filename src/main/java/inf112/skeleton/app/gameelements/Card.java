@@ -95,6 +95,11 @@ public class Card implements Comparable<Card>{
                 0, 0, resizedCard.getWidth(), resizedCard.getHeight());
         texture = new Texture(resizedCard);
         sprite = new Sprite(texture);
+
+        card.dispose();
+        resizedCard.dispose();
+        texture.dispose();
+
     }
 
     /**
