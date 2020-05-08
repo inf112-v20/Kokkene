@@ -78,19 +78,19 @@ public class AI extends Player {
             setReady(true);
             return;
         }
-        int currentObj = getObjective() - 1;
+        int currentObj = getObjective() - 1; // Index of current objective
         createSequences();
         ArrayList<ArrayList<Integer>> successful = findSuccessful(currentObj, allPermutations);
 
-        while (1 < successful.size()) {
+        // Gets the best paths to each subsequent objective from the list of successful paths to the prev. obj.
+        while (1 < successful.size() && currentObj < board.objectives.size()) { // Size == 1 when it doesn't reach obj.
             currentObj++;
             successful = findSuccessful(currentObj, successful);
         }
-        for (int i : successful.get(0)) {
+        for (int i : successful.get(0)) { // Selects the cards from the optimal sequence
             hand.toggleCard(hand.plHand[i]);
         }
-        if (getSelected().size() < hand.cardsToSelect()) {
-            System.out.println("Insane didn't work, trying Hard");
+        if (getSelected().size() < hand.cardsToSelect()) { // If it malfunctions, use lower difficulty
             aiMoveHard();
         }
         setReady(true);
@@ -100,7 +100,6 @@ public class AI extends Player {
      * Always move towards the current objective taking into account board elements, but not other robots or damage
      */
     private void aiMoveHard() {
-        //TODO Optimize if-else to reduce NPath complexity
         int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
                 obXY = board.objectives.get(getObjective() - 1);
 
@@ -129,24 +128,20 @@ public class AI extends Player {
                     // If current card is lethal (Outside board or in a hole), or is already used; skip current card
                     continue;
                 }
-                if (distance(sim, obXY) < distance(currentXYD, obXY)) { // Checks if it brings you closer to the obj
-                    current = c;
-                    currentXYD = sim;
-                    continue;
-                }
-                // If current selected card is a turn, but not the best possible: check if better turns are available
-                if (current.getType() == 2
-                        && c.getType() == 2
-                        && !bestTurn(aiXYD, obXY, aiXYD[2], current, true) // current=best, no point in changing
-                        && !board.isBlocked(sim[0], sim[1], sim[2])
-                        && distance(sim, obXY) <= distance(currentXYD, obXY)
-                        && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) {  // Not opposite
+                // If this card brings you closer || if there is a better turn; update current selected card
+                if (distance(sim, obXY) < distance(currentXYD, obXY) // Execute if it brings you closer to the objective
+                        ||
+                        (distance(sim, obXY) <= distance(currentXYD, obXY) // If current is a turn the distances are equal
+                                && c.getType() == 2
+                                && badTurn(aiXYD, obXY, aiXYD[2], current, true) // current=best, no point in changing
+                                && !board.isBlocked(sim[0], sim[1], sim[2])
+                                && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4)) {  // Not opposite
                     current = c;
                     currentXYD = sim;
                 }
             }
             hand.toggleCard(current);
-            aiXYD = currentXYD;
+            aiXYD = currentXYD; // Updates start position to simulate from
         }
         setReady(true);
     }
@@ -155,7 +150,6 @@ public class AI extends Player {
      * Always tries to move in the direction most towards the next objective without taking into account board elements
      */
     private void aiMoveMedium() {
-        //TODO Optimize if-else to reduce NPath complexity
         int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
                 obXY = board.objectives.get(getObjective() - 1);
 
@@ -173,7 +167,7 @@ public class AI extends Player {
             for (Card curr : hand.plHand) { // Sets the current card to a valid unselected card
                 current = curr;
                 currentXY = board.simulatePhase(current, aiXYD, aiXYD[2], getSelected().size());
-                if (!(getSelected().contains(current) || currentXY[2] == -1)) {
+                if (!(getSelected().contains(current) || currentXY[2] == -1)) { // Exits when valid card is selected
                     break;
                 }
             }
@@ -183,23 +177,20 @@ public class AI extends Player {
                 if (sim[2] == -1 || getSelected().contains(c)) { // Skip if already selected or it kills you
                     continue;
                 }
-                if (distance(sim, obXY) < distance(currentXY, obXY)) { // If the card brings us closer to the objective
-                    current = c;
-                    currentXY = sim;
-                    continue; // We know it isn't a turn, thus next if-statement will never be true
-                }
-                // If current selected card is a turn, but not the best possible; check if there is a better turn
-                if (current.getType() == 2
-                        && c.getType() == 2
-                        && !bestTurn(aiXYD, obXY, aiXYD[2], current, false) // Current=best, no point to change
-                        && !board.isBlocked(sim[0], sim[1], sim[2])
-                        && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4) { // not opposite
+                // If this card brings you closer || if there is a better turn; update current selected card
+                if (distance(sim, obXY) < distance(currentXY, obXY) // if the card brings us closer to the objective
+                        ||
+                        (distance(sim, obXY) <= distance(currentXY, obXY) // If current is a turn the distance is equal
+                                && c.getType() == 2
+                                && badTurn(aiXYD, obXY, aiXYD[2], current, false) // Current=best; no point to change
+                                && !board.isBlocked(sim[0], sim[1], sim[2])
+                                && sim[2] != (Board.towardTarget(sim[0], sim[1], obXY[0], obXY[1]) + 2) % 4)) { // not opposite
                     current = c;
                     currentXY = sim;
                 }
             }
             hand.toggleCard(current);
-            aiXYD = currentXY;
+            aiXYD = currentXY; // Updates start position to simulate from
         }
         setReady(true);
     }
@@ -230,14 +221,14 @@ public class AI extends Player {
      * @param c   Turn card
      * @return True if the new dir is towards the objective and not blocked, false otherwise
      */
-    private boolean bestTurn(int[] xy, int[] ob, int dir, Card c, boolean mapElem) {
+    private boolean badTurn(int[] xy, int[] ob, int dir, Card c, boolean mapElem) {
         int newDir;
         if (mapElem) {
             newDir = board.simulatePhase(c, xy, dir, getSelected().size())[2];
         } else {
             newDir = board.simulateMove(c, xy, dir)[2];
         }
-        return !board.isBlocked(xy[0], xy[1], newDir) && newDir == Board.towardTarget(xy[0], xy[1], ob[0], ob[1]);
+        return board.isBlocked(xy[0], xy[1], newDir) || newDir != Board.towardTarget(xy[0], xy[1], ob[0], ob[1]);
     }
 
     /**
@@ -263,31 +254,33 @@ public class AI extends Player {
                 obXY = board.objectives.get(obj),
                 current = aiXYD;
 
-        int shortest = hand.cardsToSelect();
+        int shortest = 6;
         ArrayList<ArrayList<Integer>> successful = new ArrayList<>();
         ArrayList<Integer> best = new ArrayList<>();
 
-        for (ArrayList<Integer> sequence : permutations) {
-            int[] newXY = aiXYD;
-            for (int index = 0; index < sequence.size() + hand.getLocked().size(); index++) {
-                newXY = simulateLocked(newXY, index, sequence);
-                if (newXY[2] == -1 || index > shortest) {
+        for (ArrayList<Integer> sequence : permutations) { // Check all permutations
+            int[] newXY = aiXYD.clone(); // Always start the simulations at the current position of the AI
+            for (int phase = 0; phase < sequence.size() + hand.getLocked().size(); phase++) { // Walk through sequence
+                newXY = simulateLocked(newXY, phase, sequence); // Simulates the card of current phase, hand and locked
+                if (newXY[2] == -1 || phase > shortest) { // discard sequence if it kills or is longer than current
                     break;
                 }
-                if (newXY[0] == obXY[0] && newXY[1] == obXY[1] && index <= shortest) {
-                    if (index < shortest) {
+                if (newXY[0] == obXY[0] && newXY[1] == obXY[1]) { // If it hits the obj; save sequence as successful
+                    if (phase < shortest) { // Remove all paths that are longer than this path to the objective
                         successful.clear();
                     }
-                    successful.add(sequence);
-                    shortest = index;
+                    successful.add(sequence); // Add sequence to list of successful sequences that reach the objective
+                    shortest = phase; // Update lenth of shortest path to objective
                     break;
                 }
             }
+            // If this sequence brings us closer to the objective than any previous, save it as current best sequence
             if (newXY[2] != -1 && successful.isEmpty() && distance(newXY, obXY) < distance(current, obXY)) {
                 current = newXY;
                 best = sequence;
             }
         }
+        // If no sequence takes us to the objective, save and return the one that brings us the closest
         if (successful.isEmpty()) {
             successful.add(best);
         }
@@ -341,19 +334,19 @@ public class AI extends Player {
             heapPermutation(a, size - 1, choiceOfCards);
 
             // if size is odd, swap first and last element
+            int temp;
             if (size % 2 == 1) {
-                int temp = a.get(0);
+                temp = a.get(0);
                 a.set(0, a.get(size - 1));
-                a.set(size - 1, temp);
             }
 
             // If size is even, swap ith and last
             // element
             else {
-                int temp = a.get(i);
+                temp = a.get(i);
                 a.set(i, a.get(size - 1));
-                a.set(size - 1, temp);
             }
+            a.set(size - 1, temp);
         }
     }
 

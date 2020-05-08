@@ -8,7 +8,7 @@ import com.badlogic.gdx.Gdx;
 public class Music {
 
     //store current position
-    private com.badlogic.gdx.audio.Music music;
+    private final com.badlogic.gdx.audio.Music music;
 
     public Music() {
         //May be in unpacked file format.

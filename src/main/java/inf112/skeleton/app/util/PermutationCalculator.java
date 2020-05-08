@@ -6,15 +6,15 @@ import java.util.Set;
 
 public class PermutationCalculator {
 
-    private Set<ArrayList<Integer>> permutationsAt10HP = new HashSet<>();
-    private Set<ArrayList<Integer>> permutationsAt9HP = new HashSet<>();
-    private Set<ArrayList<Integer>> permutationsAt8HP = new HashSet<>();
-    private Set<ArrayList<Integer>> permutationsAt7HP = new HashSet<>();
-    private Set<ArrayList<Integer>> permutationsAt6HP = new HashSet<>();
-    private Set<ArrayList<Integer>> permutationsAt5HP = new HashSet<>();
-    private Set<ArrayList<Integer>> permutationsAt4HP = new HashSet<>();
-    private Set<ArrayList<Integer>> permutationsAt3HP = new HashSet<>();
-    private Set<ArrayList<Integer>> permutationsAt2HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt10HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt9HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt8HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt7HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt6HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt5HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt4HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt3HP = new HashSet<>();
+    private final Set<ArrayList<Integer>> permutationsAt2HP = new HashSet<>();
 
     public PermutationCalculator() {
         createSequences();
@@ -77,26 +77,23 @@ public class PermutationCalculator {
         if (size == 1)
             addPermutation(a,choiceOfCards);
 
-        for (int i = 0; i <size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             heapPermutation(a, size - 1, choiceOfCards);
 
             // if size is odd, swap first and last element
-            if (size % 2 == 1)
-            {
-                int temp = a.get(0);
+            int temp;
+            if (size % 2 == 1) {
+                temp = a.get(0);
                 a.set(0, a.get(size - 1));
-                a.set(size - 1, temp);
             }
 
             // If size is even, swap ith and last
             // element
-            else
-            {
-                int temp = a.get(i);
+            else {
+                temp = a.get(i);
                 a.set(i, a.get(size - 1));
-                a.set(size - 1, temp);
             }
+            a.set(size - 1, temp);
         }
     }
 

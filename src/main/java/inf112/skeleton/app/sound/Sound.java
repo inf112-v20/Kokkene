@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 
 public class Sound {
     //store sound object
-    private com.badlogic.gdx.audio.Sound sound;
+    private final com.badlogic.gdx.audio.Sound sound;
     private float pitch = 0.5f;
     private boolean mute = false;
 

@@ -8,7 +8,7 @@ import org.lwjgl.opengl.Display;
 
 public class ControlsTable {
 
-    private Table table = new Table();
+    private final Table table = new Table();
 
     public ControlsTable() {
         int width = Display.getWidth(),
