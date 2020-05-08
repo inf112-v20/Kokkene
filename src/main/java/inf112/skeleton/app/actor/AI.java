@@ -252,7 +252,7 @@ public class AI extends Player {
     private ArrayList<ArrayList<Integer>> findSuccessful(int obj, Collection<ArrayList<Integer>> permutations) {
         int[] aiXYD = {getxPos(), getyPos(), getOrientation()},
                 obXY = board.objectives.get(obj),
-                current = aiXYD;
+                current = aiXYD.clone();
 
         int shortest = 6;
         ArrayList<ArrayList<Integer>> successful = new ArrayList<>();
@@ -270,12 +270,12 @@ public class AI extends Player {
                         successful.clear();
                     }
                     successful.add(sequence); // Add sequence to list of successful sequences that reach the objective
-                    shortest = index; // Update lenth of shortest path to objective
+                    shortest = index; // Update length of shortest path to objective
                     break;
                 }
             }
             // If this sequence brings us closer to the objective than any previous, save it as current best sequence
-            if (newXY[2] != -1 && successful.isEmpty() && distance(newXY, obXY) < distance(current, obXY)) {
+            if (newXY[2] != -1 && successful.isEmpty() && distance(newXY, obXY) <= distance(current, obXY)) {
                 current = newXY;
                 best = sequence;
             }
