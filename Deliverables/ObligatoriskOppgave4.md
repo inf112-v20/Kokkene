@@ -52,19 +52,23 @@ This was the first time any of us had worked on a project of this scale before a
 We agreed on roles quite early, since some of us were more comfortable writing code and others drawing.\
 This gave each and everyone of us the opportunity to "specialize" in the given roles and helped us tremendously.\
 Working on this project, however, was not all sunshine and rainbows. There was a lot to learn when working as a team,\
-especially when most of us did not have experience with it before.\
+especially since this was the first time most of us worked on something together.\
 This did mean a lot of undocumented code, a project board which was nearly never updated, bad commit messages,\
-and so on. Another big issue was splitting functionality. This was not something we were too concerned with at first.\
-We did refactor most of the code at one point, as a lot of it was unnecessarily grouped together.\
-Over time, as the code grew larger, it became harder and harder to split functionality.   
+not making use of branches, and so on. 
+
+Another big issue was splitting functionality. This was not something we were too concerned with at first.\
+We did in fact refactor most of the code at one point, as a lot of it was unnecessarily grouped together.\
+Over time, as the code grew larger, it became harder and harder to split functionality,\
+so some classes ended up much bigger than needed.\
 
 #### Improvement in retrospection
-We realized as we were starting to program in the AI/computer that we should have had more focus on this from the start.\
-The game works perfectly when playing in singleplayer mode, but we struggled when trying to implement multiplayer.\
-We also feel like we didn't properly use the tools GitHub offered, such as the project board and different branches\
-one could commit to. The way we decided to go was to just commit everything to the master branch, and not a development\
-branch that someone reviewed before merging. Maybe we also could have split the program into more threads, this way it\
+We realized as we were starting to make the code for the AI/computer, that we should have had more focus on this from the start.\
+The game works perfectly when playing in singleplayer mode, but we struggled when trying to implement multiple players.\
+We committed everything to the master branch every time. This could have been utilized better, if we had pushed\
+to something like a development branch that someone was in charge of reviewing, before merging with the main branch.
+It might also have been possible to split the program into more threads, this way it\
 would have been easier to handle everything that happens on the board.
+
 
 #### Communication
 The communication was good from the start, as we had our biweekly meetings every Tuesday and Thursday.\
@@ -86,8 +90,16 @@ so meetings did not really feel less efficient than before the quarantine either
 #### Acceptance Criterias
 
 1.  Have a simple computer that plays some cards.
+    1.  Add a method that lets you pick between multiple difficulties
+    2.  Each difficulty should be clearly different from one another
+
 2.  The message contains all noteworthy changes, and documents them properly.
+    1.  Each commit should be concise and straight to the point about the changes made to a class.
+    2.  Commit often. Changes to different classes that are not linked, should not share commit messages.
+    
 3.  All implemented features the player can interact with, should work accordingly, and without game-breaking bugs.
+    1.  Test the code often.
+    2.  Have others test the same code as well. They might find bugs and crashes you could not find.
 
 ##### Implementation
 
