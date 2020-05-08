@@ -10,7 +10,6 @@ import inf112.skeleton.app.util.PermutationCalculator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Objects;
 
 
 public class AI extends Player {
@@ -78,7 +77,7 @@ public class AI extends Player {
         }
         int currentObj = getObjective() - 1; // Index of current objective
         ArrayList<ArrayList<Integer>> successful = findSuccessful(currentObj,
-                Objects.requireNonNull(PermutationCalculator.getPermutation(getHealth()))); // Permutations for current HP
+                PermutationCalculator.getPermutation(getHealth())); // Permutations for current HP
 
         // Gets the best paths to each subsequent objective from the list of successful paths to the prev. obj.
         while (1 < successful.size() && currentObj < board.objectives.size()) { // Size == 1 when it doesn't reach obj.

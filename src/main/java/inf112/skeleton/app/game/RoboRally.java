@@ -29,7 +29,7 @@ public class RoboRally extends InputAdapter implements Screen {
 
     private RoundHandler rh;
 
-    public static PermutationCalculator permCalc;
+    public static PermutationCalculator permCalc = new PermutationCalculator();
 
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final SpriteBatch batch;
@@ -55,7 +55,6 @@ public class RoboRally extends InputAdapter implements Screen {
     RoboRally(Game game) {
         //Initializes the board and HUD
         this.game = game;
-        permCalc = new PermutationCalculator();
         setBoard();
 
         int extraSpace = 8;
