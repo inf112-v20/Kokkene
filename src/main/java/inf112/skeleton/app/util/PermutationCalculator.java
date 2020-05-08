@@ -6,21 +6,21 @@ import java.util.Set;
 
 public class PermutationCalculator {
 
-    private final Set<ArrayList<Integer>> permutationsAt10HP = new HashSet<>();
-    private final Set<ArrayList<Integer>> permutationsAt9HP = new HashSet<>();
-    private final Set<ArrayList<Integer>> permutationsAt8HP = new HashSet<>();
-    private final Set<ArrayList<Integer>> permutationsAt7HP = new HashSet<>();
-    private final Set<ArrayList<Integer>> permutationsAt6HP = new HashSet<>();
-    private final Set<ArrayList<Integer>> permutationsAt5HP = new HashSet<>();
-    private final Set<ArrayList<Integer>> permutationsAt4HP = new HashSet<>();
-    private final Set<ArrayList<Integer>> permutationsAt3HP = new HashSet<>();
-    private final Set<ArrayList<Integer>> permutationsAt2HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt10HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt9HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt8HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt7HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt6HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt5HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt4HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt3HP = new HashSet<>();
+    private static final Set<ArrayList<Integer>> permutationsAt2HP = new HashSet<>();
 
     public PermutationCalculator() {
         createSequences();
     }
 
-    public Set<ArrayList<Integer>> getPermutation(int hp) {
+    public static Set<ArrayList<Integer>> getPermutation(int hp) {
         switch (hp) {
             case 10:
                 return permutationsAt10HP;
@@ -75,7 +75,7 @@ public class PermutationCalculator {
     {
         // if size becomes 1 add the permutation to the set. (duplicates will be removed)
         if (size == 1)
-            addPermutation(a,choiceOfCards);
+            addPermutation(a, choiceOfCards);
 
         for (int i = 0; i < size; i++) {
             heapPermutation(a, size - 1, choiceOfCards);

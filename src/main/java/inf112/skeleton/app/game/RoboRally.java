@@ -18,6 +18,7 @@ import inf112.skeleton.app.gameelements.RoundHandler;
 import inf112.skeleton.app.sound.Music;
 import inf112.skeleton.app.ui.HUD;
 import inf112.skeleton.app.ui.HandVisualizer;
+import inf112.skeleton.app.util.PermutationCalculator;
 import org.lwjgl.opengl.Display;
 
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ public class RoboRally extends InputAdapter implements Screen {
     private final HUD hud;
 
     private RoundHandler rh;
+
+    public static PermutationCalculator permCalc;
 
     private final OrthogonalTiledMapRenderer mapRenderer;
     private final SpriteBatch batch;
@@ -52,6 +55,7 @@ public class RoboRally extends InputAdapter implements Screen {
     RoboRally(Game game) {
         //Initializes the board and HUD
         this.game = game;
+        permCalc = new PermutationCalculator();
         setBoard();
 
         int extraSpace = 8;

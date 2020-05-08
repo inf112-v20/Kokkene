@@ -6,11 +6,11 @@ import inf112.skeleton.app.gameelements.Board;
 import inf112.skeleton.app.gameelements.Card;
 import inf112.skeleton.app.gameelements.Deck;
 import inf112.skeleton.app.util.AIColor;
+import inf112.skeleton.app.util.PermutationCalculator;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Objects;
 
 
 public class AI extends Player {
@@ -19,8 +19,6 @@ public class AI extends Player {
     private final Color color;
 
     private final Board board;
-
-    private final Set<ArrayList<Integer>> allPermutations = new HashSet<>();
 
     /**
      * @param name        the name for this robot.
@@ -79,8 +77,8 @@ public class AI extends Player {
             return;
         }
         int currentObj = getObjective() - 1; // Index of current objective
-        createSequences();
-        ArrayList<ArrayList<Integer>> successful = findSuccessful(currentObj, allPermutations);
+        ArrayList<ArrayList<Integer>> successful = findSuccessful(currentObj,
+                Objects.requireNonNull(PermutationCalculator.getPermutation(getHealth()))); // Permutations for current HP
 
         // Gets the best paths to each subsequent objective from the list of successful paths to the prev. obj.
         while (1 < successful.size() && currentObj < board.objectives.size()) { // Size == 1 when it doesn't reach obj.
@@ -304,74 +302,6 @@ public class AI extends Player {
                 xyd, xyd[2], index + 1);
     }
 
-    /**
-     * Creates a HashSet that contains all possible permutations of the hand
-     * size = P(n,r) = n!/((n−r)!)
-     */
-    private void createSequences() {
-        allPermutations.clear();
-        ArrayList<Integer> handArray = getHandArray();
-        heapPermutation(handArray, handArray.size(), hand.cardsToSelect());
-    }
-
     //Inspiration and more information: https://www.geeksforgeeks.org/heaps-algorithm-for-generating-permutations/
-    /**
-     * Generating permutation using Heap Algorithm
-     * @param a objects to choose from (ArrayList of the hand)
-     * @param size size of the actor's hand
-     * @param choiceOfCards Sample of the permutation
-     */
-    public void heapPermutation(ArrayList<Integer> a, int size, int choiceOfCards)
-    //Runtime is pretty bad, but should be manageable since the largest number of permutations = 362880,
-    //and the allPermutations HashSet will never reach a size higher than P(9,5) = 15120
-    {
-        // if size becomes 1 add the permutation to the set. (duplicates will be removed)
-        if (size == 1)
-            addPermutation(a,choiceOfCards);
 
-        for (int i = 0; i < size; i++) {
-
-            heapPermutation(a, size - 1, choiceOfCards);
-
-            // if size is odd, swap first and last element
-            int temp;
-            if (size % 2 == 1) {
-                temp = a.get(0);
-                a.set(0, a.get(size - 1));
-            }
-
-            // If size is even, swap ith and last
-            // element
-            else {
-                temp = a.get(i);
-                a.set(i, a.get(size - 1));
-            }
-            a.set(size - 1, temp);
-        }
-    }
-
-    /**
-     * Creates an array containing all the different cards the actor can choose from
-     * @return ArrayList<Integer> of form [0, 1, 2, 3...((cards in hand) - 1)]
-     */
-    public ArrayList<Integer> getHandArray() {
-        ArrayList<Integer> handArray = new ArrayList<>();
-        for (int i = 0; i <= hand.plHand.length - 1; i++) {
-            handArray.add(i);
-        }
-        return handArray;
-    }
-
-    /**
-     * Adds the given permutation from the ArrayList's position: 0 to n
-     * @param a The permutation of the hand (length = objects)
-     * @param r sample size of the permutation
-     */
-    private void addPermutation(ArrayList<Integer> a, int r) {
-        ArrayList<Integer> permutation = new ArrayList<>();
-        for (int i = 0; i < r; i++) {
-            permutation.add(a.get(i));
-        }
-        allPermutations.add(permutation);
-    }
 }
