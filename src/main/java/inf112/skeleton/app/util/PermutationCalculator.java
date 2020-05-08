@@ -51,28 +51,28 @@ public class PermutationCalculator {
      * and adds them to the corresponding HashSet
      * size = P(n,r) = n!/((n−r)!)
      */
-    private void createSequences() {
+    private static void createSequences() {
         for (int i = 9; i >= 0; i--) {
             ArrayList<Integer> handArray = getHandArray(i);
             int handSize = handArray.size();
             if (i <= 5) {
                 heapPermutation(handArray, handSize, handSize);
-            }
-            else {
+            } else {
                 heapPermutation(handArray, handSize, 5);
             }
         }
     }
 
     //Inspiration and more information: https://www.geeksforgeeks.org/heaps-algorithm-for-generating-permutations/
+
     /**
      * Generating permutation using Heap Algorithm
-     * @param a objects to choose from (ArrayList of the hand)
-     * @param size size of the actor's hand
+     *
+     * @param a             objects to choose from (ArrayList of the hand)
+     * @param size          size of the actor's hand
      * @param choiceOfCards Sample of the permutation
      */
-    private void heapPermutation(ArrayList<Integer> a, int size, int choiceOfCards)
-    {
+    private static void heapPermutation(ArrayList<Integer> a, int size, int choiceOfCards) {
         // if size becomes 1 add the permutation to the set. (duplicates will be removed)
         if (size == 1)
             addPermutation(a, choiceOfCards);
@@ -99,11 +99,11 @@ public class PermutationCalculator {
 
     /**
      * Adds the given permutation from the ArrayList's position: 0 to n
+     *
      * @param a The permutation of the hand (length = objects)
      * @param r sample size of the permutation
      */
-    private void addPermutation(ArrayList<Integer> a, int r)
-    {
+    private static void addPermutation(ArrayList<Integer> a, int r) {
         ArrayList<Integer> permutation = new ArrayList<>();
         for (int i = 0; i < r; i++) {
             permutation.add(a.get(i));
@@ -147,10 +147,11 @@ public class PermutationCalculator {
 
     /**
      * Creates an array containing all the different cards the actor can choose from
+     *
      * @param n The size of the wanted hand
      * @return ArrayList<Integer> of form [0, 1, 2, 3...((cards in hand) - 1)]
      */
-    public ArrayList<Integer> getHandArray(int n) {
+    public static ArrayList<Integer> getHandArray(int n) {
         ArrayList<Integer> handArray = new ArrayList<>();
         for (int i = 0; i <= n; i++) {
             handArray.add(i);
