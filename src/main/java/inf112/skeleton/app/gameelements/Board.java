@@ -350,7 +350,7 @@ public class Board extends Tile implements Cloneable{
                 }
                 break;
             case 2:
-                newDir = (dir + 2) % 4;
+                newDir = (dir + c.getMove()) % 4;
                 break;
             default:
                 throw new IllegalStateException("Unexpected type value: " + c.getType());
@@ -379,9 +379,6 @@ public class Board extends Tile implements Cloneable{
         }
         if (hasTile(pushLayer, result[0], result[1]) && phase % 2 == pushPhases(pushLayer, result[0], result[1])) {
             result = simulateMove(new Card(0, 0, 1), result, pushDirection(pushLayer, result[0], result[1]));
-        }
-        if (result[2] == -1) {
-            return result;
         }
         if (hasTile(gearLayer, result[0], result[1])) {
             result[2] = (result[2] + gearDirection(gearLayer, result[0], result[1])) % 4;
