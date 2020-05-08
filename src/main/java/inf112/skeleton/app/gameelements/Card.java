@@ -98,7 +98,6 @@ public class Card implements Comparable<Card>{
 
         card.dispose();
         resizedCard.dispose();
-        texture.dispose();
 
     }
 
