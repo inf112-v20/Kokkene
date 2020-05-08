@@ -207,7 +207,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
             }
         }
         else if (powerButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
-            if (!player.getReady()) {
+            if (!player.getReady() && !player.powerDownLastRound) {
                 player.setAnnouncer();
                 setPowerDown();
             }
@@ -220,6 +220,7 @@ public class HandVisualizer extends InputAdapter implements Screen {
             player.setAnnouncer();
             player.playerPower = true;
             player.powerDownLastRound = false;
+            setPowerDown();
         }
         else if (noButton.getBoundingRectangle().contains(screenX, HEIGHT - screenY)) {
             player.playerPower = false;
@@ -371,10 +372,31 @@ public class HandVisualizer extends InputAdapter implements Screen {
                 controlsButton.getY()+controlsButton.getHeight()-gl.height/2);
 
         if(player.powerDownLastRound) {
-            yesButton.draw(batch);
-            noButton.draw(batch);
+            drawPowerDownButtons();
         }
 
+    }
+
+    public void drawPowerDownButtons() {
+        BitmapFont font = new BitmapFont(Gdx.files.internal("assets/skins/default.fnt"));
+        //Draws text above the two buttons
+        GlyphLayout gl = new GlyphLayout(font, "Do you want to keep staying powered down?");
+        font.draw(batch, gl, (yesButton.getX()+noButton.getX())/2 + (yesButton.getWidth() - noButton.getWidth())/2 - 20,
+                yesButton.getY() + (yesButton.getHeight()+gl.height + 20));
+
+        //Draws the buttons
+        yesButton.draw(batch);
+        noButton.draw(batch);
+        //Draws the font on top of the buttons.
+        gl.reset();
+        gl.setText(font, "Yes");
+        font.draw(batch, gl, yesButton.getX()+ (yesButton.getWidth() - gl.width)/2 ,
+                yesButton.getY() + (yesButton.getHeight()+gl.height)/2);
+
+        gl.reset();
+        gl.setText(font, "No");
+        font.draw(batch, gl, noButton.getX()+ (noButton.getWidth() - gl.width)/2 ,
+                noButton.getY() + (noButton.getHeight()+gl.height)/2);
     }
 
     /**
